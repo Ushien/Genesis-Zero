@@ -18,7 +18,6 @@ public class Tile : MonoBehaviour
 
     void OnMouseEnter() {
         main_selection = true;
-        _highlight.SetActive(true);
     }
 
     void OnMouseDown() {
@@ -27,6 +26,5 @@ public class Tile : MonoBehaviour
 
     void OnMouseExit() {
         main_selection = false;
-        _highlight.SetActive(false);
     }
 }

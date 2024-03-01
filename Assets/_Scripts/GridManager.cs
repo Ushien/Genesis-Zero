@@ -68,6 +68,8 @@ public class GridManager : MonoBehaviour
 
     void Update(){
 
+        main_selection = null;
+
         foreach (Tile tile in ReturnTilesList()){
             bool selected = tile.main_selection;
             if(selected){
