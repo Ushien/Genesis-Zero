@@ -52,15 +52,18 @@ public class GridManager : MonoBehaviour
         return null;
     }
 
-    private List<Tile> ReturnTilesList(){
+    private List<Tile> ReturnTilesList(int width = -1, int height = -1){
         List<Tile> tiles_list = new List<Tile>();
         int compteur = 0;
+
         for (int i = 0; i < _width; i++)
         {
             for (int j = 0; j < _height; j++)
             {
-                tiles_list.Add(GetTileAtPosition(new Vector2(i, j)));
-                compteur++;
+                if((width == -1 || width == i)&&(height == -1 || height == j)){
+                    tiles_list.Add(GetTileAtPosition(new Vector2(i, j)));
+                    compteur++;
+                }
             }
         }
         return tiles_list;
@@ -86,32 +89,27 @@ public class GridManager : MonoBehaviour
 
                 case Selection_mode.Single_selection:
 
-                    selected_tiles.Add(main_selection);
+                    selected_tiles = ReturnTilesList(width : main_selection.x_position, height : main_selection.y_position);
                     break;
 
                 case Selection_mode.Horizontal_selection:
 
-                    {};
+                    selected_tiles = ReturnTilesList(height : main_selection.y_position);
                     break;
 
                 case Selection_mode.Vertical_selection:
 
-                    int column_index = main_selection.x_position;
-                    for (int j = 0; j < _height; j++)
-                    {
-                        selected_tiles.Add(GetTileAtPosition(new Vector2(column_index, j)));
-                    }
-
+                    selected_tiles = ReturnTilesList(width : main_selection.x_position);
                     break;
 
                 case Selection_mode.All:
 
-                    {};
+                    selected_tiles = ReturnTilesList();
                     break;
 
                 case Selection_mode.Special:
 
-                    {};
+                    //TODO
                     break;
                     
             }
@@ -159,11 +157,11 @@ public class GridManager : MonoBehaviour
         if (next_mode){
             selection_mode = Selection_mode[0];
         }
+*/
+        //Debug.Log(selection_mode);
 
-        Debug.Log(selection_mode);
-        */
         if (selection_mode == Selection_mode.Single_selection){
-            selection_mode = Selection_mode.Vertical_selection;
+            selection_mode = Selection_mode.All;
         }
         else{
             selection_mode = Selection_mode.Single_selection;
