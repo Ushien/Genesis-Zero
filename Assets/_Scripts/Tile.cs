@@ -7,8 +7,11 @@ public class Tile : MonoBehaviour
     [SerializeField] private Color _baseColor, _offsetColor;
     [SerializeField] private SpriteRenderer _renderer;
     [SerializeField] public GameObject _highlight;
+
     public int x_position;
     public int y_position;
+    public BaseUnit OccupiedUnit;
+    public bool free => OccupiedUnit == null;
 
     public bool main_selection = false;
 
@@ -26,5 +29,12 @@ public class Tile : MonoBehaviour
 
     void OnMouseExit() {
         main_selection = false;
+    }
+
+    public void SetUnit(BaseUnit unit){
+            if(unit.OccupiedTile != null) unit.OccupiedTile.OccupiedUnit = null;
+            unit.transform.position = transform.position;
+            OccupiedUnit = unit;
+            unit.OccupiedTile = this;
     }
 }

@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class GridManager : MonoBehaviour
 {
+    public static GridManager Instance;
+
     [SerializeField] private int _width, _height;
-
     [SerializeField] private Tile _tilePrefab;
-
     [SerializeField] private Transform _cam;
 
     private Dictionary<Vector2, Tile> _tiles;
@@ -23,6 +24,10 @@ public class GridManager : MonoBehaviour
 
     void Start(){
         GenerateGrid();
+    }
+
+    void Awake(){
+        Instance = this;
     }
 
     void GenerateGrid() {
@@ -52,7 +57,7 @@ public class GridManager : MonoBehaviour
         return null;
     }
 
-    private List<Tile> ReturnTilesList(int width = -1, int height = -1){
+    private List<Tile> ReturnTilesList(int width = -1, int height = -1, bool occupiedByUnit = false){
         List<Tile> tiles_list = new List<Tile>();
         int compteur = 0;
 
@@ -61,6 +66,9 @@ public class GridManager : MonoBehaviour
             for (int j = 0; j < _height; j++)
             {
                 if((width == -1 || width == i)&&(height == -1 || height == j)){
+                    if(occupiedByUnit){
+                        //TODO
+                    }
                     tiles_list.Add(GetTileAtPosition(new Vector2(i, j)));
                     compteur++;
                 }
@@ -131,6 +139,10 @@ public class GridManager : MonoBehaviour
             
         }
 
+    }
+
+    public Tile GetEnemySpawnTile() {
+        return _tiles.Where(t=>t.Key.x < _width/2 && t.Value.free).OrderBy(t => Random.value).First().Value;
     }
 
     public static void DumpToConsole(object obj)

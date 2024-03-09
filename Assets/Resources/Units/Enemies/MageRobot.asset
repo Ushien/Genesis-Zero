@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74e90ef35834eb84dbcc3899f95ea8e4, type: 3}
   m_Name: MageRobot
   m_EditorClassIdentifier: 
-  Team: 0
+  Team: 1
+  UnitPrefab: {fileID: 0}
