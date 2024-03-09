@@ -13,7 +13,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        GridManager.Instance.GenerateGrid();
+        UnitManager.Instance.SpawnEnemy();
     }
 
     // Update is called once per frame

@@ -22,15 +22,11 @@ public class GridManager : MonoBehaviour
     private Selection_mode selection_mode = Selection_mode.Single_selection;
     private Tile main_selection;    
 
-    void Start(){
-        GenerateGrid();
-    }
-
     void Awake(){
         Instance = this;
     }
 
-    void GenerateGrid() {
+    public void GenerateGrid() {
         _tiles = new Dictionary<Vector2, Tile>();
         for (int x = 0; x < _width; x++) {
             for (int y = 0; y <_height; y++) {
@@ -142,7 +138,9 @@ public class GridManager : MonoBehaviour
     }
 
     public Tile GetEnemySpawnTile() {
-        return _tiles.Where(t=>t.Key.x < _width/2 && t.Value.free).OrderBy(t => Random.value).First().Value;
+        Debug.Log(_tiles);
+        return GetTileAtPosition(new Vector2(1, 1));
+        //return _tiles.Where(t=>t.Key.x < _width/2 && t.Value.free).OrderBy(t => Random.value).First().Value;
     }
 
     public static void DumpToConsole(object obj)
