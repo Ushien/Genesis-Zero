@@ -16,6 +16,8 @@ public class BaseUnit : MonoBehaviour
     [TextArea(5,10)]
     public string description = "Description";
 
+    public int armor = 0;
+
     void Awake(){
         unit_name = scriptableUnit.unit_name;
         finalPower = scriptableUnit.original_power;        

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
   m_Name: BombeSolaire
   m_EditorClassIdentifier: 
-  spell_name: 
+  spell_name: Bombe Solaire

@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: AtomicAngel
   m_EditorClassIdentifier: 
   unit_name: Atomic Angel
-  level: 0
   original_power: 200
   original_health: 9000
-  Team: 1
-  UnitPrefab: {fileID: 0}
+  description: Accompagne une catastrophe
+  UnitPrefab: {fileID: -1000002949264461015, guid: dcef0de15ff8db64d904e9440bac239e, type: 3}
