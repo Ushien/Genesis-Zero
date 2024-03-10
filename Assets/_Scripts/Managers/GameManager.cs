@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         GridManager.Instance.GenerateGrid();
-        UnitManager.Instance.SpawnEnemy();
+        UnitManager.Instance.SpawnEnemy(1, 1);
+        UnitManager.Instance.SpawnEnemy(1, 3);
     }
 
     // Update is called once per frame

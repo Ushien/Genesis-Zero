@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74e90ef35834eb84dbcc3899f95ea8e4, type: 3}
-  m_Name: MageRobot
+  m_Name: Wall
   m_EditorClassIdentifier: 
   Team: 1
-  UnitPrefab: {fileID: -4886507262946932171, guid: dcef0de15ff8db64d904e9440bac239e, type: 3}
+  UnitPrefab: {fileID: -3727782691645208588, guid: 94cb45403504b9149a29602442cf10d5, type: 3}

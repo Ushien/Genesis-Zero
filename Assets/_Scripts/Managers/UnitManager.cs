@@ -15,15 +15,16 @@ public class UnitManager : MonoBehaviour
         _units = Resources.LoadAll<Unit>("Units").ToList();
     }
 
-    public void SpawnEnemy() {
+    public void SpawnEnemy(int x_position, int y_position) {
         var enemyCount = 1;
 
         for (int i = 0; i < enemyCount; i++){
             var randomPrefab = GetRandomUnit<BaseEnemy>(Team.Enemy);
             var spawnedEnemy = Instantiate(randomPrefab);
-            var randomSpawnTile = GridManager.Instance.GetEnemySpawnTile();
+            //var randomSpawnTile = GridManager.Instance.GetEnemySpawnTile();
+            var SpawnTile = GridManager.Instance.GetTileAtPosition(new Vector2(x_position, y_position));
             
-            randomSpawnTile.SetUnit(spawnedEnemy);
+            SpawnTile.SetUnit(spawnedEnemy);
         }
 
     }

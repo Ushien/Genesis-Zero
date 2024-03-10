@@ -21,6 +21,7 @@ public class GridManager : MonoBehaviour
     }
     private Selection_mode selection_mode = Selection_mode.Single_selection;
     private Tile main_selection;    
+    private List<Tile> selected_tiles;
 
     void Awake(){
         Instance = this;
@@ -73,6 +74,16 @@ public class GridManager : MonoBehaviour
         return tiles_list;
     }
 
+    private List<BaseUnit> UnitsFromTiles(List<Tile> tiles){
+        List<BaseUnit> units_list = new List<BaseUnit>();
+        foreach (Tile tile in tiles){
+            if(tile.OccupiedUnit != null){
+                units_list.Add(tile.OccupiedUnit);
+            }
+        }
+        return units_list;
+    }
+
     void Update(){
 
         main_selection = null;
@@ -87,8 +98,7 @@ public class GridManager : MonoBehaviour
 
         if(main_selection != null){
 
-            List<Tile> selected_tiles = new List<Tile>();
-
+            selected_tiles = new List<Tile>();
             switch(selection_mode){
 
                 case Selection_mode.Single_selection:
@@ -125,7 +135,12 @@ public class GridManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0)){
 
-            DumpToConsole(main_selection);
+            var units_list = UnitsFromTiles(selected_tiles);
+            foreach( var x in units_list) {
+                DumpToConsole(x);
+                //Debug.Log( x.GetComponent<Enemy1>().ToString());
+                //Debug.Log( x.ToString());
+            }
             
         }
 
@@ -137,10 +152,9 @@ public class GridManager : MonoBehaviour
 
     }
 
-    public Tile GetEnemySpawnTile() {
-        Debug.Log(_tiles);
-        return GetTileAtPosition(new Vector2(1, 1));
-        //return _tiles.Where(t=>t.Key.x < _width/2 && t.Value.free).OrderBy(t => Random.value).First().Value;
+    public Tile GetRandomTile() {
+        //TODO Fix this function
+        return _tiles.OrderBy(t => Random.value).First().Value;
     }
 
     public static void DumpToConsole(object obj)
@@ -171,7 +185,7 @@ public class GridManager : MonoBehaviour
         //Debug.Log(selection_mode);
 
         if (selection_mode == Selection_mode.Single_selection){
-            selection_mode = Selection_mode.All;
+            selection_mode = Selection_mode.Vertical_selection;
         }
         else{
             selection_mode = Selection_mode.Single_selection;

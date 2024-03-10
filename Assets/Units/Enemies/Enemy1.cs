@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Enemy1 : BaseEnemy
 {
+
+    [SerializeField] private string name;
+
     // Start is called before the first frame update
     void Start()
     {
