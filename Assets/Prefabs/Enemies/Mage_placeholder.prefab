@@ -97,5 +97,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: badd103acc47ea64c9f3a29f94b2eb9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scriptableUnit: {fileID: 11400000, guid: 6afde0bbe41525346a2575007ed63835, type: 2}
   OccupiedTile: {fileID: 0}
   Team: 1
+  level: 1
+  unit_name: Name
+  finalPower: 1
+  finalLife: 1
+  description: Description

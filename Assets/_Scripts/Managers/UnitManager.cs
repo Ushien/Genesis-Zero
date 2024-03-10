@@ -7,12 +7,12 @@ public class UnitManager : MonoBehaviour
 {
     public static UnitManager Instance;
 
-    private List<Unit> _units;
+    private List<ScriptableUnit> _units;
 
     void Awake(){
         Instance = this;
 
-        _units = Resources.LoadAll<Unit>("Units").ToList();
+        _units = Resources.LoadAll<ScriptableUnit>("Units").ToList();
     }
 
     public void SpawnEnemy(int x_position, int y_position) {
