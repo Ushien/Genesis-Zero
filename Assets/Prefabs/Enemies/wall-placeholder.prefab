@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4098878842821007440}
   - component: {fileID: 379234672383784218}
-  - component: {fileID: -3727782691645208588}
+  - component: {fileID: 6190323798953656818}
   m_Layer: 0
   m_Name: wall-placeholder
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-3727782691645208588
+--- !u!114 &6190323798953656818
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,9 +94,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 6380695302838500109}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cbef471c5d64c643a96798bae6aaf19, type: 3}
+  m_Script: {fileID: 11500000, guid: badd103acc47ea64c9f3a29f94b2eb9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   OccupiedTile: {fileID: 0}
   Team: 1
-  name: Titan

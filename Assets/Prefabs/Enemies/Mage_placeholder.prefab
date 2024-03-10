@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3841924166004162370}
   - component: {fileID: 2940124123709327838}
-  - component: {fileID: -4886507262946932171}
+  - component: {fileID: -1000002949264461015}
   m_Layer: 0
   m_Name: Mage_placeholder
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-4886507262946932171
+--- !u!114 &-1000002949264461015
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,9 +94,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 6886274184561370928}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cbef471c5d64c643a96798bae6aaf19, type: 3}
+  m_Script: {fileID: 11500000, guid: badd103acc47ea64c9f3a29f94b2eb9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   OccupiedTile: {fileID: 0}
   Team: 1
-  name: "Mage m\xE9canique"

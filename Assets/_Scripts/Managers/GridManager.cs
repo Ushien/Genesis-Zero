@@ -136,10 +136,12 @@ public class GridManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0)){
 
             var units_list = UnitsFromTiles(selected_tiles);
-            foreach( var x in units_list) {
-                DumpToConsole(x);
-                //Debug.Log( x.GetComponent<Enemy1>().ToString());
-                //Debug.Log( x.ToString());
+            if(units_list != null){
+                foreach( var x in units_list) {
+                    DumpToConsole(x);
+                    //Debug.Log( x.GetComponent<Enemy1>().ToString());
+                    //Debug.Log( x.ToString());
+                }
             }
             
         }

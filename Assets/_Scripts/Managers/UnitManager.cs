@@ -19,7 +19,7 @@ public class UnitManager : MonoBehaviour
         var enemyCount = 1;
 
         for (int i = 0; i < enemyCount; i++){
-            var randomPrefab = GetRandomUnit<BaseEnemy>(Team.Enemy);
+            var randomPrefab = GetRandomUnit<BaseUnit>(Team.Enemy);
             var spawnedEnemy = Instantiate(randomPrefab);
             //var randomSpawnTile = GridManager.Instance.GetEnemySpawnTile();
             var SpawnTile = GridManager.Instance.GetTileAtPosition(new Vector2(x_position, y_position));
@@ -30,6 +30,6 @@ public class UnitManager : MonoBehaviour
     }
 
     private T GetRandomUnit<T>(Team team) where T : BaseUnit {
-        return (T)_units.Where(u => u.Team == team).OrderBy(o=> Random.value).First().UnitPrefab;
+        return (T)_units.OrderBy(o=> Random.value).First().UnitPrefab;
     }
 }
