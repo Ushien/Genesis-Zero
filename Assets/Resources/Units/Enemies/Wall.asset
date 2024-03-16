@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Wall
   m_EditorClassIdentifier: 
   unit_name: Mur
+  sprite: {fileID: 21300000, guid: d19f9321838faf944b11fa4b12b7904d, type: 3}
   original_power: 5
   original_health: 105
   description: Il ne bougera pas si facilement
-  UnitPrefab: {fileID: 6190323798953656818, guid: 94cb45403504b9149a29602442cf10d5, type: 3}
