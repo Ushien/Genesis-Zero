@@ -11,7 +11,7 @@ public class TestScript : MonoBehaviour
 
     void Start()
     {
-        _spells = Resources.LoadAll<ScriptableSpell>("Spells").ToList();
+        _spells = LoadSpells();
 
         var selected_spell = GetRandomSpell();
 
@@ -23,5 +23,10 @@ public class TestScript : MonoBehaviour
     
     private ScriptableSpell GetRandomSpell(){
         return _spells.OrderBy(o=> Random.value).First();
+    }
+
+    private List<ScriptableSpell> LoadSpells(){
+        var spellList = Resources.LoadAll<ScriptableSpell>("Spells").ToList();
+        return spellList;
     }
 }
