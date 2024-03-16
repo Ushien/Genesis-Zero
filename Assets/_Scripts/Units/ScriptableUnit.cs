@@ -7,6 +7,8 @@ using UnityEngine;
 public class ScriptableUnit : ScriptableObject
 {
     public string unit_name;
+
+    public Sprite sprite;
     public int original_power;
     public int original_health;
     [TextArea(5,10)]

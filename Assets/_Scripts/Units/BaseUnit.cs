@@ -22,6 +22,7 @@ public class BaseUnit : MonoBehaviour
         scriptableUnit = originUnit;
         this.name = scriptableUnit.unit_name;
         
+        this.GetComponent<SpriteRenderer>().sprite = scriptableUnit.sprite;
         unit_name = scriptableUnit.unit_name;
         finalPower = scriptableUnit.original_power;        
         finalLife = scriptableUnit.original_health;
