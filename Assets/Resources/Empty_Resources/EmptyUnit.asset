@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
-  m_Name: BaseSpell
+  m_Script: {fileID: 11500000, guid: 74e90ef35834eb84dbcc3899f95ea8e4, type: 3}
+  m_Name: EmptyUnit
   m_EditorClassIdentifier: 
-  spell_name: Name
+  unit_name: Name
+  original_power: 0
+  original_health: 0
   description: Description
+  UnitPrefab: {fileID: 0}

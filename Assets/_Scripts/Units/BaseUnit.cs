@@ -18,7 +18,10 @@ public class BaseUnit : MonoBehaviour
 
     public int armor = 0;
 
-    void Awake(){
+    public void Setup(ScriptableUnit originUnit){
+        scriptableUnit = originUnit;
+        this.name = scriptableUnit.unit_name;
+        
         unit_name = scriptableUnit.unit_name;
         finalPower = scriptableUnit.original_power;        
         finalLife = scriptableUnit.original_health;

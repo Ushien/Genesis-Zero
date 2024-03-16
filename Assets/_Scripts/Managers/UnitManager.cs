@@ -8,6 +8,7 @@ public class UnitManager : MonoBehaviour
     public static UnitManager Instance;
 
     private List<ScriptableUnit> _units;
+    public BaseUnit EmptyUnit;
 
     void Awake(){
         Instance = this;
@@ -19,17 +20,17 @@ public class UnitManager : MonoBehaviour
         var enemyCount = 1;
 
         for (int i = 0; i < enemyCount; i++){
-            var randomPrefab = GetRandomUnit<BaseUnit>(Team.Enemy);
-            var spawnedEnemy = Instantiate(randomPrefab);
-            //var randomSpawnTile = GridManager.Instance.GetEnemySpawnTile();
+            var scriptableUnit = GetRandomUnit();
+            var new_unit = Instantiate(EmptyUnit);
+            new_unit.Setup(scriptableUnit);
+
             var SpawnTile = GridManager.Instance.GetTileAtPosition(new Vector2(x_position, y_position));
-            
-            SpawnTile.SetUnit(spawnedEnemy);
+            SpawnTile.SetUnit(new_unit);
         }
 
     }
 
-    private T GetRandomUnit<T>(Team team) where T : BaseUnit {
-        return (T)_units.OrderBy(o=> Random.value).First().UnitPrefab;
+    private ScriptableUnit GetRandomUnit(){
+        return _units.OrderBy(o=> Random.value).First();
     }
 }

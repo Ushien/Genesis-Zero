@@ -11,5 +11,4 @@ public class ScriptableUnit : ScriptableObject
     public int original_health;
     [TextArea(5,10)]
     public string description;
-    public BaseUnit UnitPrefab;
 }
