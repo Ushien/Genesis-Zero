@@ -10,6 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
-  m_Name: BombeSolaire
+  m_Name: FireBall
   m_EditorClassIdentifier: 
-  spell_name: Bombe Solaire
+  spell_name: 
+  description: 
+  SpellPrefab: {fileID: 0}
