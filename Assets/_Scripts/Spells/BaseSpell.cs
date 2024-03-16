@@ -10,7 +10,8 @@ public class BaseSpell : MonoBehaviour
     [TextArea(5,10)]
     public string description = "Description";
 
-    void Awake(){
+    public void Setup(ScriptableSpell originSpell){
+        scriptableSpell = originSpell;
         spell_name = scriptableSpell.spell_name;
         description = scriptableSpell.description;
     }

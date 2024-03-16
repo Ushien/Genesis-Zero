@@ -10,8 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
-  m_Name: FireBall
+  m_Name: BaseSpell
   m_EditorClassIdentifier: 
-  spell_name: Boule de feu
-  description: "A l'aide de modules pyro, il est possible de g\xE9n\xE9rer des vagues
-    de chaleurs condens\xE9es en un projectile \xE0 moyenne port\xE9e."
+  spell_name: Name
+  description: Description
