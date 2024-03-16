@@ -12,6 +12,8 @@ public class BaseSpell : MonoBehaviour
 
     public void Setup(ScriptableSpell originSpell){
         scriptableSpell = originSpell;
+        this.name = scriptableSpell.spell_name;
+        
         spell_name = scriptableSpell.spell_name;
         description = scriptableSpell.description;
     }
