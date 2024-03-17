@@ -14,7 +14,9 @@ public class BaseUnit : MonoBehaviour
     public int finalPower = 1;
     public int finalLife = 1;
     [TextArea(5,10)]
-    public string description = "Description";
+    public string lore_description = "Lore Description";
+    [TextArea(5,10)]
+    public string fight_description = "Fight Description";
 
     public int armor = 0;
 
@@ -26,7 +28,8 @@ public class BaseUnit : MonoBehaviour
         unit_name = scriptableUnit.unit_name;
         finalPower = scriptableUnit.original_power;        
         finalLife = scriptableUnit.original_health;
-        description = scriptableUnit.description;
+        lore_description = scriptableUnit.lore_description;
+        fight_description = scriptableUnit.fight_description;
     }
 }
 

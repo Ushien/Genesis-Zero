@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
-  m_Name: FireBall
+  m_Name: Scalpel
   m_EditorClassIdentifier: 
-  spell_name: Boule de feu
-  description: "A l'aide de modules pyro, il est possible de g\xE9n\xE9rer des vagues
-    de chaleurs condens\xE9es en un projectile \xE0 moyenne port\xE9e."
+  spell_name: Scalpel
+  description: "Inflige de lourds d\xE9gats \xE0 une cible. Si la cible a re\xE7u
+    un soin lors du tour pr\xE9c\xE9dent, la technique \xE9choue."

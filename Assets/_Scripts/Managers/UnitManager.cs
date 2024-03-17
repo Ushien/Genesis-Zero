@@ -13,7 +13,7 @@ public class UnitManager : MonoBehaviour
     void Awake(){
         Instance = this;
 
-        _units = Resources.LoadAll<ScriptableUnit>("Units").ToList();
+        _units = Resources.LoadAll<ScriptableUnit>("Units/Enemies").ToList();
     }
 
     public void SpawnEnemy(int x_position, int y_position) {

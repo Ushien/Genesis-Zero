@@ -8,5 +8,7 @@ public class ScriptableSpell : ScriptableObject
 {
     public string spell_name;
     [TextArea(5,10)]
-    public string description;
+    public string lore_description;
+    [TextArea(5,10)]
+    public string fight_description;
 }

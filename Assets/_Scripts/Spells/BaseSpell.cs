@@ -8,13 +8,16 @@ public class BaseSpell : MonoBehaviour
 
     public string spell_name = "Name";
     [TextArea(5,10)]
-    public string description = "Description";
+    public string lore_description = "Lore Description";
+    [TextArea(5,10)]
+    public string fight_description = "Fight Description";
 
     public void Setup(ScriptableSpell originSpell){
         scriptableSpell = originSpell;
         this.name = scriptableSpell.spell_name;
         
         spell_name = scriptableSpell.spell_name;
-        description = scriptableSpell.description;
+        lore_description = scriptableSpell.lore_description;
+        fight_description = scriptableSpell.fight_description;
     }
 }

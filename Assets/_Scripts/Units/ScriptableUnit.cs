@@ -12,5 +12,9 @@ public class ScriptableUnit : ScriptableObject
     public int original_power;
     public int original_health;
     [TextArea(5,10)]
-    public string description;
+    public string lore_description;
+    [TextArea(5,10)]
+    public string fight_description;
+
+    public List<ScriptableSpell> spells;
 }
