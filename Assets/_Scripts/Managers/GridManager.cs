@@ -8,6 +8,8 @@ public class GridManager : MonoBehaviour
     public static GridManager Instance;
 
     [SerializeField] private int _width, _height;
+
+    [SerializeField] private int gap_between_tiles = 10;
     [SerializeField] private Tile _tilePrefab;
     [SerializeField] private Transform _cam;
 
@@ -31,7 +33,9 @@ public class GridManager : MonoBehaviour
         _tiles = new Dictionary<Vector2, Tile>();
         for (int x = 0; x < _width; x++) {
             for (int y = 0; y <_height; y++) {
-                var spawnedTile = Instantiate(_tilePrefab, new Vector3(x, y), Quaternion.identity);
+
+                var spawnedTile = Instantiate(_tilePrefab, new Vector3((x * 256) + x * gap_between_tiles,(y * 256) + y * gap_between_tiles), Quaternion.identity);
+
                 spawnedTile.name = $"Tile {x} {y}";
                 spawnedTile.x_position = x;
                 spawnedTile.y_position = y;
@@ -42,7 +46,7 @@ public class GridManager : MonoBehaviour
                 _tiles[new Vector2(x, y)] = spawnedTile;
             }
         }
-        _cam.transform.position = new Vector3((float)_width/2 - 0.5f, (float)_height/2 - 0.5f, -10);
+        _cam.transform.position = new Vector3((float)_width*256/2, (float)_height*256/2, -10);
     }
 
     public Tile GetTileAtPosition(Vector2 pos){
