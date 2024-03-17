@@ -123,6 +123,63 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &587495003
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 587495005}
+  - component: {fileID: 587495004}
+  m_Layer: 0
+  m_Name: Anasta
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &587495004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587495003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c22751165c7cfd844b48588d3d1c3738, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scriptableUnit: {fileID: 11400000, guid: c9b8ccb84d6b90d4aa9ce0f8cefab461, type: 2}
+  OccupiedTile: {fileID: 0}
+  Team: 0
+  level: 1
+  unit_name: Name
+  finalPower: 1
+  finalLife: 1
+  lore_description: Lore Description
+  fight_description: Fight Description
+  armor: 0
+  job: {fileID: 11400000, guid: 09a48b02a33c2a146a74907d1ed156f0, type: 2}
+  spell1: {fileID: 11400000, guid: d82b8e743a2889c4f83af0148b21409f, type: 2}
+  spell2: {fileID: 11400000, guid: 860c283029c0cdb45b10b04643ae0dc7, type: 2}
+--- !u!4 &587495005
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587495003}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.24667393, y: -0.053403705, z: -0.0080998335}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &755375720
 GameObject:
   m_ObjectHideFlags: 0
@@ -547,3 +604,4 @@ SceneRoots:
   - {fileID: 755375721}
   - {fileID: 1158603990}
   - {fileID: 2007150717}
+  - {fileID: 587495005}

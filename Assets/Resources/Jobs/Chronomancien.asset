@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2909e28d4cedc07449d6335173aff69d, type: 3}
   m_Name: Chronomancien
   m_EditorClassIdentifier: 
-  job_name: 
+  job_name: Chronomancien
   artwork: {fileID: 0}
-  description: 
-  spells: []
+  fight_description: 
+  lore_description: 
+  spells:
+  - {fileID: 11400000, guid: 40eea90631f2fff48b0367e06fc969a9, type: 2}
+  - {fileID: 11400000, guid: 128821c81fed44f43b7724674c4ee219, type: 2}

@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class Hero : BaseUnit
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public Job job;
+    public ScriptableSpell spell1;
+    public ScriptableSpell spell2;
+    //TODO public Weapon weapon;
+    void Awake(){
+        Team = Team.Ally;
     }
 }
