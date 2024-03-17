@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BaseUnit : MonoBehaviour
 {
@@ -20,16 +21,30 @@ public class BaseUnit : MonoBehaviour
 
     public int armor = 0;
 
-    public void Setup(ScriptableUnit originUnit){
+    public void Setup(ScriptableUnit originUnit, int setup_level){
         scriptableUnit = originUnit;
         this.name = scriptableUnit.unit_name;
         
         this.GetComponent<SpriteRenderer>().sprite = scriptableUnit.sprite;
         unit_name = scriptableUnit.unit_name;
-        finalPower = scriptableUnit.original_power;        
-        finalLife = scriptableUnit.original_health;
+
+        level = setup_level;
+
+        finalPower = GetStatFromLevel(scriptableUnit.original_power, level);
+        finalLife = GetStatFromLevel(scriptableUnit.original_health, level);
+
         lore_description = scriptableUnit.lore_description;
         fight_description = scriptableUnit.fight_description;
+    }
+
+    public int GetStatFromLevel(int level_100_stat, int real_level){
+
+        var level_1_stat = (float)level_100_stat/10;
+        var growth_by_level = ((float)level_100_stat-level_1_stat)/99;
+        var real_level_stat = (int)Math.Ceiling(level_1_stat+growth_by_level*(real_level-1));
+        //var real_level_stat = (int)(level_1_stat*real_level/10);
+
+        return real_level_stat;
     }
 }
 

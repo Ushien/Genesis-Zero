@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit_name: Mur
   sprite: {fileID: 21300000, guid: d19f9321838faf944b11fa4b12b7904d, type: 3}
-  original_power: 5
-  original_health: 105
-  description: Il ne bougera pas si facilement
+  original_power: 120
+  original_health: 1100
+  lore_description: 
+  fight_description: 
+  spells:
+  - {fileID: 11400000, guid: 860c283029c0cdb45b10b04643ae0dc7, type: 2}

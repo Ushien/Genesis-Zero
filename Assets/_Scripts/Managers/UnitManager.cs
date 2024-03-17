@@ -22,7 +22,7 @@ public class UnitManager : MonoBehaviour
         for (int i = 0; i < enemyCount; i++){
             var scriptableUnit = GetRandomUnit();
             var new_unit = Instantiate(EmptyUnit);
-            new_unit.Setup(scriptableUnit);
+            new_unit.Setup(scriptableUnit, 1);
 
             var SpawnTile = GridManager.Instance.GetTileAtPosition(new Vector2(x_position, y_position));
             SpawnTile.SetUnit(new_unit);
