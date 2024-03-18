@@ -366,6 +366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9431c0e831f9b8f43971b2a0ed25e653, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyTeam: {fileID: 11400000, guid: 4f33863df0557614da3f9d27bad534f7, type: 2}
   nTurn: 0
   battleState: 0
   turnState: 0

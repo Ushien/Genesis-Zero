@@ -30,6 +30,15 @@ public class UnitManager : MonoBehaviour
 
     }
 
+    public void SpawnEnemies(ScriptableTeam units_to_spawn){
+        SpawnEnemy(1,1);
+        SpawnEnemy(1, 3);
+    }
+
+    public void spawnAllies(){
+
+    }
+
     private ScriptableUnit GetRandomUnit(){
         return _units.OrderBy(o=> Random.value).First();
     }

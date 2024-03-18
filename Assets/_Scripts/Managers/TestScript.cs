@@ -9,6 +9,7 @@ public class TestScript : MonoBehaviour
     {
         var selected_spell = SpellManager.Instance.GetRandomSpell();
         SpellManager.Instance.SetupSpell(selected_spell);
+        GameManager.Instance.LaunchBattle();
     }
     
 }
