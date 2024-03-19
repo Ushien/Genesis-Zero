@@ -15,7 +15,7 @@ public class TestScript : MonoBehaviour
 
         var decomposedComposition = enemy_composition.GetTuples();
 
-        BattleManager.Instance.LaunchBattle();
+        BattleManager.Instance.LaunchBattle(decomposedComposition);
     }
 
     /*

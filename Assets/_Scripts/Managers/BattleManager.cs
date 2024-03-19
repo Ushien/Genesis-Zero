@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BattleManager : MonoBehaviour
 {
@@ -9,8 +10,6 @@ public class BattleManager : MonoBehaviour
     
     public enum BattleState {OUTSIDE, START, PLAYERTURN, ENEMYTURN, END, WON, LOST}
     public enum TurnState {OUTSIDE, START, MIDDLE, END}
-
-    public ScriptableComposition enemyComposition;
 
     public int nTurn = 0;
     public BattleState battleState;
@@ -23,6 +22,7 @@ public class BattleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
     }
 
     // Update is called once per frame
@@ -31,9 +31,10 @@ public class BattleManager : MonoBehaviour
         
     }
 
-    public void LaunchBattle(){
+    public void LaunchBattle(List<Tuple<Vector2, ScriptableUnit, int>> composition){
+        
         GridManager.Instance.GenerateGrid();
-        UnitManager.Instance.SpawnEnemies(enemyComposition);
+        UnitManager.Instance.SpawnEnemies(composition);
 
         StartBattle();
     }

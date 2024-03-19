@@ -348,7 +348,7 @@ GameObject:
   - component: {fileID: 1282223806}
   - component: {fileID: 1282223805}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: BattleManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -366,7 +366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9431c0e831f9b8f43971b2a0ed25e653, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyTeam: {fileID: 11400000, guid: 4f33863df0557614da3f9d27bad534f7, type: 2}
+  enemyComposition: {fileID: 0}
   nTurn: 0
   battleState: 0
   turnState: 0
@@ -555,6 +555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dcb93cad8514e946b9119230c473bac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy_composition: {fileID: 11400000, guid: 4f33863df0557614da3f9d27bad534f7, type: 2}
 --- !u!4 &1706843978
 Transform:
   m_ObjectHideFlags: 0
