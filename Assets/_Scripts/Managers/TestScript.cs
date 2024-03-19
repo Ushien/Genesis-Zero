@@ -5,6 +5,8 @@ using System.Linq;
 
 public class TestScript : MonoBehaviour
 {
+    public ScriptableComposition enemy_composition;
+
     void Start()
     {
         var selected_spell = SpellManager.Instance.GetRandomSpell();

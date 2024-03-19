@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public enum BattleState {OUTSIDE, START, PLAYERTURN, ENEMYTURN, END, WON, LOST}
     public enum TurnState {OUTSIDE, START, MIDDLE, END}
 
-    public ScriptableTeam enemyTeam;
+    public ScriptableComposition enemyComposition;
 
     public int nTurn = 0;
     public BattleState battleState;
@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
 
     public void LaunchBattle(){
         GridManager.Instance.GenerateGrid();
-        UnitManager.Instance.SpawnEnemies(enemyTeam);
+        UnitManager.Instance.SpawnEnemies(enemyComposition);
 
         StartBattle();
     }

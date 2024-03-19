@@ -30,7 +30,7 @@ public class UnitManager : MonoBehaviour
 
     }
 
-    public void SpawnEnemies(ScriptableTeam units_to_spawn){
+    public void SpawnEnemies(ScriptableComposition units_to_spawn){
         SpawnEnemy(1,1);
         SpawnEnemy(1, 3);
     }
