@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class BattleManager : MonoBehaviour
 {
     
-    public static GameManager Instance;
+    public static BattleManager Instance;
     
     public enum BattleState {OUTSIDE, START, PLAYERTURN, ENEMYTURN, END, WON, LOST}
     public enum TurnState {OUTSIDE, START, MIDDLE, END}

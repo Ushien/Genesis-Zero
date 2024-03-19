@@ -24,7 +24,7 @@ public class Tile : MonoBehaviour
     }
 
     void OnMouseDown() {
-        // if(GameManager.Instance.Gamestate != GameState.HeroesTurn) return;
+        // if(BattleManager.Instance.Battlestate != BattleState.HeroesTurn) return;
     }
 
     void OnMouseExit() {
