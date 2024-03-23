@@ -8,6 +8,7 @@ public class BaseUnit : MonoBehaviour
     public ScriptableUnit scriptableUnit;
 
     public Tile OccupiedTile;
+    public List<BaseSpell> availableSpells;
     public Team Team = Team.Enemy;
     public int level = 1;
 
@@ -35,6 +36,13 @@ public class BaseUnit : MonoBehaviour
 
         lore_description = scriptableUnit.lore_description;
         fight_description = scriptableUnit.fight_description;
+
+        foreach (var scriptableSpell in scriptableUnit.spells)
+        {
+            var new_spell = Instantiate(SpellManager.Instance.EmptySpell);
+            new_spell.Setup(scriptableSpell);
+            availableSpells.Add(new_spell);
+        }
     }
 
     public int GetStatFromLevel(int level_100_stat, int real_level){
@@ -46,9 +54,4 @@ public class BaseUnit : MonoBehaviour
 
         return real_level_stat;
     }
-}
-
-public enum Team {
-    Ally = 0,
-    Enemy = 1
 }

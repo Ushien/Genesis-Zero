@@ -55,3 +55,9 @@ public class UnitManager : MonoBehaviour
         return _units.OrderBy(o=> UnityEngine.Random.value).First();
     }
 }
+
+public enum Team {
+    Ally = 0,
+    Enemy = 1
+}
+

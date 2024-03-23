@@ -20,4 +20,8 @@ public class BaseSpell : MonoBehaviour
         lore_description = scriptableSpell.lore_description;
         fight_description = scriptableSpell.fight_description;
     }
+
+    public void Cast(){
+
+    }
 }

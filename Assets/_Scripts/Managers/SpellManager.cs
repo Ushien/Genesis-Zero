@@ -30,4 +30,13 @@ public class SpellManager : MonoBehaviour
         var new_spell = Instantiate(EmptySpell);
         new_spell.Setup(scriptableSpell);
     }
+
+    public void InflictDamage(int amount, BaseUnit target, Properties property){
+        Debug.Log("J'inflige des dégats avec ma technique !");
+    }
+}
+
+public enum Properties {    
+    Pyro = 0,
+    Létalité = 1
 }

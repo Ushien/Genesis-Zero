@@ -17,11 +17,5 @@ public class TestScript : MonoBehaviour
 
         BattleManager.Instance.LaunchBattle(decomposedComposition);
     }
-
-    /*
-    public Tuple<Vector2, ScriptableUnit, int> DecomposeScriptableComposition(ScriptableComposition comp){
-        return new Tuple<Vector2, ScriptableUnit, int>(new Vector2(0, 0), comp.units[0], 10);
-    }
-    */
     
 }

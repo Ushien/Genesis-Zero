@@ -366,7 +366,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9431c0e831f9b8f43971b2a0ed25e653, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyComposition: {fileID: 0}
   nTurn: 0
   battleState: 0
   turnState: 0
@@ -522,7 +521,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _width: 3
-  _height: 5
+  _height: 3
   gap_between_tiles: 0.05
   _tilePrefab: {fileID: 7435666411490668235, guid: 6e7ac63a2d3576846a5edcb486197e4f, type: 3}
   _cam: {fileID: 1494868754}
