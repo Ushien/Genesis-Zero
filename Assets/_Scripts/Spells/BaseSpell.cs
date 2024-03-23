@@ -5,6 +5,7 @@ using UnityEngine;
 public class BaseSpell : MonoBehaviour
 {
     public ScriptableSpell scriptableSpell;
+    public BaseUnit owner;
 
     public string spell_name = "Name";
     [TextArea(5,10)]
@@ -12,9 +13,11 @@ public class BaseSpell : MonoBehaviour
     [TextArea(5,10)]
     public string fight_description = "Fight Description";
 
-    public void Setup(ScriptableSpell originSpell){
+    public void Setup(ScriptableSpell originSpell, BaseUnit ownerUnit){
         scriptableSpell = originSpell;
         this.name = scriptableSpell.spell_name;
+
+        owner = ownerUnit;
         
         spell_name = scriptableSpell.spell_name;
         lore_description = scriptableSpell.lore_description;

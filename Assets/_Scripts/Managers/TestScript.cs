@@ -10,9 +10,6 @@ public class TestScript : MonoBehaviour
 
     void Start()
     {
-        var selected_spell = SpellManager.Instance.GetRandomSpell();
-        SpellManager.Instance.SetupSpell(selected_spell);
-
         var decomposedComposition = enemy_composition.GetTuples();
 
         BattleManager.Instance.LaunchBattle(decomposedComposition);

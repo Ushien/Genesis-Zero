@@ -40,7 +40,7 @@ public class BaseUnit : MonoBehaviour
         foreach (var scriptableSpell in scriptableUnit.spells)
         {
             var new_spell = Instantiate(SpellManager.Instance.EmptySpell);
-            new_spell.Setup(scriptableSpell);
+            new_spell.Setup(scriptableSpell, this);
             availableSpells.Add(new_spell);
         }
     }
