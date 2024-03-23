@@ -26,9 +26,10 @@ public class SpellManager : MonoBehaviour
         return spellList;
     }
 
-    public void SetupSpell(ScriptableSpell scriptableSpell){
+    public BaseSpell SetupSpell(ScriptableSpell scriptableSpell, BaseUnit unit){
         var new_spell = Instantiate(EmptySpell);
-        new_spell.Setup(scriptableSpell);
+        new_spell.Setup(scriptableSpell, unit);
+        return new_spell;
     }
 
     public void InflictDamage(int amount, BaseUnit target, Properties property){
