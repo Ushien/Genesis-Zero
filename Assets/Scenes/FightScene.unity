@@ -154,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scriptableUnit: {fileID: 11400000, guid: c9b8ccb84d6b90d4aa9ce0f8cefab461, type: 2}
   OccupiedTile: {fileID: 0}
+  availableSpells: []
   Team: 0
   level: 1
   unit_name: Name

@@ -11,4 +11,7 @@ public class ScriptableSpell : ScriptableObject
     public string lore_description;
     [TextArea(5,10)]
     public string fight_description;
+    public int cooldown;
+
+    public GameObject spellScriptPrefab;
 }

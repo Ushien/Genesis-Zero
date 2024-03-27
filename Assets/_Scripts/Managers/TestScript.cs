@@ -13,6 +13,8 @@ public class TestScript : MonoBehaviour
         var decomposedComposition = enemy_composition.GetTuples();
 
         BattleManager.Instance.LaunchBattle(decomposedComposition);
+
+        UnitManager.Instance.GetRandomUnit().CastSpell(0);
     }
     
 }

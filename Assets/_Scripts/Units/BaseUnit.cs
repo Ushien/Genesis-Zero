@@ -49,8 +49,11 @@ public class BaseUnit : MonoBehaviour
         var level_1_stat = (float)level_100_stat/10;
         var growth_by_level = ((float)level_100_stat-level_1_stat)/99;
         var real_level_stat = (int)Math.Ceiling(level_1_stat+growth_by_level*(real_level-1));
-        //var real_level_stat = (int)(level_1_stat*real_level/10);
 
         return real_level_stat;
+    }
+
+    public void CastSpell(int index){
+        availableSpells[index].Cast();
     }
 }

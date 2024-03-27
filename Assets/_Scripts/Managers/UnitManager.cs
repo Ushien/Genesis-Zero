@@ -9,18 +9,21 @@ public class UnitManager : MonoBehaviour
     public static UnitManager Instance;
 
     private List<ScriptableUnit> _units;
+    private List<BaseUnit> units;
     public BaseUnit EmptyUnit;
 
     void Awake(){
         Instance = this;
 
         _units = Resources.LoadAll<ScriptableUnit>("Units/Enemies").ToList();
+        units = new List<BaseUnit>();
     }
 
     public void SpawnUnit(Vector2 position, ScriptableUnit unit_to_spawn, int level){
 
         var new_unit = Instantiate(EmptyUnit);
         new_unit.Setup(unit_to_spawn, level);
+        units.Add(new_unit);
 
         var SpawnTile = GridManager.Instance.GetTileAtPosition(position);
         SpawnTile.SetUnit(new_unit);
@@ -31,7 +34,7 @@ public class UnitManager : MonoBehaviour
         var enemyCount = 1;
 
         for (int i = 0; i < enemyCount; i++){
-            var scriptableUnit = GetRandomUnit();
+            var scriptableUnit = GetRandomScriptableUnit();
             var new_unit = Instantiate(EmptyUnit);
             new_unit.Setup(scriptableUnit, 1);
 
@@ -51,8 +54,12 @@ public class UnitManager : MonoBehaviour
 
     }
 
-    private ScriptableUnit GetRandomUnit(){
+    public ScriptableUnit GetRandomScriptableUnit(){
         return _units.OrderBy(o=> UnityEngine.Random.value).First();
+    }
+
+    public BaseUnit GetRandomUnit(){
+        return units.OrderBy(o=> UnityEngine.Random.value).First();
     }
 }
 

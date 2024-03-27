@@ -12,6 +12,7 @@ public class BaseSpell : MonoBehaviour
     public string lore_description = "Lore Description";
     [TextArea(5,10)]
     public string fight_description = "Fight Description";
+    public int cooldown = 0;
 
     public void Setup(ScriptableSpell originSpell, BaseUnit ownerUnit){
         scriptableSpell = originSpell;
@@ -22,9 +23,10 @@ public class BaseSpell : MonoBehaviour
         spell_name = scriptableSpell.spell_name;
         lore_description = scriptableSpell.lore_description;
         fight_description = scriptableSpell.fight_description;
+        cooldown = scriptableSpell.cooldown;
     }
 
-    public void Cast(){
+    public virtual void Cast(BaseUnit target = null){
 
     }
 }
