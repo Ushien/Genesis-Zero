@@ -13,9 +13,12 @@ public class BaseSpell : MonoBehaviour
     [TextArea(5,10)]
     public string fight_description = "Fight Description";
     public int cooldown = 0;
+    public ISpellInterface spell = null;
 
     public void Setup(ScriptableSpell originSpell, BaseUnit ownerUnit){
         scriptableSpell = originSpell;
+        spell = originSpell.spellScriptPrefab.GetComponent<ISpellInterface>();
+
         this.name = scriptableSpell.spell_name;
 
         owner = ownerUnit;
@@ -26,7 +29,7 @@ public class BaseSpell : MonoBehaviour
         cooldown = scriptableSpell.cooldown;
     }
 
-    public virtual void Cast(BaseUnit target = null){
-
+    public void Cast(){
+        spell.Cast();
     }
 }

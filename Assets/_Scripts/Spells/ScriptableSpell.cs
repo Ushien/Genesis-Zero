@@ -12,6 +12,12 @@ public class ScriptableSpell : ScriptableObject
     [TextArea(5,10)]
     public string fight_description;
     public int cooldown;
+    public List<Properties> properties;
 
     public GameObject spellScriptPrefab;
+
+    public virtual void OnUse()
+    {
+        Debug.Log("Base Obj");
+    }
 }
