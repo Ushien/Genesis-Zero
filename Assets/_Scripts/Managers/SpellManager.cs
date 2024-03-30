@@ -28,6 +28,7 @@ public class SpellManager : MonoBehaviour
 
     public BaseSpell SetupSpell(ScriptableSpell scriptableSpell, BaseUnit unit){
         var new_spell = Instantiate(EmptySpell);
+        new_spell.transform.parent = unit.transform;
         new_spell.Setup(scriptableSpell, unit);
         return new_spell;
     }

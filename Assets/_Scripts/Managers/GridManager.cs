@@ -31,11 +31,14 @@ public class GridManager : MonoBehaviour
 
     public void GenerateGrid() {
         _tiles = new Dictionary<Vector2, Tile>();
+        GameObject emptyGrid = new GameObject("Grid");
+        
         for (int x = 0; x < _width; x++) {
             for (int y = 0; y <_height; y++) {
 
                 var spawnedTile = Instantiate(_tilePrefab, new Vector3(gap_between_tiles*x + x, gap_between_tiles*y + y), Quaternion.identity);
 
+                spawnedTile.transform.parent = emptyGrid.transform;
                 spawnedTile.name = $"Tile {x} {y}";
                 spawnedTile.x_position = x;
                 spawnedTile.y_position = y;

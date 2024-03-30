@@ -22,13 +22,14 @@ public class BaseUnit : MonoBehaviour
 
     public int armor = 0;
 
-    public void Setup(ScriptableUnit originUnit, int setup_level){
+    public void Setup(ScriptableUnit originUnit, int setup_level, Team team){
         scriptableUnit = originUnit;
         this.name = scriptableUnit.unit_name;
         
         this.GetComponent<SpriteRenderer>().sprite = scriptableUnit.sprite;
         unit_name = scriptableUnit.unit_name;
 
+        Team = team;
         level = setup_level;
 
         finalPower = GetStatFromLevel(scriptableUnit.original_power, level);
