@@ -521,8 +521,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d08f692126cf246bafc1094cfb957a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _width: 3
-  _height: 3
+  _enemy_width: 3
+  _enemy_height: 3
   _ally_width: 1
   _ally_height: 3
   gap_between_tiles: 0.05

@@ -7,7 +7,7 @@ public class GridManager : MonoBehaviour
 {
     public static GridManager Instance;
 
-    [SerializeField] private int _width, _height;
+    [SerializeField] private int _enemy_width, _enemy_height;
     [SerializeField] private int _ally_width, _ally_height;
 
     [SerializeField] private float gap_between_tiles = 0.05f;
@@ -60,9 +60,10 @@ public class GridManager : MonoBehaviour
         
         if(team == Team.Enemy){
             offset = 2;
-            width = _width;
-            height = _height;
+            width = _enemy_width;
+            height = _enemy_height;
         }
+        
         for (int x = 0; x < width; x++) {
             for (int y = 0; y <height; y++) {
 
@@ -101,9 +102,9 @@ public class GridManager : MonoBehaviour
         List<Tile> tiles_list = new List<Tile>();
         int compteur = 0;
 
-        for (int i = 0; i < _width; i++)
+        for (int i = 0; i < _enemy_width; i++)
         {
-            for (int j = 0; j < _height; j++)
+            for (int j = 0; j < _enemy_height; j++)
             {
                 if((width == -1 || width == i)&&(height == -1 || height == j)){
                     if(occupiedByUnit){
