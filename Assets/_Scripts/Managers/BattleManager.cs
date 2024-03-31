@@ -33,7 +33,7 @@ public class BattleManager : MonoBehaviour
 
     public void LaunchBattle(List<Tuple<Vector2, ScriptableUnit, int>> composition){
         
-        GridManager.Instance.GenerateGrid();
+        GridManager.Instance.GenerateGrids();
         UnitManager.Instance.SpawnEnemies(composition);
 
         StartBattle();

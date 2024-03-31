@@ -16,4 +16,5 @@ MonoBehaviour:
   lore_description: 
   fight_description: 
   cooldown: 0
+  properties: 00000000
   spellScriptPrefab: {fileID: 2728591094715648525, guid: 2712a1912af1cd346850b35190ee8e8e, type: 3}
