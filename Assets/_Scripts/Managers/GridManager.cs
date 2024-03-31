@@ -8,6 +8,7 @@ public class GridManager : MonoBehaviour
     public static GridManager Instance;
 
     [SerializeField] private int _width, _height;
+    [SerializeField] private int _ally_width, _ally_height;
 
     [SerializeField] private float gap_between_tiles = 0.05f;
     [SerializeField] private Tile _tilePrefab;
@@ -54,12 +55,16 @@ public class GridManager : MonoBehaviour
 
     public void GenerateGrid(Team team, GameObject parentGrid){
         int offset = 0;
+        int width = _ally_width;
+        int height = _ally_height;
         
         if(team == Team.Enemy){
-            offset = 10;
+            offset = 2;
+            width = _width;
+            height = _height;
         }
-        for (int x = 0; x < _width; x++) {
-            for (int y = 0; y <_height; y++) {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y <height; y++) {
 
                 var spawnedTile = Instantiate(_tilePrefab, new Vector3(gap_between_tiles*x + x + offset, gap_between_tiles*y + y), Quaternion.identity);
 

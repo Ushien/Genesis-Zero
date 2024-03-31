@@ -286,7 +286,7 @@ Transform:
   m_GameObject: {fileID: 1158603989}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.24667393, y: -0.053403705, z: -0.0080998335}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -523,6 +523,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _width: 3
   _height: 3
+  _ally_width: 1
+  _ally_height: 3
   gap_between_tiles: 0.05
   _tilePrefab: {fileID: 7435666411490668235, guid: 6e7ac63a2d3576846a5edcb486197e4f, type: 3}
   _cam: {fileID: 1494868754}
