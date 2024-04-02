@@ -7,28 +7,25 @@ public class BattleManager : MonoBehaviour
 {
     
     public static BattleManager Instance;
-    
-    public enum BattleState {OUTSIDE, START, PLAYERTURN, ENEMYTURN, END, WON, LOST}
-    public enum TurnState {OUTSIDE, START, MIDDLE, END}
 
-    public int nTurn = 0;
+    //Game states
+    public enum BattleState {START, TURN, END, WON, LOST}
+    public enum TurnState {PLAYERTURN, ENEMYTURN}
+    public enum PlayerTurnState {START, ACTION_CHOICE, APPLY_ACTIONS, END}
+    public enum EnemyTurnState {START, ACTION_CHOICE, APPLY_ACTIONS, END}
+    public enum PlayerActionChoiceState {CHARACTER_SELECTION, SWITCH_CHARACTER, SPELL_SELECTION, ENEMY_SELECTION, VALIDATED_ACTION, OTHER_STATE}
+    public enum Trigger {VALIDATE, CANCEL, LEFT, RIGHT, UP, DOWN, FORWARD}
+
     public BattleState battleState;
     public TurnState turnState;
+    public PlayerTurnState playerTurnState;
+    public EnemyTurnState enemyTurnState;
+    public PlayerActionChoiceState playerActionChoiceState;
+
+    public int nTurn = 0;
 
     void Awake(){
         Instance = this;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void LaunchBattle(List<Tuple<Vector2, ScriptableUnit, int>> composition){
@@ -37,6 +34,15 @@ public class BattleManager : MonoBehaviour
         UnitManager.Instance.SpawnEnemies(composition);
 
         StartBattle();
+        ChangeState(Trigger.LEFT);
+    }
+
+    public void ChangeState(Trigger trigger){
+        switch(playerActionChoiceState){
+            case PlayerActionChoiceState.CHARACTER_SELECTION:
+                Debug.Log("Bonjour");
+                break;
+        }
     }
 
     private void StartBattle(){
@@ -48,7 +54,11 @@ public class BattleManager : MonoBehaviour
     }
 
     private void StartTurn(){
-        turnState = TurnState.START;
+        turnState = TurnState.PLAYERTURN;
+
+        // Do things
+
+        
     }
 
     [ContextMenu("Tour suivant")]
