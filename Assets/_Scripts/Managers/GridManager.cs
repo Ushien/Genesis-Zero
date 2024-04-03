@@ -200,7 +200,12 @@ public class GridManager : MonoBehaviour
 
     public Tile GetRandomTile() {
         //TODO Fix this function
+        Debug.Log(_enemy_tiles);
         return _enemy_tiles.OrderBy(t => Random.value).First().Value;
+    }
+
+    public Tile GetMainSelection(){
+        return main_selection;
     }
 
     public static void DumpToConsole(object obj)

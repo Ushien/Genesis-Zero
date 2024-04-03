@@ -20,6 +20,10 @@ public class Tile : MonoBehaviour
     }
 
     void OnMouseEnter() {
+        //main_selection = true;
+    }
+
+    public void Select(){
         main_selection = true;
     }
 
@@ -36,5 +40,21 @@ public class Tile : MonoBehaviour
             unit.transform.position = transform.position;
             OccupiedUnit = unit;
             unit.OccupiedTile = this;
+    }
+
+    public Tile GetNextTile(KeyboardDirections direction){
+        Tile next_tile = null;
+        switch (direction){
+            case(KeyboardDirections.UP):
+                break;
+            case(KeyboardDirections.DOWN):
+                break;
+            case(KeyboardDirections.LEFT):
+                break;
+            case(KeyboardDirections.RIGHT):
+                next_tile = GridManager.Instance.GetTileAtPosition(new Vector2(x_position + 1, y_position));
+                break;
+        }
+        return next_tile;
     }
 }
