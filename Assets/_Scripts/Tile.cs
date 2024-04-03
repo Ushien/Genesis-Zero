@@ -7,6 +7,7 @@ public class Tile : MonoBehaviour
     [SerializeField] private Color _baseColor, _offsetColor;
     [SerializeField] private SpriteRenderer _renderer;
     [SerializeField] public GameObject _highlight;
+    //TODO Marqueur pour montrer la sélection principale
 
     public int x_position;
     public int y_position;
@@ -27,12 +28,16 @@ public class Tile : MonoBehaviour
         main_selection = true;
     }
 
+    public void Unselect(){
+        main_selection = false;
+    }
+
     void OnMouseDown() {
         // if(BattleManager.Instance.Battlestate != BattleState.HeroesTurn) return;
     }
 
     void OnMouseExit() {
-        main_selection = false;
+        //main_selection = false;
     }
 
     public void SetUnit(BaseUnit unit){
@@ -46,10 +51,13 @@ public class Tile : MonoBehaviour
         Tile next_tile = null;
         switch (direction){
             case(KeyboardDirections.UP):
+                next_tile = GridManager.Instance.GetTileAtPosition(new Vector2(x_position, y_position + 1));
                 break;
             case(KeyboardDirections.DOWN):
+                next_tile = GridManager.Instance.GetTileAtPosition(new Vector2(x_position, y_position - 1));
                 break;
             case(KeyboardDirections.LEFT):
+                next_tile = GridManager.Instance.GetTileAtPosition(new Vector2(x_position -1, y_position));
                 break;
             case(KeyboardDirections.RIGHT):
                 next_tile = GridManager.Instance.GetTileAtPosition(new Vector2(x_position + 1, y_position));

@@ -183,8 +183,6 @@ public class GridManager : MonoBehaviour
             if(units_list != null){
                 foreach( var x in units_list) {
                     DumpToConsole(x);
-                    //Debug.Log( x.GetComponent<Enemy1>().ToString());
-                    //Debug.Log( x.ToString());
                 }
             }
             
@@ -199,8 +197,6 @@ public class GridManager : MonoBehaviour
     }
 
     public Tile GetRandomTile() {
-        //TODO Fix this function
-        Debug.Log(_enemy_tiles);
         return _enemy_tiles.OrderBy(t => Random.value).First().Value;
     }
 
@@ -216,25 +212,6 @@ public class GridManager : MonoBehaviour
 
     public void CycleTroughSelectionModes()
     {
-        /*
-        bool next_mode = false;
-
-        foreach (var mode in System.Enum.GetNames(typeof(Selection_mode)))
-        {
-            if(mode == selection_mode){
-                next_mode = true;
-            }
-            if(next_mode){
-                selection_mode = mode;
-                next_mode = false;
-            }
-        }
-        if (next_mode){
-            selection_mode = Selection_mode[0];
-        }
-*/
-        //Debug.Log(selection_mode);
-
         if (selection_mode == Selection_mode.Single_selection){
             selection_mode = Selection_mode.Vertical_selection;
         }
