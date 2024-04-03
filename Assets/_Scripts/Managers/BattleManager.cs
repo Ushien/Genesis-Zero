@@ -34,14 +34,55 @@ public class BattleManager : MonoBehaviour
         UnitManager.Instance.SpawnEnemies(composition);
 
         StartBattle();
-        ChangeState(Trigger.LEFT);
+        ChangeState(Trigger.UP);
     }
 
     public void ChangeState(Trigger trigger){
+
         switch(playerActionChoiceState){
+
             case PlayerActionChoiceState.CHARACTER_SELECTION:
-                Debug.Log("Bonjour");
+
+                switch (trigger){
+                    case Trigger.LEFT:
+                        Debug.Log("Je bouge à gauche dans la sélection");
+                        break;
+                    case (Trigger.UP):
+                        Debug.Log("Je bouge en haut dans la sélection");
+                        break;
+                    case (Trigger.DOWN):
+                        Debug.Log("Je bouge en bas dans la sélection");
+                        break;
+                    case (Trigger.RIGHT):
+                        Debug.Log("Je bouge à droite dans la sélection");
+                        break;
+                    default:
+                        break;
+                }
                 break;
+            
+            default:
+                break;
+                
+/*
+            case PlayerActionChoiceState.SWITCH_CHARACTER:
+                break;
+
+            case PlayerActionChoiceState.SPELL_SELECTION:
+                break;
+
+            case PlayerActionChoiceState.ENEMY_SELECTION:
+                break;
+
+            case PlayerActionChoiceState.VALIDATED_ACTION:
+                break;
+
+            case PlayerActionChoiceState.OTHER_STATE:
+                break;
+                */
+                
+            
+
         }
     }
 
