@@ -43,7 +43,7 @@ public class UnitManager : MonoBehaviour
         new_unit.Setup(unit_to_spawn, level, team);
         units.Add(new_unit);
 
-        var SpawnTile = GridManager.Instance.GetTileAtPosition(position);
+        var SpawnTile = GridManager.Instance.GetTileAtPosition(team, position);
         SpawnTile.SetUnit(new_unit);
     }
 
@@ -70,6 +70,7 @@ public class UnitManager : MonoBehaviour
 
 public enum Team {
     Ally = 0,
-    Enemy = 1
+    Enemy = 1,
+    Both = 2
 }
 

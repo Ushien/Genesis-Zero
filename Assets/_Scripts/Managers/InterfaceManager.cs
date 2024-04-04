@@ -20,23 +20,23 @@ public class InterfaceManager : MonoBehaviour
     {
         Tile currentSelection = GridManager.Instance.GetMainSelection();
         if (Input.GetKeyDown(KeyCode.UpArrow)){
-            currentSelection.GetNextTile(KeyboardDirections.UP).Select();
+            currentSelection.GetNextTile(Directions.UP).Select();
             currentSelection.Unselect();
         }
         if (Input.GetKeyDown(KeyCode.DownArrow)){
-            currentSelection.GetNextTile(KeyboardDirections.DOWN).Select();
+            currentSelection.GetNextTile(Directions.DOWN).Select();
             currentSelection.Unselect();
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow)){
-            currentSelection.GetNextTile(KeyboardDirections.LEFT).Select();
+            currentSelection.GetNextTile(Directions.LEFT).Select();
             currentSelection.Unselect();
         }
         if (Input.GetKeyDown(KeyCode.RightArrow)){
-            currentSelection.GetNextTile(KeyboardDirections.RIGHT).Select();
+            currentSelection.GetNextTile(Directions.RIGHT).Select();
             currentSelection.Unselect();
         }
     }
 
 }
 
-public enum KeyboardDirections {RIGHT, LEFT, UP, DOWN}
+public enum Directions {RIGHT, LEFT, UP, DOWN}

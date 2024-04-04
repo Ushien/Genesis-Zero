@@ -13,9 +13,9 @@ public class TestScript : MonoBehaviour
         var decomposedComposition = enemy_composition.GetTuples();
 
         BattleManager.Instance.LaunchBattle(decomposedComposition);
-        GridManager.Instance.GetRandomTile().Select();
+        GridManager.Instance.GetRandomTile(Team.Enemy).Select();
 
-        UnitManager.Instance.GetRandomUnit().CastSpell(0);
+        //UnitManager.Instance.GetRandomUnit().CastSpell(0);
     }
     
 }

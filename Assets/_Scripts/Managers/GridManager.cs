@@ -55,6 +55,7 @@ public class GridManager : MonoBehaviour
 
     public void GenerateGrid(Team team, GameObject parentGrid){
         int offset = 0;
+        
         int width = _ally_width;
         int height = _ally_height;
         
@@ -75,7 +76,7 @@ public class GridManager : MonoBehaviour
                 spawnedTile.y_position = y;
 
                 var isOffset = (x % 2 == 0 && y % 2 != 0) || (x % 2 != 0 && y % 2 == 0);
-                spawnedTile.Init(isOffset);
+                spawnedTile.Init(isOffset, team);
 
                 if(team == Team.Enemy){
                     _enemy_tiles[new Vector2(x, y)] = spawnedTile;
@@ -90,31 +91,92 @@ public class GridManager : MonoBehaviour
 
     }
 
-    public Tile GetTileAtPosition(Vector2 pos){
-        if (_enemy_tiles.TryGetValue(pos, out var tile)) {
+    public Tile GetTileAtPosition(Team team, Vector2 pos){
+
+        Dictionary<Vector2, Tile> tiles = _enemy_tiles;
+        if(team == Team.Ally){
+            tiles = _ally_tiles;
+        }
+
+        if (tiles.TryGetValue(pos, out var tile)){
             return tile;
         }
 
         return null;
     }
 
-    private List<Tile> ReturnTilesList(int width = -1, int height = -1, bool occupiedByUnit = false){
+    public Tile GetBorderTile(Team team, Directions direction, int coordinate){
+
+        int width = _enemy_width;
+        int height = _enemy_height;
+        if(team == Team.Ally){
+            width = _ally_width;
+            height = _ally_height;
+        }
+
+        switch (direction){
+            case Directions.UP:
+                return ReturnTilesList(team, coordinate, height-1)[coordinate];
+            case Directions.DOWN:
+                return ReturnTilesList(team, coordinate, 0)[coordinate];
+            case Directions.RIGHT:
+                return ReturnTilesList(team, width-1, coordinate)[0];
+            case Directions.LEFT:
+                Debug.Log(team);
+                Debug.Log(coordinate);
+                return ReturnTilesList(team, 0, coordinate)[0];
+            default:
+                return null;
+        }
+    }
+
+    private List<Tile> ReturnTilesList(Team team = Team.Both, int width = -1, int height = -1, bool occupiedByUnit = false){
+
         List<Tile> tiles_list = new List<Tile>();
         int compteur = 0;
+        List<Team> teams = new List<Team>();
 
-        for (int i = 0; i < _enemy_width; i++)
-        {
-            for (int j = 0; j < _enemy_height; j++)
-            {
-                if((width == -1 || width == i)&&(height == -1 || height == j)){
-                    if(occupiedByUnit){
-                        //TODO
-                    }
-                    tiles_list.Add(GetTileAtPosition(new Vector2(i, j)));
-                    compteur++;
-                }
-            }
+        if(team == Team.Ally){
+            teams.Add(Team.Ally);
         }
+        else if(team == Team.Enemy){
+            teams.Add(Team.Enemy);
+        }
+        else if(team == Team.Both){
+            teams.Add(Team.Ally);
+            teams.Add(Team.Enemy);
+        }
+
+        foreach(Team individual_team in teams)
+        {
+            int grid_width;
+            int grid_height;
+            if(individual_team == Team.Ally)
+            {
+                grid_width = _ally_width;
+                grid_height = _ally_height;
+            }
+            else
+            {
+                grid_width = _enemy_width;
+                grid_height = _enemy_height;
+            }
+
+            for (int i = 0; i < grid_width; i++)
+                {
+                    for (int j = 0; j < grid_height; j++)
+                    {
+                        if((width == -1 || width == i)&&(height == -1 || height == j)){
+                            if(occupiedByUnit){
+                                //TODO
+                            }
+                            tiles_list.Add(GetTileAtPosition(individual_team, new Vector2(i, j)));
+                            compteur++;
+                        }
+                    }
+                }
+        }
+        
         return tiles_list;
     }
 
@@ -130,12 +192,9 @@ public class GridManager : MonoBehaviour
 
     void Update(){
 
-        main_selection = null;
-
         foreach (Tile tile in ReturnTilesList()){
-            bool selected = tile.main_selection;
-            if(selected){
-                main_selection = tile;
+            if(tile.main_selection){
+                SetMainSelection(tile);
             }
             tile._highlight.SetActive(false);
         }
@@ -147,17 +206,17 @@ public class GridManager : MonoBehaviour
 
                 case Selection_mode.Single_selection:
 
-                    selected_tiles = ReturnTilesList(width : main_selection.x_position, height : main_selection.y_position);
+                    selected_tiles = ReturnTilesList(main_selection.team, width : main_selection.x_position, height : main_selection.y_position);
                     break;
 
                 case Selection_mode.Horizontal_selection:
 
-                    selected_tiles = ReturnTilesList(height : main_selection.y_position);
+                    selected_tiles = ReturnTilesList(main_selection.team, height : main_selection.y_position);
                     break;
 
                 case Selection_mode.Vertical_selection:
 
-                    selected_tiles = ReturnTilesList(width : main_selection.x_position);
+                    selected_tiles = ReturnTilesList(main_selection.team, width : main_selection.x_position);
                     break;
 
                 case Selection_mode.All:
@@ -196,8 +255,12 @@ public class GridManager : MonoBehaviour
 
     }
 
-    public Tile GetRandomTile() {
-        return _enemy_tiles.OrderBy(t => Random.value).First().Value;
+    public Tile GetRandomTile(Team team) {
+        return ReturnTilesList(team).OrderBy(t => Random.value).First();
+    }
+
+    private void SetMainSelection(Tile tile){
+        main_selection = tile;
     }
 
     public Tile GetMainSelection(){
