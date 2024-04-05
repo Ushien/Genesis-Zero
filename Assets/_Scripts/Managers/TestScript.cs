@@ -10,9 +10,9 @@ public class TestScript : MonoBehaviour
 
     void Start()
     {
-        var decomposedComposition = enemy_composition.GetTuples();
+        var enemyComposition = enemy_composition.GetTuples();
 
-        BattleManager.Instance.LaunchBattle(decomposedComposition);
+        BattleManager.Instance.LaunchBattle(new List<Tuple<Vector2, ScriptableUnit, int>>(),enemyComposition);
         GridManager.Instance.GetRandomTile(Team.Enemy).Select();
 
         //UnitManager.Instance.GetRandomUnit().CastSpell(0);

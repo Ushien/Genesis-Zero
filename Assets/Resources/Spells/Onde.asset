@@ -9,13 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74e90ef35834eb84dbcc3899f95ea8e4, type: 3}
-  m_Name: Anasta
+  m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
+  m_Name: Onde
   m_EditorClassIdentifier: 
-  unit_name: Anasta
-  sprite: {fileID: 0}
-  original_power: 200
-  original_health: 1000
+  spell_name: 
   lore_description: 
-  fight_description: 
-  spells: []
+  fight_description: "Soigne un alli\xE9 et lui conf\xE8re un l\xE9ger bonus de puissance."
+  cooldown: 0
+  properties: 
+  spellScriptPrefab: {fileID: 0}

@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74e90ef35834eb84dbcc3899f95ea8e4, type: 3}
-  m_Name: Anasta
+  m_Script: {fileID: 11500000, guid: 2909e28d4cedc07449d6335173aff69d, type: 3}
+  m_Name: Chaman
   m_EditorClassIdentifier: 
-  unit_name: Anasta
-  sprite: {fileID: 0}
-  original_power: 200
-  original_health: 1000
-  lore_description: 
+  job_name: Chaman
+  artwork: {fileID: 0}
   fight_description: 
-  spells: []
+  lore_description: 
+  spells:
+  - {fileID: 11400000, guid: 626a32d705e2a8647b13eb439e75cb3a, type: 2}
+  - {fileID: 11400000, guid: 483b84219f35077479204e4456255fca, type: 2}

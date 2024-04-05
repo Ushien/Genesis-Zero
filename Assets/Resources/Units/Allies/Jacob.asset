@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74e90ef35834eb84dbcc3899f95ea8e4, type: 3}
-  m_Name: Anasta
+  m_Name: Jacob
   m_EditorClassIdentifier: 
-  unit_name: Anasta
+  unit_name: Jacob
   sprite: {fileID: 0}
   original_power: 200
   original_health: 1000
