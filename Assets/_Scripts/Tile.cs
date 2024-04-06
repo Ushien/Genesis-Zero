@@ -42,6 +42,10 @@ public class Tile : MonoBehaviour
         //main_selection = false;
     }
 
+    public BaseUnit GetUnit(){
+        return OccupiedUnit;
+    }
+
     public void SetUnit(BaseUnit unit){
             if(unit.OccupiedTile != null) unit.OccupiedTile.OccupiedUnit = null;
             unit.transform.position = transform.position;

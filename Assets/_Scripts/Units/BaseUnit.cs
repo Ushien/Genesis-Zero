@@ -57,4 +57,29 @@ public class BaseUnit : MonoBehaviour
     public void CastSpell(int index){
         availableSpells[index].Cast();
     }
+
+    public String GetName(){
+        return unit_name;
+    }
+
+    public String GetFightDescription(){
+        return fight_description;
+    }
+
+    public List<string> GetInfo(){
+        List<string> infos = new List<string>();
+        /*
+        infos.Add(unit_name);
+        infos.Add(Team);
+        infos.Add(level);
+        infos.Add(finalPower);
+        infos.Add(finalLife);
+        infos.Add(fight_description);
+        infos.Add(armor);
+        infos.Add();
+        infos.Add();
+        infos.Add();
+        */
+        return infos;
+    }
 }

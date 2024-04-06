@@ -19,6 +19,13 @@ public class InterfaceManager : MonoBehaviour
     void Update()
     {
         Tile currentSelection = GridManager.Instance.GetMainSelection();
+
+        if (Input.GetKeyDown(KeyCode.Q)){
+            
+        }
+        if (Input.GetKeyDown(KeyCode.W)){
+    
+        }
         if (Input.GetKeyDown(KeyCode.UpArrow)){
             currentSelection.GetNextTile(Directions.UP).Select();
             currentSelection.Unselect();
@@ -35,6 +42,9 @@ public class InterfaceManager : MonoBehaviour
             currentSelection.GetNextTile(Directions.RIGHT).Select();
             currentSelection.Unselect();
         }
+
+        string information = currentSelection.GetUnit().GetName();
+        Debug.Log(information);
     }
 
 }

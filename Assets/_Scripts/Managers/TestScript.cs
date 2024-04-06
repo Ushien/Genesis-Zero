@@ -7,12 +7,11 @@ using System;
 public class TestScript : MonoBehaviour
 {
     public ScriptableComposition enemy_composition;
+    public ScriptableComposition ally_composition;
 
     void Start()
     {
-        var enemyComposition = enemy_composition.GetTuples();
-
-        BattleManager.Instance.LaunchBattle(new List<Tuple<Vector2, ScriptableUnit, int>>(),enemyComposition);
+        BattleManager.Instance.LaunchBattle(ally_composition.GetTuples(), enemy_composition.GetTuples());
         GridManager.Instance.GetRandomTile(Team.Enemy).Select();
 
         //UnitManager.Instance.GetRandomUnit().CastSpell(0);
