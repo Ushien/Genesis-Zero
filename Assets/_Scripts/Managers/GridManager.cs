@@ -60,7 +60,7 @@ public class GridManager : MonoBehaviour
         int height = _ally_height;
         
         if(team == Team.Enemy){
-            offset = 2;
+            offset = 4;
             width = _enemy_width;
             height = _enemy_height;
         }
@@ -87,7 +87,7 @@ public class GridManager : MonoBehaviour
 
             }
         }
-        _cam.transform.position = new Vector3(2f, 1f, -10);
+        _cam.transform.position = new Vector3(3f, 1.5f, -10);
 
     }
 
@@ -122,8 +122,6 @@ public class GridManager : MonoBehaviour
             case Directions.RIGHT:
                 return ReturnTilesList(team, width-1, coordinate)[0];
             case Directions.LEFT:
-                Debug.Log(team);
-                Debug.Log(coordinate);
                 return ReturnTilesList(team, 0, coordinate)[0];
             default:
                 return null;

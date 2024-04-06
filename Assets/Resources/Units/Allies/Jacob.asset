@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Jacob
   m_EditorClassIdentifier: 
   unit_name: Jacob
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: f2e0bdcade495074db1b9f32f14d41f0, type: 3}
   original_power: 200
   original_health: 1000
   lore_description: 

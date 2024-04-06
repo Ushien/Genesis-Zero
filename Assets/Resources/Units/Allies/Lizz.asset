@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Lizz
   m_EditorClassIdentifier: 
   unit_name: Lizz
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 76f39518201d1ad43be5d04c89e85d12, type: 3}
   original_power: 200
   original_health: 1000
   lore_description: 

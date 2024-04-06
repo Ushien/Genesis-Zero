@@ -12,6 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1a35e8e7f2bab5479d800e9cec1846f, type: 3}
   m_Name: HeroTestComposition
   m_EditorClassIdentifier: 
-  units: []
-  positions: []
-  levels: 
+  units:
+  - {fileID: 11400000, guid: c9b8ccb84d6b90d4aa9ce0f8cefab461, type: 2}
+  - {fileID: 11400000, guid: 4f790958bd5a1764e95b4db9dbb7dbb3, type: 2}
+  - {fileID: 11400000, guid: cd3118c26da4b464c902503520a69ae3, type: 2}
+  positions:
+  - {x: 0, y: 0}
+  - {x: 0, y: 1}
+  - {x: 0, y: 2}
+  levels: 140000001400000014000000

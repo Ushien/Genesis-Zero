@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Anasta
   m_EditorClassIdentifier: 
   unit_name: Anasta
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 5b2f00b3fc239ca48ab321f3d815827e, type: 3}
   original_power: 200
   original_health: 1000
   lore_description: 

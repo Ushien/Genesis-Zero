@@ -27,25 +27,33 @@ public class InterfaceManager : MonoBehaviour
     
         }
         if (Input.GetKeyDown(KeyCode.UpArrow)){
-            currentSelection.GetNextTile(Directions.UP).Select();
-            currentSelection.Unselect();
+            if(currentSelection.GetNextTile(Directions.UP) != null){
+                currentSelection.GetNextTile(Directions.UP).Select();
+                currentSelection.Unselect();
+            }
         }
         if (Input.GetKeyDown(KeyCode.DownArrow)){
-            currentSelection.GetNextTile(Directions.DOWN).Select();
-            currentSelection.Unselect();
+            if(currentSelection.GetNextTile(Directions.DOWN) != null){
+                currentSelection.GetNextTile(Directions.DOWN).Select();
+                currentSelection.Unselect();
+            }
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow)){
-            currentSelection.GetNextTile(Directions.LEFT).Select();
-            currentSelection.Unselect();
+            if(currentSelection.GetNextTile(Directions.LEFT) != null){
+                currentSelection.GetNextTile(Directions.LEFT).Select();
+                currentSelection.Unselect();
+            }
         }
         if (Input.GetKeyDown(KeyCode.RightArrow)){
-            currentSelection.GetNextTile(Directions.RIGHT).Select();
-            currentSelection.Unselect();
+            if(currentSelection.GetNextTile(Directions.RIGHT) != null){
+                currentSelection.GetNextTile(Directions.RIGHT).Select();
+                currentSelection.Unselect();
+            }
         }
 
         if(currentSelection.GetUnit() != null){
             string information = currentSelection.GetUnit().GetName();
-            Debug.Log(information);
+            //Debug.Log(information);
         }
     }
 

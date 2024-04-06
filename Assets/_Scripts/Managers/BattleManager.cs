@@ -35,7 +35,6 @@ public class BattleManager : MonoBehaviour
         UnitManager.Instance.SpawnEnemies(enemy_composition);
 
         StartBattle();
-        ChangeState(Trigger.UP);
     }
 
     public void ChangeState(Trigger trigger){
