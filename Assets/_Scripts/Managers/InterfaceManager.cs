@@ -43,8 +43,10 @@ public class InterfaceManager : MonoBehaviour
             currentSelection.Unselect();
         }
 
-        string information = currentSelection.GetUnit().GetName();
-        Debug.Log(information);
+        if(currentSelection.GetUnit() != null){
+            string information = currentSelection.GetUnit().GetName();
+            Debug.Log(information);
+        }
     }
 
 }
