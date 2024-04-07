@@ -16,5 +16,6 @@ public class Job : ScriptableObject
     [TextArea(5,10)]
     public string lore_description;
 
+    public Passive passive;
     public List<ScriptableSpell> spells;
 }

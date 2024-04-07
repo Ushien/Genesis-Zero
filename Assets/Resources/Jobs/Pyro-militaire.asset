@@ -16,6 +16,7 @@ MonoBehaviour:
   artwork: {fileID: 0}
   fight_description: 
   lore_description: 
+  passive: {fileID: 4618570809523265024, guid: f23559c46aea4014cb0e9566fcfe7f70, type: 3}
   spells:
   - {fileID: 11400000, guid: 6bcec8029b37f1541a1ed0943a6cd1b4, type: 2}
   - {fileID: 11400000, guid: 5daadbd6b422ceb4583d38c135a77b55, type: 2}
