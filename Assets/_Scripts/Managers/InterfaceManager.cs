@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class InterfaceManager : MonoBehaviour
 {
     public static InterfaceManager Instance;
+    public GameObject informationPanel;
+    public TextMeshProUGUI unitName;
 
     void Awake(){
         Instance = this;
@@ -52,8 +55,13 @@ public class InterfaceManager : MonoBehaviour
         }
 
         if(currentSelection.GetUnit() != null){
+            informationPanel.SetActive(true);
             string information = currentSelection.GetUnit().GetName();
+            unitName.text = information;
             //Debug.Log(information);
+        }
+        else{
+            informationPanel.SetActive(false);
         }
     }
 
