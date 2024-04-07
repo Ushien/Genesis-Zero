@@ -7,7 +7,10 @@ public class InterfaceManager : MonoBehaviour
 {
     public static InterfaceManager Instance;
     public GameObject informationPanel;
-    public TextMeshProUGUI unitName;
+    public TextMeshProUGUI unitNamePanel;
+    public TextMeshProUGUI unitPowerPanel;
+    public TextMeshProUGUI unitHealthPanel;
+    public TextMeshProUGUI unitLevelPanel;
 
     void Awake(){
         Instance = this;
@@ -54,11 +57,13 @@ public class InterfaceManager : MonoBehaviour
             }
         }
 
-        if(currentSelection.GetUnit() != null){
+        BaseUnit currentUnit = currentSelection.GetUnit();
+        if(currentUnit != null){
             informationPanel.SetActive(true);
-            string information = currentSelection.GetUnit().GetName();
-            unitName.text = information;
-            //Debug.Log(information);
+            unitNamePanel.text = currentUnit.GetName();
+            unitPowerPanel.text = "POWER : " + currentUnit.GetFinalPower().ToString();
+            unitHealthPanel.text = "HP : " + currentUnit.GetFinalHealth().ToString();
+            unitLevelPanel.text = "Level : " + currentUnit.GetLevel().ToString();
         }
         else{
             informationPanel.SetActive(false);

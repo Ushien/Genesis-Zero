@@ -14,7 +14,7 @@ public class BaseUnit : MonoBehaviour
 
     public string unit_name = "Name";
     public int finalPower = 1;
-    public int finalLife = 1;
+    public int finalHealth = 1;
     [TextArea(5,10)]
     public string lore_description = "Lore Description";
     [TextArea(5,10)]
@@ -33,7 +33,7 @@ public class BaseUnit : MonoBehaviour
         level = setup_level;
 
         finalPower = GetStatFromLevel(scriptableUnit.original_power, level);
-        finalLife = GetStatFromLevel(scriptableUnit.original_health, level);
+        finalHealth = GetStatFromLevel(scriptableUnit.original_health, level);
 
         lore_description = scriptableUnit.lore_description;
         fight_description = scriptableUnit.fight_description;
@@ -64,6 +64,18 @@ public class BaseUnit : MonoBehaviour
 
     public String GetFightDescription(){
         return fight_description;
+    }
+
+    public int GetFinalPower(){
+        return finalPower;
+    }
+
+    public int GetFinalHealth(){
+        return finalHealth;
+    }
+
+    public int GetLevel(){
+        return level;
     }
 
     public List<string> GetInfo(){
