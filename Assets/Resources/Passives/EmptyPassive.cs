@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FrappeDiesel : Passive
+public class EmptyPassive : Passive
 {
     void Awake()
     {
-        passiveName = "Frappe Diesel";
-        fight_description = "Les attaques de base du personnage font des dégats supplémentaires et appliquent l'élément feu.";
+        passiveName = "Pas de passif";
+        fight_description = "Ce passif ne fait rien";
     }
     
     // Lorsque le passif est setup, l'active

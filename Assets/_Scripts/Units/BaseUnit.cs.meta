@@ -3,7 +3,11 @@ guid: badd103acc47ea64c9f3a29f94b2eb9c
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - scriptableUnit: {instanceID: 0}
+  - OccupiedTile: {instanceID: 0}
+  - emptyPassive: {fileID: 3810670229972875663, guid: 6217b02478aa69f4d89ff893ae28e53e, type: 3}
+  - passive: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

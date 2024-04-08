@@ -99,11 +99,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scriptableUnit: {fileID: 0}
   OccupiedTile: {fileID: 0}
+  emptyPassive: {fileID: 3810670229972875663, guid: 6217b02478aa69f4d89ff893ae28e53e, type: 3}
+  passive: {fileID: 0}
+  availableSpells: []
   Team: 1
   level: 1
   unit_name: Name
   finalPower: 1
-  finalLife: 1
+  finalHealth: 1
   lore_description: Lore Description
   fight_description: Fight Description
   armor: 0

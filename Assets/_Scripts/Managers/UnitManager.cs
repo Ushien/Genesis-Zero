@@ -11,6 +11,7 @@ public class UnitManager : MonoBehaviour
     private List<ScriptableUnit> _units;
     private List<BaseUnit> units;
     public BaseUnit EmptyUnit;
+    public Passive EmptyPassive;
 
     GameObject all_units;
     GameObject all_allies;

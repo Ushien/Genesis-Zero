@@ -8,6 +8,7 @@ public class BaseUnit : MonoBehaviour
     public ScriptableUnit scriptableUnit;
 
     public Tile OccupiedTile;
+    public Passive emptyPassive;
     public Passive passive;
     public List<BaseSpell> availableSpells;
     public Team Team = Team.Enemy;
@@ -39,7 +40,8 @@ public class BaseUnit : MonoBehaviour
         lore_description = scriptableUnit.lore_description;
         fight_description = scriptableUnit.fight_description;
 
-        passive = scriptableUnit.passive;
+        passive = Instantiate(emptyPassive);
+        passive.AttachToUnit(this);
         foreach (var scriptableSpell in scriptableUnit.spells)
         {
             var new_spell = SpellManager.Instance.SetupSpell(scriptableSpell, this);
