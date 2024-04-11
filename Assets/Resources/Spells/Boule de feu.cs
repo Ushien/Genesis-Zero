@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Bouledefeu : MonoBehaviour, ISpellInterface
 {
-    [ContextMenu("Lancer le sort")]
     public void Cast(BaseUnit target = null){
         if (target == null){
             target = UnitManager.Instance.GetRandomUnit(); 

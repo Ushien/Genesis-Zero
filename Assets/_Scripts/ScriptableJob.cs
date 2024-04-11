@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Job", menuName = "Job")]
 
-public class Job : ScriptableObject
+public class ScriptableJob : ScriptableObject
 {
     public string job_name;
 
