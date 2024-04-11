@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Work", menuName = "Job")]
+[CreateAssetMenu(fileName = "New Job", menuName = "Job")]
 
 public class ScriptableJob : ScriptableObject
 {
