@@ -6,13 +6,16 @@ using System;
 public class BaseUnit : MonoBehaviour
 {
     public ScriptableUnit scriptableUnit;
-
+    public ScriptableJob scriptableJob;
     public Tile OccupiedTile;
     public Passive emptyPassive;
     public Passive passive;
     public List<BaseSpell> availableSpells;
     public Team Team = Team.Enemy;
     public int level = 1;
+
+    public BaseSpell heroSpell1;
+    public BaseSpell heroSpell2;
 
     public string unit_name = "Name";
     public int finalPower = 1;
@@ -41,11 +44,30 @@ public class BaseUnit : MonoBehaviour
         fight_description = scriptableUnit.fight_description;
 
         passive = Instantiate(emptyPassive);
+        passive.transform.parent = this.transform;
+        passive.name = "Passif";
         passive.AttachToUnit(this);
+
         foreach (var scriptableSpell in scriptableUnit.spells)
         {
-            var new_spell = SpellManager.Instance.SetupSpell(scriptableSpell, this);
-            availableSpells.Add(new_spell);
+            availableSpells.Add(SpellManager.Instance.SetupSpell(scriptableSpell, this));
+        }
+        if (scriptableUnit.scriptableJob != null){
+            LoadJob(scriptableUnit.scriptableJob);
+        }
+    }
+
+    public void LoadJob(ScriptableJob scriptableJob){
+        foreach (var scriptableSpell in scriptableJob.spells)
+        {
+            availableSpells.Add(SpellManager.Instance.SetupSpell(scriptableSpell, this));
+        }
+        if (scriptableJob.passive != null){
+            Destroy(passive.gameObject);
+            passive = Instantiate(scriptableJob.passive);
+            passive.transform.parent = this.transform;
+            passive.name = "Passif";
+            passive.AttachToUnit(this);
         }
     }
 

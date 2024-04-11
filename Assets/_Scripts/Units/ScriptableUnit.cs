@@ -18,4 +18,6 @@ public class ScriptableUnit : ScriptableObject
 
     public Passive passive;
     public List<ScriptableSpell> spells;
+    
+    public ScriptableJob scriptableJob = null;
 }
