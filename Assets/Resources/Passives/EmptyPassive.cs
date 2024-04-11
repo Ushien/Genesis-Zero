@@ -9,8 +9,22 @@ public class EmptyPassive : Passive
         passiveName = "Pas de passif";
         fight_description = "Ce passif ne fait rien";
     }
-    
-    // Lorsque le passif est setup, l'active
 
+    // Lorsque le passif est setup, l'active
+    void OnEnable()
+    {
+        EventManager.OnClicked += ShoutName;
+    }
+
+    void OnDisable()
+    {
+        EventManager.OnClicked -= ShoutName;
+    }
+    
     // Lorsque le passif disparaît, le désactive
+
+    void ShoutName()
+    {
+        Debug.Log(holder.GetName());
+    }
 }

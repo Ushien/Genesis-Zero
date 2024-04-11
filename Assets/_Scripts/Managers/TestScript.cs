@@ -16,5 +16,11 @@ public class TestScript : MonoBehaviour
 
         //UnitManager.Instance.GetRandomUnit().CastSpell(0);
     }
-    
+    void OnGUI()
+    {
+        if (GUI.Button(new Rect(Screen.width / 2 - 50, 5, 100, 30), "Click"))
+        {
+            EventManager.Instance.Click();
+        }
+    }
 }
