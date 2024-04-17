@@ -14,6 +14,8 @@ public class InterfaceManager : MonoBehaviour
     public TextMeshProUGUI unitPassiveNamePanel;
     public TextMeshProUGUI unitPassiveDescriptionPanel;
 
+    public GameObject spellSelector;
+
     void Awake(){
         Instance = this;
     }
@@ -28,11 +30,12 @@ public class InterfaceManager : MonoBehaviour
     {
         Tile currentSelection = GridManager.Instance.GetMainSelection();
 
-        if (Input.GetKeyDown(KeyCode.Q)){
-            
+        if (Input.GetKeyDown(KeyCode.B)){
+            spellSelector.transform.position = currentSelection.transform.position;
+            spellSelector.SetActive(true);
         }
-        if (Input.GetKeyDown(KeyCode.W)){
-    
+        if (Input.GetKeyDown(KeyCode.N)){
+            spellSelector.SetActive(false);
         }
         if (Input.GetKeyDown(KeyCode.UpArrow)){
             if(currentSelection.GetNextTile(Directions.UP) != null){
@@ -68,7 +71,6 @@ public class InterfaceManager : MonoBehaviour
             unitLevelPanel.text = "Niveau : " + currentUnit.GetLevel().ToString();
             unitPassiveNamePanel.text = currentUnit.GetPassive().GetName();
             unitPassiveDescriptionPanel.text = currentUnit.GetPassive().GetFightDescription();
-
         }
         else{
             informationPanel.SetActive(false);

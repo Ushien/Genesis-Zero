@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: Bombe solaire
   m_EditorClassIdentifier: 
   spell_name: Bombe Solaire
-  description: "D\xE9charge d'\xE9nergie balayant le terrain. L'\xE9nergie d\xE9ploy\xE9e
-    est directement tir\xE9e des modules Photo sans aucune conversion, ce qui garantit
-    la puissance de la d\xE9charge."
+  lore_description: 
+  fight_description: "Frappe tous les adversaires et soigne les personnages alli\xE9s
+    de 50% des d\xE9gats totaux"
+  cooldown: 5
+  properties: 
+  spellScriptPrefab: {fileID: 0}

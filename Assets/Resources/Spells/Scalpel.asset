@@ -13,5 +13,9 @@ MonoBehaviour:
   m_Name: Scalpel
   m_EditorClassIdentifier: 
   spell_name: Scalpel
-  description: "Inflige de lourds d\xE9gats \xE0 une cible. Si la cible a re\xE7u
-    un soin lors du tour pr\xE9c\xE9dent, la technique \xE9choue."
+  lore_description: 
+  fight_description: "Inflige des d\xE9gats \xE0 un ennemi, si celui-ci a \xE9t\xE9
+    soign\xE9 lors du pr\xE9c\xE9dent tour, les d\xE9gats augmentent"
+  cooldown: 0
+  properties: 
+  spellScriptPrefab: {fileID: 0}

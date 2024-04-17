@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spell_name: Boule de feu
   lore_description: 
-  fight_description: 
-  cooldown: 0
+  fight_description: "Frappe un ennemi avec l'\xE9l\xE9ment Pyro"
+  cooldown: 2
   properties: 00000000
   spellScriptPrefab: {fileID: 2728591094715648525, guid: 2712a1912af1cd346850b35190ee8e8e, type: 3}
