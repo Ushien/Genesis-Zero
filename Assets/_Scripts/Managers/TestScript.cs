@@ -12,6 +12,8 @@ public class TestScript : MonoBehaviour
     void Start()
     {
         BattleManager.Instance.LaunchBattle(ally_composition.GetTuples(), enemy_composition.GetTuples());
+
+        BattleManager.Instance.DebugSetState();
         GridManager.Instance.GetRandomTile(Team.Enemy).Select();
 
         //UnitManager.Instance.GetRandomUnit().CastSpell(0);

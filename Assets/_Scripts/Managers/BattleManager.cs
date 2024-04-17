@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Unity.VisualScripting;
+using UnityEngine.Tilemaps;
 
 public class BattleManager : MonoBehaviour
 {
@@ -9,11 +11,13 @@ public class BattleManager : MonoBehaviour
     public static BattleManager Instance;
 
     //Game states
-    public enum BattleState {START, TURN, END, WON, LOST}
-    public enum TurnState {PLAYERTURN, ENEMYTURN}
-    public enum PlayerTurnState {START, ACTION_CHOICE, APPLY_ACTIONS, END}
-    public enum EnemyTurnState {START, ACTION_CHOICE, APPLY_ACTIONS, END}
-    public enum PlayerActionChoiceState {CHARACTER_SELECTION, SWITCH_CHARACTER, SPELL_SELECTION, ENEMY_SELECTION, VALIDATED_ACTION, OTHER_STATE}
+    public enum BattleState {OUT, START, TURN, END, WON, LOST}
+    public enum TurnState {OUT, PLAYERTURN, ENEMYTURN}
+    public enum PlayerTurnState {OUT, START, ACTION_CHOICE, APPLY_ACTIONS, END}
+    public enum EnemyTurnState {OUT, START, ACTION_CHOICE, APPLY_ACTIONS, END}
+    public enum PlayerActionChoiceState {OUT, CHARACTER_SELECTION, SWITCH_CHARACTER, SPELL_SELECTION, TARGET_SELECTION, VALIDATED_ACTION, OTHER_STATE}
+
+    public enum Machine{BATTLESTATE, TURNSTATE, PLAYERTURNSTATE, ENEMYTURNSTATE, PLAYERACTIONCHOICESTATE}
     public enum Trigger {VALIDATE, CANCEL, LEFT, RIGHT, UP, DOWN, FORWARD}
 
     public BattleState battleState;
@@ -37,13 +41,29 @@ public class BattleManager : MonoBehaviour
         StartBattle();
     }
 
-    public void ChangeState(Trigger trigger){
+    public void ChangeState(Machine machine, Trigger trigger){
 
+        switch (machine)
+        {
+            case Machine.PLAYERACTIONCHOICESTATE:
+                ChangePlayerActionChoiceState(trigger);
+                break;
+            default:
+                break;
+        }
+
+        
+    }
+
+    private void ChangePlayerActionChoiceState(Trigger trigger){
         switch(playerActionChoiceState){
 
             case PlayerActionChoiceState.CHARACTER_SELECTION:
 
                 switch (trigger){
+                    case Trigger.VALIDATE:
+                        playerActionChoiceState = PlayerActionChoiceState.SPELL_SELECTION;
+                        break;
                     case Trigger.LEFT:
                         Debug.Log("Je bouge à gauche dans la sélection");
                         break;
@@ -63,31 +83,50 @@ public class BattleManager : MonoBehaviour
             
             default:
                 break;
-                
-/*
-            case PlayerActionChoiceState.SWITCH_CHARACTER:
-                break;
-
-            case PlayerActionChoiceState.SPELL_SELECTION:
-                break;
-
-            case PlayerActionChoiceState.ENEMY_SELECTION:
-                break;
-
-            case PlayerActionChoiceState.VALIDATED_ACTION:
-                break;
-
-            case PlayerActionChoiceState.OTHER_STATE:
-                break;
-                */
-                
-            
 
         }
     }
 
+    public void DebugSetState(){
+        battleState = BattleState.TURN;
+        turnState = TurnState.PLAYERTURN;
+        playerTurnState = PlayerTurnState.ACTION_CHOICE;
+        playerActionChoiceState = PlayerActionChoiceState.CHARACTER_SELECTION;
+    }
+
+    public string GetCurrentStatesSummary(){
+        string currentStates = "";
+        currentStates = currentStates + "BattleState: " + battleState + "\n";
+        currentStates = currentStates + "TurnState: " + turnState + "\n";
+        currentStates = currentStates + "PlayerTurnState: " + playerTurnState + "\n";
+        currentStates = currentStates + "EnemyTurnState: " + enemyTurnState + "\n";
+        currentStates = currentStates + "PlayerActionChoiceState: " + playerActionChoiceState + "\n";
+        return currentStates;
+
+    }
+    public BattleState GetBattleState(){
+        return battleState;
+    }
+
+    public TurnState GetTurnState(){
+        return turnState;
+    }
+
+    public PlayerTurnState GetPlayerTurnState(){
+        return playerTurnState;
+    }
+
+    public EnemyTurnState GetEnemyTurnState(){
+        return enemyTurnState;
+    }
+
+    public PlayerActionChoiceState GetPlayerActionChoiceState(){
+        return playerActionChoiceState;
+    }
     private void StartBattle(){
         battleState = BattleState.START;
+
+        //Setup stuff
 
         //Start the first turn
         NextTurn();

@@ -110,6 +110,10 @@ public class BaseUnit : MonoBehaviour
         return level;
     }
 
+    public Team GetTeam(){
+        return Team;
+    }
+
     public Passive GetPassive(){
         return passive;
     }
