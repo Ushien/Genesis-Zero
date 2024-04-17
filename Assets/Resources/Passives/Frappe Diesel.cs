@@ -7,7 +7,7 @@ public class FrappeDiesel : Passive
     void Awake()
     {
         passiveName = "Frappe Diesel";
-        fight_description = "Les attaques de base du personnage font des dégats supplémentaires et appliquent l'élément feu.";
+        fight_description = "Les attaques de base du personnage font des dégats supplémentaires et appliquent l'élément pyro.";
     }
     
     // Lorsque le passif est setup, l'active

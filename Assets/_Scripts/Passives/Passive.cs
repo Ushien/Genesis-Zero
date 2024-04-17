@@ -11,4 +11,12 @@ public class Passive : MonoBehaviour
     virtual public void AttachToUnit(BaseUnit unit){
         holder = unit;
     }
+
+    virtual public string GetName(){
+        return passiveName;
+    }
+
+    virtual public string GetFightDescription(){
+        return fight_description;
+    }
 }

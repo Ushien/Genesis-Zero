@@ -110,6 +110,10 @@ public class BaseUnit : MonoBehaviour
         return level;
     }
 
+    public Passive GetPassive(){
+        return passive;
+    }
+
     public List<string> GetInfo(){
         List<string> infos = new List<string>();
         /*

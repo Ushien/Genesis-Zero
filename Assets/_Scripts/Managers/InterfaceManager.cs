@@ -11,6 +11,8 @@ public class InterfaceManager : MonoBehaviour
     public TextMeshProUGUI unitPowerPanel;
     public TextMeshProUGUI unitHealthPanel;
     public TextMeshProUGUI unitLevelPanel;
+    public TextMeshProUGUI unitPassiveNamePanel;
+    public TextMeshProUGUI unitPassiveDescriptionPanel;
 
     void Awake(){
         Instance = this;
@@ -61,9 +63,12 @@ public class InterfaceManager : MonoBehaviour
         if(currentUnit != null){
             informationPanel.SetActive(true);
             unitNamePanel.text = currentUnit.GetName();
-            unitPowerPanel.text = "POWER : " + currentUnit.GetFinalPower().ToString();
-            unitHealthPanel.text = "HP : " + currentUnit.GetFinalHealth().ToString();
-            unitLevelPanel.text = "Level : " + currentUnit.GetLevel().ToString();
+            unitPowerPanel.text = "Puissance : " + currentUnit.GetFinalPower().ToString();
+            unitHealthPanel.text = "PV : " + currentUnit.GetFinalHealth().ToString();
+            unitLevelPanel.text = "Niveau : " + currentUnit.GetLevel().ToString();
+            unitPassiveNamePanel.text = currentUnit.GetPassive().GetName();
+            unitPassiveDescriptionPanel.text = currentUnit.GetPassive().GetFightDescription();
+
         }
         else{
             informationPanel.SetActive(false);
