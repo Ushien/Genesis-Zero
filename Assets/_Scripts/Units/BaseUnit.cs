@@ -43,7 +43,13 @@ public class BaseUnit : MonoBehaviour
         lore_description = scriptableUnit.lore_description;
         fight_description = scriptableUnit.fight_description;
 
-        passive = Instantiate(emptyPassive);
+        if(scriptableUnit.passive != null){
+            passive = Instantiate(scriptableUnit.passive);
+
+        }
+        else{
+            passive = Instantiate(emptyPassive);
+        }
         passive.transform.parent = this.transform;
         passive.name = "Passif";
         passive.AttachToUnit(this);
