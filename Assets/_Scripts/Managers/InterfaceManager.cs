@@ -108,7 +108,14 @@ public class InterfaceManager : MonoBehaviour
         if (activation){
             spellSelector.transform.position = currentSelection.transform.position;
             sourceUnit = currentSelection.GetUnit();
-            spellSelector.transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().sprite = sourceUnit.availableSpells[0].artwork;
+
+            int currentSpellIndex = 0;
+            foreach (var spell in sourceUnit.availableSpells)
+            {
+                spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().sprite = spell.artwork;
+                currentSpellIndex += 1;
+            }
+            //spellSelector.transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().sprite = sourceUnit.availableSpells[0].artwork;
             BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, BattleManager.Trigger.VALIDATE);
         }
         else{
@@ -119,6 +126,7 @@ public class InterfaceManager : MonoBehaviour
     }
     void SpellSelectionDisplay(){
         //Display highlight
+
         spellSelector.transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(false);
         spellSelector.transform.GetChild(1).transform.GetChild(0).gameObject.SetActive(false);
         spellSelector.transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(false);
