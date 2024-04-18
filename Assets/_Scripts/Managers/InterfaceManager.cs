@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Microsoft.Unity.VisualStudio.Editor;
 
 public class InterfaceManager : MonoBehaviour
 {
@@ -107,6 +108,7 @@ public class InterfaceManager : MonoBehaviour
         if (activation){
             spellSelector.transform.position = currentSelection.transform.position;
             sourceUnit = currentSelection.GetUnit();
+            spellSelector.transform.GetChild(0).GetComponent<UnityEngine.UI.Image>().sprite = sourceUnit.availableSpells[0].artwork;
             BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, BattleManager.Trigger.VALIDATE);
         }
         else{

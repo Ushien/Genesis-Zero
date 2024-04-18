@@ -13,6 +13,7 @@ public class BaseSpell : MonoBehaviour
     [TextArea(5,10)]
     public string fight_description = "Fight Description";
     public int cooldown = 0;
+    public Sprite artwork = null;
     public ISpellInterface spell = null;
 
     public void Setup(ScriptableSpell originSpell, BaseUnit ownerUnit){
@@ -27,6 +28,7 @@ public class BaseSpell : MonoBehaviour
         lore_description = scriptableSpell.lore_description;
         fight_description = scriptableSpell.fight_description;
         cooldown = scriptableSpell.cooldown;
+        artwork = scriptableSpell.artwork;
     }
 
     public void Cast(){

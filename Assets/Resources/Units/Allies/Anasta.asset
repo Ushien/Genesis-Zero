@@ -19,5 +19,6 @@ MonoBehaviour:
   lore_description: 
   fight_description: 
   passive: {fileID: 0}
-  spells: []
-  scriptableJob: {fileID: 11400000, guid: 17d1d4ac6c136ba49bbfcbbc9363f979, type: 2}
+  spells:
+  - {fileID: 11400000, guid: 626a32d705e2a8647b13eb439e75cb3a, type: 2}
+  scriptableJob: {fileID: 11400000, guid: 6f02e2776bda97049b1a64b38b89a58b, type: 2}

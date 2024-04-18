@@ -17,4 +17,5 @@ MonoBehaviour:
   fight_description: "Soigne un alli\xE9 et lui conf\xE8re un l\xE9ger bonus de puissance."
   cooldown: 0
   properties: 
-  spellScriptPrefab: {fileID: 0}
+  artwork: {fileID: 21300000, guid: e2c194a3fc273f3448240d7c2d50aa9c, type: 3}
+  spellScriptPrefab: {fileID: 5944812931841372396, guid: 95cc6951c6e44d44ba78b2dfc6e6ef94, type: 3}

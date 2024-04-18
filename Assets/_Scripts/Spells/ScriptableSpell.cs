@@ -14,6 +14,8 @@ public class ScriptableSpell : ScriptableObject
     public int cooldown;
     public List<Properties> properties;
 
+    public Sprite artwork;
+
     public GameObject spellScriptPrefab;
 
     public virtual void OnUse()
