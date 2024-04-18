@@ -80,6 +80,18 @@ public class BattleManager : MonoBehaviour
                         break;
                 }
                 break;
+            case PlayerActionChoiceState.SPELL_SELECTION:
+                switch (trigger){
+                    case Trigger.VALIDATE:
+                        playerActionChoiceState = PlayerActionChoiceState.TARGET_SELECTION;
+                        break;
+                    case Trigger.CANCEL:
+                        playerActionChoiceState = PlayerActionChoiceState.CHARACTER_SELECTION;
+                        break;
+                    default:
+                        break;
+                }
+                break;
             
             default:
                 break;

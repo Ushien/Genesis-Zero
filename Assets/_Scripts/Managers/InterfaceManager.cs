@@ -39,7 +39,7 @@ public class InterfaceManager : MonoBehaviour
                 CharacterSelection();
                 break;
             case BattleManager.PlayerActionChoiceState.SPELL_SELECTION:
-                SpellSelection();
+                SpellSelectionDisplay();
                 break;
             default:
                 Debug.Log(BattleManager.Instance.GetCurrentStatesSummary());
@@ -53,11 +53,7 @@ public class InterfaceManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B)){
             if(currentSelection.GetUnit()!= null){
                 if(currentSelection.GetUnit().GetTeam() == Team.Ally){
-                    spellSelector.transform.position = currentSelection.transform.position;
-                    spellSelector.SetActive(true);
-                    shade.SetActive(true);
-                    sourceUnit = currentSelection.GetUnit();
-                    BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, BattleManager.Trigger.VALIDATE);
+                    SpellSelectionActivation(true, currentSelection);
                 }
             }
         }
@@ -105,7 +101,21 @@ public class InterfaceManager : MonoBehaviour
         }
     }
 
-    void SpellSelection(){
+    void SpellSelectionActivation(bool activation, Tile currentSelection = null){
+        spellSelector.SetActive(activation);
+        shade.SetActive(activation);
+        if (activation){
+            spellSelector.transform.position = currentSelection.transform.position;
+            sourceUnit = currentSelection.GetUnit();
+            BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, BattleManager.Trigger.VALIDATE);
+        }
+        else{
+            sourceUnit = null;
+            BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, BattleManager.Trigger.CANCEL);
+        }
+
+    }
+    void SpellSelectionDisplay(){
         //Display highlight
         spellSelector.transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(false);
         spellSelector.transform.GetChild(1).transform.GetChild(0).gameObject.SetActive(false);
@@ -143,7 +153,7 @@ public class InterfaceManager : MonoBehaviour
                 }
                 if (Input.GetKeyDown(KeyCode.N)){
                     // Retour à la sélection de personnages
-                    // TODO
+                    SpellSelectionActivation(false);
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.UpArrow)){
