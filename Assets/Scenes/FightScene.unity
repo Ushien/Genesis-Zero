@@ -1424,8 +1424,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 426479277}
-  - {fileID: 726293031}
   - {fileID: 1736160359}
+  - {fileID: 726293031}
   - {fileID: 957232715}
   - {fileID: 1846028235}
   m_Father: {fileID: 2008520594}
@@ -1653,7 +1653,7 @@ GameObject:
   - component: {fileID: 1550136858}
   - component: {fileID: 1550136857}
   m_Layer: 5
-  m_Name: PassiveDescription
+  m_Name: Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1698,7 +1698,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Passif de l'unit\xE9"
+  m_text: Description
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1963,7 +1963,7 @@ GameObject:
   - component: {fileID: 1834372114}
   - component: {fileID: 1834372113}
   m_Layer: 5
-  m_Name: PassiveName
+  m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2008,7 +2008,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Nom du passif de l'unit\xE9"
+  m_text: Nom
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

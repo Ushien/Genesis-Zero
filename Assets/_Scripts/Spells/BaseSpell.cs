@@ -34,4 +34,11 @@ public class BaseSpell : MonoBehaviour
     public void Cast(){
         spell.Cast();
     }
+    public string GetName(){
+        return spell_name;
+    }
+
+    public string GetFightDescription(){
+        return fight_description;
+    }
 }
