@@ -64,17 +64,9 @@ public class BattleManager : MonoBehaviour
                     case Trigger.VALIDATE:
                         playerActionChoiceState = PlayerActionChoiceState.SPELL_SELECTION;
                         break;
-                    case Trigger.LEFT:
-                        Debug.Log("Je bouge à gauche dans la sélection");
-                        break;
-                    case (Trigger.UP):
-                        Debug.Log("Je bouge en haut dans la sélection");
-                        break;
-                    case (Trigger.DOWN):
-                        Debug.Log("Je bouge en bas dans la sélection");
-                        break;
-                    case (Trigger.RIGHT):
-                        Debug.Log("Je bouge à droite dans la sélection");
+                    case Trigger.CANCEL:
+                        // if(un des alliés a déjà sélectionné son instruction)
+                        //     on retire la dernière instruction et on reste dans l'état
                         break;
                     default:
                         break;
@@ -88,6 +80,23 @@ public class BattleManager : MonoBehaviour
                     case Trigger.CANCEL:
                         playerActionChoiceState = PlayerActionChoiceState.CHARACTER_SELECTION;
                         break;
+                    default:
+                        break;
+                }
+                break;
+            case PlayerActionChoiceState.TARGET_SELECTION:
+                switch (trigger)
+                {
+                    case Trigger.VALIDATE:
+                        // if tous les personnages ont déjà donné leur instruction
+                            // On sort de la machine PlayerActionChoiceState
+                        // else
+                            // La cible est validée et on passe à la source sélection suivante
+                        break;
+                    case Trigger.CANCEL:
+                        playerActionChoiceState = PlayerActionChoiceState.SPELL_SELECTION;
+                        break;
+
                     default:
                         break;
                 }

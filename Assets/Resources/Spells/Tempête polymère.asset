@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
-  m_Name: Renforcement
+  m_Name: "Temp\xEAte polym\xE8re"
   m_EditorClassIdentifier: 
-  spell_name: Renforcement
+  spell_name: "Temp\xEAte Polym\xE8re"
   lore_description: 
-  fight_description: Donne de l'armure au lanceur
+  fight_description: "Conf\xE8re Polym\xE8re \xE0 toutes les unit\xE9s sur le terrain."
   cooldown: 0
   properties: 
   range: 0
-  team_restriction: 1
-  artwork: {fileID: 21300000, guid: 9ff73e17a635fab408fbf9fe81aa7748, type: 3}
-  spellScriptPrefab: {fileID: 3108065734473402421, guid: 660f81acc692dc64fa3c66a4b0c769c4, type: 3}
+  team_restriction: 0
+  artwork: {fileID: 0}
+  spellScriptPrefab: {fileID: 0}

@@ -18,4 +18,7 @@ MonoBehaviour:
     l'alli\xE9 en r\xE9serve."
   cooldown: 0
   properties: 00000000
+  range: 0
+  team_restriction: 2
+  artwork: {fileID: 0}
   spellScriptPrefab: {fileID: 8818679046638044897, guid: c876d6cb064dad241972d3266966ee1a, type: 3}

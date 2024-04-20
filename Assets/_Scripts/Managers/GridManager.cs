@@ -16,12 +16,18 @@ public class GridManager : MonoBehaviour
 
     private Dictionary<Vector2, Tile> _enemy_tiles;
     private Dictionary<Vector2, Tile> _ally_tiles;
-    private enum Selection_mode {
+    public enum Selection_mode {
         Single_selection,
         Horizontal_selection,
         Vertical_selection,
         All,
         Special
+    }
+    public enum Team_restriction{
+        Choice,
+        Allies_only,
+        Enemies_only,
+        Both
     }
     private Selection_mode selection_mode = Selection_mode.Single_selection;
     private Tile main_selection;    

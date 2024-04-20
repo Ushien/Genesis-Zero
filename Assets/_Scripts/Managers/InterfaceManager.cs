@@ -19,6 +19,8 @@ public class InterfaceManager : MonoBehaviour
     public GameObject spellSelector;
     public GameObject shade;
 
+    public GameObject tileSelector;
+
     // La Tile sélectionnée à tout moment
     // private Tile selectedTile;
 
@@ -74,11 +76,13 @@ public class InterfaceManager : MonoBehaviour
 
             // Activate the needed interface
             informationPanel.SetActive(true);
+            tileSelector.SetActive(true);
 
             ActivateState(BattleManager.PlayerActionChoiceState.CHARACTER_SELECTION);
 
         }
         sourceTile = GridManager.Instance.GetMainSelection();
+        tileSelector.transform.position = sourceTile.transform.position;
 
         if (Input.GetKeyDown(KeyCode.B)){
             if(sourceTile.GetUnit()!= null){
@@ -87,9 +91,9 @@ public class InterfaceManager : MonoBehaviour
                 }
             }
         }
+
         if (Input.GetKeyDown(KeyCode.N)){
-            spellSelector.SetActive(false);
-            shade.SetActive(false);
+            //
         }
         if (Input.GetKeyDown(KeyCode.UpArrow)){
             if(sourceTile.GetNextTile(Directions.UP) != null){
@@ -132,15 +136,18 @@ public class InterfaceManager : MonoBehaviour
     }
 
     void SpellSelectionTrigger(BattleManager.Trigger trigger){
-
+        // On sort de la sélection des spells pour aller vers un autre état
+        Debug.Log(selectedSpell.GetName());
         BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, trigger);
     }
     void SourceSelectionTrigger(BattleManager.Trigger trigger){
+        // On sort de la sélection de la source pour aller vers un autre état
 
         BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, trigger);
     }
 
     void SpellSelectionDisplay(){
+        // TODO Ne pas afficher les 4 cases si le personnage n'a pas 4 spells
         BaseUnit sourceUnit = sourceTile.GetUnit();
         List<BaseSpell> currentSpells = sourceUnit.availableSpells;
 
@@ -198,6 +205,8 @@ public class InterfaceManager : MonoBehaviour
         // Navigation au sein de la sélection
         switch(spellChoice){
             case SpellChoice.CHARACTER:
+                //TODO Supprimer et remplacer par l'attaque de base, ça ne doit pas rester dans cet état
+                selectedSpell = currentSpells[0];
                 if (Input.GetKeyDown(KeyCode.B)){
                     // Sélectionner attaque
                     // TODO
@@ -230,10 +239,9 @@ public class InterfaceManager : MonoBehaviour
                 }
                 break;
             case SpellChoice.LEFT:
-            // selectedSpell = availableSpells[0];
+                selectedSpell = currentSpells[0];
                 if (Input.GetKeyDown(KeyCode.B)){
-                    // Sélectionner spell gauche
-                    // TODO
+                    SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.N)){
@@ -258,9 +266,9 @@ public class InterfaceManager : MonoBehaviour
                 }
                 break;
             case SpellChoice.RIGHT:
+                selectedSpell = currentSpells[1];
                 if (Input.GetKeyDown(KeyCode.B)){
-                    // Sélectionner spell à droite
-                    // TODO
+                    SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.N)){
@@ -285,9 +293,9 @@ public class InterfaceManager : MonoBehaviour
                 }
                 break;
             case SpellChoice.UP:
+                selectedSpell = currentSpells[2];
                 if (Input.GetKeyDown(KeyCode.B)){
-                    // Sélectionner spell en haut
-                    // TODO
+                    SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.N)){
@@ -312,9 +320,9 @@ public class InterfaceManager : MonoBehaviour
                 }
                 break;
             case SpellChoice.DOWN:
+                selectedSpell = currentSpells[3];
                 if (Input.GetKeyDown(KeyCode.B)){
-                    // Sélectionner spell en bas
-                    // TODO
+                    SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.N)){
@@ -381,13 +389,39 @@ public class InterfaceManager : MonoBehaviour
     }
 
     void TargetSelectionDisplay(){
-        //
+        if(!activated_states[BattleManager.PlayerActionChoiceState.TARGET_SELECTION]){
+            // Just changed from another state
+
+            // Reset view
+            ResetDisplay();
+
+            // Activate the needed interface
+            informationPanel.SetActive(true);
+            tileSelector.SetActive(true);
+
+            // TODO Définir par défaut l'emplacement de la targetTile, l'aléatoire c'est nul
+            targetTile = GridManager.Instance.GetRandomTile(Team.Enemy);
+            
+            ActivateState(BattleManager.PlayerActionChoiceState.TARGET_SELECTION);
+        }
+
+        // Display selector on the target tile
+        tileSelector.transform.position = targetTile.transform.position;
+
+        // Highlight the selected tiles depending on the range of the spell
+
+        // Change the tile or the state depending on the input (same algorithm than the source selection !)
+
+        // Write into a variable the instruction if validated
+
+        // Go back to the same spell selection if cancel
     }
 
     void ResetDisplay(){
             spellSelector.SetActive(false);
             shade.SetActive(false);
             informationPanel.SetActive(false);
+            tileSelector.SetActive(false);
     }
 
     void ActivateState(BattleManager.PlayerActionChoiceState stateToActivate){
@@ -402,6 +436,10 @@ public class InterfaceManager : MonoBehaviour
             }
         }
         activated_states = new_states;
+    }
+
+    void Navigate(Directions direction){
+        //
     }
 }
 

@@ -13,6 +13,8 @@ public class ScriptableSpell : ScriptableObject
     public string fight_description;
     public int cooldown;
     public List<Properties> properties;
+    public GridManager.Selection_mode range;
+    public GridManager.Team_restriction team_restriction;
 
     public Sprite artwork;
 

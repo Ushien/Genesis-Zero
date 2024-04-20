@@ -14,6 +14,9 @@ public class BaseSpell : MonoBehaviour
     public string fight_description = "Fight Description";
     public int cooldown = 0;
     public Sprite artwork = null;
+    public GridManager.Selection_mode range;
+    public GridManager.Team_restriction team_restriction;
+
     public ISpellInterface spell = null;
 
     public void Setup(ScriptableSpell originSpell, BaseUnit ownerUnit){
@@ -29,6 +32,8 @@ public class BaseSpell : MonoBehaviour
         fight_description = scriptableSpell.fight_description;
         cooldown = scriptableSpell.cooldown;
         artwork = scriptableSpell.artwork;
+        range = scriptableSpell.range;
+        team_restriction = scriptableSpell.team_restriction;
     }
 
     public void Cast(){
