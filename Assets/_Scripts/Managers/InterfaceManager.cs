@@ -20,7 +20,7 @@ public class InterfaceManager : MonoBehaviour
     public GameObject shade;
 
     // La Tile sélectionnée à tout moment
-    private Tile selectedTile;
+    // private Tile selectedTile;
 
     // La Tile contenant la source du spell, lorsqu'un spell est lancé (lorsqu'on revient en arrière pendant la sélection de cible)
     private Tile sourceTile;
@@ -47,7 +47,7 @@ public class InterfaceManager : MonoBehaviour
         }
     }
     void Update()
-    {
+    {   
         switch (BattleManager.Instance.GetPlayerActionChoiceState())
         {
             case BattleManager.PlayerActionChoiceState.CHARACTER_SELECTION:
@@ -69,7 +69,6 @@ public class InterfaceManager : MonoBehaviour
     void SourceSelectionDisplay(){
         if(!activated_states[BattleManager.PlayerActionChoiceState.CHARACTER_SELECTION]){
             // Just changed from another state
-
             // Reset view
             ResetDisplay();
 
@@ -79,12 +78,12 @@ public class InterfaceManager : MonoBehaviour
             ActivateState(BattleManager.PlayerActionChoiceState.CHARACTER_SELECTION);
 
         }
-        selectedTile = GridManager.Instance.GetMainSelection();
+        sourceTile = GridManager.Instance.GetMainSelection();
 
         if (Input.GetKeyDown(KeyCode.B)){
-            if(selectedTile.GetUnit()!= null){
-                if(selectedTile.GetUnit().GetTeam() == Team.Ally){
-                    SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
+            if(sourceTile.GetUnit()!= null){
+                if(sourceTile.GetUnit().GetTeam() == Team.Ally){
+                    SourceSelectionTrigger(BattleManager.Trigger.VALIDATE);
                 }
             }
         }
@@ -93,31 +92,31 @@ public class InterfaceManager : MonoBehaviour
             shade.SetActive(false);
         }
         if (Input.GetKeyDown(KeyCode.UpArrow)){
-            if(selectedTile.GetNextTile(Directions.UP) != null){
-                selectedTile.GetNextTile(Directions.UP).Select();
-                selectedTile.Unselect();
+            if(sourceTile.GetNextTile(Directions.UP) != null){
+                sourceTile.GetNextTile(Directions.UP).Select();
+                sourceTile.Unselect();
             }
         }
         if (Input.GetKeyDown(KeyCode.DownArrow)){
-            if(selectedTile.GetNextTile(Directions.DOWN) != null){
-                selectedTile.GetNextTile(Directions.DOWN).Select();
-                selectedTile.Unselect();
+            if(sourceTile.GetNextTile(Directions.DOWN) != null){
+                sourceTile.GetNextTile(Directions.DOWN).Select();
+                sourceTile.Unselect();
             }
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow)){
-            if(selectedTile.GetNextTile(Directions.LEFT) != null){
-                selectedTile.GetNextTile(Directions.LEFT).Select();
-                selectedTile.Unselect();
+            if(sourceTile.GetNextTile(Directions.LEFT) != null){
+                sourceTile.GetNextTile(Directions.LEFT).Select();
+                sourceTile.Unselect();
             }
         }
         if (Input.GetKeyDown(KeyCode.RightArrow)){
-            if(selectedTile.GetNextTile(Directions.RIGHT) != null){
-                selectedTile.GetNextTile(Directions.RIGHT).Select();
-                selectedTile.Unselect();
+            if(sourceTile.GetNextTile(Directions.RIGHT) != null){
+                sourceTile.GetNextTile(Directions.RIGHT).Select();
+                sourceTile.Unselect();
             }
         }
 
-        BaseUnit currentUnit = selectedTile.GetUnit();
+        BaseUnit currentUnit = sourceTile.GetUnit();
         if(currentUnit != null){
             informationPanel.SetActive(true);
             unitNamePanel.text = currentUnit.GetName();
@@ -132,46 +131,20 @@ public class InterfaceManager : MonoBehaviour
         }
     }
 
-    /*
-    void SpellSelectionActivation(bool activation, Tile source_tile = null){
-
-        spellSelector.SetActive(activation);
-        shade.SetActive(activation);
-
-        sourceTile = source_tile;
-        BaseUnit sourceUnit = sourceTile.GetUnit();
-
-        List<BaseSpell> currentSpells = sourceUnit.availableSpells;
-
-        if (activation){
-            spellSelector.transform.position = selectedTile.transform.position;
-            sourceUnit = selectedTile.GetUnit();
-
-            int currentSpellIndex = 0;
-            foreach (var spell in sourceUnit.availableSpells)
-            {
-                spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().sprite = spell.artwork;
-                currentSpellIndex += 1;
-            }
-            BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, BattleManager.Trigger.VALIDATE);
-        }
-        else{
-            //    
-        }
-
-    }
-    */
-
     void SpellSelectionTrigger(BattleManager.Trigger trigger){
 
-        BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, BattleManager.Trigger.VALIDATE);
+        BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, trigger);
+    }
+    void SourceSelectionTrigger(BattleManager.Trigger trigger){
+
+        BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, trigger);
     }
 
     void SpellSelectionDisplay(){
         BaseUnit sourceUnit = sourceTile.GetUnit();
         List<BaseSpell> currentSpells = sourceUnit.availableSpells;
 
-        if(!activated_states[BattleManager.PlayerActionChoiceState.CHARACTER_SELECTION]){
+        if(!activated_states[BattleManager.PlayerActionChoiceState.SPELL_SELECTION]){
             // Just changed from another state
 
             // Reset view
@@ -182,7 +155,7 @@ public class InterfaceManager : MonoBehaviour
             shade.SetActive(true);
             informationPanel.SetActive(true);
 
-            spellSelector.transform.position = selectedTile.transform.position;
+            spellSelector.transform.position = sourceTile.transform.position;
 
             int currentSpellIndex = 0;
 
@@ -192,7 +165,7 @@ public class InterfaceManager : MonoBehaviour
                 currentSpellIndex += 1;
             }
             
-            ActivateState(BattleManager.PlayerActionChoiceState.CHARACTER_SELECTION);
+            ActivateState(BattleManager.PlayerActionChoiceState.SPELL_SELECTION);
         }
 
         //Display highlight
@@ -379,42 +352,33 @@ public class InterfaceManager : MonoBehaviour
                 unitPassiveDescriptionPanel.text = sourceUnit.GetPassive().GetFightDescription();
                 break;
             case SpellChoice.LEFT:
-                unitPassiveNamePanel.text = currentSpells[0].GetName();
-                unitPassiveDescriptionPanel.text = currentSpells[0].GetFightDescription();
+                if(currentSpells.Count > 0){
+                    unitPassiveNamePanel.text = currentSpells[0].GetName();
+                    unitPassiveDescriptionPanel.text = currentSpells[0].GetFightDescription();
+                }
                 break;
             case SpellChoice.RIGHT:
-                unitPassiveNamePanel.text = currentSpells[1].GetName();
-                unitPassiveDescriptionPanel.text = currentSpells[1].GetFightDescription();
+                if(currentSpells.Count > 1){
+                    unitPassiveNamePanel.text = currentSpells[1].GetName();
+                    unitPassiveDescriptionPanel.text = currentSpells[1].GetFightDescription();
+                }
                 break;
             case SpellChoice.UP:
-                unitPassiveNamePanel.text = currentSpells[2].GetName();
-                unitPassiveDescriptionPanel.text = currentSpells[2].GetFightDescription();
+                if(currentSpells.Count > 2){
+                    unitPassiveNamePanel.text = currentSpells[2].GetName();
+                    unitPassiveDescriptionPanel.text = currentSpells[2].GetFightDescription();
+                }
                 break;
             case SpellChoice.DOWN:
-                unitPassiveNamePanel.text = currentSpells[3].GetName();
-                unitPassiveDescriptionPanel.text = currentSpells[3].GetFightDescription();
+                if(currentSpells.Count > 3){
+                    unitPassiveNamePanel.text = currentSpells[3].GetName();
+                    unitPassiveDescriptionPanel.text = currentSpells[3].GetFightDescription();
+                }
                 break;
             default:
                 break;
         }
     }
-    
-    /*
-    void TargetSelectionActivation(bool activation, BaseSpell spell = null){
-        if (activation){
-            // Place the cursor on the first valid target in front of the unit
-            //selectedTarget = GridManager.Instance.FindFirstTarget();
-
-            // Hihglight all the tiles in the selection zone
-
-            BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, BattleManager.Trigger.VALIDATE);
-        }
-        else{
-            //
-        }
-        
-    }
-    */
 
     void TargetSelectionDisplay(){
         //
