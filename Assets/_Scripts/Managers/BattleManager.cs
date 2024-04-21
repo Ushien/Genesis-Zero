@@ -26,6 +26,10 @@ public class BattleManager : MonoBehaviour
     public EnemyTurnState enemyTurnState;
     public PlayerActionChoiceState playerActionChoiceState;
 
+    public Instruction emptyInstruction;
+
+    private List<Instruction> playerInstructions;
+
     public int nTurn = 0;
 
     void Awake(){
@@ -166,5 +170,11 @@ public class BattleManager : MonoBehaviour
     public void NextTurn(){
         nTurn ++;
         StartTurn();
+    }
+
+    public Instruction CreateInstruction(BaseUnit source_unit, BaseSpell spell_to_cast, Tile target_tile){
+        Instruction new_instruction = Instantiate(emptyInstruction);
+        new_instruction.Setup(source_unit, spell_to_cast, target_tile);
+        return new_instruction;
     }
 }
