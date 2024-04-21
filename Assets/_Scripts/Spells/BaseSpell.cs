@@ -43,6 +43,10 @@ public class BaseSpell : MonoBehaviour
         return spell_name;
     }
 
+    public GridManager.Selection_mode GetRange(){
+        return range;
+    }
+
     public string GetFightDescription(){
         return fight_description;
     }

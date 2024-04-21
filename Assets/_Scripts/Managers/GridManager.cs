@@ -277,6 +277,10 @@ public class GridManager : MonoBehaviour
         Debug.Log(output);
     }
 
+    public void SetSelectionMode(Selection_mode mode){
+        selection_mode = mode;
+    }
+
     public void CycleTroughSelectionModes()
     {
         if (selection_mode == Selection_mode.Single_selection){
