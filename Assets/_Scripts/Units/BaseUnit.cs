@@ -79,6 +79,15 @@ public class BaseUnit : MonoBehaviour
         }
     }
 
+    public void Update(){
+        if(HasGivenInstruction()){
+            this.gameObject.GetComponent<SpriteRenderer>().color = new Color32( 173, 173, 173, 200);
+        }
+        else{
+            this.gameObject.GetComponent<SpriteRenderer>().color = new Color32( 255, 255, 255, 255);
+        }
+    }
+
     public int GetStatFromLevel(int level_100_stat, int real_level){
 
         var level_1_stat = (float)level_100_stat/10;
