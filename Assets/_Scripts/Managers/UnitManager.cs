@@ -81,11 +81,9 @@ public class UnitManager : MonoBehaviour
 
         foreach (BaseUnit unit in GetUnits(Team.Ally))
         {
-            Debug.Log(unit.GetName() + ' ' + unit.HasGivenInstruction().ToString());
             theyDid = theyDid && unit.HasGivenInstruction();
         }
 
-        Debug.Log(theyDid.ToString());
         return theyDid;
     }
 }

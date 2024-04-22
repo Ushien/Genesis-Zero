@@ -60,7 +60,7 @@ public class InterfaceManager : MonoBehaviour
                 TargetSelectionDisplay();
                 break;
             default:
-                Debug.Log(BattleManager.Instance.GetCurrentStatesSummary());
+                //Debug.Log(BattleManager.Instance.GetCurrentStatesSummary());
                 break;
         }
         
@@ -93,7 +93,7 @@ public class InterfaceManager : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.N)){
-            //
+            SourceSelectionTrigger(BattleManager.Trigger.CANCEL);
         }
         if (Input.GetKeyDown(KeyCode.UpArrow)){
             if(sourceTile.GetNextTile(Directions.UP) != null){
@@ -417,9 +417,6 @@ public class InterfaceManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B)){
             if(targetTile.GetUnit()!= null){
                 if(GridManager.Instance.IsSelected(targetTile)){
-                    // Ajouter l'instruction dans la liste d'instructions
-                    Instruction instruction = BattleManager.Instance.CreateInstruction(sourceTile.GetUnit(), selectedSpell, targetTile);
-                    BattleManager.Instance.AssignInstruction(instruction);
                     TargetSelectionTrigger(BattleManager.Trigger.VALIDATE);
                 }
             }
@@ -452,6 +449,7 @@ public class InterfaceManager : MonoBehaviour
         targetTile.Select();
         GridManager.Instance.SetSelectionMode(selectedSpell.GetRange());
 
+        //Abstraire ce code
         BaseUnit currentUnit = targetTile.GetUnit();
         if(currentUnit != null){
             informationPanel.SetActive(true);
@@ -472,7 +470,12 @@ public class InterfaceManager : MonoBehaviour
     }
     
     void TargetSelectionTrigger(BattleManager.Trigger trigger){
-        // On sort de la sélection de la source pour aller vers un autre état
+        // On sort de la sélection de la cible pour aller vers un autre état
+        if(trigger == BattleManager.Trigger.VALIDATE){
+            // Ajouter l'instruction dans la liste d'instructions
+            Instruction instruction = BattleManager.Instance.CreateInstruction(sourceTile.GetUnit(), selectedSpell, targetTile);
+            BattleManager.Instance.AssignInstruction(instruction);
+        }
         BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, trigger);
     }
     

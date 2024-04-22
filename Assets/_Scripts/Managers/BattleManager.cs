@@ -78,8 +78,7 @@ public class BattleManager : MonoBehaviour
                         playerActionChoiceState = PlayerActionChoiceState.SPELL_SELECTION;
                         break;
                     case Trigger.CANCEL:
-                        // if(un des alliés a déjà sélectionné son instruction)
-                        //     on retire la dernière instruction et on reste dans l'état
+                        CancelLastInstruction();
                         break;
                     default:
                         break;
@@ -222,6 +221,18 @@ public class BattleManager : MonoBehaviour
     public void AssignInstruction(Instruction instruction){
         AddInstruction(instruction);
         instruction.GetSourceUnit().GiveInstruction(true);
+    }
+
+    public void CancelLastInstruction(){
+        RemoveInstruction(playerInstructions.Count - 1);
+    }
+
+    private void RemoveInstruction(int index){
+        if(playerInstructions.Count > index){
+            playerInstructions[index].GetSourceUnit().GiveInstruction(false);
+            Destroy(playerInstructions[index].gameObject);
+            playerInstructions.RemoveAt(index);
+        }
     }
 
     private void AddInstruction(Instruction instruction){
