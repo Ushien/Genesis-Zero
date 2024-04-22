@@ -37,8 +37,6 @@ public class InterfaceManager : MonoBehaviour
     public Tile targetTile;
     // TODO Implémenter un tuple qui contient toutes les ordres définis.
 
-    private bool sourceSelectionActivated;
-    private bool spellSelectionActivated;
     private Dictionary<BattleManager.PlayerActionChoiceState, bool> activated_states;
 
     void Awake(){
@@ -418,7 +416,10 @@ public class InterfaceManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.B)){
             if(targetTile.GetUnit()!= null){
-                if(targetTile.GetUnit().GetTeam() == Team.Ally){
+                if(GridManager.Instance.IsSelected(targetTile)){
+                    // Ajouter l'instruction dans la liste d'instructions
+                    Instruction instruction = BattleManager.Instance.CreateInstruction(sourceTile.GetUnit(), selectedSpell, targetTile);
+                    BattleManager.Instance.AssignInstruction(instruction);
                     TargetSelectionTrigger(BattleManager.Trigger.VALIDATE);
                 }
             }

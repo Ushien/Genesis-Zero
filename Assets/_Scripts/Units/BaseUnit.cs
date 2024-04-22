@@ -14,6 +14,8 @@ public class BaseUnit : MonoBehaviour
     public Team Team = Team.Enemy;
     public int level = 1;
 
+    private bool instructionGiven = false;
+
     public BaseSpell heroSpell1;
     public BaseSpell heroSpell2;
 
@@ -88,6 +90,14 @@ public class BaseUnit : MonoBehaviour
 
     public void CastSpell(int index){
         availableSpells[index].Cast();
+    }
+
+    public void GiveInstruction(bool newInstructionGiven){
+        instructionGiven = newInstructionGiven;
+    }
+
+    public bool HasGivenInstruction(){
+        return instructionGiven;
     }
 
     public String GetName(){

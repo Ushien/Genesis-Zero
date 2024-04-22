@@ -245,7 +245,7 @@ public class GridManager : MonoBehaviour
             var units_list = UnitsFromTiles(selected_tiles);
             if(units_list != null){
                 foreach( var x in units_list) {
-                    DumpToConsole(x);
+                    Tools.DumpToConsole(x);
                 }
             }
             
@@ -271,10 +271,8 @@ public class GridManager : MonoBehaviour
         return main_selection;
     }
 
-    public static void DumpToConsole(object obj)
-    {
-        var output = JsonUtility.ToJson(obj, true);
-        Debug.Log(output);
+    public bool IsSelected(Tile tile){
+        return selected_tiles.Contains(tile);
     }
 
     public void SetSelectionMode(Selection_mode mode){
@@ -289,5 +287,14 @@ public class GridManager : MonoBehaviour
         else{
             selection_mode = Selection_mode.Single_selection;
         }
+    }
+}
+
+public static class Tools
+{
+    public static void DumpToConsole(object obj)
+    {
+        var output = JsonUtility.ToJson(obj, true);
+        Debug.Log(output);
     }
 }

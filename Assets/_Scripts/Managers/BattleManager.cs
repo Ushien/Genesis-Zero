@@ -15,7 +15,7 @@ public class BattleManager : MonoBehaviour
     public enum TurnState {OUT, PLAYERTURN, ENEMYTURN}
     public enum PlayerTurnState {OUT, START, ACTION_CHOICE, APPLY_ACTIONS, END}
     public enum EnemyTurnState {OUT, START, ACTION_CHOICE, APPLY_ACTIONS, END}
-    public enum PlayerActionChoiceState {OUT, CHARACTER_SELECTION, SWITCH_CHARACTER, SPELL_SELECTION, TARGET_SELECTION, VALIDATED_ACTION, OTHER_STATE}
+    public enum PlayerActionChoiceState {OUT, START, CHARACTER_SELECTION, SWITCH_CHARACTER, SPELL_SELECTION, TARGET_SELECTION, VALIDATED_ACTION, OTHER_STATE, EXIT}
 
     public enum Machine{BATTLESTATE, TURNSTATE, PLAYERTURNSTATE, ENEMYTURNSTATE, PLAYERACTIONCHOICESTATE}
     public enum Trigger {VALIDATE, CANCEL, LEFT, RIGHT, UP, DOWN, FORWARD}
@@ -34,6 +34,12 @@ public class BattleManager : MonoBehaviour
 
     void Awake(){
         Instance = this;
+        playerInstructions = new List<Instruction>();
+    }
+
+    void Update(){
+        ChangePlayerActionChoiceState(Trigger.FORWARD);
+        ChangePlayerTurnState(Trigger.FORWARD);
     }
 
     public void LaunchBattle(List<Tuple<Vector2, ScriptableUnit, int>> ally_composition, List<Tuple<Vector2, ScriptableUnit, int>> enemy_composition){
@@ -51,6 +57,9 @@ public class BattleManager : MonoBehaviour
         {
             case Machine.PLAYERACTIONCHOICESTATE:
                 ChangePlayerActionChoiceState(trigger);
+                break;
+            case Machine.PLAYERTURNSTATE:
+                ChangePlayerTurnState(trigger);
                 break;
             default:
                 break;
@@ -92,10 +101,7 @@ public class BattleManager : MonoBehaviour
                 switch (trigger)
                 {
                     case Trigger.VALIDATE:
-                        // if tous les personnages ont déjà donné leur instruction
-                            // On sort de la machine PlayerActionChoiceState
-                        // else
-                            // La cible est validée et on passe à la source sélection suivante
+                        playerActionChoiceState = PlayerActionChoiceState.VALIDATED_ACTION;
                         break;
                     case Trigger.CANCEL:
                         playerActionChoiceState = PlayerActionChoiceState.SPELL_SELECTION;
@@ -105,11 +111,44 @@ public class BattleManager : MonoBehaviour
                         break;
                 }
                 break;
+
+            case PlayerActionChoiceState.VALIDATED_ACTION:
+                switch (trigger)
+                {
+                    case Trigger.FORWARD:
+                        if(UnitManager.Instance.DidEveryCharacterGaveInstruction()){
+                            playerActionChoiceState = PlayerActionChoiceState.EXIT;
+                        }
+                        else{
+                            playerActionChoiceState = PlayerActionChoiceState.CHARACTER_SELECTION;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+
+            break;
             
-            default:
-                break;
+
+            case PlayerActionChoiceState.EXIT:
+                switch (trigger)
+                {
+                    case Trigger.FORWARD:
+                        // Do stuff
+                        playerActionChoiceState = PlayerActionChoiceState.OUT;
+                        break;
+                    default:
+                        break;
+                }
+
+            break;
 
         }
+    }
+
+    private void ChangePlayerTurnState(Trigger trigger){
+
     }
 
     public void DebugSetState(){
@@ -174,7 +213,35 @@ public class BattleManager : MonoBehaviour
 
     public Instruction CreateInstruction(BaseUnit source_unit, BaseSpell spell_to_cast, Tile target_tile){
         Instruction new_instruction = Instantiate(emptyInstruction);
+
+        // L'associer au tour actuel
         new_instruction.Setup(source_unit, spell_to_cast, target_tile);
         return new_instruction;
+    }
+
+    public void AssignInstruction(Instruction instruction){
+        AddInstruction(instruction);
+        instruction.GetSourceUnit().GiveInstruction(true);
+    }
+
+    private void AddInstruction(Instruction instruction){
+        playerInstructions.Add(instruction);
+    }
+
+    public int CountInstructions(){
+        return playerInstructions.Count;
+    }
+
+    public bool AreInstructionsFull(){
+        int registeredInstructionCount = 0;
+        foreach (BaseUnit unit in UnitManager.Instance.GetUnits(Team.Ally))
+        {
+            foreach (Instruction instruction in playerInstructions){
+                if(instruction.GetSourceUnit() == unit){
+                    registeredInstructionCount ++;
+                }
+            }
+        }
+        return registeredInstructionCount == UnitManager.Instance.CountUnits(Team.Ally);
     }
 }

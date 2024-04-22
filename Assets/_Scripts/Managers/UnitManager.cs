@@ -67,6 +67,27 @@ public class UnitManager : MonoBehaviour
     public BaseUnit GetRandomUnit(){
         return units.OrderBy(o=> UnityEngine.Random.value).First();
     }
+
+    public List<BaseUnit> GetUnits(Team team){
+        return units.Where(unit => unit.Team == team).ToList();
+    }
+
+    public int CountUnits(Team team){
+        return GetUnits(team).Count;
+    }
+
+    public bool DidEveryCharacterGaveInstruction(){
+        bool theyDid = true;
+
+        foreach (BaseUnit unit in GetUnits(Team.Ally))
+        {
+            Debug.Log(unit.GetName() + ' ' + unit.HasGivenInstruction().ToString());
+            theyDid = theyDid && unit.HasGivenInstruction();
+        }
+
+        Debug.Log(theyDid.ToString());
+        return theyDid;
+    }
 }
 
 public enum Team {

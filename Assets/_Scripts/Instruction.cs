@@ -8,9 +8,9 @@ public class Instruction : MonoBehaviour
         public BaseSpell emptySpell;
         public Tile emptyTile;
 
-        private BaseUnit source;
-        private BaseSpell spell;
-        private Tile target;
+        public BaseUnit source;
+        public BaseSpell spell;
+        public Tile target;
 
         void Awake(){
             source = emptyUnit;
@@ -21,5 +21,15 @@ public class Instruction : MonoBehaviour
             source = source_unit;
             spell = spell_to_cast;
             target = target_tile;
+        }
+
+        public BaseUnit GetSourceUnit(){
+            return source;
+        }
+        public BaseSpell GetSpell(){
+            return spell;
+        }
+        public Tile GetTargetTile(){
+            return target;
         }
 }
