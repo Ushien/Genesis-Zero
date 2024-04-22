@@ -60,7 +60,6 @@ public class InterfaceManager : MonoBehaviour
                 TargetSelectionDisplay();
                 break;
             default:
-                //Debug.Log(BattleManager.Instance.GetCurrentStatesSummary());
                 break;
         }
         
@@ -86,7 +85,7 @@ public class InterfaceManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.B)){
             if(sourceTile.GetUnit()!= null){
-                if(sourceTile.GetUnit().GetTeam() == Team.Ally){
+                if(sourceTile.GetUnit().GetTeam() == Team.Ally && !sourceTile.GetUnit().HasGivenInstruction()){
                     SourceSelectionTrigger(BattleManager.Trigger.VALIDATE);
                 }
             }
