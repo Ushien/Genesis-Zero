@@ -39,6 +39,10 @@ public class BaseSpell : MonoBehaviour
     public void Cast(){
         spell.Cast();
     }
+
+    public void Cast(Tile tile){
+        spell.Cast(tile);
+    }
     public string GetName(){
         return spell_name;
     }

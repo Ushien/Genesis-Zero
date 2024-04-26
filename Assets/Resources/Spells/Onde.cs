@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Onde : MonoBehaviour, ISpellInterface
 {
-    public void Cast(BaseUnit target = null){
+    public void Cast(Tile target = null){
         //
     }
 }

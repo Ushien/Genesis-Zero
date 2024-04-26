@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RetourDeFlammes : MonoBehaviour, ISpellInterface
 {
-    public void Cast(BaseUnit target = null){
+    public void Cast(Tile target = null){
         //
     }
 }

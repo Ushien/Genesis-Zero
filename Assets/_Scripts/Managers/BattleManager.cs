@@ -18,7 +18,7 @@ public class BattleManager : MonoBehaviour
     public enum PlayerActionChoiceState {OUT, START, CHARACTER_SELECTION, SWITCH_CHARACTER, SPELL_SELECTION, TARGET_SELECTION, VALIDATED_ACTION, OTHER_STATE, EXIT}
 
     public enum Machine{BATTLESTATE, TURNSTATE, PLAYERTURNSTATE, ENEMYTURNSTATE, PLAYERACTIONCHOICESTATE}
-    public enum Trigger {VALIDATE, CANCEL, LEFT, RIGHT, UP, DOWN, FORWARD}
+    public enum Trigger {VALIDATE, CANCEL, LEFT, RIGHT, UP, DOWN, FORWARD, EMPTY}
 
     public BattleState battleState;
     public TurnState turnState;
@@ -34,12 +34,12 @@ public class BattleManager : MonoBehaviour
 
     void Awake(){
         Instance = this;
-        playerInstructions = new List<Instruction>();
+        CleanPlayerInstructions();
     }
 
     void Update(){
-        ChangePlayerActionChoiceState(Trigger.FORWARD);
-        ChangePlayerTurnState(Trigger.FORWARD);
+        ChangeState(Machine.PLAYERACTIONCHOICESTATE, Trigger.EMPTY);
+        ChangeState(Machine.PLAYERTURNSTATE, Trigger.EMPTY);
     }
 
     public void LaunchBattle(List<Tuple<Vector2, ScriptableUnit, int>> ally_composition, List<Tuple<Vector2, ScriptableUnit, int>> enemy_composition){
@@ -70,6 +70,17 @@ public class BattleManager : MonoBehaviour
 
     private void ChangePlayerActionChoiceState(Trigger trigger){
         switch(playerActionChoiceState){
+            case PlayerActionChoiceState.OUT:
+                switch (trigger)
+                {
+                    case Trigger.FORWARD:
+                        // Do stuff if needed
+                        playerActionChoiceState = PlayerActionChoiceState.CHARACTER_SELECTION;
+                        break;
+                    default:
+                        break;
+                }
+                break;
 
             case PlayerActionChoiceState.CHARACTER_SELECTION:
 
@@ -114,7 +125,7 @@ public class BattleManager : MonoBehaviour
             case PlayerActionChoiceState.VALIDATED_ACTION:
                 switch (trigger)
                 {
-                    case Trigger.FORWARD:
+                    case Trigger.EMPTY:
                         if(UnitManager.Instance.DidEveryCharacterGaveInstruction()){
                             playerActionChoiceState = PlayerActionChoiceState.EXIT;
                         }
@@ -133,9 +144,10 @@ public class BattleManager : MonoBehaviour
             case PlayerActionChoiceState.EXIT:
                 switch (trigger)
                 {
-                    case Trigger.FORWARD:
+                    case Trigger.EMPTY:
                         // Do stuff
                         playerActionChoiceState = PlayerActionChoiceState.OUT;
+                        ChangeState(Machine.PLAYERTURNSTATE, Trigger.FORWARD);
                         break;
                     default:
                         break;
@@ -147,7 +159,37 @@ public class BattleManager : MonoBehaviour
     }
 
     private void ChangePlayerTurnState(Trigger trigger){
+        switch (playerTurnState)
+        {
+            case PlayerTurnState.ACTION_CHOICE:
+                switch (trigger)
+                {
+                    case Trigger.FORWARD:
+                        playerTurnState = PlayerTurnState.APPLY_ACTIONS;
+                        break;
+                    
+                    default:
+                        break;
+                }
+                break;
+            case PlayerTurnState.APPLY_ACTIONS:
+                ApplyInstructions();
+                // Sauvegarder l'historique d'instructions
+                // TODO
+                // Clean les instructions actuelles
+                CleanPlayerInstructions();
+                //TODO faudra changer ça c'est temporaire
+                playerTurnState = PlayerTurnState.ACTION_CHOICE;
+                ChangeState(Machine.PLAYERACTIONCHOICESTATE, Trigger.FORWARD);
+                break;
+            default:
+                break;
+        }
+    }
 
+    private void CleanPlayerInstructions(){
+        playerInstructions = new List<Instruction>();
+        UnitManager.Instance.MakeUnitsActive();
     }
 
     public void DebugSetState(){
@@ -237,6 +279,17 @@ public class BattleManager : MonoBehaviour
 
     private void AddInstruction(Instruction instruction){
         playerInstructions.Add(instruction);
+    }
+
+    private void ApplyInstructions(){
+        foreach (Instruction instruction in playerInstructions)
+        {
+            ApplyInstruction(instruction);            
+        }
+    }
+
+    private void ApplyInstruction(Instruction instruction){
+        instruction.GetSpell().Cast(instruction.GetTargetTile());
     }
 
     public int CountInstructions(){

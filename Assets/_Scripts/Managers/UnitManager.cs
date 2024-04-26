@@ -86,6 +86,13 @@ public class UnitManager : MonoBehaviour
 
         return theyDid;
     }
+
+    public void MakeUnitsActive(){
+        foreach (BaseUnit unit in GetUnits(Team.Ally))
+        {
+            unit.GiveInstruction(false);
+        }
+    }
 }
 
 public enum Team {

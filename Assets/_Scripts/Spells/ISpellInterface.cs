@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface ISpellInterface
 {
-    void Cast(BaseUnit target = null);
+    void Cast(Tile target = null);
 }
