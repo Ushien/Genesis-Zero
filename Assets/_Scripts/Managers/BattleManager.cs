@@ -270,7 +270,7 @@ public class BattleManager : MonoBehaviour
     }
 
     private void RemoveInstruction(int index){
-        if(playerInstructions.Count > index){
+        if(playerInstructions.Count > index && index >= 0){
             playerInstructions[index].GetSourceUnit().GiveInstruction(false);
             Destroy(playerInstructions[index].gameObject);
             playerInstructions.RemoveAt(index);

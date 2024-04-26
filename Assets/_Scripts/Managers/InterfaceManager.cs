@@ -124,7 +124,7 @@ public class InterfaceManager : MonoBehaviour
             informationPanel.SetActive(true);
             unitNamePanel.text = currentUnit.GetName();
             unitPowerPanel.text = "Puissance : " + currentUnit.GetFinalPower().ToString();
-            unitHealthPanel.text = "PV : " + currentUnit.GetFinalHealth().ToString();
+            unitHealthPanel.text = "PV : " + currentUnit.GetFinalHealth().ToString() + "/" + currentUnit.GetTotalHealth().ToString();;
             unitLevelPanel.text = "Niveau : " + currentUnit.GetLevel().ToString();
             unitPassiveNamePanel.text = currentUnit.GetPassive().GetName();
             unitPassiveDescriptionPanel.text = currentUnit.GetPassive().GetFightDescription();
@@ -454,7 +454,7 @@ public class InterfaceManager : MonoBehaviour
             informationPanel.SetActive(true);
             unitNamePanel.text = currentUnit.GetName();
             unitPowerPanel.text = "Puissance : " + currentUnit.GetFinalPower().ToString();
-            unitHealthPanel.text = "PV : " + currentUnit.GetFinalHealth().ToString();
+            unitHealthPanel.text = "PV : " + currentUnit.GetFinalHealth().ToString() + "/" + currentUnit.GetTotalHealth().ToString();
             unitLevelPanel.text = "Niveau : " + currentUnit.GetLevel().ToString();
             unitPassiveNamePanel.text = currentUnit.GetPassive().GetName();
             unitPassiveDescriptionPanel.text = currentUnit.GetPassive().GetFightDescription();

@@ -21,6 +21,7 @@ public class BaseUnit : MonoBehaviour
 
     public string unit_name = "Name";
     public int finalPower = 1;
+    public int totalHealth = 1;
     public int finalHealth = 1;
     [TextArea(5,10)]
     public string lore_description = "Lore Description";
@@ -40,7 +41,8 @@ public class BaseUnit : MonoBehaviour
         level = setup_level;
 
         finalPower = GetStatFromLevel(scriptableUnit.original_power, level);
-        finalHealth = GetStatFromLevel(scriptableUnit.original_health, level);
+        totalHealth = GetStatFromLevel(scriptableUnit.original_health, level);
+        finalHealth = totalHealth;
 
         lore_description = scriptableUnit.lore_description;
         fight_description = scriptableUnit.fight_description;
@@ -121,6 +123,10 @@ public class BaseUnit : MonoBehaviour
         return finalPower;
     }
 
+    public int GetTotalHealth(){
+        return totalHealth;
+    }
+
     public int GetFinalHealth(){
         return finalHealth;
     }
@@ -135,6 +141,10 @@ public class BaseUnit : MonoBehaviour
 
     public Passive GetPassive(){
         return passive;
+    }
+
+    public void ModifyHP(int amount){
+        finalHealth = finalHealth + amount;
     }
 
     public List<string> GetInfo(){

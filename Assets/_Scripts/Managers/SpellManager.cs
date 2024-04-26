@@ -38,6 +38,7 @@ public class SpellManager : MonoBehaviour
     }
 
     public void InflictDamage(int amount, BaseUnit target, Properties property){
+        target.ModifyHP(-amount);
         Debug.Log("J'inflige des dégats avec ma technique !");
     }
 

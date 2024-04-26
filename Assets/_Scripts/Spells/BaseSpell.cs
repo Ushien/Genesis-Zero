@@ -22,6 +22,7 @@ public class BaseSpell : MonoBehaviour
     public void Setup(ScriptableSpell originSpell, BaseUnit ownerUnit){
         scriptableSpell = originSpell;
         spell = originSpell.spellScriptPrefab.GetComponent<ISpellInterface>();
+        spell.SetSpell(this);
 
         this.name = scriptableSpell.spell_name;
 
