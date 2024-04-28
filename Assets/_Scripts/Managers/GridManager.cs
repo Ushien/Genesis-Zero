@@ -134,7 +134,7 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    private List<Tile> ReturnTilesList(Team team = Team.Both, int width = -1, int height = -1, bool occupiedByUnit = false){
+    public List<Tile> ReturnTilesList(Team team = Team.Both, int width = -1, int height = -1, bool occupiedByUnit = false){
 
         List<Tile> tiles_list = new List<Tile>();
         int compteur = 0;
@@ -196,12 +196,13 @@ public class GridManager : MonoBehaviour
 
     void Update(){
 
-        foreach (Tile tile in ReturnTilesList()){
-            if(tile.main_selection){
-                SetMainSelection(tile);
-            }
-            tile._highlight.SetActive(false);
-        }
+        
+    }
+
+    public void DisplayHighlights(){
+
+        TurnHighlightsOff();
+        GetMainSelection();
 
         if(main_selection != null){
 
@@ -239,35 +240,34 @@ public class GridManager : MonoBehaviour
                 tile._highlight.SetActive(true);
             }
         }
+    }
 
-        if (Input.GetMouseButtonDown(0)){
-
-            var units_list = UnitsFromTiles(selected_tiles);
-            if(units_list != null){
-                foreach( var x in units_list) {
-                    Tools.DumpToConsole(x);
-                }
-            }
-            
+    public void TurnHighlightsOff(){
+        foreach (Tile tile in ReturnTilesList())
+        {
+            tile._highlight.SetActive(false);
         }
-
-        if (Input.GetMouseButtonDown(1)){
-            
-            CycleTroughSelectionModes();
-            
-        }
-
     }
 
     public Tile GetRandomTile(Team team) {
         return ReturnTilesList(team).OrderBy(t => Random.value).First();
     }
 
+    public Tile GetMiddleTile(Team team){
+        return ReturnTilesList(team).Skip(1).Take(ReturnTilesList(team).Count-2).First();
+    }
     private void SetMainSelection(Tile tile){
         main_selection = tile;
     }
 
     public Tile GetMainSelection(){
+
+        foreach (Tile tile in ReturnTilesList()){
+            if(tile.main_selection){
+                SetMainSelection(tile);
+            }
+        }
+
         return main_selection;
     }
 

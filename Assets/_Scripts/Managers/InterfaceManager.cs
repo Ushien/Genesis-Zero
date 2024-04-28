@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using Microsoft.Unity.VisualStudio.Editor;
 
 public class InterfaceManager : MonoBehaviour
 {
@@ -75,6 +74,7 @@ public class InterfaceManager : MonoBehaviour
             informationPanel.SetActive(true);
             tileSelector.SetActive(true);
 
+            GridManager.Instance.GetMiddleTile(Team.Ally).Select();
             GridManager.Instance.SetSelectionMode(GridManager.Selection_mode.Single_selection);
 
             ActivateState(BattleManager.PlayerActionChoiceState.CHARACTER_SELECTION);
@@ -82,6 +82,8 @@ public class InterfaceManager : MonoBehaviour
         }
         sourceTile = GridManager.Instance.GetMainSelection();
         tileSelector.transform.position = sourceTile.transform.position;
+
+        GridManager.Instance.DisplayHighlights();
 
         if (Input.GetKeyDown(KeyCode.B)){
             if(sourceTile.GetUnit()!= null){
@@ -406,6 +408,7 @@ public class InterfaceManager : MonoBehaviour
         }
         // Display selector on the target tile
         tileSelector.transform.position = targetTile.transform.position;
+        GridManager.Instance.DisplayHighlights();
 
         // Highlight the selected tiles depending on the range of the spell
 

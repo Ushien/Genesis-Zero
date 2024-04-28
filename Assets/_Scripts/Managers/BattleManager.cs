@@ -196,7 +196,7 @@ public class BattleManager : MonoBehaviour
         battleState = BattleState.TURN;
         turnState = TurnState.PLAYERTURN;
         playerTurnState = PlayerTurnState.ACTION_CHOICE;
-        playerActionChoiceState = PlayerActionChoiceState.CHARACTER_SELECTION;
+        playerActionChoiceState = PlayerActionChoiceState.OUT;
     }
 
     public string GetCurrentStatesSummary(){
