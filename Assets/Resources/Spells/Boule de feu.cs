@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class Bouledefeu : BaseSpell
 {
+    float ratio = 1;
     override public void Cast(Tile targetTile = null){
         BaseUnit targetUnit = null;
         if (targetTile != null){
             targetUnit = targetTile.GetUnit();
         }
 
+        float finalDamages = ratio * owner.finalPower;
+
         Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.GetUnit().GetName());
 
-        SpellManager.Instance.InflictDamage(100, targetUnit, Properties.Pyro);
+        SpellManager.Instance.InflictDamage(finalDamages, targetUnit, Properties.Pyro);
+
+        EventManager.Instance.CastSpell(this);
     }
 }

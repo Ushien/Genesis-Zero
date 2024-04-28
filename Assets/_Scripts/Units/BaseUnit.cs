@@ -147,6 +147,10 @@ public class BaseUnit : MonoBehaviour
         finalHealth = finalHealth + amount;
     }
 
+    public void ModifyPower(float amount){
+        finalPower = (int)System.Math.Ceiling(finalPower + finalPower * amount);
+    }
+
     public List<string> GetInfo(){
         List<string> infos = new List<string>();
         /*

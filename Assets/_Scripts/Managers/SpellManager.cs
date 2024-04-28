@@ -37,24 +37,30 @@ public class SpellManager : MonoBehaviour
         Debug.Log("J'inflige des dégats avec mon attaque");
     }
 
-    public void InflictDamage(int amount, BaseUnit target, Properties property){
-        target.ModifyHP(-amount);
-        Debug.Log("J'inflige des dégats avec ma technique !");
+    public void InflictDamage(float amount, BaseUnit target, Properties property= Properties.Empty){
+        int finalDamages = (int)System.Math.Ceiling(amount);
+        target.ModifyHP(-finalDamages);
     }
 
-    public void HealDamage(int amount, BaseUnit target, Properties property){
-        Debug.Log("Je te soigne avec ma technique");
+    public void HealDamage(float amount, BaseUnit target, Properties property = Properties.Empty){
+        int finalAmount = (int)System.Math.Ceiling(amount);
+        target.ModifyHP(finalAmount);
     }
 
     public void ModifyRange(BaseSpell spell, bool definitive, Ranges new_range){
         Debug.Log("Je modifie ma portée");
     }
+
+    public void ModifyPower(float amount, BaseUnit target){
+        target.ModifyPower(amount);
+    }
 }
 
-public enum Properties {    
-    Pyro = 0,
-    Létalité = 1,
-    Curatif = 2
+public enum Properties {   
+    Empty = 0, 
+    Pyro = 1,
+    Létalité = 2,
+    Curatif = 3
 }
 
 public enum Ranges {
