@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RetourDeFlammes : MonoBehaviour, ISpellInterface
+public class RetourDeFlammes : BaseSpell
 {
-    private BaseSpell spell = null;
-    public void Cast(Tile target = null){
-        //
-    }
+    override public void Cast(Tile targetTile = null){
+        BaseUnit targetUnit = null;
+        if (targetTile != null){
+            targetUnit = targetTile.GetUnit();
+        }
 
-    public void SetSpell(BaseSpell baseSpell){
-        spell = baseSpell;
+        Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.GetUnit().GetName());
+
+        // Do something
     }
 }

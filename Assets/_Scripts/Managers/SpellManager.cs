@@ -26,10 +26,10 @@ public class SpellManager : MonoBehaviour
         return spellList;
     }
 
-    public BaseSpell SetupSpell(ScriptableSpell scriptableSpell, BaseUnit unit){
-        var new_spell = Instantiate(EmptySpell);
+    public BaseSpell SetupSpell(BaseSpell spell, BaseUnit unit){
+        BaseSpell new_spell = Instantiate(spell);
         new_spell.transform.parent = unit.transform;
-        new_spell.Setup(scriptableSpell, unit);
+        new_spell.Setup(unit);
         return new_spell;
     }
 

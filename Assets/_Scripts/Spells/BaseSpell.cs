@@ -17,13 +17,7 @@ public class BaseSpell : MonoBehaviour
     public GridManager.Selection_mode range;
     public GridManager.Team_restriction team_restriction;
 
-    public ISpellInterface spell = null;
-
-    public void Setup(ScriptableSpell originSpell, BaseUnit ownerUnit){
-        scriptableSpell = originSpell;
-        spell = originSpell.spellScriptPrefab.GetComponent<ISpellInterface>();
-        spell.SetSpell(this);
-
+    public void Setup(BaseUnit ownerUnit){
         this.name = scriptableSpell.spell_name;
 
         owner = ownerUnit;
@@ -37,15 +31,19 @@ public class BaseSpell : MonoBehaviour
         team_restriction = scriptableSpell.team_restriction;
     }
 
-    public void Cast(){
-        spell.Cast();
+    virtual public void Cast(){
+        Debug.Log("Pas la méthode overridée");
     }
 
-    public void Cast(Tile tile){
-        spell.Cast(tile);
+    virtual public void Cast(Tile tile){
+        Debug.Log("Pas la méthode overridée");
     }
     public string GetName(){
         return spell_name;
+    }
+
+    public BaseUnit GetOwner(){
+        return owner;
     }
 
     public GridManager.Selection_mode GetRange(){

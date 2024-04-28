@@ -44,3 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39ab3b8eb9ebde84e83200f19d74f473, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scriptableSpell: {fileID: 11400000, guid: 626a32d705e2a8647b13eb439e75cb3a, type: 2}
+  owner: {fileID: 0}
+  spell_name: Name
+  lore_description: Lore Description
+  fight_description: Fight Description
+  cooldown: 0
+  artwork: {fileID: 0}
+  range: 0
+  team_restriction: 0

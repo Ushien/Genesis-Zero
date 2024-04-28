@@ -58,9 +58,9 @@ public class BaseUnit : MonoBehaviour
         passive.name = "Passif";
         passive.AttachToUnit(this);
 
-        foreach (var scriptableSpell in scriptableUnit.spells)
+        foreach (BaseSpell spell in scriptableUnit.spells)
         {
-            availableSpells.Add(SpellManager.Instance.SetupSpell(scriptableSpell, this));
+            availableSpells.Add(SpellManager.Instance.SetupSpell(spell, this));
         }
         if (scriptableUnit.scriptableJob != null){
             LoadJob(scriptableUnit.scriptableJob);
@@ -68,9 +68,9 @@ public class BaseUnit : MonoBehaviour
     }
 
     public void LoadJob(ScriptableJob scriptableJob){
-        foreach (var scriptableSpell in scriptableJob.spells)
+        foreach (BaseSpell spell in scriptableJob.spells)
         {
-            availableSpells.Add(SpellManager.Instance.SetupSpell(scriptableSpell, this));
+            availableSpells.Add(SpellManager.Instance.SetupSpell(spell, this));
         }
         if (scriptableJob.passive != null){
             Destroy(passive.gameObject);

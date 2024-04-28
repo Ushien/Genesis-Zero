@@ -2,14 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Onde : MonoBehaviour, ISpellInterface
+public class Onde : BaseSpell
 {
-    private BaseSpell spell = null;
-    public void Cast(Tile target = null){
+    override public void Cast(Tile target = null){
         //
-    }
-
-    public void SetSpell(BaseSpell baseSpell){
-        spell = baseSpell;
     }
 }

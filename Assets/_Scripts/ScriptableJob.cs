@@ -17,5 +17,5 @@ public class ScriptableJob : ScriptableObject
     public string lore_description;
 
     public Passive passive;
-    public List<ScriptableSpell> spells;
+    public List<BaseSpell> spells;
 }

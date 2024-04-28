@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2616006053027405452}
-  - component: {fileID: 5413075515922555276}
   - component: {fileID: 5743886638759037235}
   m_Layer: 0
   m_Name: "Fus\xE9esDeSignal"
@@ -33,24 +32,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5413075515922555276
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8818679046638044897}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b654ea6b6cce2094ba5aff92035efdb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scriptableSpell: {fileID: 0}
-  owner: {fileID: 0}
-  spell_name: Name
-  lore_description: Lore Description
-  fight_description: Fight Description
-  cooldown: 0
 --- !u!114 &5743886638759037235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,3 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f14de3621f6b764c9bfc58ea98a4fec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scriptableSpell: {fileID: 11400000, guid: 5daadbd6b422ceb4583d38c135a77b55, type: 2}
+  owner: {fileID: 0}
+  spell_name: Name
+  lore_description: Lore Description
+  fight_description: Fight Description
+  cooldown: 0
+  artwork: {fileID: 0}
+  range: 0
+  team_restriction: 0

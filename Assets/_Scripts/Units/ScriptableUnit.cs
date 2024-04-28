@@ -17,7 +17,7 @@ public class ScriptableUnit : ScriptableObject
     public string fight_description;
 
     public Passive passive;
-    public List<ScriptableSpell> spells;
+    public List<BaseSpell> spells;
     
     public ScriptableJob scriptableJob = null;
 }
