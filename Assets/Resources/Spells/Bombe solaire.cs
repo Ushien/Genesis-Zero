@@ -9,9 +9,10 @@ public class Bombesolaire : BaseSpell
         if (targetTile != null){
             targetUnit = targetTile.GetUnit();
         }
-
-        Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.GetUnit().GetName());
-
+        
+        if(targetUnit != null){
+            Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.GetUnit().GetName());
+        }
         // Do something
     }
 }

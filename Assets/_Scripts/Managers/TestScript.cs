@@ -19,6 +19,12 @@ public class TestScript : MonoBehaviour
 
         //UnitManager.Instance.GetRandomUnit().CastSpell(0);
     }
+
+    void Update(){
+        if(UnitManager.Instance.GetUnits(Team.Enemy).Count == 0){
+            UnitManager.Instance.SpawnEnemies(enemy_composition.GetTuples());
+        }
+    }
     /*
     void OnGUI()
     {

@@ -12,14 +12,16 @@ public class Onde : BaseSpell
             targetUnit = targetTile.GetUnit();
         }
 
-        float finalAmount1 = ratio1 * owner.finalPower;
-        float finalAmount2 = ratio2 * owner.finalPower;
+        if(targetUnit != null){
+            float finalAmount1 = ratio1 * owner.finalPower;
+            float finalAmount2 = ratio2 * owner.finalPower;
 
-        Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.GetUnit().GetName());
+            Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.GetUnit().GetName());
 
-        SpellManager.Instance.HealDamage(finalAmount1, targetUnit);
-        SpellManager.Instance.ModifyPower(finalAmount2, targetUnit);
+            SpellManager.Instance.HealDamage(finalAmount1, targetUnit);
+            SpellManager.Instance.ModifyPower(finalAmount2, targetUnit);
 
-        EventManager.Instance.CastSpell(this);
+            EventManager.Instance.CastSpell(this);
+        }
     }
 }

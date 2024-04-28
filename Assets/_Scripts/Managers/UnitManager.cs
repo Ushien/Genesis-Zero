@@ -93,6 +93,13 @@ public class UnitManager : MonoBehaviour
             unit.GiveInstruction(false);
         }
     }
+
+    public void Kill(BaseUnit unit){
+        units.Remove(unit);
+        unit.OccupiedTile.SetUnit(null);
+        unit.OccupiedTile = null; 
+        unit.gameObject.SetActive(false);
+    }
 }
 
 public enum Team {

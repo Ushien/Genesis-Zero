@@ -28,6 +28,8 @@ public class BaseUnit : MonoBehaviour
     [TextArea(5,10)]
     public string fight_description = "Fight Description";
 
+    public bool dead = false;
+
     public int armor = 0;
 
     public void Setup(ScriptableUnit originUnit, int setup_level, Team team){
@@ -144,7 +146,29 @@ public class BaseUnit : MonoBehaviour
     }
 
     public void ModifyHP(int amount){
-        finalHealth = finalHealth + amount;
+        finalHealth += amount;
+        if(AreHPBelowZero()){
+            Kill();
+        }
+        if(AreHPBeyondMax()){
+            SetHP(GetTotalHealth());
+        }
+    }
+
+    public bool AreHPBelowZero(){
+        return finalHealth <= 0;
+    }
+    public bool AreHPBeyondMax(){
+        return finalHealth >= GetTotalHealth();
+    }
+
+    public void SetHP(int HP){
+        finalHealth = HP;
+    }
+
+    public void Kill(){
+        dead = true;
+        UnitManager.Instance.Kill(this);
     }
 
     public void ModifyPower(float amount){

@@ -46,11 +46,17 @@ public class Tile : MonoBehaviour
         return OccupiedUnit;
     }
 
-    public void SetUnit(BaseUnit unit){
+    public void SetUnit(BaseUnit unit = null){
+        if (unit != null){
             if(unit.OccupiedTile != null) unit.OccupiedTile.OccupiedUnit = null;
             unit.transform.position = transform.position;
             OccupiedUnit = unit;
             unit.OccupiedTile = this;
+        }
+        else{
+            OccupiedUnit = null;
+        }
+
     }
 
     public Tile GetNextTile(Directions direction){
