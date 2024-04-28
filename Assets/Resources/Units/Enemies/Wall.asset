@@ -18,5 +18,7 @@ MonoBehaviour:
   original_health: 1100
   lore_description: 
   fight_description: 
+  passive: {fileID: 0}
   spells:
-  - {fileID: 11400000, guid: 860c283029c0cdb45b10b04643ae0dc7, type: 2}
+  - {fileID: 4855276535827830897, guid: 660f81acc692dc64fa3c66a4b0c769c4, type: 3}
+  scriptableJob: {fileID: 0}

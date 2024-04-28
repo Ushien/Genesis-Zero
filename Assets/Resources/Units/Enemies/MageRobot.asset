@@ -20,5 +20,5 @@ MonoBehaviour:
   fight_description: 
   passive: {fileID: 1300072096745834880, guid: 6a1429a24283a104caf9667f4367106a, type: 3}
   spells:
-  - {fileID: 11400000, guid: d82b8e743a2889c4f83af0148b21409f, type: 2}
+  - {fileID: 6708877276925215642, guid: 2712a1912af1cd346850b35190ee8e8e, type: 3}
   scriptableJob: {fileID: 0}

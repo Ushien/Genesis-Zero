@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
   m_Name: "Fus\xE9es de Signal"
   m_EditorClassIdentifier: 
-  spell_name: "Fus\xE9es de Signal"
+  spell_name: "Fus\xE9es de Signal (N)"
   lore_description: 
   fight_description: "Frappe l'ennemi avec le plus de vie et augmente l'attaque de
-    l'alli\xE9 en r\xE9serve."
+    l'alli\xE9 en r\xE9serve (N)"
   cooldown: 0
   properties: 00000000
   range: 0

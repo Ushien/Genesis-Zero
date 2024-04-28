@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
   m_Name: Retour de Flammes
   m_EditorClassIdentifier: 
-  spell_name: Retour de Flammes
+  spell_name: Retour de Flammes (N)
   lore_description: 
   fight_description: "Attaque un ennemi et \xE9change la place du personnage avec
-    un alli\xE9 en r\xE9serve"
+    un alli\xE9 en r\xE9serve. (N)"
   cooldown: 0
   properties: 00000000
+  range: 0
+  team_restriction: 0
+  artwork: {fileID: 0}
   spellScriptPrefab: {fileID: 862956936155830111, guid: 110f973f2f01d6b4b8492ba7b844a425, type: 3}

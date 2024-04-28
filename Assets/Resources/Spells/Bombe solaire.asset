@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
   m_Name: Bombe solaire
   m_EditorClassIdentifier: 
-  spell_name: Bombe Solaire
+  spell_name: Bombe Solaire (N)
   lore_description: 
   fight_description: "Frappe tous les adversaires et soigne les personnages alli\xE9s
-    de 50% des d\xE9gats totaux"
+    de 50% des d\xE9gats totaux (N)"
   cooldown: 5
   properties: 
   range: 3

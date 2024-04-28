@@ -20,6 +20,6 @@ MonoBehaviour:
   fight_description: 
   passive: {fileID: 0}
   spells:
-  - {fileID: 11400000, guid: 012e6ff4f078a0a469fd55fb67b8d6e1, type: 2}
-  - {fileID: 11400000, guid: 626a32d705e2a8647b13eb439e75cb3a, type: 2}
+  - {fileID: 2999990872894262757, guid: 5a54959b7a3ec2c4981e9b78fa7c4652, type: 3}
+  - {fileID: 4855276535827830897, guid: 660f81acc692dc64fa3c66a4b0c769c4, type: 3}
   scriptableJob: {fileID: 11400000, guid: 6f02e2776bda97049b1a64b38b89a58b, type: 2}

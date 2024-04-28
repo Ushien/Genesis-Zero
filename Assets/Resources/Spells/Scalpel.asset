@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
   m_Name: Scalpel
   m_EditorClassIdentifier: 
-  spell_name: Scalpel
+  spell_name: Scalpel (N)
   lore_description: 
   fight_description: "Inflige des d\xE9gats \xE0 une unit\xE9, si celle-ci a \xE9t\xE9
-    soign\xE9e lors du pr\xE9c\xE9dent tour, les d\xE9gats augmentent."
+    soign\xE9e lors du pr\xE9c\xE9dent tour, les d\xE9gats augmentent. (N)"
   cooldown: 0
   properties: 
   range: 0
