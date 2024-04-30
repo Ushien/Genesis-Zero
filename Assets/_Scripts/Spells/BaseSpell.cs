@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class BaseSpell : MonoBehaviour
 {
@@ -33,17 +34,29 @@ public class BaseSpell : MonoBehaviour
     }
 
     virtual public void Cast(){
-        Debug.Log("Pas la méthode overridée");
+        Debug.Log("Méthode overridée");
     }
 
-    virtual public void Cast(Tile tile){
-        cooldown = base_cooldown;
+    virtual public void Cast(Tile targetTile){
+        Debug.Log("Méthode overridée");
     }
 
-    public void SpellCasted(Tile targetTile){
-        Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.GetUnit().GetName());
-        EventManager.Instance.CastSpell(this);
+    virtual public void CastSpell(Tile targetTile, Action<Tile> spellFunction){
+        BaseUnit targetUnit = null;
+        if (targetTile != null){
+            targetUnit = targetTile.GetUnit();
+        }
+
+        if(targetUnit != null){
+            cooldown = base_cooldown;
+
+            spellFunction(targetTile);
+
+            Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.GetUnit().GetName());
+            EventManager.Instance.CastSpell(this);
+        }
     }
+
     public string GetName(){
         return spell_name;
     }

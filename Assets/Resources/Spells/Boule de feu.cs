@@ -6,18 +6,7 @@ public class Bouledefeu : BaseSpell
 {
     float ratio = 1;
     override public void Cast(Tile targetTile = null){
-        BaseUnit targetUnit = null;
-        if (targetTile != null){
-            targetUnit = targetTile.GetUnit();
-        }
-
-        if(targetUnit != null){
-            base.Cast(targetTile);
-
-            _Bouledefeu(targetTile);
-
-            SpellCasted(targetTile);
-        }
+        base.CastSpell(targetTile, _Bouledefeu);
     }
 
     private void _Bouledefeu(Tile targetTile){
