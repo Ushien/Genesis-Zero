@@ -13,6 +13,9 @@ public class Onde : BaseSpell
         }
 
         if(targetUnit != null){
+
+            cooldown = base_cooldown;
+            
             float finalAmount1 = ratio1 * owner.finalPower;
             float finalAmount2 = ratio2 * owner.finalPower;
 

@@ -12,15 +12,17 @@ public class Bouledefeu : BaseSpell
         }
 
         if(targetUnit != null){
+            base.Cast(targetTile);
 
-            float finalDamages = ratio * owner.finalPower;
+            _Bouledefeu(targetTile);
 
-            Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.GetUnit().GetName());
-
-            SpellManager.Instance.InflictDamage(finalDamages, targetUnit, Properties.Pyro);
-
-            EventManager.Instance.CastSpell(this);
+            SpellCasted(targetTile);
         }
+    }
 
+    private void _Bouledefeu(Tile targetTile){
+        float finalDamages = ratio * owner.finalPower;
+
+        SpellManager.Instance.InflictDamage(finalDamages, targetTile.GetUnit(), Properties.Pyro);
     }
 }

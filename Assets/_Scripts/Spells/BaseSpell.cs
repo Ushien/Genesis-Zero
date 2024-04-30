@@ -13,6 +13,7 @@ public class BaseSpell : MonoBehaviour
     [TextArea(5,10)]
     public string fight_description = "Fight Description";
     public int cooldown = 0;
+    public int base_cooldown = 0;
     public Sprite artwork = null;
     public GridManager.Selection_mode range;
     public GridManager.Team_restriction team_restriction;
@@ -25,7 +26,7 @@ public class BaseSpell : MonoBehaviour
         spell_name = scriptableSpell.spell_name;
         lore_description = scriptableSpell.lore_description;
         fight_description = scriptableSpell.fight_description;
-        cooldown = scriptableSpell.cooldown;
+        base_cooldown = scriptableSpell.cooldown;
         artwork = scriptableSpell.artwork;
         range = scriptableSpell.range;
         team_restriction = scriptableSpell.team_restriction;
@@ -36,7 +37,12 @@ public class BaseSpell : MonoBehaviour
     }
 
     virtual public void Cast(Tile tile){
-        Debug.Log("Pas la méthode overridée");
+        cooldown = base_cooldown;
+    }
+
+    public void SpellCasted(Tile targetTile){
+        Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.GetUnit().GetName());
+        EventManager.Instance.CastSpell(this);
     }
     public string GetName(){
         return spell_name;
