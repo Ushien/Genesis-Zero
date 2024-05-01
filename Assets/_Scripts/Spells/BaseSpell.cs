@@ -47,18 +47,39 @@ public class BaseSpell : MonoBehaviour
             targetUnit = targetTile.GetUnit();
         }
 
-        if(targetUnit != null){
+        if(targetUnit != null && cooldown <= 0){
             cooldown = base_cooldown;
 
             spellFunction(targetTile);
 
-            Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.GetUnit().GetName());
+            if(targetTile.GetUnit() != null){
+                Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.GetUnit().GetName());
+            }
+            else{
+                Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.name);
+            }
+
             EventManager.Instance.CastSpell(this);
         }
     }
 
     public string GetName(){
         return spell_name;
+    }
+
+    public void ModifyCooldown(int amount){
+        cooldown += amount;
+        if(cooldown < 0){
+            cooldown = 0;
+        }
+    }
+
+    public bool isAvailable(){
+        bool availability = true;
+        if(cooldown > 0){
+            availability = false;
+        }
+        return availability;
     }
 
     public BaseUnit GetOwner(){

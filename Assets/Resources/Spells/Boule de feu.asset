@@ -15,7 +15,7 @@ MonoBehaviour:
   spell_name: Boule de feu
   lore_description: 
   fight_description: "Frappe une unit\xE9 avec l'\xE9l\xE9ment Pyro"
-  cooldown: 2
+  cooldown: 1
   properties: 00000000
   range: 0
   team_restriction: 0

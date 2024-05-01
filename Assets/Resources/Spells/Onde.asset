@@ -16,7 +16,7 @@ MonoBehaviour:
   lore_description: 
   fight_description: "Soigne une unit\xE9 et lui conf\xE8re un l\xE9ger bonus de
     puissance."
-  cooldown: 0
+  cooldown: 2
   properties: 
   range: 0
   team_restriction: 0

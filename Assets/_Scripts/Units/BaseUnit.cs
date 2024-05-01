@@ -145,6 +145,10 @@ public class BaseUnit : MonoBehaviour
         return passive;
     }
 
+    public List<BaseSpell> GetSpells(){
+        return availableSpells;
+    }
+
     public void ModifyHP(int amount){
         finalHealth += amount;
         if(AreHPBelowZero()){

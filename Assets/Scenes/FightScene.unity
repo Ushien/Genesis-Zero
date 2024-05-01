@@ -1588,6 +1588,7 @@ MonoBehaviour:
   playerTurnState: 0
   enemyTurnState: 0
   playerActionChoiceState: 0
+  teamTurn: 0
   emptyInstruction: {fileID: 1357468458602736189, guid: 7fa9915facd635144b9a98b27d2c0bc9, type: 3}
   nTurn: 0
 --- !u!4 &1282223806
@@ -2148,6 +2149,7 @@ MonoBehaviour:
   unitPassiveDescriptionPanel: {fileID: 1550136857}
   spellSelector: {fileID: 1361008557}
   shade: {fileID: 1023284484}
+  grayscaleShader: {fileID: -6465566751694194690, guid: cafecebd812c730489d240ccc155ca09, type: 3}
   tileSelector: {fileID: 185091824}
   targetTile: {fileID: 0}
 --- !u!4 &1755985706
@@ -2517,7 +2519,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: -1
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0

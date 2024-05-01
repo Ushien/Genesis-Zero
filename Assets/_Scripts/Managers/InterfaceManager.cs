@@ -17,6 +17,7 @@ public class InterfaceManager : MonoBehaviour
     public TextMeshProUGUI unitPassiveDescriptionPanel;
     public GameObject spellSelector;
     public GameObject shade;
+    public Material grayscaleShader;
 
     public GameObject tileSelector;
 
@@ -144,7 +145,7 @@ public class InterfaceManager : MonoBehaviour
     void SpellSelectionDisplay(){
         // TODO Ne pas afficher les 4 cases si le personnage n'a pas 4 spells
         BaseUnit sourceUnit = sourceTile.GetUnit();
-        List<BaseSpell> currentSpells = sourceUnit.availableSpells;
+        List<BaseSpell> currentSpells = sourceUnit.GetSpells();
 
         if(!activated_states[BattleManager.PlayerActionChoiceState.SPELL_SELECTION]){
             // Just changed from another state
@@ -164,6 +165,11 @@ public class InterfaceManager : MonoBehaviour
             foreach (var spell in currentSpells)
             {
                 spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().sprite = spell.artwork;
+                if(!spell.isAvailable()){
+                    Material material = Instantiate(grayscaleShader);
+                    spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().material = material;
+                    //Grey
+                }
                 currentSpellIndex += 1;
             }
 

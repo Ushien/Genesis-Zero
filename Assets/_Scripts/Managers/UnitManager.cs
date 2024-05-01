@@ -100,6 +100,16 @@ public class UnitManager : MonoBehaviour
         unit.OccupiedTile = null; 
         unit.gameObject.SetActive(false);
     }
+
+    public void ReduceCooldowns(Team team){
+        foreach (BaseUnit unit in GetUnits(team))
+        {
+            foreach (BaseSpell spell in unit.GetSpells())
+            {
+                spell.ModifyCooldown(-1);
+            }
+        }
+    }
 }
 
 public enum Team {
