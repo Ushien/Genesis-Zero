@@ -106,7 +106,7 @@ public class UnitManager : MonoBehaviour
         {
             foreach (BaseSpell spell in unit.GetSpells())
             {
-                spell.ModifyCooldown(-1);
+                spell.ModifyCooldown(+1);
             }
         }
     }

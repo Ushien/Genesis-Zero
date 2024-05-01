@@ -28,6 +28,7 @@ public class BaseSpell : MonoBehaviour
         lore_description = scriptableSpell.lore_description;
         fight_description = scriptableSpell.fight_description;
         base_cooldown = scriptableSpell.cooldown;
+        cooldown = base_cooldown;
         artwork = scriptableSpell.artwork;
         range = scriptableSpell.range;
         team_restriction = scriptableSpell.team_restriction;
@@ -47,8 +48,8 @@ public class BaseSpell : MonoBehaviour
             targetUnit = targetTile.GetUnit();
         }
 
-        if(targetUnit != null && cooldown <= 0){
-            cooldown = base_cooldown;
+        if(targetUnit != null && isAvailable()){
+            SetCooldown(0);
 
             spellFunction(targetTile);
 
@@ -69,14 +70,26 @@ public class BaseSpell : MonoBehaviour
 
     public void ModifyCooldown(int amount){
         cooldown += amount;
-        if(cooldown < 0){
-            cooldown = 0;
+        if(cooldown > base_cooldown){
+            cooldown = base_cooldown;
         }
+    }
+
+    public void SetCooldown(int amount){
+        cooldown = amount;
+    }
+
+    public int GetCooldown(){
+        return cooldown;
+    }
+
+    public int GetBaseCooldown(){
+        return base_cooldown;
     }
 
     public bool isAvailable(){
         bool availability = true;
-        if(cooldown > 0){
+        if(cooldown < base_cooldown){
             availability = false;
         }
         return availability;

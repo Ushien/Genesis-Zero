@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
 
 public class InterfaceManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class InterfaceManager : MonoBehaviour
     public TextMeshProUGUI unitLevelPanel;
     public TextMeshProUGUI unitPassiveNamePanel;
     public TextMeshProUGUI unitPassiveDescriptionPanel;
+    public TextMeshProUGUI spellCooldownPanel;
     public GameObject spellSelector;
     public GameObject shade;
     public Material grayscaleShader;
@@ -165,6 +167,7 @@ public class InterfaceManager : MonoBehaviour
             foreach (var spell in currentSpells)
             {
                 spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().sprite = spell.artwork;
+                spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().material = null;
                 if(!spell.isAvailable()){
                     Material material = Instantiate(grayscaleShader);
                     spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().material = material;
@@ -243,7 +246,7 @@ public class InterfaceManager : MonoBehaviour
                 break;
             case SpellChoice.LEFT:
                 selectedSpell = currentSpells[0];
-                if (Input.GetKeyDown(KeyCode.B)){
+                if (Input.GetKeyDown(KeyCode.B) && selectedSpell.isAvailable()){
                     SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
                     break;
                 }
@@ -270,7 +273,7 @@ public class InterfaceManager : MonoBehaviour
                 break;
             case SpellChoice.RIGHT:
                 selectedSpell = currentSpells[1];
-                if (Input.GetKeyDown(KeyCode.B)){
+                if (Input.GetKeyDown(KeyCode.B) && selectedSpell.isAvailable()){
                     SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
                     break;
                 }
@@ -297,7 +300,7 @@ public class InterfaceManager : MonoBehaviour
                 break;
             case SpellChoice.UP:
                 selectedSpell = currentSpells[2];
-                if (Input.GetKeyDown(KeyCode.B)){
+                if (Input.GetKeyDown(KeyCode.B) && selectedSpell.isAvailable()){
                     SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
                     break;
                 }
@@ -324,7 +327,7 @@ public class InterfaceManager : MonoBehaviour
                 break;
             case SpellChoice.DOWN:
                 selectedSpell = currentSpells[3];
-                if (Input.GetKeyDown(KeyCode.B)){
+                if (Input.GetKeyDown(KeyCode.B) && selectedSpell.isAvailable()){
                     SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
                     break;
                 }
@@ -358,32 +361,26 @@ public class InterfaceManager : MonoBehaviour
         switch(spellChoice){
             case SpellChoice.CHARACTER:
                 unitPassiveNamePanel.text = sourceUnit.GetPassive().GetName();
-                // FIXME Lorsqu'on quitte l'interface de spells ça renvoie une nullreference
-                // Je pense que c'est lié à la variable sourceUnit qui est mal gérée
                 unitPassiveDescriptionPanel.text = sourceUnit.GetPassive().GetFightDescription();
                 break;
             case SpellChoice.LEFT:
                 if(currentSpells.Count > 0){
-                    unitPassiveNamePanel.text = currentSpells[0].GetName();
-                    unitPassiveDescriptionPanel.text = currentSpells[0].GetFightDescription();
+                    DisplaySpell(currentSpells[0]);
                 }
                 break;
             case SpellChoice.RIGHT:
                 if(currentSpells.Count > 1){
-                    unitPassiveNamePanel.text = currentSpells[1].GetName();
-                    unitPassiveDescriptionPanel.text = currentSpells[1].GetFightDescription();
+                    DisplaySpell(currentSpells[1]);
                 }
                 break;
             case SpellChoice.UP:
                 if(currentSpells.Count > 2){
-                    unitPassiveNamePanel.text = currentSpells[2].GetName();
-                    unitPassiveDescriptionPanel.text = currentSpells[2].GetFightDescription();
+                    DisplaySpell(currentSpells[2]);
                 }
                 break;
             case SpellChoice.DOWN:
                 if(currentSpells.Count > 3){
-                    unitPassiveNamePanel.text = currentSpells[3].GetName();
-                    unitPassiveDescriptionPanel.text = currentSpells[3].GetFightDescription();
+                    DisplaySpell(currentSpells[3]);
                 }
                 break;
             default:
@@ -461,12 +458,7 @@ public class InterfaceManager : MonoBehaviour
         BaseUnit currentUnit = targetTile.GetUnit();
         if(currentUnit != null){
             informationPanel.SetActive(true);
-            unitNamePanel.text = currentUnit.GetName();
-            unitPowerPanel.text = "Puissance : " + currentUnit.GetFinalPower().ToString();
-            unitHealthPanel.text = "PV : " + currentUnit.GetFinalHealth().ToString() + "/" + currentUnit.GetTotalHealth().ToString();
-            unitLevelPanel.text = "Niveau : " + currentUnit.GetLevel().ToString();
-            unitPassiveNamePanel.text = currentUnit.GetPassive().GetName();
-            unitPassiveDescriptionPanel.text = currentUnit.GetPassive().GetFightDescription();
+            DisplayUnit(currentUnit);
         }
         else{
             informationPanel.SetActive(false);
@@ -485,6 +477,21 @@ public class InterfaceManager : MonoBehaviour
             BattleManager.Instance.AssignInstruction(instruction);
         }
         BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, trigger);
+    }
+
+    private void DisplaySpell(BaseSpell spell){
+        unitPassiveNamePanel.text = spell.GetName();
+        unitPassiveDescriptionPanel.text = spell.GetFightDescription();
+        spellCooldownPanel.text = spell.GetCooldown().ToString() + " / " + spell.GetBaseCooldown().ToString();
+    }
+
+    private void DisplayUnit(BaseUnit unit){
+        unitNamePanel.text = unit.GetName();
+        unitPowerPanel.text = "Puissance : " + unit.GetFinalPower().ToString();
+        unitHealthPanel.text = "PV : " + unit.GetFinalHealth().ToString() + "/" + unit.GetTotalHealth().ToString();
+        unitLevelPanel.text = "Niveau : " + unit.GetLevel().ToString();
+        unitPassiveNamePanel.text = unit.GetPassive().GetName();
+        unitPassiveDescriptionPanel.text = unit.GetPassive().GetFightDescription();
     }
     
     void ResetDisplay(){
