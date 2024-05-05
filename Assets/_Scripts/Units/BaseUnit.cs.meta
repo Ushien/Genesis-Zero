@@ -5,9 +5,14 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - scriptableUnit: {instanceID: 0}
+  - scriptableJob: {instanceID: 0}
   - OccupiedTile: {instanceID: 0}
+  - baseAttack: {fileID: 8434168870271485426, guid: eeae1d804ea500d4c90d9eea03bdafee, type: 3}
+  - attack: {instanceID: 0}
   - emptyPassive: {fileID: 3810670229972875663, guid: 6217b02478aa69f4d89ff893ae28e53e, type: 3}
   - passive: {instanceID: 0}
+  - heroSpell1: {instanceID: 0}
+  - heroSpell2: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

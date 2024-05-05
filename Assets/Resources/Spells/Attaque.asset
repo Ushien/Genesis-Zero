@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
+  m_Name: Attaque
+  m_EditorClassIdentifier: 
+  spell_name: Attaque
+  lore_description: 
+  fight_description: "Attaque une cible et lui inflige des d\xE9gats."
+  cooldown: 0
+  properties: 
+  range: 0
+  team_restriction: 0
+  artwork: {fileID: 21300000, guid: 97209abe28f63394e9637856187a3a04, type: 3}
+  spellScriptPrefab: {fileID: 7298346626276781464, guid: eeae1d804ea500d4c90d9eea03bdafee, type: 3}

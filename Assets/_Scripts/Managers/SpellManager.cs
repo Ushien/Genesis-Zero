@@ -7,6 +7,7 @@ public class SpellManager : MonoBehaviour
 {
     public static SpellManager Instance;
     public BaseSpell EmptySpell;
+    public BaseSpell baseAttack;
 
     private List<ScriptableSpell> _spells;
     void Awake(){
@@ -24,6 +25,13 @@ public class SpellManager : MonoBehaviour
     private List<ScriptableSpell> LoadSpells(){
         var spellList = Resources.LoadAll<ScriptableSpell>("Spells").ToList();
         return spellList;
+    }
+
+    public BaseSpell SetupAttack(BaseUnit unit){
+        BaseSpell new_spell = Instantiate(baseAttack);
+        new_spell.transform.parent = unit.transform;
+        new_spell.Setup(unit);
+        return new_spell;
     }
 
     public BaseSpell SetupSpell(BaseSpell spell, BaseUnit unit){

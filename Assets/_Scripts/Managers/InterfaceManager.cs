@@ -211,11 +211,10 @@ public class InterfaceManager : MonoBehaviour
         // Navigation au sein de la sélection
         switch(spellChoice){
             case SpellChoice.CHARACTER:
-                //TODO Supprimer et remplacer par l'attaque de base, ça ne doit pas rester dans cet état
-                selectedSpell = currentSpells[0];
+                selectedSpell = sourceUnit.GetAttack();
                 if (Input.GetKeyDown(KeyCode.B)){
                     // Sélectionner attaque
-                    // TODO
+                    SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.N)){

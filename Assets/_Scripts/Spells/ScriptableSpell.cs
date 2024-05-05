@@ -18,7 +18,7 @@ public class ScriptableSpell : ScriptableObject
 
     public Sprite artwork;
 
-    public GameObject spellScriptPrefab;
+    public BaseSpell spellScriptPrefab;
 
     public virtual void OnUse()
     {

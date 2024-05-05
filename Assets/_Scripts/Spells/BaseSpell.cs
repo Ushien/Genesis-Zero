@@ -10,6 +10,7 @@ public class BaseSpell : MonoBehaviour
 
     public string spell_name = "Name";
     [TextArea(5,10)]
+    private bool isATechnique = true;
     public string lore_description = "Lore Description";
     [TextArea(5,10)]
     public string fight_description = "Fight Description";
@@ -59,8 +60,10 @@ public class BaseSpell : MonoBehaviour
             else{
                 Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.name);
             }
+            if (IsATechnique()){
+                EventManager.Instance.CastSpell(this);
+            }
 
-            EventManager.Instance.CastSpell(this);
         }
     }
 
@@ -93,6 +96,13 @@ public class BaseSpell : MonoBehaviour
             availability = false;
         }
         return availability;
+    }
+    public bool IsATechnique(){
+        return isATechnique;
+    }
+
+    public void SetIsATechnique(bool value){
+        isATechnique = value;
     }
 
     public BaseUnit GetOwner(){

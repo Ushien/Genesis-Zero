@@ -8,6 +8,7 @@ public class BaseUnit : MonoBehaviour
     public ScriptableUnit scriptableUnit;
     public ScriptableJob scriptableJob;
     public Tile OccupiedTile;
+    public BaseSpell attack;
     public Passive emptyPassive;
     public Passive passive;
     public List<BaseSpell> availableSpells;
@@ -59,6 +60,8 @@ public class BaseUnit : MonoBehaviour
         passive.transform.parent = this.transform;
         passive.name = "Passif";
         passive.AttachToUnit(this);
+
+        attack = SpellManager.Instance.SetupAttack(this);
 
         foreach (BaseSpell spell in scriptableUnit.spells)
         {
@@ -147,6 +150,10 @@ public class BaseUnit : MonoBehaviour
 
     public List<BaseSpell> GetSpells(){
         return availableSpells;
+    }
+
+    public BaseSpell GetAttack(){
+        return attack;
     }
 
     public void ModifyHP(int amount){
