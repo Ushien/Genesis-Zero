@@ -1599,6 +1599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EmptySpell: {fileID: 9006307862910270949, guid: d67e51260aaa4ab469a34fa6fc7b56a5, type: 3}
+  baseAttack: {fileID: 8434168870271485426, guid: eeae1d804ea500d4c90d9eea03bdafee, type: 3}
 --- !u!4 &1168403978
 Transform:
   m_ObjectHideFlags: 0
