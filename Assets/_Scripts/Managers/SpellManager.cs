@@ -50,6 +50,14 @@ public class SpellManager : MonoBehaviour
         target.ModifyHP(-finalDamages);
     }
 
+    public void InflictDamage(float amount, List<BaseUnit> targets, Properties property= Properties.Empty){
+        foreach (BaseUnit target in targets)
+        {
+            int finalDamages = (int)System.Math.Ceiling(amount);
+            target.ModifyHP(-finalDamages);
+        }        
+    }
+
     public void HealDamage(float amount, BaseUnit target, Properties property = Properties.Empty){
         int finalAmount = (int)System.Math.Ceiling(amount);
         target.ModifyHP(finalAmount);
