@@ -62,21 +62,21 @@ public class Tile : MonoBehaviour
     public Tile GetNextTile(Directions direction){
         Tile next_tile = null;
         switch (direction){
-            case(Directions.UP):
+            case Directions.UP:
                 next_tile = GridManager.Instance.GetTileAtPosition(team, new Vector2(x_position, y_position + 1));
                 //TODO Ajouter les autres cas
                 break;
-            case(Directions.DOWN):
+            case Directions.DOWN:
                 next_tile = GridManager.Instance.GetTileAtPosition(team, new Vector2(x_position, y_position - 1));
                 //TODO Ajouter les autres cas
                 break;
-            case(Directions.LEFT):
+            case Directions.LEFT:
                 next_tile = GridManager.Instance.GetTileAtPosition(team, new Vector2(x_position - 1, y_position));
                 if(next_tile == null && team == Team.Enemy){
                     next_tile = GridManager.Instance.GetBorderTile(Team.Ally, Directions.RIGHT, y_position);
                 }
                 break;
-            case(Directions.RIGHT):
+            case Directions.RIGHT:
                 next_tile = GridManager.Instance.GetTileAtPosition(team, new Vector2(x_position + 1, y_position));
                 if(next_tile == null && team == Team.Ally){
                     next_tile = GridManager.Instance.GetBorderTile(Team.Enemy, Directions.LEFT, y_position);

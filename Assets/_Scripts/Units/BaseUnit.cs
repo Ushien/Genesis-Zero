@@ -156,6 +156,10 @@ public class BaseUnit : MonoBehaviour
         return attack;
     }
 
+    public Tile GetTile(){
+        return OccupiedTile;
+    }
+
     public void ModifyHP(int amount){
         finalHealth += amount;
         if(AreHPBelowZero()){
@@ -179,6 +183,7 @@ public class BaseUnit : MonoBehaviour
 
     public void Kill(){
         dead = true;
+        EventManager.Instance.UnitDied(this);
         UnitManager.Instance.Kill(this);
     }
 

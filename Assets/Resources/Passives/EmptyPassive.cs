@@ -13,12 +13,12 @@ public class EmptyPassive : Passive
     // Lorsque le passif est setup, l'active
     void OnEnable()
     {
-        EventManager.OnClicked += ShoutName;
+        //
     }
 
     void OnDisable()
     {
-        EventManager.OnClicked -= ShoutName;
+        //
     }
     
     // Lorsque le passif disparaît, le désactive

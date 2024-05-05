@@ -72,6 +72,10 @@ public class UnitManager : MonoBehaviour
         return units.Where(unit => unit.Team == team).ToList();
     }
 
+    public List<BaseUnit> GetAdjacentUnits(BaseUnit unit){
+        return GridManager.Instance.UnitsFromTiles(GridManager.Instance.GetAdjacentTiles(unit.GetTile()));
+    }
+
     public int CountUnits(Team team){
         return GetUnits(team).Count;
     }

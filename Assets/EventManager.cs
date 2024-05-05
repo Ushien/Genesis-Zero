@@ -8,21 +8,22 @@ public class EventManager : MonoBehaviour
 {
 
     public static EventManager Instance;
-    public delegate void ClickAction();
     public delegate void SpellAction();
-    public static event ClickAction OnClicked;
     public static event Action<BaseSpell> OnCast;
+    public delegate void DeathAction();
+    public static event Action<BaseUnit> OnDeath;
     void Awake(){
         Instance = this;
     }
-    public void Click(){
-        if (OnClicked != null){
-            OnClicked();
-        }
-    }
-    public void CastSpell(BaseSpell spell){
+
+    public void TechCasted(BaseSpell spell){
         if (OnCast != null){
             OnCast(spell);
+        }
+    }
+    public void UnitDied(BaseUnit unit){
+        if (OnDeath != null){
+            OnDeath(unit);
         }
     }
 

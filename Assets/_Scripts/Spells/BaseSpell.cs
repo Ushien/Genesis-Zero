@@ -61,7 +61,7 @@ public class BaseSpell : MonoBehaviour
                 Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.name);
             }
             if (IsATechnique()){
-                EventManager.Instance.CastSpell(this);
+                EventManager.Instance.TechCasted(this);
             }
 
         }

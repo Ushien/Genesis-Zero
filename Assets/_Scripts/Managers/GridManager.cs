@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
 
 public class GridManager : MonoBehaviour
 {
@@ -184,7 +185,7 @@ public class GridManager : MonoBehaviour
         return tiles_list;
     }
 
-    private List<BaseUnit> UnitsFromTiles(List<Tile> tiles){
+    public List<BaseUnit> UnitsFromTiles(List<Tile> tiles){
         List<BaseUnit> units_list = new List<BaseUnit>();
         foreach (Tile tile in tiles){
             if(tile.OccupiedUnit != null){
@@ -194,11 +195,23 @@ public class GridManager : MonoBehaviour
         return units_list;
     }
 
-    void Update(){
+    public List<Tile> GetAdjacentTiles(Tile tile){
+        List<Tile> tiles_list = new();
+        if(tile.GetNextTile(Directions.LEFT) != null){
+            tiles_list.Add(tile.GetNextTile(Directions.LEFT));
+        }
+        if(tile.GetNextTile(Directions.RIGHT) != null){
+            tiles_list.Add(tile.GetNextTile(Directions.RIGHT));
+        }
+        if(tile.GetNextTile(Directions.UP) != null){
+            tiles_list.Add(tile.GetNextTile(Directions.UP));
+        }
+        if(tile.GetNextTile(Directions.DOWN) != null){
+            tiles_list.Add(tile.GetNextTile(Directions.DOWN));
+        }
 
-        
+        return tiles_list;
     }
-
     public void DisplayHighlights(){
 
         TurnHighlightsOff();
