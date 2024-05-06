@@ -358,7 +358,7 @@ public class BattleManager : MonoBehaviour
     public void NextTurn(){
         nTurn ++;
         //SwitchCurrentTeam();
-        UnitManager.Instance.ReduceCooldowns(ConvertTeamTurn(teamTurn));
+        UnitManager.Instance.ApplyEndTurnEffects(ConvertTeamTurn(teamTurn));
         StartTurn();
     }
 

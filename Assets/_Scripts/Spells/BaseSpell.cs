@@ -49,7 +49,7 @@ public class BaseSpell : MonoBehaviour
             targetUnit = targetTile.GetUnit();
         }
 
-        if(targetUnit != null && isAvailable()){
+        if(targetUnit != null && IsAvailable()){
             SetCooldown(0);
 
             spellFunction(targetTile);
@@ -73,8 +73,15 @@ public class BaseSpell : MonoBehaviour
 
     public void ModifyCooldown(int amount){
         cooldown += amount;
+        CheckCooldown();
+    }
+    
+    public void CheckCooldown(){
         if(cooldown > base_cooldown){
             cooldown = base_cooldown;
+        }
+        if(cooldown < 0){
+            cooldown = 0;
         }
     }
 
@@ -90,9 +97,9 @@ public class BaseSpell : MonoBehaviour
         return base_cooldown;
     }
 
-    public bool isAvailable(){
+    public bool IsAvailable(){
         bool availability = true;
-        if(cooldown < base_cooldown){
+        if(GetCooldown() < GetBaseCooldown()){
             availability = false;
         }
         return availability;
@@ -115,5 +122,9 @@ public class BaseSpell : MonoBehaviour
 
     public string GetFightDescription(){
         return fight_description;
+    }
+
+    public void ApplyEndTurnEffects(){
+        ModifyCooldown(+1);
     }
 }

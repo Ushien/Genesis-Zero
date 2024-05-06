@@ -14,7 +14,8 @@ public class BaseUnit : MonoBehaviour
     public List<BaseSpell> availableSpells;
     public Team Team = Team.Enemy;
     public int level = 1;
-    public int stun = 0;
+    public int stunTime = 0;
+    public bool stun;
 
     private bool instructionGiven = false;
 
@@ -99,7 +100,7 @@ public class BaseUnit : MonoBehaviour
     public int GetStatFromLevel(int level_100_stat, int real_level){
 
         var level_1_stat = (float)level_100_stat/10;
-        var growth_by_level = ((float)level_100_stat-level_1_stat)/99;
+        var growth_by_level = (level_100_stat-level_1_stat)/99;
         var real_level_stat = (int)Math.Ceiling(level_1_stat+growth_by_level*(real_level-1));
 
         return real_level_stat;
@@ -127,6 +128,10 @@ public class BaseUnit : MonoBehaviour
 
     public int GetFinalPower(){
         return finalPower;
+    }
+
+    public void ModifyPower(float amount){
+        finalPower = (int)System.Math.Ceiling(finalPower + finalPower * amount);
     }
 
     public int GetTotalHealth(){
@@ -161,33 +166,99 @@ public class BaseUnit : MonoBehaviour
         return OccupiedTile;
     }
 
+    public void ModifyBothHP(int amount){
+        ModifyTotalHP(amount);
+        ModifyHP(amount);
+    }
+
+    public void MultiplyBothHP(int amount){
+        MultiplyTotalHP(amount);
+        MultiplyHP(amount);
+    }
+
+    public void ModifyTotalHP(int amount){
+        totalHealth += amount;
+        CheckTotalHP();
+    }
+
+    public void MultiplyTotalHP(int amount){
+        totalHealth *= amount;
+        CheckTotalHP();
+    }
+
     public void ModifyHP(int amount){
         finalHealth += amount;
+        CheckHP();
+    }
+
+    public void MultiplyHP(int amount){
+        finalHealth *= amount;
+        CheckHP();
+    }
+
+    public void SetHP(int HP, bool check = true){
+        finalHealth = HP;
+        if(check){
+            CheckHP();
+        }
+    }
+
+    public void SetTotalHP(int HP, bool check = true){
+        totalHealth = HP;
+        if(check){
+            CheckTotalHP();
+        }
+    }
+
+    public void CheckHP(){
+        if(AreHPBeyondMax()){
+            SetHP(GetTotalHealth(), false);
+        }
         if(AreHPBelowZero()){
+            SetHP(0, false);
             Kill();
         }
-        if(AreHPBeyondMax()){
-            SetHP(GetTotalHealth());
+    }
+
+    public void CheckTotalHP(){
+        if(AreTotalHPBelowZero()){
+            SetTotalHP(0, false);
         }
+        CheckHP();
     }
 
     public bool AreHPBelowZero(){
-        return finalHealth <= 0;
+        return GetFinalHealth() <= 0;
     }
     public bool AreHPBeyondMax(){
-        return finalHealth >= GetTotalHealth();
+        return GetFinalHealth() >= GetTotalHealth();
     }
 
-    public void SetHP(int HP){
-        finalHealth = HP;
+    public bool AreTotalHPBelowZero(){
+        return GetTotalHealth() <= 0;
     }
 
-    public void Stun(int amount){
-        stun += amount;
+    public void SetStunTime(int amount){
+        stunTime = amount;
+        CheckStun();
+    }
+
+    public void ModifyStunTime(int amount){
+        stunTime += amount;
+        CheckStun();
+    }
+
+    public void CheckStun(){
+        if (stunTime > 0){
+            stun = true;
+        }
+        else{
+            stun = false;
+        }
     }
 
     public bool IsAvailable(){
-        available = true;
+        bool available = true;
         if(dead){
             available = false;
         }
@@ -203,8 +274,12 @@ public class BaseUnit : MonoBehaviour
         UnitManager.Instance.Kill(this);
     }
 
-    public void ModifyPower(float amount){
-        finalPower = (int)System.Math.Ceiling(finalPower + finalPower * amount);
+    public void ApplyEndturnEffects(){
+        ModifyStunTime(-1);
+        foreach (BaseSpell spell in GetSpells())
+        {
+            spell.ApplyEndTurnEffects()  ; 
+        }
     }
 
     public List<string> GetInfo(){

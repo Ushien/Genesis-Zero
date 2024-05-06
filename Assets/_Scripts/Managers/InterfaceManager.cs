@@ -168,7 +168,7 @@ public class InterfaceManager : MonoBehaviour
             {
                 spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().sprite = spell.artwork;
                 spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().material = null;
-                if(!spell.isAvailable()){
+                if(!spell.IsAvailable()){
                     Material material = Instantiate(grayscaleShader);
                     spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().material = material;
                     //Grey
@@ -245,7 +245,7 @@ public class InterfaceManager : MonoBehaviour
                 break;
             case SpellChoice.LEFT:
                 selectedSpell = currentSpells[0];
-                if (Input.GetKeyDown(KeyCode.B) && selectedSpell.isAvailable()){
+                if (Input.GetKeyDown(KeyCode.B) && selectedSpell.IsAvailable()){
                     SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
                     break;
                 }
@@ -272,7 +272,7 @@ public class InterfaceManager : MonoBehaviour
                 break;
             case SpellChoice.RIGHT:
                 selectedSpell = currentSpells[1];
-                if (Input.GetKeyDown(KeyCode.B) && selectedSpell.isAvailable()){
+                if (Input.GetKeyDown(KeyCode.B) && selectedSpell.IsAvailable()){
                     SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
                     break;
                 }
@@ -299,7 +299,7 @@ public class InterfaceManager : MonoBehaviour
                 break;
             case SpellChoice.UP:
                 selectedSpell = currentSpells[2];
-                if (Input.GetKeyDown(KeyCode.B) && selectedSpell.isAvailable()){
+                if (Input.GetKeyDown(KeyCode.B) && selectedSpell.IsAvailable()){
                     SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
                     break;
                 }
@@ -326,7 +326,7 @@ public class InterfaceManager : MonoBehaviour
                 break;
             case SpellChoice.DOWN:
                 selectedSpell = currentSpells[3];
-                if (Input.GetKeyDown(KeyCode.B) && selectedSpell.isAvailable()){
+                if (Input.GetKeyDown(KeyCode.B) && selectedSpell.IsAvailable()){
                     SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
                     break;
                 }

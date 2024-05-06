@@ -109,13 +109,10 @@ public class UnitManager : MonoBehaviour
         unit.gameObject.SetActive(false);
     }
 
-    public void ReduceCooldowns(Team team){
+    public void ApplyEndTurnEffects(Team team){
         foreach (BaseUnit unit in GetUnits(team))
         {
-            foreach (BaseSpell spell in unit.GetSpells())
-            {
-                spell.ModifyCooldown(+1);
-            }
+            unit.ApplyEndturnEffects();
         }
     }
 }

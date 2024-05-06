@@ -72,11 +72,11 @@ public class SpellManager : MonoBehaviour
     }
 
     public void MultiplyHP(float amount, BaseUnit target){
-        target.ModifyHP(target.GetFinalHealth()*amount);
+        target.MultiplyBothHP((int)amount);
     }
 
-    public void Stun(int amount){
-        target.Stun(amount);
+    public void Stun(int amount, BaseUnit target){
+        target.SetStunTime(amount);
     }
 }
 
