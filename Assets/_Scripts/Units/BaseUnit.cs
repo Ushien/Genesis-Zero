@@ -14,6 +14,7 @@ public class BaseUnit : MonoBehaviour
     public List<BaseSpell> availableSpells;
     public Team Team = Team.Enemy;
     public int level = 1;
+    public int stun = 0;
 
     private bool instructionGiven = false;
 
@@ -179,6 +180,21 @@ public class BaseUnit : MonoBehaviour
 
     public void SetHP(int HP){
         finalHealth = HP;
+    }
+
+    public void Stun(int amount){
+        stun += amount;
+    }
+
+    public bool IsAvailable(){
+        available = true;
+        if(dead){
+            available = false;
+        }
+        if(stun){
+            available = false;
+        }
+        return available;
     }
 
     public void Kill(){

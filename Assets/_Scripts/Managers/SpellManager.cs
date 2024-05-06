@@ -70,6 +70,14 @@ public class SpellManager : MonoBehaviour
     public void ModifyPower(float amount, BaseUnit target){
         target.ModifyPower(amount);
     }
+
+    public void MultiplyHP(float amount, BaseUnit target){
+        target.ModifyHP(target.GetFinalHealth()*amount);
+    }
+
+    public void Stun(int amount){
+        target.Stun(amount);
+    }
 }
 
 public enum Properties {   
