@@ -11,7 +11,7 @@ public class EmptyPassive : Passive
     }
 
     // Lorsque le passif est setup, l'active
-    void OnEnable()
+    override public void Activate()
     {
         //
     }

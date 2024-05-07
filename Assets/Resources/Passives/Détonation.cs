@@ -11,7 +11,7 @@ public class NewBehaviourScript : Passive
         fight_description = "Lorsqu'un unité adverse meurt, elle inflige de légers dégats aux unités adjacentes";
     }
     // Lorsque le passif est setup, l'active
-    void OnEnable()
+    override public void Activate()
     {
         EventManager.OnDeath += Detonation;
     }

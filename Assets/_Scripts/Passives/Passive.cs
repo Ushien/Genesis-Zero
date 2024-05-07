@@ -12,6 +12,19 @@ public class Passive : MonoBehaviour
         holder = unit;
     }
 
+    virtual public void Setup(BaseUnit unit){
+        name = passiveName;
+        AttachToUnit(unit);
+        transform.parent = unit.transform;
+
+        Activate();
+    }
+
+    virtual public void Activate(){
+        Debug.Log("Must be overriden");
+        Debug.Log(name);
+    }
+
     virtual public string GetName(){
         return passiveName;
     }

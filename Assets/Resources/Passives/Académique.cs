@@ -10,7 +10,7 @@ public class Académique : Passive
         fight_description = "Après avoir lancé une technique, le lanceur gagne 10% de puissance";
     }
     // Lorsque le passif est setup, l'active
-    void OnEnable()
+    override public void Activate()
     {
         EventManager.OnCast += RisingPower;
     }

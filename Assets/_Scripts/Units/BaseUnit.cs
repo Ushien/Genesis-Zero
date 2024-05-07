@@ -35,6 +35,9 @@ public class BaseUnit : MonoBehaviour
 
     public int armor = 0;
 
+    public Dictionary<Action<int>, List<Modifier>> modifiers = new Dictionary<Action<int>, List<Modifier>>();
+    public Hashtable modifiers2 = new Hashtable();
+
     public void Setup(ScriptableUnit originUnit, int setup_level, Team team){
         scriptableUnit = originUnit;
         this.name = scriptableUnit.unit_name;
@@ -52,16 +55,17 @@ public class BaseUnit : MonoBehaviour
         lore_description = scriptableUnit.lore_description;
         fight_description = scriptableUnit.fight_description;
 
+        modifiers[Heal] = new List<Modifier>();
+        modifiers[Damage] = new List<Modifier>();
+
         if(scriptableUnit.passive != null){
             passive = Instantiate(scriptableUnit.passive);
-
         }
         else{
             passive = Instantiate(emptyPassive);
         }
-        passive.transform.parent = this.transform;
-        passive.name = "Passif";
-        passive.AttachToUnit(this);
+
+        passive.Setup(this);
 
         attack = SpellManager.Instance.SetupAttack(this);
 
@@ -82,9 +86,7 @@ public class BaseUnit : MonoBehaviour
         if (scriptableJob.passive != null){
             Destroy(passive.gameObject);
             passive = Instantiate(scriptableJob.passive);
-            passive.transform.parent = this.transform;
-            passive.name = "Passif";
-            passive.AttachToUnit(this);
+            passive.Setup(this);
         }
     }
 
@@ -186,7 +188,20 @@ public class BaseUnit : MonoBehaviour
         CheckTotalHP();
     }
 
-    public void ModifyHP(int amount){
+    public void Damage(int amount){
+        ModifyHP(-amount);
+    }
+
+    public void Heal(int amount){
+        int finalAmount = amount;
+        foreach (Modifier _modifier in modifiers[Heal])
+        {
+            finalAmount = _modifier.GetNewAmount(finalAmount);
+        }
+        ModifyHP(+finalAmount);
+    }
+
+    private void ModifyHP(int amount){
         finalHealth += amount;
         CheckHP();
     }
@@ -273,6 +288,15 @@ public class BaseUnit : MonoBehaviour
         EventManager.Instance.UnitDied(this);
         UnitManager.Instance.Kill(this);
     }
+
+    public void AddModifier(Modifier modifier, Action<int> function){
+        modifiers[function].Add(modifier);
+    }
+
+    public void DeleteModifier(Modifier modifier, Action<int> function){
+        modifiers[function].Remove(modifier);
+    }
+
 
     public void ApplyEndturnEffects(){
         ModifyStunTime(-1);

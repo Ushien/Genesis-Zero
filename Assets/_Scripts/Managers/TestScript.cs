@@ -17,7 +17,11 @@ public class TestScript : MonoBehaviour
 
         BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, BattleManager.Trigger.FORWARD);
 
-        //UnitManager.Instance.GetRandomUnit().CastSpell(0);
+        
+        foreach (BaseUnit unit in UnitManager.Instance.GetUnits(Team.Ally)){
+            unit.SetHP(20);
+        }
+
     }
 
     void Update(){
