@@ -19,4 +19,4 @@ MonoBehaviour:
   passive: {fileID: 6541320857499053826, guid: 7a584848ed3aceb4db7a86d1327693b7, type: 3}
   spells:
   - {fileID: 9162928632122956477, guid: 1086a4262588bf84e89c33b2abdb7da0, type: 3}
-  - {fileID: 6708877276925215642, guid: 2712a1912af1cd346850b35190ee8e8e, type: 3}
+  - {fileID: 794894405015748919, guid: de410596f443dcd4693903a533ac73d7, type: 3}
