@@ -6,6 +6,8 @@ public class FrappeDiesel : Passive
 {
     void Awake()
     {
+        ratio1 = 1f;
+
         passiveName = "Frappe Diesel";
         fight_description = "Les attaques de base du personnage font des dégats supplémentaires et appliquent l'élément pyro.";
     }

@@ -15,7 +15,7 @@ MonoBehaviour:
   spell_name: Onde
   lore_description: 
   fight_description: "Soigne une unit\xE9 de %%1 d\xE9gats et augmente sa puissance
-    de %%2 %."
+    de __2 %."
   cooldown: 2
   properties: 
   range: 0

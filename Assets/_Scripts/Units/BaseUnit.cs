@@ -132,10 +132,20 @@ public class BaseUnit : MonoBehaviour
         return finalPower;
     }
 
-    public void ModifyPower(float amount){
-        finalPower = Tools.Ceiling(finalPower + finalPower * amount);
+    public void SetFinalPower(int amount){
+        finalPower = amount;
     }
 
+    public void ModifyPower(float amount){
+        SetFinalPower(Tools.Ceiling(amount * finalPower + finalPower));
+        CheckFinalPower();
+    }
+
+    private void CheckFinalPower(){
+        if(GetFinalPower() < 0){
+            SetFinalPower(0);
+        }
+    }
     public int GetTotalHealth(){
         return totalHealth;
     }
@@ -230,7 +240,7 @@ public class BaseUnit : MonoBehaviour
         int finalAmount = amount;
         foreach (Modifier _modifier in modifiers[Heal])
         {
-            finalAmount = _modifier.GetNewAmount(finalAmount);
+            finalAmount = Tools.Ceiling(_modifier.GetNewAmount(finalAmount));
         }
         ModifyHP(+finalAmount);
     }

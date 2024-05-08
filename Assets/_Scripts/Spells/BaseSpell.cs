@@ -128,7 +128,7 @@ public class BaseSpell : MonoBehaviour
     public BaseUnit GetOwner(){
         return owner;
     }
-
+    
     public GridManager.Selection_mode GetRange(){
         return range;
     }
@@ -137,11 +137,25 @@ public class BaseSpell : MonoBehaviour
         fight_description = fight_description.Replace("%%1", GetFinalDamages(GetRatio()[0]).ToString());
         fight_description = fight_description.Replace("%%2", GetFinalDamages(GetRatio()[1]).ToString());
         fight_description = fight_description.Replace("%%3", GetFinalDamages(GetRatio()[2]).ToString());
+
+        fight_description = fight_description.Replace("__1", DisplayPercents(ApplyPower(GetRatio()[0])));
+        fight_description = fight_description.Replace("__2", DisplayPercents(ApplyPower(GetRatio()[1])));
+        fight_description = fight_description.Replace("__3", DisplayPercents(ApplyPower(GetRatio()[2])));
         return fight_description;
     }
 
     public int GetFinalDamages(float _ratio){
         return Tools.Ceiling(_ratio * GetOwner().GetFinalPower());
+    }
+
+    public float ApplyPower(float ratio){
+        return ratio * GetOwner().GetFinalPower();
+    }
+
+    public string DisplayPercents(float percentRatio){
+        Debug.Log(percentRatio);
+        Debug.Log(Tools.Ceiling(percentRatio * 100).ToString());
+        return Tools.Ceiling(percentRatio * 100).ToString();
     }
 
     public void ApplyEndTurnEffects(){

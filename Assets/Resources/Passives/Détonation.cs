@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class NewBehaviourScript : Passive
 {
-    float ratio = 0.2f;
     void Awake()
     {
+        ratio1 = 0.2f;
+        ratio2 = 1f;
+        ratio3 = 1f;
+
         passiveName = "Détonation";
-        fight_description = "Lorsqu'un unité adverse meurt, elle inflige de légers dégats aux unités adjacentes";
+        fight_description = "Lorsqu'un unité adverse meurt, elle inflige %%1 dégats aux unités adjacentes";
     }
     // Lorsque le passif est setup, l'active
     override public void Activate()
@@ -24,8 +27,7 @@ public class NewBehaviourScript : Passive
         if(unit.GetTeam() != holder.GetTeam()){
             foreach (BaseUnit adjUnit in UnitManager.Instance.GetAdjacentUnits(unit))
             {
-                float finalDamages = ratio * holder.finalPower;
-                SpellManager.Instance.InflictDamage(finalDamages, adjUnit);
+                SpellManager.Instance.InflictDamage(GetFinalDamages(ratio1), adjUnit);
             }
             
         }

@@ -129,13 +129,6 @@ public class InterfaceManager : MonoBehaviour
         if(currentUnit != null){
             informationPanel.SetActive(true);
             DisplayUnit(currentUnit);
-            /*
-            unitNamePanel.text = currentUnit.GetName();
-            unitPowerPanel.text = "Puissance : " + currentUnit.GetFinalPower().ToString();
-            unitHealthPanel.text = "PV : " + currentUnit.GetFinalHealth().ToString() + "/" + currentUnit.GetTotalHealth().ToString();;
-            unitLevelPanel.text = "Niveau : " + currentUnit.GetLevel().ToString();
-            unitPassiveNamePanel.text = currentUnit.GetPassive().GetName();
-            unitPassiveDescriptionPanel.text = currentUnit.GetPassive().GetFightDescription();*/
         }
         else{
             informationPanel.SetActive(false);
@@ -362,8 +355,7 @@ public class InterfaceManager : MonoBehaviour
         // Affichage du spell dans l'information panel
         switch(spellChoice){
             case SpellChoice.CHARACTER:
-                unitPassiveNamePanel.text = sourceUnit.GetPassive().GetName();
-                unitPassiveDescriptionPanel.text = sourceUnit.GetPassive().GetFightDescription();
+                DisplayUnit(sourceUnit);
                 break;
             case SpellChoice.LEFT:
                 if(currentSpells.Count > 0){
@@ -500,6 +492,7 @@ public class InterfaceManager : MonoBehaviour
         unitLevelPanel.text = "Niveau : " + unit.GetLevel().ToString();
         unitPassiveNamePanel.text = unit.GetPassive().GetName();
         unitPassiveDescriptionPanel.text = unit.GetPassive().GetFightDescription();
+        spellCooldownPanel.text = "";
     }
     
     void ResetDisplay(){

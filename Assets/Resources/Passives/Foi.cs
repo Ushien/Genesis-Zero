@@ -5,9 +5,10 @@ using UnityEngine;
 public class Foi : Passive
 {
     public Modifier modifier;
-    public int ratio1 = 15;
     void Awake()
     {
+        ratio1 = 0.15f;
+
         passiveName = "Foi";
         fight_description = "L'unité reçoit un bonus de 15% sur tous les soins qu'elle reçoit";
     }

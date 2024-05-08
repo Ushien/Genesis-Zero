@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Modifier : MonoBehaviour
 {
-    public int powerBonus = 0;
+    public float powerBonus = 0f;
     public Properties property = Properties.Empty;
 
-    public void Setup(int _powerBonus = 0, Properties _property = Properties.Empty){
+    public void Setup(float _powerBonus = 0f, Properties _property = Properties.Empty){
         powerBonus = _powerBonus;
         property = Properties.Empty;
     }
 
-    public int GetNewAmount(int amount){
-        return (int)(((float) powerBonus + 100)/100 * amount);
+    public float GetNewAmount(float amount){
+        return (powerBonus + 1)* amount;
     }
 }
