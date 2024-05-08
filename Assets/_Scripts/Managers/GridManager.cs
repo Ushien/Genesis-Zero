@@ -310,4 +310,8 @@ public static class Tools
         var output = JsonUtility.ToJson(obj, true);
         Debug.Log(output);
     }
+
+    public static int Ceiling(float amount){
+        return (int)System.Math.Ceiling(amount);
+    }
 }

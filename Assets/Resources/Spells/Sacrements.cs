@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Sacrements : BaseSpell
 {
-    float ratio1 = 1.1f;
-    float ratio2 = 1.4f;
+    void Awake(){
+        ratio1 = 1.1f;
+        ratio2 = 1.4f;
+        ratio3 = 1f;
+    }
     override public void Cast(Tile targetTile = null){
         base.CastSpell(targetTile, _Sacrements);
     }

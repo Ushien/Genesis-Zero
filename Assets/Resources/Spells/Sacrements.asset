@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spell_name: Sacrements (P)
   lore_description: 
-  fight_description: "Frappe en croix. Si un cible dispose d'armure, les d\xE9gats
-    de la technique sont renforc\xE9s. (P)"
+  fight_description: "Inflige %%1 d\xE9gats en croix. Si une cible dispose d'armure,
+    elle subit \xE0 la place %%2 d\xE9gats. (P)"
   cooldown: 3
   properties: 
   range: 0

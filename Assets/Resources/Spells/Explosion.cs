@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Explosion : BaseSpell
 {
-    float ratio1 = 1.2f;
-    float ratio2 = 0.2f;
+    void Awake(){
+        ratio1 = 1.2f;
+        ratio2 = 0.2f;
+        ratio3 = 1f;
+    }
     override public void Cast(Tile targetTile = null){
         base.CastSpell(targetTile, _Explosion);
     }

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spell_name: Explosion
   lore_description: 
-  fight_description: "Inflige beaucoup de d\xE9gats \xE0 une cible, et de faibles
-    d\xE9gats \xE0 ses alli\xE9s"
+  fight_description: "Inflige %%1 d\xE9gats \xE0 une cible, et %%2 d\xE9gats \xE0
+    ses alli\xE9s"
   cooldown: 3
   properties: 
   range: 3

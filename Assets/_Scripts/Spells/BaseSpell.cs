@@ -20,6 +20,10 @@ public class BaseSpell : MonoBehaviour
     public GridManager.Selection_mode range;
     public GridManager.Team_restriction team_restriction;
 
+    public float ratio1 = 1f;
+    public float ratio2 = 1f;
+    public float ratio3 = 1f;
+
     public void Setup(BaseUnit ownerUnit){
         this.name = scriptableSpell.spell_name;
 
@@ -65,6 +69,15 @@ public class BaseSpell : MonoBehaviour
             }
 
         }
+    }
+
+    virtual public List<float> GetRatio(){
+        return new List<float>{
+            ratio1,
+            ratio2,
+            ratio3
+        };
+
     }
 
     public string GetName(){
@@ -121,7 +134,14 @@ public class BaseSpell : MonoBehaviour
     }
 
     public string GetFightDescription(){
+        fight_description = fight_description.Replace("%%1", GetFinalDamages(GetRatio()[0]).ToString());
+        fight_description = fight_description.Replace("%%2", GetFinalDamages(GetRatio()[1]).ToString());
+        fight_description = fight_description.Replace("%%3", GetFinalDamages(GetRatio()[2]).ToString());
         return fight_description;
+    }
+
+    public int GetFinalDamages(float _ratio){
+        return Tools.Ceiling(_ratio * GetOwner().GetFinalPower());
     }
 
     public void ApplyEndTurnEffects(){

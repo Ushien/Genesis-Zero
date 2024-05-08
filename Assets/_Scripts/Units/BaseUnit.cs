@@ -103,7 +103,7 @@ public class BaseUnit : MonoBehaviour
 
         var level_1_stat = (float)level_100_stat/10;
         var growth_by_level = (level_100_stat-level_1_stat)/99;
-        var real_level_stat = (int)Math.Ceiling(level_1_stat+growth_by_level*(real_level-1));
+        var real_level_stat = Tools.Ceiling(level_1_stat+growth_by_level*(real_level-1));
 
         return real_level_stat;
     }
@@ -133,7 +133,7 @@ public class BaseUnit : MonoBehaviour
     }
 
     public void ModifyPower(float amount){
-        finalPower = (int)System.Math.Ceiling(finalPower + finalPower * amount);
+        finalPower = Tools.Ceiling(finalPower + finalPower * amount);
     }
 
     public int GetTotalHealth(){

@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class FuséesdeSignal : BaseSpell
 {
-    override public void Cast(Tile targetTile = null){
-        BaseUnit targetUnit = null;
-        if (targetTile != null){
-            targetUnit = targetTile.GetUnit();
-        }
+    void Awake(){
+        ratio1 = 1f;
+        ratio2 = 1f;
+        ratio3 = 1f;
+    }
 
-        if(targetUnit != null){
-            Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.GetUnit().GetName());
-        // Do something
-        }
+    override public void Cast(Tile targetTile = null){
+        base.CastSpell(targetTile, _FuséesSignal);
+    }
+
+    private void _FuséesSignal(Tile targetTile){
+        // Do stuff        
     }
 }

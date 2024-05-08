@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Bombesolaire : BaseSpell
 {
+    void Awake(){
+        ratio1 = 1f;
+        ratio2 = 1f;
+        ratio3 = 1f;
+    }
+    
     override public void Cast(Tile targetTile = null){
-        BaseUnit targetUnit = null;
-        if (targetTile != null){
-            targetUnit = targetTile.GetUnit();
-        }
-        
-        if(targetUnit != null){
-            Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.GetUnit().GetName());
-        }
-        // Do something
+        base.CastSpell(targetTile, _BombeSolaire);
+    }
+
+    private void _BombeSolaire(Tile targetTile){
+        //Do things        
     }
 }
