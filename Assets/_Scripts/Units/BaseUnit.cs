@@ -144,6 +144,31 @@ public class BaseUnit : MonoBehaviour
         return finalHealth;
     }
 
+    public int GetArmor(){
+        return armor;
+    }
+
+    public void SetArmor(int amount){
+        if(amount >= 0){
+            armor = amount;
+        }
+    }
+
+    public void ModifyArmor(int amount){
+        armor += amount;
+        CheckArmor();
+    }
+
+    public void CheckArmor(){
+        if(armor < 0){
+            SetArmor(0);
+        }
+    }
+
+    public bool isArmored(){
+        return armor > 0;
+    }
+
     public int GetLevel(){
         return level;
     }
@@ -189,7 +214,16 @@ public class BaseUnit : MonoBehaviour
     }
 
     public void Damage(int amount){
-        ModifyHP(-amount);
+        int finalDamage = amount - GetArmor();
+        if(finalDamage > 0){
+            ModifyArmor(-GetArmor());
+            ModifyHP(-finalDamage);
+        }
+        else{
+            ModifyArmor(-amount);
+        }
+
+        
     }
 
     public void Heal(int amount){

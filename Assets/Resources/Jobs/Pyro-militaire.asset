@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2909e28d4cedc07449d6335173aff69d, type: 3}
   m_Name: Pyro-militaire
   m_EditorClassIdentifier: 
-  job_name: Pyro-militaire
+  job_name: Pyro-militaire(N)
   artwork: {fileID: 0}
   fight_description: 
   lore_description: 
   passive: {fileID: 4618570809523265024, guid: f23559c46aea4014cb0e9566fcfe7f70, type: 3}
   spells:
-  - {fileID: 11400000, guid: 6bcec8029b37f1541a1ed0943a6cd1b4, type: 2}
-  - {fileID: 11400000, guid: 5daadbd6b422ceb4583d38c135a77b55, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}

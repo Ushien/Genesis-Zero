@@ -10,11 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2909e28d4cedc07449d6335173aff69d, type: 3}
-  m_Name: Chronomancien
+  m_Name: Porteur de croix
   m_EditorClassIdentifier: 
-  job_name: Chronomancien(N)
+  job_name: Porteur de croix(P)
   artwork: {fileID: 0}
   fight_description: 
   lore_description: 
-  passive: {fileID: 0}
-  spells: []
+  passive: {fileID: 798507344205524587, guid: 3689af533764f474481ea144be747b79, type: 3}
+  spells:
+  - {fileID: 794894405015748919, guid: de410596f443dcd4693903a533ac73d7, type: 3}
+  - {fileID: 106893454696806627, guid: ab48d8c3fc5146c45a2fe26f32da1fd3, type: 3}

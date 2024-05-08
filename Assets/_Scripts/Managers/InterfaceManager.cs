@@ -13,6 +13,7 @@ public class InterfaceManager : MonoBehaviour
     public TextMeshProUGUI unitNamePanel;
     public TextMeshProUGUI unitPowerPanel;
     public TextMeshProUGUI unitHealthPanel;
+    public TextMeshProUGUI unitArmorPanel;
     public TextMeshProUGUI unitLevelPanel;
     public TextMeshProUGUI unitPassiveNamePanel;
     public TextMeshProUGUI unitPassiveDescriptionPanel;
@@ -127,12 +128,14 @@ public class InterfaceManager : MonoBehaviour
         BaseUnit currentUnit = sourceTile.GetUnit();
         if(currentUnit != null){
             informationPanel.SetActive(true);
+            DisplayUnit(currentUnit);
+            /*
             unitNamePanel.text = currentUnit.GetName();
             unitPowerPanel.text = "Puissance : " + currentUnit.GetFinalPower().ToString();
             unitHealthPanel.text = "PV : " + currentUnit.GetFinalHealth().ToString() + "/" + currentUnit.GetTotalHealth().ToString();;
             unitLevelPanel.text = "Niveau : " + currentUnit.GetLevel().ToString();
             unitPassiveNamePanel.text = currentUnit.GetPassive().GetName();
-            unitPassiveDescriptionPanel.text = currentUnit.GetPassive().GetFightDescription();
+            unitPassiveDescriptionPanel.text = currentUnit.GetPassive().GetFightDescription();*/
         }
         else{
             informationPanel.SetActive(false);
@@ -488,6 +491,12 @@ public class InterfaceManager : MonoBehaviour
         unitNamePanel.text = unit.GetName();
         unitPowerPanel.text = "Puissance : " + unit.GetFinalPower().ToString();
         unitHealthPanel.text = "PV : " + unit.GetFinalHealth().ToString() + "/" + unit.GetTotalHealth().ToString();
+        if(unit.GetArmor() > 0){
+            unitArmorPanel.text = "Armure : " + unit.GetArmor().ToString();
+        }
+        else{
+            unitArmorPanel.text = "";
+        }
         unitLevelPanel.text = "Niveau : " + unit.GetLevel().ToString();
         unitPassiveNamePanel.text = unit.GetPassive().GetName();
         unitPassiveDescriptionPanel.text = unit.GetPassive().GetFightDescription();

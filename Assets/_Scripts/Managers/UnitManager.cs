@@ -64,12 +64,22 @@ public class UnitManager : MonoBehaviour
         return _units.OrderBy(o=> UnityEngine.Random.value).First();
     }
 
-    public BaseUnit GetRandomUnit(){
-        return units.OrderBy(o=> UnityEngine.Random.value).First();
+    public BaseUnit GetRandomUnit(Team team = Team.Both){
+        if(team == Team.Both){
+            return units.OrderBy(o=> UnityEngine.Random.value).First();
+        }
+        else{
+            return units.Where(unit => unit.Team == team).OrderBy(o=> UnityEngine.Random.value).First();
+        }
     }
 
-    public List<BaseUnit> GetUnits(Team team){
-        return units.Where(unit => unit.Team == team).ToList();
+    public List<BaseUnit> GetUnits(Team team = Team.Both){
+        if(team == Team.Both){
+            return units.ToList();
+        }
+        else{
+            return units.Where(unit => unit.Team == team).ToList();
+        }
     }
 
     public List<BaseUnit> GetAdjacentUnits(BaseUnit unit){

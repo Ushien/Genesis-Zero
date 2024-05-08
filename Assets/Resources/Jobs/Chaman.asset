@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2909e28d4cedc07449d6335173aff69d, type: 3}
   m_Name: Chaman
   m_EditorClassIdentifier: 
-  job_name: Chaman
+  job_name: Chaman(N)
   artwork: {fileID: 0}
   fight_description: 
   lore_description: 
