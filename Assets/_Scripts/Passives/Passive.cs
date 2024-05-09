@@ -41,14 +41,27 @@ public class Passive : MonoBehaviour
     }
 
     virtual public string GetFightDescription(){
-        fight_description = fight_description.Replace("%%1", GetFinalDamages(GetRatio()[0]).ToString());
-        fight_description = fight_description.Replace("%%2", GetFinalDamages(GetRatio()[1]).ToString());
-        fight_description = fight_description.Replace("%%3", GetFinalDamages(GetRatio()[2]).ToString());
-        return fight_description;
+        string _fight_description = fight_description.Clone().ToString();
+        _fight_description = _fight_description.Replace("%%1", GetFinalDamages(GetRatio()[0]).ToString());
+        _fight_description = _fight_description.Replace("%%2", GetFinalDamages(GetRatio()[1]).ToString());
+        _fight_description = _fight_description.Replace("%%3", GetFinalDamages(GetRatio()[2]).ToString());
+
+        _fight_description = _fight_description.Replace("__1", DisplayPercents(ApplyPower(GetRatio()[0])));
+        _fight_description = _fight_description.Replace("__2", DisplayPercents(ApplyPower(GetRatio()[1])));
+        _fight_description = _fight_description.Replace("__3", DisplayPercents(ApplyPower(GetRatio()[2])));
+        return _fight_description;
+    }
+
+    public float ApplyPower(float ratio){
+        return ratio * GetOwner().GetFinalPower();
     }
 
     public BaseUnit GetOwner(){
         return holder;
+    }
+
+    public string DisplayPercents(float percentRatio){
+        return Tools.Ceiling(percentRatio * 100).ToString();
     }
 
     public int GetFinalDamages(float _ratio){

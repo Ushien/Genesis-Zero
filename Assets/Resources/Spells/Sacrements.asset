@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
   m_Name: Sacrements
   m_EditorClassIdentifier: 
-  spell_name: Sacrements (P)
+  spell_name: Sacrements
   lore_description: 
-  fight_description: "Inflige %%1 d\xE9gats en croix. Si une cible dispose d'armure,
-    elle subit \xE0 la place %%2 d\xE9gats. (P)"
+  fight_description: "Inflige %%1 d\xE9gats. Si une cible dispose d'armure, elle
+    subit \xE0 la place %%2 d\xE9gats."
   cooldown: 3
   properties: 
   range: 0
