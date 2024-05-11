@@ -8,6 +8,8 @@ public class BaseSpell : MonoBehaviour
     public ScriptableSpell scriptableSpell;
     public BaseUnit owner;
 
+    public Modifier modifier;
+
     public string spell_name = "Name";
     private bool isATechnique = true;
     [TextArea(5,10)]
@@ -24,10 +26,13 @@ public class BaseSpell : MonoBehaviour
     public float ratio2 = 1f;
     public float ratio3 = 1f;
 
+    public List<Modifier> modifiers = new List<Modifier>();
+
     public void Setup(BaseUnit ownerUnit){
         this.name = scriptableSpell.spell_name;
 
         owner = ownerUnit;
+        modifier = ownerUnit.emptyModifier;
         
         spell_name = scriptableSpell.spell_name;
         lore_description = scriptableSpell.lore_description;
@@ -54,9 +59,6 @@ public class BaseSpell : MonoBehaviour
         }
 
         if(targetUnit != null && IsAvailable()){
-            SetCooldown(0);
-
-            spellFunction(targetTile);
 
             if(targetTile.GetUnit() != null){
                 Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.GetUnit().GetName());
@@ -64,6 +66,11 @@ public class BaseSpell : MonoBehaviour
             else{
                 Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.name);
             }
+
+            SetCooldown(0);
+
+            spellFunction(targetTile);
+
             if (IsATechnique()){
                 EventManager.Instance.TechCasted(this);
             }
@@ -146,7 +153,16 @@ public class BaseSpell : MonoBehaviour
     }
 
     public int GetFinalDamages(float _ratio){
-        return Tools.Ceiling(_ratio * GetOwner().GetFinalPower());
+        int finalAmount = Tools.Ceiling(_ratio * GetOwner().GetFinalPower());
+        
+        foreach (Modifier _modifier in modifiers)
+        {
+            Debug.Log(finalAmount);
+            finalAmount = Tools.Ceiling(_modifier.GetNewAmount(finalAmount));
+            Debug.Log(finalAmount);
+        }
+
+        return finalAmount;
     }
 
     public float ApplyPower(float ratio){
@@ -154,10 +170,33 @@ public class BaseSpell : MonoBehaviour
     }
 
     public string DisplayPercents(float percentRatio){
-        return Tools.Ceiling(percentRatio * 100).ToString();
+        return (percentRatio * 100).ToString();
+        //return Tools.Ceiling(percentRatio * 100).ToString();
+    }
+
+    public void AddModifier(Modifier modifier){
+        modifiers.Add(modifier);
+    }
+
+    public void DeleteModifier(Modifier modifier){
+        modifiers.Remove(modifier);
+    }
+
+    private void ModifierEndTurn(){
+        if(modifiers.Count > 0){
+        }
+        foreach (Modifier modifier in modifiers)
+        {
+            modifier.ModifyTurns(-1);
+            if(modifier.IsEnded()){
+                //FIXME les listes aiment pas beaucoup ça
+                modifiers.Remove(modifier);
+            }
+        }
     }
 
     public void ApplyEndTurnEffects(){
         ModifyCooldown(+1);
+        ModifierEndTurn();
     }
 }

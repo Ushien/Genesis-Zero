@@ -11,6 +11,8 @@ public class Passive : MonoBehaviour
     public string fight_description;
     public BaseUnit holder;
 
+    public Modifier modifier;
+
     virtual public void AttachToUnit(BaseUnit unit){
         holder = unit;
     }
@@ -46,9 +48,9 @@ public class Passive : MonoBehaviour
         _fight_description = _fight_description.Replace("%%2", GetFinalDamages(GetRatio()[1]).ToString());
         _fight_description = _fight_description.Replace("%%3", GetFinalDamages(GetRatio()[2]).ToString());
 
-        _fight_description = _fight_description.Replace("__1", DisplayPercents(ApplyPower(GetRatio()[0])));
-        _fight_description = _fight_description.Replace("__2", DisplayPercents(ApplyPower(GetRatio()[1])));
-        _fight_description = _fight_description.Replace("__3", DisplayPercents(ApplyPower(GetRatio()[2])));
+        _fight_description = _fight_description.Replace("__1", DisplayPercents(GetRatio()[0]));
+        _fight_description = _fight_description.Replace("__2", DisplayPercents(GetRatio()[1]));
+        _fight_description = _fight_description.Replace("__3", DisplayPercents(GetRatio()[2]));
         return _fight_description;
     }
 
@@ -61,7 +63,7 @@ public class Passive : MonoBehaviour
     }
 
     public string DisplayPercents(float percentRatio){
-        return Tools.Ceiling(percentRatio * 100).ToString();
+        return (percentRatio * 100).ToString();
     }
 
     public int GetFinalDamages(float _ratio){

@@ -36,7 +36,7 @@ public class BaseUnit : MonoBehaviour
     public int armor = 0;
 
     public Dictionary<Action<int>, List<Modifier>> modifiers = new Dictionary<Action<int>, List<Modifier>>();
-    public Hashtable modifiers2 = new Hashtable();
+    public Modifier emptyModifier;
     private List<Tuple<Action<int>, int, int>> actionQueue = new List<Tuple<Action<int>, int, int>>();
 
     public void Setup(ScriptableUnit originUnit, int setup_level, Team team){
@@ -388,14 +388,28 @@ public class BaseUnit : MonoBehaviour
         modifiers[function].Remove(modifier);
     }
 
+    private void ModifierEndTurn(){
+        foreach (var action in modifiers)
+        {
+            foreach (Modifier _modifier in action.Value)
+            {
+                _modifier.ModifyTurns(-1);
+                if(_modifier.IsEnded()){
+                    //FIXME this les listes aiment pas beaucoup ça
+                    action.Value.Remove(_modifier);
+                }
+            }
+        }
+    }
 
     public void ApplyEndturnEffects(){
         ModifyStunTime(-1);
         foreach (BaseSpell spell in GetSpells())
         {
-            spell.ApplyEndTurnEffects()  ; 
+            spell.ApplyEndTurnEffects(); 
         }
-
+        GetAttack().ApplyEndTurnEffects();
+        ModifierEndTurn();
         ReduceQueueTurns();
         ApplyQueueActions();
     }

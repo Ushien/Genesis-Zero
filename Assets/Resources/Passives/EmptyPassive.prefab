@@ -44,6 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fa235290ebd728448158b0175a41077, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ratio1: 1
+  ratio2: 1
+  ratio3: 1
   passiveName: 
   fight_description: 
   holder: {fileID: 0}
+  modifier: {fileID: 3725732595186329557, guid: 9649bcacdc3281c47b9a5985c44e62d8, type: 3}
