@@ -9,8 +9,8 @@ public class BaseSpell : MonoBehaviour
     public BaseUnit owner;
 
     public string spell_name = "Name";
-    [TextArea(5,10)]
     private bool isATechnique = true;
+    [TextArea(5,10)]
     public string lore_description = "Lore Description";
     [TextArea(5,10)]
     public string fight_description = "Fight Description";

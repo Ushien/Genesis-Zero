@@ -86,6 +86,11 @@ public class UnitManager : MonoBehaviour
         return GridManager.Instance.UnitsFromTiles(GridManager.Instance.GetAdjacentTiles(unit.GetTile()));
     }
 
+    /// <summary>
+    /// Return all the allies of a given Unit
+    /// </summary>
+    /// <param name="centralUnit"></param>
+    /// <returns></returns>
     public List<BaseUnit> GetUnitsExcept(BaseUnit centralUnit){
         return GetUnits(centralUnit.GetTeam()).Where(unit => unit != centralUnit).ToList();
     }

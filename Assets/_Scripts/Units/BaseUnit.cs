@@ -100,6 +100,10 @@ public class BaseUnit : MonoBehaviour
         }
     }
 
+    public void Attack(Tile targetTile){
+        attack.Cast(targetTile);
+    }
+
     public int GetStatFromLevel(int level_100_stat, int real_level){
 
         var level_1_stat = (float)level_100_stat/10;

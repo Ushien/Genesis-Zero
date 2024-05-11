@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1138308759577880613
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3587885202995487066}
+  - component: {fileID: 4962997177195944154}
+  m_Layer: 0
+  m_Name: "Main Imp\xE9ratrice"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3587885202995487066
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1138308759577880613}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.60875, y: 1.933114, z: 309.13654}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4962997177195944154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1138308759577880613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daf4e3372e73abe47bada0b42b21b478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scriptableSpell: {fileID: 11400000, guid: 90ed7e611bfda6c40bf4ea7237619e9e, type: 2}
+  owner: {fileID: 0}
+  spell_name: Name
+  lore_description: Lore Description
+  fight_description: Fight Description
+  cooldown: 0
+  base_cooldown: 0
+  artwork: {fileID: 0}
+  range: 0
+  team_restriction: 0
+  ratio1: 1
+  ratio2: 1
+  ratio3: 1
