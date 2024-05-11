@@ -37,6 +37,7 @@ public class BaseUnit : MonoBehaviour
 
     public Dictionary<Action<int>, List<Modifier>> modifiers = new Dictionary<Action<int>, List<Modifier>>();
     public Hashtable modifiers2 = new Hashtable();
+    private List<Tuple<Action<int>, int, int>> actionQueue = new List<Tuple<Action<int>, int, int>>();
 
     public void Setup(ScriptableUnit originUnit, int setup_level, Team team){
         scriptableUnit = originUnit;
@@ -177,6 +178,13 @@ public class BaseUnit : MonoBehaviour
 
     public bool isArmored(){
         return armor > 0;
+    }
+
+    public void ConvertArmorIntoHP(int amount){
+        if(GetArmor() >= amount){
+            ModifyArmor(-amount);
+            ModifyBothHP(amount);
+        }
     }
 
     public int GetLevel(){
@@ -333,6 +341,41 @@ public class BaseUnit : MonoBehaviour
         UnitManager.Instance.Kill(this);
     }
 
+    public void QueueAction(Action<int> action, int parameter, int howManyTurns){
+        actionQueue.Add(new Tuple<Action<int>, int, int>(action, parameter, howManyTurns));
+    }
+
+    public void ReduceQueueTurns(){
+        List<Tuple<Action<int>, int, int>> newQueue = new List<Tuple<Action<int>, int, int>>();
+
+        foreach (Tuple<Action<int>, int, int> queuedAction in actionQueue)
+        {
+            newQueue.Add(new Tuple<Action<int>, int, int>(queuedAction.Item1, queuedAction.Item2, queuedAction.Item3 - 1));
+        }
+
+        actionQueue = newQueue;
+    }
+
+    public void ApplyQueueActions(){
+        foreach (Tuple<Action<int>, int, int> queuedAction in actionQueue)
+        {
+            if(queuedAction.Item3 == 0){
+                queuedAction.Item1(queuedAction.Item2);
+            }
+        }
+
+        List<Tuple<Action<int>, int, int>> newQueue = new List<Tuple<Action<int>, int, int>>();
+
+        foreach (Tuple<Action<int>, int, int> queuedAction in actionQueue)
+        {
+            if(queuedAction.Item3 != 0){
+                newQueue.Add(new Tuple<Action<int>, int, int>(queuedAction.Item1, queuedAction.Item2, queuedAction.Item3));
+            }
+        }
+
+        actionQueue = newQueue;
+    }
+
     public void AddModifier(Modifier modifier, Action<int> function){
         modifiers[function].Add(modifier);
     }
@@ -348,6 +391,9 @@ public class BaseUnit : MonoBehaviour
         {
             spell.ApplyEndTurnEffects()  ; 
         }
+
+        ReduceQueueTurns();
+        ApplyQueueActions();
     }
 
     public List<string> GetInfo(){

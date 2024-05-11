@@ -18,5 +18,5 @@ MonoBehaviour:
   lore_description: 
   passive: {fileID: 798507344205524587, guid: 3689af533764f474481ea144be747b79, type: 3}
   spells:
-  - {fileID: 794894405015748919, guid: de410596f443dcd4693903a533ac73d7, type: 3}
+  - {fileID: 5747960691504219851, guid: 9a1282facf019fa41b48d6a9f0153d8a, type: 3}
   - {fileID: 106893454696806627, guid: ab48d8c3fc5146c45a2fe26f32da1fd3, type: 3}
