@@ -58,7 +58,11 @@ public class BaseSpell : MonoBehaviour
             targetUnit = targetTile.GetUnit();
         }
 
-        if(targetUnit != null && IsAvailable()){
+        if(targetUnit != null && IsAvailable() && GetOwner().IsAvailable()){
+
+            if (IsATechnique()){
+                EventManager.Instance.BeforeTechCast(this, targetTile);
+            }
 
             if(targetTile.GetUnit() != null){
                 Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.GetUnit().GetName());
@@ -72,7 +76,7 @@ public class BaseSpell : MonoBehaviour
             spellFunction(targetTile);
 
             if (IsATechnique()){
-                EventManager.Instance.TechCasted(this);
+                EventManager.Instance.AfterTechCast(this, targetTile);
             }
 
         }
@@ -157,9 +161,7 @@ public class BaseSpell : MonoBehaviour
         
         foreach (Modifier _modifier in modifiers)
         {
-            Debug.Log(finalAmount);
             finalAmount = Tools.Ceiling(_modifier.GetNewAmount(finalAmount));
-            Debug.Log(finalAmount);
         }
 
         return finalAmount;

@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PoudreEtourdissante : BaseSpell
 {
+    void Awake(){
+        ratio1 = 1;
+        ratio2 = 2f;
+    }
 
     override public void Cast(Tile targetTile = null){
         base.CastSpell(targetTile, _PoudreEtourdissante);

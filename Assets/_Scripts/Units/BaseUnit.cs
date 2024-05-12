@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEditor.PackageManager;
 
 public class BaseUnit : MonoBehaviour
 {
@@ -125,11 +126,11 @@ public class BaseUnit : MonoBehaviour
         return instructionGiven;
     }
 
-    public String GetName(){
+    public string GetName(){
         return unit_name;
     }
 
-    public String GetFightDescription(){
+    public string GetFightDescription(){
         return fight_description;
     }
 
@@ -326,6 +327,30 @@ public class BaseUnit : MonoBehaviour
         else{
             stun = false;
         }
+    }
+
+    public void Cleanse(Status status){
+        switch (status)
+        {
+            case Status.Stun:
+                SetStunTime(0);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    public void Cleanse(List<Status> statusList){
+
+        foreach (Status status in statusList)
+        {
+            Cleanse(status);
+        }
+    }
+
+    public void Cleanse(){
+        Cleanse(SpellManager.Instance.GetCleansableStatus());
     }
 
     public bool IsAvailable(){

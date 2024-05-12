@@ -25,6 +25,6 @@ public class EmptyPassive : Passive
 
     void ShoutName()
     {
-        Debug.Log(holder.GetName());
+        //
     }
 }

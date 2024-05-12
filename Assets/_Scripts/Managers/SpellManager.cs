@@ -10,6 +10,8 @@ public class SpellManager : MonoBehaviour
     public BaseSpell baseAttack;
 
     private List<ScriptableSpell> _spells;
+
+    private List<Status> cleansableStatus = new List<Status>(){Status.Poison, Status.Stun};
     void Awake(){
         Instance = this;
     }
@@ -78,6 +80,10 @@ public class SpellManager : MonoBehaviour
     public void Stun(int amount, BaseUnit target){
         target.SetStunTime(amount);
     }
+
+    public List<Status> GetCleansableStatus(){
+        return cleansableStatus;
+    }
 }
 
 public enum Properties {   
@@ -90,4 +96,11 @@ public enum Properties {
 public enum Ranges {
     Single_Target = 0,
     All_Targets = 1
+}
+
+public enum Status {
+    All = 0,
+    Kill = 1,
+    Stun = 2,
+    Poison = 3
 }

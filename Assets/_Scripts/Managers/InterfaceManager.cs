@@ -38,7 +38,6 @@ public class InterfaceManager : MonoBehaviour
 
     // La Tile contenant la cible du spell, lorsqu'un spell est lancé
     public Tile targetTile;
-    // TODO Implémenter un tuple qui contient toutes les ordres définis.
 
     private Dictionary<BattleManager.PlayerActionChoiceState, bool> activated_states;
 

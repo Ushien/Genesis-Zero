@@ -19,9 +19,4 @@ public class ScriptableSpell : ScriptableObject
     public Sprite artwork;
 
     public BaseSpell spellScriptPrefab;
-
-    public virtual void OnUse()
-    {
-        Debug.Log("Base Obj");
-    }
 }
