@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spell_name: "Poudre \xE9tourdissante (P)"
   lore_description: 
-  fight_description: Etourdit une adversaire pour un tour, et double ses points de
+  fight_description: Etourdit un adversaire pour un tour, et double ses points de
     vie. (P)
   cooldown: 1
   properties: 

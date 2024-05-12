@@ -11,7 +11,7 @@ public class NewBehaviourScript : Passive
         ratio3 = 1f;
 
         passiveName = "Détonation";
-        fight_description = "Lorsqu'un unité adverse meurt, elle inflige %%1 dégats aux unités adjacentes";
+        fight_description = "Lorsqu'une unité adverse meurt, elle inflige %%1 dégats aux unités adjacentes";
     }
     // Lorsque le passif est setup, l'active
     override public void Activate()

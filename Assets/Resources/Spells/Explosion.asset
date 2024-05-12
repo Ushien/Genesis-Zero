@@ -20,5 +20,5 @@ MonoBehaviour:
   properties: 
   range: 3
   team_restriction: 0
-  artwork: {fileID: 0}
+  artwork: {fileID: 21300000, guid: 77ab216301ef51d4d89f2576a8d53508, type: 3}
   spellScriptPrefab: {fileID: 0}
