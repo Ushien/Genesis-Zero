@@ -30,7 +30,6 @@ public class BaseUnit : MonoBehaviour
     public string lore_description = "Lore Description";
     [TextArea(5,10)]
     public string fight_description = "Fight Description";
-
     public bool dead = false;
 
     public int armor = 0;
