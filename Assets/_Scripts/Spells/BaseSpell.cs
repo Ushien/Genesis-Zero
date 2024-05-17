@@ -70,6 +70,7 @@ public class BaseSpell : MonoBehaviour
             else{
                 Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.name);
             }
+            StartCoroutine(AnimationManager.Instance.Jump(GetOwner().gameObject));
 
             SetCooldown(0);
 
