@@ -237,11 +237,16 @@ public class BaseUnit : MonoBehaviour
     public void Damage(int amount){
         int finalDamage = amount - GetArmor();
         if(finalDamage > 0){
-            ModifyArmor(-GetArmor());
+            if(GetArmor() > 0){
+                ModifyArmor(-GetArmor());
+                BattleManager.Instance.AddEvent(new DamageEvent(this, -GetArmor(), true));
+            }
             ModifyHP(-finalDamage);
+            BattleManager.Instance.AddEvent(new DamageEvent(this, finalDamage));
         }
         else{
             ModifyArmor(-amount);
+            BattleManager.Instance.AddEvent(new DamageEvent(this, amount, true));
         }
 
         

@@ -1,44 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 
 public class AnimationManager : MonoBehaviour
 {
     public static AnimationManager Instance;
+    public TextMeshProUGUI damageText;
+    public GameObject DamageSection;
 
     void Awake(){
         Instance = this;
-    }
-
-    /*
-    public IEnumerator Jump(GameObject item)
-    {
-        for (float distance = 0.0f; distance <= 0.4f; distance += 0.02f)
-        {
-            item.transform.Translate(new Vector3(0, 0.02f, 0));
-            yield return null;
-        }
-        for (float distance = 0.4f; distance >= 0.0f; distance -= 0.02f)
-        {
-            item.transform.Translate(new Vector3(0, -0.02f, 0));
-            yield return null;
-        }
-    }*/
-
-    public async Task Jump(GameObject item)
-    {
-        for (float distance = 0.0f; distance <= 0.4f; distance += 0.02f)
-        {
-            item.transform.Translate(new Vector3(0, 0.02f, 0));
-            await Task.Yield();
-        }
-        for (float distance = 0.4f; distance >= 0.0f; distance -= 0.02f)
-        {
-            item.transform.Translate(new Vector3(0, -0.02f, 0));
-            await Task.Yield();
-        }
-        await Task.Delay(1000);
     }
 
     public async Task Animate(List<BattleEvent> battleEvents){
@@ -64,9 +37,28 @@ public class AnimationManager : MonoBehaviour
         }
     }
 
+    private async Task Animate(DamageEvent damageEvent){
+        TextMeshProUGUI damageDisplay = Instantiate(damageText);
+        damageDisplay.transform.SetParent(DamageSection.transform);
+        damageDisplay.text = "-" + damageEvent.GetAmount().ToString();
+        damageDisplay.transform.position = damageEvent.GetTargetUnit().transform.position;
+        damageDisplay.transform.localScale = new Vector3(1, 1, 1);
+        damageDisplay.gameObject.SetActive(true);
+        for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f)
+        {
+            damageDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));
+            await Task.Yield();
+        }
+        damageDisplay.gameObject.SetActive(false);
+        Destroy(damageDisplay.gameObject);
+    }
+
     private async Task Animate(BattleEvent battleEvent){
         if (battleEvent is CastEvent){
             await Animate((CastEvent)battleEvent);
+        }
+        if (battleEvent is DamageEvent){
+            await Animate((DamageEvent)battleEvent);
         }
     }
 }
