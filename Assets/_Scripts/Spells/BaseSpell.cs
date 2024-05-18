@@ -70,7 +70,9 @@ public class BaseSpell : MonoBehaviour
             else{
                 Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.name);
             }
-            StartCoroutine(AnimationManager.Instance.Jump(GetOwner().gameObject));
+            CastEvent new_event = new CastEvent(GetOwner(), this, targetTile);
+            BattleManager.Instance.AddEvent(new_event);
+            //await AnimationManager.Instance.Jump(GetOwner().gameObject);
 
             SetCooldown(0);
 

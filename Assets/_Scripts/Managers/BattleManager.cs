@@ -31,6 +31,7 @@ public class BattleManager : MonoBehaviour
     public Instruction emptyInstruction;
 
     private List<Instruction> playerInstructions;
+    public List<BattleEvent> currentTurnEvents = new List<BattleEvent>();
 
     public int nTurn = 0;
 
@@ -356,9 +357,13 @@ public class BattleManager : MonoBehaviour
 
     [ContextMenu("Tour suivant")]
     public void NextTurn(){
-        nTurn ++;
         //SwitchCurrentTeam();
         UnitManager.Instance.ApplyEndTurnEffects(ConvertTeamTurn(teamTurn));
+        // Lance les animations de ce tour
+        AnimateElements();
+        
+        Debug.Log("J'ai fini");
+        nTurn ++;
         StartTurn();
     }
 
@@ -431,5 +436,13 @@ public class BattleManager : MonoBehaviour
             }
         }
         return registeredInstructionCount == UnitManager.Instance.CountUnits(Team.Ally);
+    }
+
+    public void AddEvent(BattleEvent _event){
+        currentTurnEvents.Add(_event);
+    }
+
+    public async void AnimateElements(){
+        await AnimationManager.Instance.Animate(currentTurnEvents);
     }
 }
