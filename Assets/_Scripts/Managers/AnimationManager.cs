@@ -41,17 +41,6 @@ public class AnimationManager : MonoBehaviour
         await Task.Delay(1000);
     }
 
-    /*
-    public async Task Animate(List<BattleEvent> battleEvents){
-        var tasks = new List<Task>();
-        for (var i = 0; i < battleEvents.Count; i++)
-        {
-           tasks.Add(Animate(battleEvents[i]));
-        }
-
-        await Task.WhenAll(tasks);
-    }*/
-
     public async Task Animate(List<BattleEvent> battleEvents){
 
         for (var i = 0; i < battleEvents.Count; i++)

@@ -33,6 +33,8 @@ public class BattleManager : MonoBehaviour
     private List<Instruction> playerInstructions;
     public List<BattleEvent> currentTurnEvents = new List<BattleEvent>();
 
+    public List<List<BattleEvent>> archivedTurnEvents = new List<List<BattleEvent>>();
+
     public int nTurn = 0;
 
     private bool inAnimation = false;
@@ -267,6 +269,9 @@ public class BattleManager : MonoBehaviour
                             battleState = BattleState.END;
                         }
                         else{
+                            EndTurnEffects();
+                            AnimateElements();
+                            CleanTurnEvents();
                             NextTurn();
                             ChangePlayerTurnState(Trigger.FORWARD);
                         }
@@ -347,8 +352,6 @@ public class BattleManager : MonoBehaviour
     private void StartBattle(){
         battleState = BattleState.START;
 
-        //Setup stuff
-
         //Start the first turn
         NextTurn();
 
@@ -356,18 +359,23 @@ public class BattleManager : MonoBehaviour
 
     private void StartTurn(){
 
-        // Do things
-
     }
 
     [ContextMenu("Tour suivant")]
     public void NextTurn(){
         //SwitchCurrentTeam();
-        UnitManager.Instance.ApplyEndTurnEffects(ConvertTeamTurn(teamTurn));
-        // Lance les animations de ce tour
-        AnimateElements();
+
         nTurn ++;
         StartTurn();
+    }
+
+    public void EndTurnEffects(){
+        UnitManager.Instance.ApplyEndTurnEffects(ConvertTeamTurn(teamTurn));
+    }
+
+    private void CleanTurnEvents(){
+        archivedTurnEvents.Add(currentTurnEvents);
+        currentTurnEvents = new List<BattleEvent>();
     }
 
     public Team ConvertTeamTurn(TeamTurn teamTurn){
@@ -452,6 +460,5 @@ public class BattleManager : MonoBehaviour
     public void AnimateElements(){
         SetInAnimation(true);
         var task = AnimationManager.Instance.Animate(currentTurnEvents);
-        //task.Wait();
     }
 }
