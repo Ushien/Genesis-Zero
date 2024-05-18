@@ -35,17 +35,22 @@ public class BattleManager : MonoBehaviour
 
     public int nTurn = 0;
 
+    private bool inAnimation = false;
+
     void Awake(){
         Instance = this;
         CleanPlayerInstructions();
     }
 
     void Update(){
-        ChangeState(Machine.PLAYERACTIONCHOICESTATE, Trigger.EMPTY);
-        ChangeState(Machine.PLAYERTURNSTATE, Trigger.EMPTY);
-        ChangeState(Machine.ENEMYTURNSTATE, Trigger.EMPTY);
-        ChangeState(Machine.TURNSTATE, Trigger.EMPTY);
-        ChangeState(Machine.BATTLESTATE, Trigger.EMPTY);
+
+        if(!inAnimation){
+            ChangeState(Machine.PLAYERACTIONCHOICESTATE, Trigger.EMPTY);
+            ChangeState(Machine.PLAYERTURNSTATE, Trigger.EMPTY);
+            ChangeState(Machine.ENEMYTURNSTATE, Trigger.EMPTY);
+            ChangeState(Machine.TURNSTATE, Trigger.EMPTY);
+            ChangeState(Machine.BATTLESTATE, Trigger.EMPTY);
+        }
     }
 
     public void LaunchBattle(List<Tuple<Vector2, ScriptableUnit, int>> ally_composition, List<Tuple<Vector2, ScriptableUnit, int>> enemy_composition){
@@ -361,8 +366,6 @@ public class BattleManager : MonoBehaviour
         UnitManager.Instance.ApplyEndTurnEffects(ConvertTeamTurn(teamTurn));
         // Lance les animations de ce tour
         AnimateElements();
-        
-        Debug.Log("J'ai fini");
         nTurn ++;
         StartTurn();
     }
@@ -442,7 +445,13 @@ public class BattleManager : MonoBehaviour
         currentTurnEvents.Add(_event);
     }
 
-    public async void AnimateElements(){
-        await AnimationManager.Instance.Animate(currentTurnEvents);
+    public void SetInAnimation(bool value){
+        inAnimation = value;
+    }
+
+    public void AnimateElements(){
+        SetInAnimation(true);
+        var task = AnimationManager.Instance.Animate(currentTurnEvents);
+        //task.Wait();
     }
 }

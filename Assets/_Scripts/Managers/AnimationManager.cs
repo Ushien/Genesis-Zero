@@ -59,6 +59,7 @@ public class AnimationManager : MonoBehaviour
            await Animate(battleEvents[i]);
            await Task.Delay(500);
         }
+        BattleManager.Instance.SetInAnimation(false);
     }
 
     private async Task Animate(CastEvent castEvent){
