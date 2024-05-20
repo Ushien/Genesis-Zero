@@ -15,8 +15,8 @@ public class BattleManager : MonoBehaviour
     public enum PlayerTurnState {OUT, START, ACTION_CHOICE, APPLY_ACTIONS, END}
     public enum PlayerActionChoiceState {OUT, START, CHARACTER_SELECTION, SWITCH_CHARACTER, SPELL_SELECTION, TARGET_SELECTION, VALIDATED_ACTION, OTHER_STATE, EXIT}
 
-    public enum Machine{BATTLESTATE, TURNSTATE, PLAYERTURNSTATE, ENEMYTURNSTATE, PLAYERACTIONCHOICESTATE}
-    public enum Trigger {VALIDATE, CANCEL, LEFT, RIGHT, UP, DOWN, FORWARD, EMPTY}
+    public enum Machine{BATTLESTATE, PLAYERTURNSTATE, PLAYERACTIONCHOICESTATE}
+    public enum Trigger {VALIDATE, CANCEL, FORWARD, EMPTY}
     public enum TeamTurn{OUT, ALLY, ENEMY}
 
     public BattleState battleState;
@@ -45,8 +45,6 @@ public class BattleManager : MonoBehaviour
         if(!inAnimation){
             ChangeState(Machine.PLAYERACTIONCHOICESTATE, Trigger.EMPTY);
             ChangeState(Machine.PLAYERTURNSTATE, Trigger.EMPTY);
-            ChangeState(Machine.ENEMYTURNSTATE, Trigger.EMPTY);
-            ChangeState(Machine.TURNSTATE, Trigger.EMPTY);
             ChangeState(Machine.BATTLESTATE, Trigger.EMPTY);
         }
     }
