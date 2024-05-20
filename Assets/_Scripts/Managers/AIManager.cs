@@ -9,12 +9,17 @@ public class AIManager : MonoBehaviour
     void Awake(){
         Instance = this;
     }
-    public List<Instruction> GetAIOrders(Team team){
+    public List<Instruction> GetDummyAIOrders(Team team){
         List<Instruction> instructions = new List<Instruction>();
-        BaseUnit randomUnit = UnitManager.Instance.GetRandomUnit(Team.Enemy);
 
-        instructions.Add(new Instruction(randomUnit, randomUnit.GetSpells()[0], UnitManager.Instance.GetRandomUnit(Team.Ally).GetTile()));
+        foreach (BaseUnit unit in UnitManager.Instance.GetUnits(Team.Enemy)){
+            instructions.Add(new Instruction(unit, unit.GetRandomSpell(includingAttack : true), UnitManager.Instance.GetRandomUnit(Team.Ally).GetTile()));
+        }
 
         return instructions;
+    }
+
+    public List<Instruction> GetAIOrders(Team team){
+        return GetDummyAIOrders(team);
     }
 }

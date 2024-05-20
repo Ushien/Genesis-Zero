@@ -80,6 +80,7 @@ public class BattleManager : MonoBehaviour
 
     private void ChangePlayerActionChoiceState(Trigger trigger){
         switch(playerActionChoiceState){
+
             case PlayerActionChoiceState.OUT:
                 switch (trigger)
                 {
@@ -93,7 +94,6 @@ public class BattleManager : MonoBehaviour
                 break;
 
             case PlayerActionChoiceState.CHARACTER_SELECTION:
-
                 switch (trigger){
                     case Trigger.VALIDATE:
                         playerActionChoiceState = PlayerActionChoiceState.SPELL_SELECTION;
@@ -105,6 +105,7 @@ public class BattleManager : MonoBehaviour
                         break;
                 }
                 break;
+
             case PlayerActionChoiceState.SPELL_SELECTION:
                 switch (trigger){
                     case Trigger.VALIDATE:
@@ -117,6 +118,7 @@ public class BattleManager : MonoBehaviour
                         break;
                 }
                 break;
+
             case PlayerActionChoiceState.TARGET_SELECTION:
                 switch (trigger)
                 {
@@ -146,11 +148,8 @@ public class BattleManager : MonoBehaviour
                     default:
                         break;
                 }
-
-
             break;
             
-
             case PlayerActionChoiceState.EXIT:
                 switch (trigger)
                 {
@@ -164,7 +163,6 @@ public class BattleManager : MonoBehaviour
                 }
 
             break;
-
         }
     }
 
@@ -172,7 +170,7 @@ public class BattleManager : MonoBehaviour
         switch (turnState)
         {
             case TurnState.OUT:
-                // Nothing happens unless it receives an OUT signal
+                // Nothing happens unless it receives an FORWARD signal
                 switch (trigger)
                 {
                     case Trigger.FORWARD:
@@ -247,7 +245,8 @@ public class BattleManager : MonoBehaviour
                             EndTurnEffects();
                             AnimateElements();
                             CleanTurnEvents();
-                            NextTurn();
+                            SwitchCurrentTeam();
+                            nTurn ++;
                             ChangeTurnState(Trigger.FORWARD);
                         }
                         break;
@@ -289,6 +288,7 @@ public class BattleManager : MonoBehaviour
 
     public void DebugSetState(){
         teamTurn = TeamTurn.ALLY;
+
         battleState = BattleState.TURN;
         turnState = TurnState.ACTION_CHOICE;
         playerActionChoiceState = PlayerActionChoiceState.OUT;
@@ -314,23 +314,10 @@ public class BattleManager : MonoBehaviour
         return playerActionChoiceState;
     }
     private void StartBattle(){
+        teamTurn = TeamTurn.ALLY;
         battleState = BattleState.START;
-
-        //Start the first turn
-        NextTurn();
-
-    }
-
-    private void StartTurn(){
-
-    }
-
-    [ContextMenu("Tour suivant")]
-    public void NextTurn(){
-        //SwitchCurrentTeam();
-
-        nTurn ++;
-        StartTurn();
+        turnState = TurnState.OUT;
+        playerActionChoiceState = PlayerActionChoiceState.OUT;
     }
 
     public void EndTurnEffects(){

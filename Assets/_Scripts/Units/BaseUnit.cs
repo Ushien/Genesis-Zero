@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 public class BaseUnit : MonoBehaviour
 {
@@ -202,8 +203,27 @@ public class BaseUnit : MonoBehaviour
         return passive;
     }
 
-    public List<BaseSpell> GetSpells(){
-        return availableSpells;
+    public List<BaseSpell> GetSpells(bool includingAttack = false){
+
+        if(includingAttack){
+            
+            List<BaseSpell> completeAvailableSpells = new List<BaseSpell>();
+            foreach(BaseSpell spell in availableSpells){
+                completeAvailableSpells.Add(spell);
+            }
+            completeAvailableSpells.Add(GetAttack());
+
+            return completeAvailableSpells;
+        }
+
+        else{
+            return availableSpells;
+        }
+
+    }
+
+    public BaseSpell GetRandomSpell(bool includingAttack){
+        return GetSpells(includingAttack).OrderBy(t => UnityEngine.Random.value).First();
     }
 
     public BaseSpell GetAttack(){
