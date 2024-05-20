@@ -12,7 +12,7 @@ public class BattleManager : MonoBehaviour
 
     //Game states
     public enum BattleState {OUT, START, TURN, END, WON, LOST}
-    public enum PlayerTurnState {OUT, START, ACTION_CHOICE, APPLY_ACTIONS, END}
+    public enum TurnState {OUT, START, ACTION_CHOICE, APPLY_ACTIONS, END}
     public enum PlayerActionChoiceState {OUT, START, CHARACTER_SELECTION, SWITCH_CHARACTER, SPELL_SELECTION, TARGET_SELECTION, VALIDATED_ACTION, OTHER_STATE, EXIT}
 
     public enum Machine{BATTLESTATE, PLAYERTURNSTATE, PLAYERACTIONCHOICESTATE}
@@ -20,7 +20,7 @@ public class BattleManager : MonoBehaviour
     public enum TeamTurn{OUT, ALLY, ENEMY}
 
     public BattleState battleState;
-    public PlayerTurnState playerTurnState;
+    public TurnState turnState;
     public PlayerActionChoiceState playerActionChoiceState;
     public TeamTurn teamTurn;
 
@@ -66,7 +66,7 @@ public class BattleManager : MonoBehaviour
                 ChangePlayerActionChoiceState(trigger);
                 break;
             case Machine.PLAYERTURNSTATE:
-                ChangePlayerTurnState(trigger);
+                ChangeTurnState(trigger);
                 break;
             case Machine.BATTLESTATE:
                 ChangeBattleState(trigger);
@@ -168,61 +168,61 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private void ChangePlayerTurnState(Trigger trigger){
-        switch (playerTurnState)
+    private void ChangeTurnState(Trigger trigger){
+        switch (turnState)
         {
-            case PlayerTurnState.OUT:
+            case TurnState.OUT:
                 // Nothing happens unless it receives an OUT signal
                 switch (trigger)
                 {
                     case Trigger.FORWARD:
                         // Do stuff if needed
-                        playerTurnState = PlayerTurnState.START;
+                        turnState = TurnState.START;
                         break;
                     default:
                         break;
                 }
                 break;
 
-            case PlayerTurnState.START:
+            case TurnState.START:
                 // Do stuff
                 // Start turn effects
-                playerTurnState = PlayerTurnState.ACTION_CHOICE;
+                turnState = TurnState.ACTION_CHOICE;
                 if(teamTurn == TeamTurn.ALLY){
                     ChangeState(Machine.PLAYERACTIONCHOICESTATE, Trigger.FORWARD);
                 }
                 break;
 
-            case PlayerTurnState.ACTION_CHOICE:
+            case TurnState.ACTION_CHOICE:
                 switch (trigger)
                 {
                     case Trigger.FORWARD:
-                        playerTurnState = PlayerTurnState.APPLY_ACTIONS;
+                        turnState = TurnState.APPLY_ACTIONS;
                         break;
                     
                     default:
                         if(teamTurn == TeamTurn.ENEMY){
                             playerInstructions = AIManager.Instance.GetAIOrders(ConvertTeamTurn(teamTurn));
-                            playerTurnState = PlayerTurnState.APPLY_ACTIONS;
+                            turnState = TurnState.APPLY_ACTIONS;
                         }
                         break;
                 }
                 break;
 
-            case PlayerTurnState.APPLY_ACTIONS:
+            case TurnState.APPLY_ACTIONS:
                 ApplyInstructions();
                 // Sauvegarder l'historique d'instructions
                 // TODO
                 // Clean les instructions actuelles
                 CleanPlayerInstructions();
 
-                playerTurnState = PlayerTurnState.END;
+                turnState = TurnState.END;
                 break;
 
-            case PlayerTurnState.END:
+            case TurnState.END:
                 // Do stuff
                 // End turn effects
-                playerTurnState = PlayerTurnState.OUT;
+                turnState = TurnState.OUT;
                 ChangeState(Machine.BATTLESTATE, Trigger.FORWARD);
                 break;
             default:
@@ -248,7 +248,7 @@ public class BattleManager : MonoBehaviour
                             AnimateElements();
                             CleanTurnEvents();
                             NextTurn();
-                            ChangePlayerTurnState(Trigger.FORWARD);
+                            ChangeTurnState(Trigger.FORWARD);
                         }
                         break;
                     default:
@@ -290,14 +290,14 @@ public class BattleManager : MonoBehaviour
     public void DebugSetState(){
         teamTurn = TeamTurn.ALLY;
         battleState = BattleState.TURN;
-        playerTurnState = PlayerTurnState.ACTION_CHOICE;
+        turnState = TurnState.ACTION_CHOICE;
         playerActionChoiceState = PlayerActionChoiceState.OUT;
     }
 
     public string GetCurrentStatesSummary(){
         string currentStates = "";
         currentStates = currentStates + "BattleState: " + battleState + "\n";
-        currentStates = currentStates + "PlayerTurnState: " + playerTurnState + "\n";
+        currentStates = currentStates + "TurnState: " + turnState + "\n";
         currentStates = currentStates + "PlayerActionChoiceState: " + playerActionChoiceState + "\n";
         return currentStates;
 
@@ -306,8 +306,8 @@ public class BattleManager : MonoBehaviour
         return battleState;
     }
 
-    public PlayerTurnState GetPlayerTurnState(){
-        return playerTurnState;
+    public TurnState GetTurnState(){
+        return turnState;
     }
 
     public PlayerActionChoiceState GetPlayerActionChoiceState(){
