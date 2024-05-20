@@ -4,22 +4,13 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Instruction : MonoBehaviour
+public class Instruction
 {
-    public BaseUnit emptyUnit;
-    public BaseSpell emptySpell;
-    public Tile emptyTile;
-
     public BaseUnit source;
     public BaseSpell spell;
     public Tile target;
-
-    void Awake(){
-        source = emptyUnit;
-        spell = emptySpell;
-        target = emptyTile;
-    }
-    public void Setup(BaseUnit source_unit, BaseSpell spell_to_cast, Tile target_tile){
+    
+    public Instruction(BaseUnit source_unit, BaseSpell spell_to_cast, Tile target_tile){
         source = source_unit;
         spell = spell_to_cast;
         target = target_tile;

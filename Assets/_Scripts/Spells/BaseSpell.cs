@@ -175,7 +175,6 @@ public class BaseSpell : MonoBehaviour
 
     public string DisplayPercents(float percentRatio){
         return (percentRatio * 100).ToString();
-        //return Tools.Ceiling(percentRatio * 100).ToString();
     }
 
     public void AddModifier(Modifier modifier){

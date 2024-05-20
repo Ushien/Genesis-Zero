@@ -12,9 +12,7 @@ public class BattleManager : MonoBehaviour
 
     //Game states
     public enum BattleState {OUT, START, TURN, END, WON, LOST}
-    public enum TurnState {OUT, PLAYERTURN, ENEMYTURN}
     public enum PlayerTurnState {OUT, START, ACTION_CHOICE, APPLY_ACTIONS, END}
-    public enum EnemyTurnState {OUT, START, ACTION_CHOICE, APPLY_ACTIONS, END}
     public enum PlayerActionChoiceState {OUT, START, CHARACTER_SELECTION, SWITCH_CHARACTER, SPELL_SELECTION, TARGET_SELECTION, VALIDATED_ACTION, OTHER_STATE, EXIT}
 
     public enum Machine{BATTLESTATE, TURNSTATE, PLAYERTURNSTATE, ENEMYTURNSTATE, PLAYERACTIONCHOICESTATE}
@@ -22,9 +20,7 @@ public class BattleManager : MonoBehaviour
     public enum TeamTurn{OUT, ALLY, ENEMY}
 
     public BattleState battleState;
-    public TurnState turnState;
     public PlayerTurnState playerTurnState;
-    public EnemyTurnState enemyTurnState;
     public PlayerActionChoiceState playerActionChoiceState;
     public TeamTurn teamTurn;
 
@@ -73,12 +69,6 @@ public class BattleManager : MonoBehaviour
                 break;
             case Machine.PLAYERTURNSTATE:
                 ChangePlayerTurnState(trigger);
-                break;
-            case Machine.ENEMYTURNSTATE:
-                ChangeEnemyTurnState(trigger);
-                break;
-            case Machine.TURNSTATE:
-                ChangeTurnState(trigger);
                 break;
             case Machine.BATTLESTATE:
                 ChangeBattleState(trigger);
@@ -214,7 +204,7 @@ public class BattleManager : MonoBehaviour
                     
                     default:
                         if(teamTurn == TeamTurn.ENEMY){
-                            // Get AI orders
+                            playerInstructions = AIManager.Instance.GetAIOrders(ConvertTeamTurn(teamTurn));
                             playerTurnState = PlayerTurnState.APPLY_ACTIONS;
                         }
                         break;
@@ -237,19 +227,6 @@ public class BattleManager : MonoBehaviour
                 playerTurnState = PlayerTurnState.OUT;
                 ChangeState(Machine.BATTLESTATE, Trigger.FORWARD);
                 break;
-            default:
-                break;
-        }
-    }
-
-    private void ChangeEnemyTurnState(Trigger trigger){
-        switch (enemyTurnState){
-            default:
-                break;
-        }
-    }
-    private void ChangeTurnState(Trigger trigger){
-        switch (turnState){
             default:
                 break;
         }
@@ -315,7 +292,6 @@ public class BattleManager : MonoBehaviour
     public void DebugSetState(){
         teamTurn = TeamTurn.ALLY;
         battleState = BattleState.TURN;
-        turnState = TurnState.OUT;
         playerTurnState = PlayerTurnState.ACTION_CHOICE;
         playerActionChoiceState = PlayerActionChoiceState.OUT;
     }
@@ -323,9 +299,7 @@ public class BattleManager : MonoBehaviour
     public string GetCurrentStatesSummary(){
         string currentStates = "";
         currentStates = currentStates + "BattleState: " + battleState + "\n";
-        currentStates = currentStates + "TurnState: " + turnState + "\n";
         currentStates = currentStates + "PlayerTurnState: " + playerTurnState + "\n";
-        currentStates = currentStates + "EnemyTurnState: " + enemyTurnState + "\n";
         currentStates = currentStates + "PlayerActionChoiceState: " + playerActionChoiceState + "\n";
         return currentStates;
 
@@ -334,16 +308,8 @@ public class BattleManager : MonoBehaviour
         return battleState;
     }
 
-    public TurnState GetTurnState(){
-        return turnState;
-    }
-
     public PlayerTurnState GetPlayerTurnState(){
         return playerTurnState;
-    }
-
-    public EnemyTurnState GetEnemyTurnState(){
-        return enemyTurnState;
     }
 
     public PlayerActionChoiceState GetPlayerActionChoiceState(){
@@ -393,10 +359,7 @@ public class BattleManager : MonoBehaviour
     }
 
     public Instruction CreateInstruction(BaseUnit source_unit, BaseSpell spell_to_cast, Tile target_tile){
-        Instruction new_instruction = Instantiate(emptyInstruction);
-
-        // L'associer au tour actuel
-        new_instruction.Setup(source_unit, spell_to_cast, target_tile);
+        Instruction new_instruction = new Instruction(source_unit, spell_to_cast, target_tile);
         return new_instruction;
     }
 
@@ -412,7 +375,7 @@ public class BattleManager : MonoBehaviour
     private void RemoveInstruction(int index){
         if(playerInstructions.Count > index && index >= 0){
             playerInstructions[index].GetSourceUnit().GiveInstruction(false);
-            Destroy(playerInstructions[index].gameObject);
+            //Destroy(playerInstructions[index].gameObject);
             playerInstructions.RemoveAt(index);
         }
     }
