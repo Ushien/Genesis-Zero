@@ -4,6 +4,10 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Contient toutes les méthodes relatives à l'animation
+/// </summary>
+
 public class AnimationManager : MonoBehaviour
 {
     public static AnimationManager Instance;

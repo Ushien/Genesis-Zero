@@ -4,7 +4,6 @@ using UnityEngine;
 using System;
 
 [CreateAssetMenu(fileName = "New Composition", menuName = "Composition")]
-
 public class ScriptableComposition : ScriptableObject
 {
     [SerializeField] public List<ScriptableUnit> units;

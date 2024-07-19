@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+/// <summary>
+/// Représente une attaque ou une technique
+/// </summary>
 public class BaseSpell : MonoBehaviour
 {
     public ScriptableSpell scriptableSpell;

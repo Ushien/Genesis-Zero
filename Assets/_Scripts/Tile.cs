@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Représente une case de la grille de combat
+/// </summary>
 public class Tile : MonoBehaviour
 {
     [SerializeField] private Color _baseColor, _offsetColor;

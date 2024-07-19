@@ -4,6 +4,10 @@ using UnityEngine;
 using System.Linq;
 using System;
 
+/// <summary>
+/// Gestion des unités sur un plan global.
+/// </summary>
+
 public class UnitManager : MonoBehaviour
 {
     public static UnitManager Instance;

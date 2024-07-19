@@ -4,6 +4,10 @@ using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
 
+/// <summary>
+/// Gestion de l'interface de jeu
+/// </summary>
+
 public class InterfaceManager : MonoBehaviour
 {
     public static InterfaceManager Instance;
@@ -23,9 +27,6 @@ public class InterfaceManager : MonoBehaviour
     public Material grayscaleShader;
 
     public GameObject tileSelector;
-
-    // La Tile sélectionnée à tout moment
-    // private Tile selectedTile;
 
     // La Tile contenant la source du spell, lorsqu'un spell est lancé (lorsqu'on revient en arrière pendant la sélection de cible)
     private Tile sourceTile;

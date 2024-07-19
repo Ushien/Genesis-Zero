@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Contient les informations relatives à une technique, afin de l'initialiser
+/// </summary>
 [CreateAssetMenu(fileName = "New Scriptable Spell", menuName = "ScriptableSpell")]
-
 public class ScriptableSpell : ScriptableObject
 {
     public string spell_name;

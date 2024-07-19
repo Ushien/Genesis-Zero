@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+
+/// <summary>
+/// Gestion des sorts (Dépréciée)
+/// </summary>
+
 public class SpellManager : MonoBehaviour
 {
     public static SpellManager Instance;

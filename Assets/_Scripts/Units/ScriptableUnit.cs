@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Contient les informations relatives à l'initialisation d'une unité.
+/// </summary>
 [CreateAssetMenu(fileName = "New Unit", menuName = "Unit")]
-
 public class ScriptableUnit : ScriptableObject
 {
     public string unit_name;

@@ -4,6 +4,10 @@ using UnityEngine;
 using System.Linq;
 using System;
 
+/// <summary>
+/// Méthodes de débug et de test
+/// </summary>
+
 public class TestScript : MonoBehaviour
 {
     public ScriptableComposition enemy_composition;
@@ -19,7 +23,7 @@ public class TestScript : MonoBehaviour
 
         
         foreach (BaseUnit unit in UnitManager.Instance.GetUnits(Team.Ally)){
-            unit.SetHP(20);
+            //unit.SetHP(20);
         }
         UnitManager.Instance.GetRandomUnit(Team.Enemy).ModifyArmor(+50);
 

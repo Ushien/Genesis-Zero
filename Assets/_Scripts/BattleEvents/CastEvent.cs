@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
+/// <summary>
+/// Un CastEvent est créé lorsqu'une technique est lancée, peu importe le contexte.
+/// </summary>
+
 public class CastEvent : BattleEvent
 {
     private BaseUnit sourceUnit;

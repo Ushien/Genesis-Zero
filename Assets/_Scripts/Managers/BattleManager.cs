@@ -5,6 +5,10 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine.Tilemaps;
 
+/// <summary>
+/// Contient toutes les méthodes relatives au moteur de combat
+/// </summary>
+
 public class BattleManager : MonoBehaviour
 {
     

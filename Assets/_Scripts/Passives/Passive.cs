@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Un passif s'attache à une unité et s'active continuellement sous certaines conditions. 
+/// Tous les passifs du jeu héritent de cette superclasse.
+/// </summary>
+
 public class Passive : MonoBehaviour
 {
     public float ratio1 = 1f;

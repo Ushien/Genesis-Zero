@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+/// <summary>
+/// Contient les informations sur la prochaine action de l'unité.
+/// </summary>
 public class Instruction
 {
     public BaseUnit source;

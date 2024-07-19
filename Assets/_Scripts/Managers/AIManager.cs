@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Contient toutes les méthodes relatives à l'intelligence artificielle du jeu
+/// </summary>
+
 public class AIManager : MonoBehaviour
 {
     public static AIManager Instance;
@@ -9,7 +13,11 @@ public class AIManager : MonoBehaviour
     void Awake(){
         Instance = this;
     }
-    public List<Instruction> GetDummyAIOrders(Team team){
+
+    /*
+    Renvoie une liste d'instructions aléatoires pour une équipe donnée
+    */
+    private List<Instruction> GetDummyAIOrders(Team team){
         List<Instruction> instructions = new List<Instruction>();
 
         foreach (BaseUnit unit in UnitManager.Instance.GetUnits(Team.Enemy)){
@@ -19,6 +27,9 @@ public class AIManager : MonoBehaviour
         return instructions;
     }
 
+    /*
+    Renvoie une liste d'instructions pour une équipe donnée
+    */
     public List<Instruction> GetAIOrders(Team team){
         return GetDummyAIOrders(team);
     }

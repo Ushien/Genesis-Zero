@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// Gestion de la grille de combat. Une grille appartient à une équipe et est composée de Tiles.
+/// </summary>
+
 public class GridManager : MonoBehaviour
 {
     public static GridManager Instance;

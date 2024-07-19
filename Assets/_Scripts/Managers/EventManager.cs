@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.Analytics;
 using System;
 
+/// <summary>
+/// Gestion du système d'évènements
+/// </summary>
+
 public class EventManager : MonoBehaviour
 {
 
