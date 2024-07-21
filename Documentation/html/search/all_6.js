@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['getarmor_0',['GetArmor',['../class_base_unit.html#a7f35560c507136ce2cc892eb0c5580c6',1,'BaseUnit']]],
+  ['getattack_1',['GetAttack',['../class_base_unit.html#a0ad7260b4f50052ae3577d262704b24a',1,'BaseUnit']]],
+  ['getbasecooldown_2',['GetBaseCooldown',['../class_base_spell.html#ac58cd30b0edaeb5702761d7b18609fb2',1,'BaseSpell']]],
+  ['getcooldown_3',['GetCooldown',['../class_base_spell.html#a61893758280d2c0a765cb9f925ea691c',1,'BaseSpell']]],
+  ['getfightdescription_4',['GetFightDescription',['../class_base_spell.html#acbf4de16182b56a47df29cfd830c5e2c',1,'BaseSpell.GetFightDescription()'],['../class_base_unit.html#a874b89cd0e544d0d06efb6950cf20172',1,'BaseUnit.GetFightDescription()']]],
+  ['getfinaldamages_5',['GetFinalDamages',['../class_base_spell.html#a0e35e8508fe5a3982c57b35829d6ce2b',1,'BaseSpell']]],
+  ['getfinalhealth_6',['GetFinalHealth',['../class_base_unit.html#aaf03ff25a67474f7da88137ae3c6fd60',1,'BaseUnit']]],
+  ['getfinalpower_7',['GetFinalPower',['../class_base_unit.html#a01c5976d439efa7f6867789efd858a6c',1,'BaseUnit']]],
+  ['getlevel_8',['GetLevel',['../class_base_unit.html#a5dd9ff4c19476f8aa734036518afa386',1,'BaseUnit']]],
+  ['getname_9',['GetName',['../class_base_spell.html#a4a45afa69a47e10a7b70edceb4aa0e9a',1,'BaseSpell.GetName()'],['../class_base_unit.html#a499f2ef132d3cacfb17cdb8690126998',1,'BaseUnit.GetName()']]],
+  ['getowner_10',['GetOwner',['../class_base_spell.html#a8c8ef380cd92d6227d59b47349a1c2ea',1,'BaseSpell']]],
+  ['getpassive_11',['GetPassive',['../class_base_unit.html#a9434c69651da6f440bbfd27e479ff00e',1,'BaseUnit']]],
+  ['getrandomspell_12',['GetRandomSpell',['../class_base_unit.html#a3a34fa64cdd2eaed77668a1e823000cc',1,'BaseUnit']]],
+  ['getrange_13',['GetRange',['../class_base_spell.html#ad9a187bcc4e245704a4f1077ffc2933a',1,'BaseSpell']]],
+  ['getratio_14',['GetRatio',['../class_base_spell.html#a61641803eb5aecebf17f04aaa6736a36',1,'BaseSpell']]],
+  ['getspells_15',['GetSpells',['../class_base_unit.html#a8da397a299f6999be06d897b86e9f1b5',1,'BaseUnit']]],
+  ['getstatfromlevel_16',['GetStatFromLevel',['../class_base_unit.html#ae7993e748a00a8af538b0a7e4176998f',1,'BaseUnit']]],
+  ['getteam_17',['GetTeam',['../class_base_unit.html#ae42aada4295d8f279fcf95d54075a8d1',1,'BaseUnit']]],
+  ['gettile_18',['GetTile',['../class_base_unit.html#affc1eb3a7a30636d3e41489df3c9f81c',1,'BaseUnit']]],
+  ['gettotalhealth_19',['GetTotalHealth',['../class_base_unit.html#a52401542a2983b354c78a599a1b4e989',1,'BaseUnit']]],
+  ['getunitsexcept_20',['GetUnitsExcept',['../class_unit_manager.html#a5e4f57cbbbeb0be550247f01edd93558',1,'UnitManager']]],
+  ['giveinstruction_21',['GiveInstruction',['../class_base_unit.html#a1fa8145c09096cbabe257fa5ecba45c4',1,'BaseUnit']]],
+  ['gridmanager_22',['GridManager',['../class_grid_manager.html',1,'']]]
+];

@@ -64,8 +64,8 @@ public class BaseUnit : MonoBehaviour
     private bool instructionGiven = false;
         #endregion
         #endregion
-    ////////////////////////////////////////////////////////
 
+    ////////////////////////////////////////////////////////
 
         #region Méthodes d'initialisation
 
