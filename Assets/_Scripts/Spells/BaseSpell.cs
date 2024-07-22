@@ -12,7 +12,8 @@ public class BaseSpell : MonoBehaviour
         #region Fields
 
         #region Fields de setup
-    public ScriptableSpell scriptableSpell;
+    [SerializeField]
+    private ScriptableSpell scriptableSpell;
     public Modifier modifier;
 
         #endregion
