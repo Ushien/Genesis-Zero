@@ -22,7 +22,7 @@ public class Académique : Passive
         EventManager.AfterCast -= RisingPower;
     }
     void RisingPower(BaseSpell spell, Tile targetTile){
-        if(spell.owner == holder){
+        if(spell.GetOwner() == holder){
             holder.ModifyPower(0.1f);
         }
     }

@@ -162,7 +162,7 @@ public class InterfaceManager : MonoBehaviour
 
             foreach (var spell in currentSpells)
             {
-                spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().sprite = spell.artwork;
+                spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().sprite = spell.GetArtwork();
                 spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().material = null;
                 if(!spell.IsAvailable()){
                     Material material = Instantiate(grayscaleShader);

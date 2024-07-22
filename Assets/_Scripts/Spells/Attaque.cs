@@ -5,9 +5,6 @@ using UnityEngine;
 public class AAttack : BaseSpell
 {
     void Awake(){
-        ratio1 = 1f;
-        ratio2 = 1f;
-        ratio3 = 1f;
         SetIsATechnique(false);
     }
 
@@ -16,6 +13,6 @@ public class AAttack : BaseSpell
     }
 
     private void _Attaque(Tile targetTile){
-        SpellManager.Instance.InflictDamage(GetFinalDamages(ratio1), targetTile.GetUnit());
+        SpellManager.Instance.InflictDamage(GetFinalDamages(GetRatio()[0]), targetTile.GetUnit());
     }
 }

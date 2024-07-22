@@ -5,8 +5,8 @@ using UnityEngine;
 public class Onde : BaseSpell
 {
     void Awake(){
-        ratio1 = 0.7f;
-        ratio2 = 0.02f;
+        SetRatio(1, 0.7f);
+        SetRatio(2, 0.02f);
     }
 
     override public void Cast(Tile targetTile = null){
@@ -14,7 +14,7 @@ public class Onde : BaseSpell
     }
 
     private void _Onde(Tile targetTile){   
-        SpellManager.Instance.HealDamage(GetFinalDamages(ratio1), targetTile.GetUnit());
-        SpellManager.Instance.ModifyPower(ratio2, targetTile.GetUnit());
+        SpellManager.Instance.HealDamage(GetFinalDamages(GetRatio()[0]), targetTile.GetUnit());
+        SpellManager.Instance.ModifyPower(GetRatio()[1], targetTile.GetUnit());
     }
 }

@@ -5,9 +5,7 @@ using UnityEngine;
 public class RetourDeFlammes : BaseSpell
 {
     void Awake(){
-        ratio1 = 1f;
-        ratio2 = 1f;
-        ratio3 = 1f;
+
     }
 
     override public void Cast(Tile targetTile = null){

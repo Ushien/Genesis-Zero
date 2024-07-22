@@ -14,39 +14,38 @@ public class BaseSpell : MonoBehaviour
         #region Fields de setup
     [SerializeField]
     private ScriptableSpell scriptableSpell;
-    public Modifier modifier;
 
         #endregion
         #region Références à d'autres objets
-    public BaseUnit owner;
+    private BaseUnit owner;
         #endregion
 
         #region Caractérstiques
-    public string spell_name = "Name";
+    private string spell_name = "Name";
     private bool isATechnique = true;
     [TextArea(5,10)]
-    public string lore_description = "Lore Description";
+    private string lore_description = "Lore Description";
     [TextArea(5,10)]
-    public string fight_description = "Fight Description";
+    private string fight_description = "Fight Description";
     // Cooldown total du sort.
-    public int base_cooldown = 0;
+    private int base_cooldown = 0;
     // Cooldown actuel du sort. Lorsque celui-ci est égal au cooldown total, le sort peut être lancé. Quand le sort est lancé, celui-ci passe à zéro. Il augmente ensuite de 1 par tour.
-    public int cooldown = 0;
-    public Sprite artwork = null;
+    private int cooldown = 0;
+    private Sprite artwork = null;
     // Indique la portée du sort (horizontale, verticale, toutes les unités, etc...)
-    public GridManager.Selection_mode range;
+    private GridManager.Selection_mode range;
     // Indique si un sort ne peut être lancé que sur une équipe en particulier
-    public GridManager.Team_restriction team_restriction;
+    private GridManager.Team_restriction team_restriction;
 
     /// Ratio associés au sort, doivent être définis au sein de la fonction Awake propre au sort.
-    public float ratio1 = 1f;
-    public float ratio2 = 1f;
-    public float ratio3 = 1f;
+    private float ratio1 = 1f;
+    private float ratio2 = 1f;
+    private float ratio3 = 1f;
         #endregion
 
         #region Fields relatifs au moteur de jeu
 
-    public List<Modifier> modifiers = new List<Modifier>();
+    private List<Modifier> modifiers = new List<Modifier>();
         #endregion
         #endregion
 
@@ -62,7 +61,6 @@ public class BaseSpell : MonoBehaviour
         this.name = scriptableSpell.spell_name;
 
         owner = ownerUnit;
-        modifier = ownerUnit.emptyModifier;
         
         spell_name = scriptableSpell.spell_name;
         lore_description = scriptableSpell.lore_description;
@@ -145,6 +143,10 @@ public class BaseSpell : MonoBehaviour
         return range;
     }
 
+    public Sprite GetArtwork(){
+        return artwork;
+    }
+
     /// <summary>
     /// Renvoie la description en combat du sort, avec les nombres convertis en fonction de la puissance du personnage.
     /// </summary>
@@ -170,7 +172,23 @@ public class BaseSpell : MonoBehaviour
             ratio2,
             ratio3
         };
+    }
 
+    /// <summary>
+    /// Fixe un ratio au choix à une valeur
+    /// </summary>
+    /// <param name="index">Index du ratio (1, 2 ou 3)</param>
+    /// <param name="newNumber">Nouvelle valeur du ratio</param>
+    public void SetRatio(int index, float newNumber){
+        if(index == 1){
+            ratio1 = newNumber;
+        }
+        if(index == 2){
+            ratio2 = newNumber;
+        }
+        if(index == 3){
+            ratio3 = newNumber;
+        }
     }
 
         #endregion
@@ -197,7 +215,7 @@ public class BaseSpell : MonoBehaviour
     /// <summary>
     /// Vérifie si les cooldowns sont légaux et les ajuste au besoin
     /// </summary>
-    public void CheckCooldown(){
+    private void CheckCooldown(){
         if(cooldown > base_cooldown){
             cooldown = base_cooldown;
         }
@@ -319,7 +337,7 @@ public class BaseSpell : MonoBehaviour
     /// Supprime un modificateur sur le sort
     /// </summary>
     /// <param name="modifier"></param>
-    public void DeleteModifier(Modifier modifier){
+    private void DeleteModifier(Modifier modifier){
         modifiers.Remove(modifier);
     }
 
@@ -335,7 +353,7 @@ public class BaseSpell : MonoBehaviour
             modifier.ModifyTurns(-1);
             if(modifier.IsEnded()){
                 //FIXME les listes aiment pas beaucoup ça
-                modifiers.Remove(modifier);
+                DeleteModifier(modifier);
             }
         }
     }

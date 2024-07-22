@@ -5,17 +5,16 @@ using UnityEngine;
 public class Sacrements : BaseSpell
 {
     void Awake(){
-        ratio1 = 1.1f;
-        ratio2 = 1.4f;
-        ratio3 = 1f;
+        SetRatio(1, 1.1f);
+        SetRatio(2, 1.4f);
     }
     override public void Cast(Tile targetTile = null){
         base.CastSpell(targetTile, _Sacrements);
     }
 
     private void _Sacrements(Tile targetTile){
-        float finalAmount1 = ratio1 * owner.finalPower;
-        float finalAmount2 = ratio2 * owner.finalPower;
+        float finalAmount1 = GetRatio()[0] * GetOwner().finalPower;
+        float finalAmount2 = GetRatio()[1] * GetOwner().finalPower;
        
         if(targetTile.GetUnit().isArmored()){
             SpellManager.Instance.InflictDamage(finalAmount2, targetTile.GetUnit());

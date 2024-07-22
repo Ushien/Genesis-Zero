@@ -5,16 +5,15 @@ using UnityEngine;
 public class Explosion : BaseSpell
 {
     void Awake(){
-        ratio1 = 1.2f;
-        ratio2 = 0.2f;
-        ratio3 = 1f;
+        SetRatio(1, 1.2f);
+        SetRatio(2, 0.2f);
     }
     override public void Cast(Tile targetTile = null){
         base.CastSpell(targetTile, _Explosion);
     }
 
     private void _Explosion(Tile targetTile){
-        SpellManager.Instance.InflictDamage(ratio1 * owner.finalPower, targetTile.GetUnit());
-        SpellManager.Instance.InflictDamage(ratio2 * owner.finalPower, UnitManager.Instance.GetUnitsExcept(targetTile.GetUnit()));
+        SpellManager.Instance.InflictDamage(GetRatio()[0] * GetOwner().finalPower, targetTile.GetUnit());
+        SpellManager.Instance.InflictDamage(GetRatio()[1] * GetOwner().finalPower, UnitManager.Instance.GetUnitsExcept(targetTile.GetUnit()));
     }
 }

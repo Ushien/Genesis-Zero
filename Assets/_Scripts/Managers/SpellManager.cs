@@ -13,7 +13,8 @@ public class SpellManager : MonoBehaviour
     public static SpellManager Instance;
     public BaseSpell EmptySpell;
     public BaseSpell baseAttack;
-
+    [SerializeField]
+    private Modifier baseModifier;
     private List<ScriptableSpell> _spells;
 
     private List<Status> cleansableStatus = new List<Status>(){Status.Poison, Status.Stun};
@@ -88,6 +89,10 @@ public class SpellManager : MonoBehaviour
 
     public List<Status> GetCleansableStatus(){
         return cleansableStatus;
+    }
+
+    public Modifier GetModifier(){
+        return baseModifier;
     }
 }
 

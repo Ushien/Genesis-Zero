@@ -5,8 +5,8 @@ using UnityEngine;
 public class PoudreEtourdissante : BaseSpell
 {
     void Awake(){
-        ratio1 = 1;
-        ratio2 = 2f;
+        SetRatio(1, 1f);
+        SetRatio(2, 2f);
     }
 
     override public void Cast(Tile targetTile = null){
