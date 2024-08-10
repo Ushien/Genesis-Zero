@@ -41,6 +41,11 @@ public class BaseSpell : MonoBehaviour
     private float ratio1 = 1f;
     private float ratio2 = 1f;
     private float ratio3 = 1f;
+
+    private float h_ratio1 = 1f;
+    private float h_ratio2 = 1f;
+    private float h_ratio3 = 1f;
+
         #endregion
 
         #region Fields relatifs au moteur de jeu
@@ -76,7 +81,15 @@ public class BaseSpell : MonoBehaviour
     /// <summary>
     /// Lance le sort. Méthode à overrider pour intégrer l'effet du sort que l'on souhaite implémenter.
     /// </summary>
+    /// 
     virtual public void Cast(){
+        Debug.Log("Méthode overridée");
+    }
+
+    /// <summary>
+    /// Lance un sort en version surchargée. Méthode à overrider pour intégrer l'effet du sort que l'on souhaite implémenter.
+    /// </summary>
+    virtual public void HyperCast(){
         Debug.Log("Méthode overridée");
     }
 
@@ -84,6 +97,14 @@ public class BaseSpell : MonoBehaviour
     /// Lance le sort. Méthode à overrider pour intégrer l'effet du sort que l'on souhaite implémenter.
     /// </summary>
     virtual public void Cast(Tile targetTile){
+        Debug.Log("Méthode overridée");
+    }
+
+    /// <summary>
+    /// /// Lance un sort en version surchargée. Méthode à overrider pour intégrer l'effet du sort que l'on souhaite implémenter.
+    /// </summary>
+    /// <param name="targetTile"></param>
+    virtual public void HyperCast(Tile targetTile){
         Debug.Log("Méthode overridée");
     }
 
@@ -166,12 +187,21 @@ public class BaseSpell : MonoBehaviour
     /// Renvoie les différents ratios associés au sort
     /// </summary>
     /// <returns></returns>
-    virtual public List<float> GetRatio(){
-        return new List<float>{
-            ratio1,
-            ratio2,
-            ratio3
-        };
+    virtual public List<float> GetRatio(bool hyper = false){
+        if(hyper){
+            return new List<float>{
+                h_ratio1,
+                h_ratio2,
+                h_ratio3
+            }; 
+        }
+        else{
+            return new List<float>{
+                ratio1,
+                ratio2,
+                ratio3
+            };
+        }
     }
 
     /// <summary>
@@ -179,15 +209,30 @@ public class BaseSpell : MonoBehaviour
     /// </summary>
     /// <param name="index">Index du ratio (1, 2 ou 3)</param>
     /// <param name="newNumber">Nouvelle valeur du ratio</param>
-    public void SetRatio(int index, float newNumber){
+    public void SetRatio(int index, float newNumber, bool hyper = false){
         if(index == 1){
-            ratio1 = newNumber;
+            if(hyper){
+                h_ratio1 = newNumber;
+            }
+            else{
+                ratio1 = newNumber;
+            }
         }
         if(index == 2){
-            ratio2 = newNumber;
+            if(hyper){
+                h_ratio2 = newNumber;
+            }
+            else{
+                ratio2 = newNumber;
+            }
         }
         if(index == 3){
-            ratio3 = newNumber;
+            if(hyper){
+                h_ratio2 = newNumber;
+            }
+            else{
+                ratio2 = newNumber;
+            }
         }
     }
 
