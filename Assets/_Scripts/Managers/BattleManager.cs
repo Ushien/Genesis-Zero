@@ -347,8 +347,8 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    public Instruction CreateInstruction(BaseUnit source_unit, BaseSpell spell_to_cast, Tile target_tile){
-        Instruction new_instruction = new Instruction(source_unit, spell_to_cast, target_tile);
+    public Instruction CreateInstruction(BaseUnit source_unit, BaseSpell spell_to_cast, Tile target_tile, bool hyper = false){
+        Instruction new_instruction = new Instruction(source_unit, spell_to_cast, target_tile, hyper : hyper);
         return new_instruction;
     }
 

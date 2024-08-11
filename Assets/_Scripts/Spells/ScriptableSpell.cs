@@ -13,6 +13,8 @@ public class ScriptableSpell : ScriptableObject
     public string lore_description;
     [TextArea(5,10)]
     public string fight_description;
+    [TextArea(5,10)]
+    public string overloaded_fight_description;
     public int cooldown;
     public List<Properties> properties;
     public GridManager.Selection_mode range;

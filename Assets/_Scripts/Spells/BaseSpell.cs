@@ -28,6 +28,8 @@ public class BaseSpell : MonoBehaviour
     [TextArea(5,10)]
     private string fight_description = "Fight Description";
     // Cooldown total du sort.
+    [TextArea(5,10)]
+    private string fight_description_h = "Overloaded Fight Description";
     private int base_cooldown = 0;
     // Cooldown actuel du sort. Lorsque celui-ci est égal au cooldown total, le sort peut être lancé. Quand le sort est lancé, celui-ci passe à zéro. Il augmente ensuite de 1 par tour.
     private int cooldown = 0;
@@ -70,6 +72,7 @@ public class BaseSpell : MonoBehaviour
         spell_name = scriptableSpell.spell_name;
         lore_description = scriptableSpell.lore_description;
         fight_description = scriptableSpell.fight_description;
+        fight_description_h = scriptableSpell.overloaded_fight_description;
         base_cooldown = scriptableSpell.cooldown;
         cooldown = base_cooldown;
         artwork = scriptableSpell.artwork;
@@ -172,15 +175,22 @@ public class BaseSpell : MonoBehaviour
     /// Renvoie la description en combat du sort, avec les nombres convertis en fonction de la puissance du personnage.
     /// </summary>
     /// <returns></returns>
-    public string GetFightDescription(){
-        string _fight_description = fight_description.Clone().ToString();
-        _fight_description = _fight_description.Replace("%%1", GetFinalDamages(GetRatio()[0]).ToString());
-        _fight_description = _fight_description.Replace("%%2", GetFinalDamages(GetRatio()[1]).ToString());
-        _fight_description = _fight_description.Replace("%%3", GetFinalDamages(GetRatio()[2]).ToString());
+    public string GetFightDescription(bool hyper = false){
+        string _fight_description;
+        if(hyper){
+            _fight_description = fight_description_h.Clone().ToString();
+        }
+        else{
+            _fight_description = fight_description.Clone().ToString();
+        }
 
-        _fight_description = _fight_description.Replace("__1", DisplayPercents(GetRatio()[0]));
-        _fight_description = _fight_description.Replace("__2", DisplayPercents(GetRatio()[1]));
-        _fight_description = _fight_description.Replace("__3", DisplayPercents(GetRatio()[2]));
+        _fight_description = _fight_description.Replace("%%1", GetFinalDamages(GetRatio(hyper:hyper)[0]).ToString());
+        _fight_description = _fight_description.Replace("%%2", GetFinalDamages(GetRatio(hyper:hyper)[1]).ToString());
+        _fight_description = _fight_description.Replace("%%3", GetFinalDamages(GetRatio(hyper:hyper)[2]).ToString());
+
+        _fight_description = _fight_description.Replace("__1", DisplayPercents(GetRatio(hyper:hyper)[0]));
+        _fight_description = _fight_description.Replace("__2", DisplayPercents(GetRatio(hyper:hyper)[1]));
+        _fight_description = _fight_description.Replace("__3", DisplayPercents(GetRatio(hyper:hyper)[2]));
         return _fight_description;
     }
     /// <summary>

@@ -5,14 +5,23 @@ using UnityEngine;
 public class Bouledefeu : BaseSpell
 {
     void Awake(){
-
+        SetRatio(1, 1f);
+        SetRatio(1, 2f, true);
     }
 
     override public void Cast(Tile targetTile = null){
         base.CastSpell(targetTile, _Bouledefeu);
     }
 
+    override public void HyperCast(Tile targetTile = null){
+        base.CastSpell(targetTile, _Bouledefeu_H);
+    }
+
     private void _Bouledefeu(Tile targetTile){
         SpellManager.Instance.InflictDamage(GetFinalDamages(GetRatio()[0]), targetTile.GetUnit(), Properties.Pyro);
+    }
+
+    private void _Bouledefeu_H(Tile targetTile){
+        SpellManager.Instance.InflictDamage(GetFinalDamages(GetRatio(hyper:true)[0]), targetTile.GetUnit(), Properties.Pyro);
     }
 }

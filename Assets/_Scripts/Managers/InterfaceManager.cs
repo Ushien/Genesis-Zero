@@ -10,6 +10,7 @@ using Unity.VisualScripting;
 
 public class InterfaceManager : MonoBehaviour
 {
+    #region Fields
     public static InterfaceManager Instance;
 
     // UI elements
@@ -33,6 +34,8 @@ public class InterfaceManager : MonoBehaviour
 
     private enum SpellChoice{CHARACTER, LEFT, RIGHT, UP, DOWN}
     private SpellChoice spellChoice;
+    [SerializeField]
+    private bool overloaded = false;
 
     // Le spell pour lequel on va sélectionner une cible
     private BaseSpell selectedSpell;
@@ -41,6 +44,8 @@ public class InterfaceManager : MonoBehaviour
     public Tile targetTile;
 
     private Dictionary<BattleManager.PlayerActionChoiceState, bool> activated_states;
+
+    #endregion
 
     void Awake(){
         activated_states = new Dictionary<BattleManager.PlayerActionChoiceState, bool>();
@@ -265,6 +270,12 @@ public class InterfaceManager : MonoBehaviour
                     spellChoice = SpellChoice.RIGHT;
                     break;
                 }
+                if (Input.GetKeyDown(KeyCode.LeftArrow)){
+                    // Switch technique surchargée/pas surchargée
+                    spellChoice = SpellChoice.LEFT;
+                    overloaded = !overloaded;
+                    break;
+                }
                 break;
             case SpellChoice.RIGHT:
                 selectedSpell = currentSpells[1];
@@ -359,22 +370,22 @@ public class InterfaceManager : MonoBehaviour
                 break;
             case SpellChoice.LEFT:
                 if(currentSpells.Count > 0){
-                    DisplaySpell(currentSpells[0]);
+                    DisplaySpell(currentSpells[0], hyper : overloaded);
                 }
                 break;
             case SpellChoice.RIGHT:
                 if(currentSpells.Count > 1){
-                    DisplaySpell(currentSpells[1]);
+                    DisplaySpell(currentSpells[1], hyper : overloaded);
                 }
                 break;
             case SpellChoice.UP:
                 if(currentSpells.Count > 2){
-                    DisplaySpell(currentSpells[2]);
+                    DisplaySpell(currentSpells[2], hyper : overloaded);
                 }
                 break;
             case SpellChoice.DOWN:
                 if(currentSpells.Count > 3){
-                    DisplaySpell(currentSpells[3]);
+                    DisplaySpell(currentSpells[3], hyper : overloaded);
                 }
                 break;
             default:
@@ -467,15 +478,15 @@ public class InterfaceManager : MonoBehaviour
         // On sort de la sélection de la cible pour aller vers un autre état
         if(trigger == BattleManager.Trigger.VALIDATE){
             // Ajouter l'instruction dans la liste d'instructions
-            Instruction instruction = BattleManager.Instance.CreateInstruction(sourceTile.GetUnit(), selectedSpell, targetTile);
+            Instruction instruction = BattleManager.Instance.CreateInstruction(sourceTile.GetUnit(), selectedSpell, targetTile, hyper : overloaded);
             BattleManager.Instance.AssignInstruction(instruction);
         }
         BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, trigger);
     }
 
-    private void DisplaySpell(BaseSpell spell){
+    private void DisplaySpell(BaseSpell spell, bool hyper = false){
         unitPassiveNamePanel.text = spell.GetName();
-        unitPassiveDescriptionPanel.text = spell.GetFightDescription();
+        unitPassiveDescriptionPanel.text = spell.GetFightDescription(hyper);
         spellCooldownPanel.text = spell.GetCooldown().ToString() + " / " + spell.GetBaseCooldown().ToString();
     }
 

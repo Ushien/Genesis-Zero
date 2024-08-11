@@ -28,7 +28,7 @@ public class Benediction : BaseSpell
     private void _Benediction_H(Tile targetTile){
 
         Modifier _modifier = Instantiate(SpellManager.Instance.GetModifier());
-        _modifier.Setup(_powerBonus : GetRatio()[0], _turns : 3, _permanent : false);
+        _modifier.Setup(_powerBonus : GetRatio(hyper:true)[0], _turns : 3, _permanent : false);
 
         targetTile.GetUnit().GetAttack().AddModifier(_modifier);
     }

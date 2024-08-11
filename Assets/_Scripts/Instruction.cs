@@ -12,11 +12,13 @@ public class Instruction
     public BaseUnit source;
     public BaseSpell spell;
     public Tile target;
+    public bool overloaded;
     
-    public Instruction(BaseUnit source_unit, BaseSpell spell_to_cast, Tile target_tile){
+    public Instruction(BaseUnit source_unit, BaseSpell spell_to_cast, Tile target_tile, bool hyper = false){
         source = source_unit;
         spell = spell_to_cast;
         target = target_tile;
+        overloaded = hyper;
     }
 
     public BaseUnit GetSourceUnit(){
@@ -38,7 +40,10 @@ public class Instruction
             _targetName = GetTargetTile().GetUnit().GetName();
         }
 
-
-        return "Source Unit : " + _sourceName + " - Spell name : " + _spellName + " - Target Unit : " + _targetName;
+        string summary = "Source Unit : " + _sourceName + " - Spell name : " + _spellName + " - Target Unit : " + _targetName;
+        if(overloaded){
+            summary = summary + " - Overloaded";
+        }
+        return summary;
     }
 }

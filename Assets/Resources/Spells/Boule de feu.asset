@@ -15,6 +15,8 @@ MonoBehaviour:
   spell_name: Boule de feu (P)
   lore_description: 
   fight_description: "Inflige %%1 d\xE9gats \xE0 une unit\xE9 - Pyro (P)"
+  overloaded_fight_description: "Inflige %%1 d\xE9gats \xE0 une unit\xE9 - Pyro (P)
+    - Surcharge"
   cooldown: 1
   properties: 00000000
   range: 0
