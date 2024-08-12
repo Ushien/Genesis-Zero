@@ -26,6 +26,7 @@ public class InterfaceManager : MonoBehaviour
     public GameObject spellSelector;
     public GameObject shade;
     public Material grayscaleShader;
+    public Sprite emptySpellSelectorSquare;
 
     public GameObject tileSelector;
 
@@ -148,7 +149,7 @@ public class InterfaceManager : MonoBehaviour
     void SpellSelectionDisplay(){
         // TODO Ne pas afficher les 4 cases si le personnage n'a pas 4 spells
         BaseUnit sourceUnit = sourceTile.GetUnit();
-        List<BaseSpell> currentSpells = sourceUnit.GetSpells();
+        BaseSpell[] currentSpells = sourceUnit.GetSpells();
 
         if(!activated_states[BattleManager.PlayerActionChoiceState.SPELL_SELECTION]){
             // Just changed from another state
@@ -167,12 +168,18 @@ public class InterfaceManager : MonoBehaviour
 
             foreach (BaseSpell spell in currentSpells)
             {
-                spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().sprite = spell.GetArtwork();
-                spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().material = null;
-                if(!spell.IsAvailable()){
-                    Material material = Instantiate(grayscaleShader);
-                    spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().material = material;
-                    //Grey
+                if(spell != null){
+                    spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().sprite = spell.GetArtwork();
+                    spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().material = null;
+                    if(!spell.IsAvailable()){
+                        Material material = Instantiate(grayscaleShader);
+                        spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().material = material;
+                        //Grey
+                    }              
+                }
+                else{
+                    spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().sprite = emptySpellSelectorSquare;
+                    spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().material = null;
                 }
                 currentSpellIndex += 1;
             }
@@ -247,8 +254,11 @@ public class InterfaceManager : MonoBehaviour
                 break;
             case SpellChoice.LEFT:
                 selectedSpell = currentSpells[0];
-                if (Input.GetKeyDown(KeyCode.B) && selectedSpell.IsAvailable()){
-                    SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
+                //TODO Ce code se répète 4 fois, il y a moyen de refactor
+                if (Input.GetKeyDown(KeyCode.B) && selectedSpell != null){
+                    if(selectedSpell.IsAvailable()){
+                        SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
+                    }
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.N)){
@@ -284,8 +294,10 @@ public class InterfaceManager : MonoBehaviour
                 break;
             case SpellChoice.RIGHT:
                 selectedSpell = currentSpells[1];
-                if (Input.GetKeyDown(KeyCode.B) && selectedSpell.IsAvailable()){
-                    SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
+                if (Input.GetKeyDown(KeyCode.B) && selectedSpell != null){
+                    if(selectedSpell.IsAvailable()){
+                        SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
+                    }
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.N)){
@@ -320,8 +332,10 @@ public class InterfaceManager : MonoBehaviour
                 break;
             case SpellChoice.UP:
                 selectedSpell = currentSpells[2];
-                if (Input.GetKeyDown(KeyCode.B) && selectedSpell.IsAvailable()){
-                    SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
+                if (Input.GetKeyDown(KeyCode.B) && selectedSpell != null){
+                    if(selectedSpell.IsAvailable()){
+                        SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
+                    }
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.N)){
@@ -356,8 +370,10 @@ public class InterfaceManager : MonoBehaviour
                 break;
             case SpellChoice.DOWN:
                 selectedSpell = currentSpells[3];
-                if (Input.GetKeyDown(KeyCode.B) && selectedSpell.IsAvailable()){
-                    SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
+                if (Input.GetKeyDown(KeyCode.B) && selectedSpell != null){
+                    if(selectedSpell.IsAvailable()){
+                        SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
+                    }
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.N)){
@@ -401,24 +417,16 @@ public class InterfaceManager : MonoBehaviour
                 DisplayUnit(sourceUnit);
                 break;
             case SpellChoice.LEFT:
-                if(currentSpells.Count > 0){
-                    DisplaySpell(currentSpells[0], hyper : overloaded);
-                }
+                DisplaySpell(currentSpells[0], hyper : overloaded);
                 break;
             case SpellChoice.RIGHT:
-                if(currentSpells.Count > 1){
-                    DisplaySpell(currentSpells[1], hyper : overloaded);
-                }
+                DisplaySpell(currentSpells[1], hyper : overloaded);
                 break;
             case SpellChoice.UP:
-                if(currentSpells.Count > 2){
-                    DisplaySpell(currentSpells[2], hyper : overloaded);
-                }
+                DisplaySpell(currentSpells[2], hyper : overloaded);
                 break;
             case SpellChoice.DOWN:
-                if(currentSpells.Count > 3){
-                    DisplaySpell(currentSpells[3], hyper : overloaded);
-                }
+                DisplaySpell(currentSpells[3], hyper : overloaded);
                 break;
             default:
                 break;
@@ -510,6 +518,9 @@ public class InterfaceManager : MonoBehaviour
         // On sort de la sélection de la cible pour aller vers un autre état
         if(trigger == BattleManager.Trigger.VALIDATE){
             // Ajouter l'instruction dans la liste d'instructions
+            if(selectedSpell == null){
+                Debug.Log("Pas normal ça");
+            }
             Instruction instruction = BattleManager.Instance.CreateInstruction(sourceTile.GetUnit(), selectedSpell, targetTile, hyper : overloaded);
             BattleManager.Instance.AssignInstruction(instruction);
         }
@@ -517,9 +528,16 @@ public class InterfaceManager : MonoBehaviour
     }
 
     private void DisplaySpell(BaseSpell spell, bool hyper = false){
-        unitPassiveNamePanel.text = spell.GetName();
-        unitPassiveDescriptionPanel.text = spell.GetFightDescription(hyper);
-        spellCooldownPanel.text = spell.GetCooldown().ToString() + " / " + spell.GetBaseCooldown().ToString();
+        if(spell != null){
+            unitPassiveNamePanel.text = spell.GetName();
+            unitPassiveDescriptionPanel.text = spell.GetFightDescription(hyper);
+            spellCooldownPanel.text = spell.GetCooldown().ToString() + " / " + spell.GetBaseCooldown().ToString();   
+        }
+        else{
+            unitPassiveNamePanel.text = "";
+            unitPassiveDescriptionPanel.text = "";
+            spellCooldownPanel.text = "";
+        }
     }
 
     private void DisplayUnit(BaseUnit unit){

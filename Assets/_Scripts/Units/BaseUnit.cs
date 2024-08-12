@@ -24,8 +24,8 @@ public class BaseUnit : MonoBehaviour
     public Tile OccupiedTile;
     public Passive passive;
     public BaseSpell attack;
-    public List<BaseSpell> availableSpells;
-    //TODO Supprimer les 2 sorts
+    public BaseSpell[] availableSpells = new BaseSpell[4];
+
         #endregion
 
         #region Caractéristiques
@@ -106,9 +106,13 @@ public class BaseUnit : MonoBehaviour
 
         attack = SpellManager.Instance.SetupAttack(this);
 
+        availableSpells = new BaseSpell[4];
+        int i = 0;
         foreach (BaseSpell spell in scriptableUnit.spells)
         {
-            availableSpells.Add(SpellManager.Instance.SetupSpell(spell, this));
+            Debug.Log(i);   
+            availableSpells[i] = SpellManager.Instance.SetupSpell(spell, this);
+            i++;
         }
         if (scriptableUnit.scriptableJob != null){
             LoadJob(scriptableUnit.scriptableJob);
@@ -120,9 +124,11 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     /// <param name="scriptableJob"></param>
     public void LoadJob(ScriptableJob scriptableJob){
+        int i = 2;
         foreach (BaseSpell spell in scriptableJob.spells)
         {
-            availableSpells.Add(SpellManager.Instance.SetupSpell(spell, this));
+            availableSpells[i] = SpellManager.Instance.SetupSpell(spell, this);
+            i++;
         }
         if (scriptableJob.passive != null){
             Destroy(passive.gameObject);
@@ -157,7 +163,9 @@ public class BaseUnit : MonoBehaviour
         // Applique les effets de fin de tours de chacun des sorts de l'unité
         foreach (BaseSpell spell in GetSpells())
         {
-            spell.ApplyEndTurnEffects(); 
+            if(spell != null){
+                spell.ApplyEndTurnEffects(); 
+            }
         }
         GetAttack().ApplyEndTurnEffects();
         // Modifiers
@@ -363,17 +371,19 @@ public class BaseUnit : MonoBehaviour
     /// <summary>
     /// Renvoie la liste de techniques de l'unité
     /// </summary>
-    /// <param name="includingAttack">Si fixé à True, intègre l'attaque de l'unité à la liste</param>
+    /// <param name="includingAttack">Si fixé à True, intègre l'attaque de l'unité à la liste, à l'index 4</param>
     /// <returns></returns>
-    public List<BaseSpell> GetSpells(bool includingAttack = false){
+    public BaseSpell[] GetSpells(bool includingAttack = false){
 
         if(includingAttack){
             
-            List<BaseSpell> completeAvailableSpells = new List<BaseSpell>();
+            BaseSpell[] completeAvailableSpells = new BaseSpell[5];
+            int i = 0;
             foreach(BaseSpell spell in availableSpells){
-                completeAvailableSpells.Add(spell);
+                completeAvailableSpells[i] = spell;
+                i++;
             }
-            completeAvailableSpells.Add(GetAttack());
+            completeAvailableSpells[4] = GetAttack();
 
             return completeAvailableSpells;
         }
@@ -384,16 +394,29 @@ public class BaseUnit : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Supprime un sort donné de la liste de sorts
+    /// </summary>
+    /// <param name="spell_to_remove"></param>
     public void RemoveSpell(BaseSpell spell_to_remove){
-        List<BaseSpell> currentSpells = GetSpells();
-        for (int i = currentSpells.Count -1; i >= 0; i--)
+        int i = 0;
+        foreach (BaseSpell _spell in GetSpells())
         {
-            if (currentSpells[i] == spell_to_remove)
+            if (_spell == spell_to_remove)
             {
-                currentSpells[i].SetOwner(null);
-                currentSpells.RemoveAt(i);
+                spell_to_remove.SetOwner(null);
+                RemoveSpell(i);
             }
+            i++;
         }
+    }
+
+    /// <summary>
+    /// Supprime un sort de la liste de sorts, par index
+    /// </summary>
+    /// <param name="index"></param>
+    public void RemoveSpell(int index){
+        availableSpells[index] = null;
     }
 
     /// <summary>
@@ -402,7 +425,7 @@ public class BaseUnit : MonoBehaviour
     /// <param name="includingAttack">Si fixé à True, intègre l'attaque de l'unité à la liste</param>
     /// <returns></returns>
     public BaseSpell GetRandomSpell(bool includingAttack){
-        return GetSpells(includingAttack).OrderBy(t => UnityEngine.Random.value).First();
+        return GetSpells(includingAttack).Where(t => t != null).OrderBy(t => UnityEngine.Random.value).First();
     }
 
     /// <summary>
