@@ -165,7 +165,7 @@ public class InterfaceManager : MonoBehaviour
 
             int currentSpellIndex = 0;
 
-            foreach (var spell in currentSpells)
+            foreach (BaseSpell spell in currentSpells)
             {
                 spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().sprite = spell.GetArtwork();
                 spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().material = null;
@@ -212,6 +212,7 @@ public class InterfaceManager : MonoBehaviour
         // Navigation au sein de la sélection
         switch(spellChoice){
             case SpellChoice.CHARACTER:
+                overloaded = false;
                 selectedSpell = sourceUnit.GetAttack();
                 if (Input.GetKeyDown(KeyCode.B)){
                     // Sélectionner attaque
@@ -253,25 +254,29 @@ public class InterfaceManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.N)){
                     // Retour au centre
                     spellChoice = SpellChoice.CHARACTER;
+                    overloaded = false;
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.UpArrow)){
                     // Aller en haut
                     spellChoice = SpellChoice.UP;
+                    overloaded = false;
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.DownArrow)){
                     // Aller en bas
                     spellChoice = SpellChoice.DOWN;
+                    overloaded = false;
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.RightArrow)){
                     // Aller à droite
                     spellChoice = SpellChoice.RIGHT;
+                    overloaded = false;
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.LeftArrow)){
-                    // Switch technique surchargée/pas surchargée
+                    // Passer en mode surcharge / Revenir au mode non surchargé
                     spellChoice = SpellChoice.LEFT;
                     overloaded = !overloaded;
                     break;
@@ -291,16 +296,25 @@ public class InterfaceManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.UpArrow)){
                     // Aller en haut
                     spellChoice = SpellChoice.UP;
+                    overloaded = false;
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.DownArrow)){
                     // Aller en bas
                     spellChoice = SpellChoice.DOWN;
+                    overloaded = false;
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.LeftArrow)){
                     // Aller à gauche
                     spellChoice = SpellChoice.LEFT;
+                    overloaded = false;
+                    break;
+                }
+                if (Input.GetKeyDown(KeyCode.RightArrow)){
+                    // Passer en mode surcharge / Revenir au mode non surchargé
+                    spellChoice = SpellChoice.RIGHT;
+                    overloaded = !overloaded;
                     break;
                 }
                 break;
@@ -318,16 +332,25 @@ public class InterfaceManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.RightArrow)){
                     // Aller à droite
                     spellChoice = SpellChoice.RIGHT;
+                    overloaded = false;
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.DownArrow)){
                     // Aller en bas
                     spellChoice = SpellChoice.DOWN;
+                    overloaded = false;
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.LeftArrow)){
                     // Aller à gauche
                     spellChoice = SpellChoice.LEFT;
+                    overloaded = false;
+                    break;
+                }
+                if (Input.GetKeyDown(KeyCode.UpArrow)){
+                    // Passer en mode surcharge / Revenir au mode non surchargé
+                    spellChoice = SpellChoice.UP;
+                    overloaded = !overloaded;
                     break;
                 }
                 break;
@@ -345,16 +368,25 @@ public class InterfaceManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.RightArrow)){
                     // Aller à droite
                     spellChoice = SpellChoice.RIGHT;
+                    overloaded = false;
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.UpArrow)){
                     // Aller en haut
                     spellChoice = SpellChoice.UP;
+                    overloaded = false;
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.LeftArrow)){
                     // Aller à gauche
                     spellChoice = SpellChoice.LEFT;
+                    overloaded = false;
+                    break;
+                }
+                if (Input.GetKeyDown(KeyCode.DownArrow)){
+                    // Passer en mode surcharge / Revenir au mode non surchargé
+                    spellChoice = SpellChoice.DOWN;
+                    overloaded = !overloaded;
                     break;
                 }
                 break;

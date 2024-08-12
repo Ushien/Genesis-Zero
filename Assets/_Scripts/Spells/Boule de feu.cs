@@ -14,7 +14,7 @@ public class Bouledefeu : BaseSpell
     }
 
     override public void HyperCast(Tile targetTile = null){
-        base.CastSpell(targetTile, _Bouledefeu_H);
+        base.CastSpell(targetTile, _Bouledefeu_H, hyper: true);
     }
 
     private void _Bouledefeu(Tile targetTile){

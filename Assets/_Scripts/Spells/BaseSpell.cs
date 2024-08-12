@@ -108,7 +108,10 @@ public class BaseSpell : MonoBehaviour
     /// </summary>
     /// <param name="targetTile"></param>
     virtual public void HyperCast(Tile targetTile){
-        Debug.Log("Méthode overridée");
+        // Méthode overridée
+
+        // Si le sort ne propose pas d'implémentation de la surcharge, lance juste la version de base.
+        Cast(targetTile);
     }
 
     /// <summary>
@@ -116,7 +119,7 @@ public class BaseSpell : MonoBehaviour
     /// </summary>
     /// <param name="targetTile"></param>
     /// <param name="spellFunction"></param>
-    virtual public void CastSpell(Tile targetTile, Action<Tile> spellFunction){
+    virtual public void CastSpell(Tile targetTile, Action<Tile> spellFunction, bool hyper = false){
         BaseUnit targetUnit = null;
         if (targetTile != null){
             targetUnit = targetTile.GetUnit();
@@ -145,6 +148,11 @@ public class BaseSpell : MonoBehaviour
                 EventManager.Instance.AfterTechCast(this, targetTile);
             }
 
+            if (hyper){
+                // Détacher la technique de son propriétaire (comme si elle était supprimée)
+                owner.RemoveSpell(this);
+            }
+
         }
     }
         #endregion
@@ -157,6 +165,14 @@ public class BaseSpell : MonoBehaviour
     /// <returns></returns>
     public BaseUnit GetOwner(){
         return owner;
+    }
+
+    /// <summary>
+    /// Définit un nouveau propriétaire du sort
+    /// </summary>
+    /// <param name="new_owner"></param>
+    public void SetOwner(BaseUnit new_owner){
+        owner = new_owner;
     }
 
     /// <summary>

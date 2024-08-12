@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
+using Unity.VisualScripting;
 
 /// <summary>
 /// Représente une unité au sens large
@@ -25,8 +26,6 @@ public class BaseUnit : MonoBehaviour
     public BaseSpell attack;
     public List<BaseSpell> availableSpells;
     //TODO Supprimer les 2 sorts
-    public BaseSpell heroSpell1;
-    public BaseSpell heroSpell2;
         #endregion
 
         #region Caractéristiques
@@ -383,6 +382,18 @@ public class BaseUnit : MonoBehaviour
             return availableSpells;
         }
 
+    }
+
+    public void RemoveSpell(BaseSpell spell_to_remove){
+        List<BaseSpell> currentSpells = GetSpells();
+        for (int i = currentSpells.Count -1; i >= 0; i--)
+        {
+            if (currentSpells[i] == spell_to_remove)
+            {
+                currentSpells[i].SetOwner(null);
+                currentSpells.RemoveAt(i);
+            }
+        }
     }
 
     /// <summary>

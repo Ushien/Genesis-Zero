@@ -31,6 +31,10 @@ public class Instruction
         return target;
     }
 
+    public bool IsOverloaded(){
+        return overloaded;
+    }
+
     public string GetSummary()
     {
         string _sourceName = GetSourceUnit().GetName();

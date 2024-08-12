@@ -381,7 +381,13 @@ public class BattleManager : MonoBehaviour
     }
 
     private void ApplyInstruction(Instruction instruction){
-        instruction.GetSpell().Cast(instruction.GetTargetTile());
+        if(instruction.IsOverloaded()){
+            instruction.GetSpell().HyperCast(instruction.GetTargetTile());
+        }
+        else{
+            instruction.GetSpell().Cast(instruction.GetTargetTile());
+        }
+
     }
 
     public int CountInstructions(){
