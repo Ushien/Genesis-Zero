@@ -62,28 +62,34 @@ public class Tile : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Récupère la case suivante, dans une direction donnée.
+    /// Prend en compte les grilles alliées et ennemies.
+    /// </summary>
+    /// <param name="direction"></param>
+    /// <returns></returns>
     public Tile GetNextTile(Directions direction){
         Tile next_tile = null;
         switch (direction){
             case Directions.UP:
                 next_tile = GridManager.Instance.GetTileAtPosition(team, new Vector2(x_position, y_position + 1));
-                //TODO Ajouter les autres cas
+                // Passage de la grille des alliés à la grille des ennemis
+                if(next_tile == null && team == Team.Ally){
+                    next_tile = GridManager.Instance.GetBorderTile(Team.Enemy, Directions.DOWN, x_position);
+                }
                 break;
             case Directions.DOWN:
                 next_tile = GridManager.Instance.GetTileAtPosition(team, new Vector2(x_position, y_position - 1));
-                //TODO Ajouter les autres cas
+                // Passage de la grille des ennemis à la grille des alliés
+                if(next_tile == null && team == Team.Enemy){
+                    next_tile = GridManager.Instance.GetBorderTile(Team.Ally, Directions.UP, x_position);
+                }
                 break;
             case Directions.LEFT:
                 next_tile = GridManager.Instance.GetTileAtPosition(team, new Vector2(x_position - 1, y_position));
-                if(next_tile == null && team == Team.Enemy){
-                    next_tile = GridManager.Instance.GetBorderTile(Team.Ally, Directions.RIGHT, y_position);
-                }
                 break;
             case Directions.RIGHT:
                 next_tile = GridManager.Instance.GetTileAtPosition(team, new Vector2(x_position + 1, y_position));
-                if(next_tile == null && team == Team.Ally){
-                    next_tile = GridManager.Instance.GetBorderTile(Team.Enemy, Directions.LEFT, y_position);
-                }
                 break;
         }
         return next_tile;

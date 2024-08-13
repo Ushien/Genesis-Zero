@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Unity.Collections;
 
 /// <summary>
 /// Gestion de la grille de combat. Une grille appartient à une équipe et est composée de Tiles.
@@ -14,7 +15,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] private int _enemy_width, _enemy_height;
     [SerializeField] private int _ally_width, _ally_height;
 
-    [SerializeField] private float gap_between_tiles = 0.05f;
+    [SerializeField] private float gap_between_tiles = -0.2f;
     [SerializeField] private Tile _tilePrefab;
     [SerializeField] private Transform _cam;
 
@@ -70,7 +71,7 @@ public class GridManager : MonoBehaviour
         int height = _ally_height;
         
         if(team == Team.Enemy){
-            offset = 4;
+            offset = 2;
             width = _enemy_width;
             height = _enemy_height;
         }
@@ -78,8 +79,8 @@ public class GridManager : MonoBehaviour
         for (int x = 0; x < width; x++) {
             for (int y = 0; y <height; y++) {
 
-                var spawnedTile = Instantiate(_tilePrefab, new Vector3(gap_between_tiles*x + x + offset, gap_between_tiles*y + y), Quaternion.identity);
-
+                var spawnedTile = Instantiate(_tilePrefab, Tools.XYToIso(new Vector2(gap_between_tiles*x + x, gap_between_tiles*y + y + offset)), Quaternion.identity);
+                
                 spawnedTile.transform.parent = parentGrid.transform;
                 spawnedTile.name = $"Tile {x} {y}";
                 spawnedTile.x_position = x;
@@ -97,7 +98,7 @@ public class GridManager : MonoBehaviour
 
             }
         }
-        _cam.transform.position = new Vector3(3f, 1.5f, -10);
+        _cam.transform.position = new Vector3(3f, 0.8f, -10);
 
     }
 
@@ -115,6 +116,13 @@ public class GridManager : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Renvoie la case de bord de grille, pour une équipe donnée, dans une direction donnée, et pour une coordonnée donnée.
+    /// </summary>
+    /// <param name="team"></param>
+    /// <param name="direction"></param>
+    /// <param name="coordinate"></param>
+    /// <returns></returns>
     public Tile GetBorderTile(Team team, Directions direction, int coordinate){
 
         int width = _enemy_width;
@@ -126,9 +134,9 @@ public class GridManager : MonoBehaviour
 
         switch (direction){
             case Directions.UP:
-                return ReturnTilesList(team, coordinate, height-1)[coordinate];
+                return ReturnTilesList(team, coordinate, height-1)[0];
             case Directions.DOWN:
-                return ReturnTilesList(team, coordinate, 0)[coordinate];
+                return ReturnTilesList(team, coordinate, 0)[0];
             case Directions.RIGHT:
                 return ReturnTilesList(team, width-1, coordinate)[0];
             case Directions.LEFT:
@@ -138,6 +146,14 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Renvoie la liste de cases du jeu respectant certaines conditions.
+    /// </summary>
+    /// <param name="team"></param>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
+    /// <param name="occupiedByUnit"></param>
+    /// <returns></returns>
     public List<Tile> ReturnTilesList(Team team = Team.Both, int width = -1, int height = -1, bool occupiedByUnit = false){
 
         List<Tile> tiles_list = new List<Tile>();
@@ -316,5 +332,13 @@ public static class Tools
 
     public static int Ceiling(float amount){
         return (int)System.Math.Ceiling(amount);
+    }
+
+    public static Vector2 IsoToXY(Vector2 v){
+        return new Vector2(0.5f * v.x - v.y, 0.5f * v.x + v.y);
+    }
+
+    public static Vector2 XYToIso(Vector2 v){
+        return new Vector2(v.x + v.y,  0.5f * (v.y - v.x));
     }
 }
