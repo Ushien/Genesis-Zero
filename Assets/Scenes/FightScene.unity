@@ -2827,8 +2827,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemy_width: 3
   _enemy_height: 3
-  _ally_width: 1
-  _ally_height: 3
+  _ally_width: 3
+  _ally_height: 1
   gap_between_tiles: 0.05
   _tilePrefab: {fileID: 7435666411490668235, guid: 6e7ac63a2d3576846a5edcb486197e4f, type: 3}
   _cam: {fileID: 1494868754}

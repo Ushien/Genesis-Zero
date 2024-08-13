@@ -17,7 +17,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6afde0bbe41525346a2575007ed63835, type: 2}
   - {fileID: 11400000, guid: 6afde0bbe41525346a2575007ed63835, type: 2}
   positions:
-  - {x: 2, y: 0}
-  - {x: 2, y: 1}
+  - {x: 0, y: 2}
+  - {x: 1, y: 2}
   - {x: 2, y: 2}
   levels: 410000004600000041000000
