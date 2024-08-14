@@ -15,7 +15,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] private int _enemy_width, _enemy_height;
     [SerializeField] private int _ally_width, _ally_height;
 
-    [SerializeField] private float gap_between_tiles = 0.8f;
+    [SerializeField] private float gap_between_tiles = 0.2f;
     [SerializeField] private Tile _tilePrefab;
     [SerializeField] private Transform _cam;
 
@@ -79,7 +79,7 @@ public class GridManager : MonoBehaviour
         for (int x = 0; x < width; x++) {
             for (int y = 0; y <height; y++) {
 
-                var spawnedTile = Instantiate(_tilePrefab, Tools.XYToIso(new Vector2(0.8f*x, 0.8f*y + offset)), Quaternion.identity);
+                var spawnedTile = Instantiate(_tilePrefab, Tools.XYToIso(new Vector2(gap_between_tiles*x + 0.5f*x, gap_between_tiles*y + 0.5f*y + offset)), Quaternion.identity);
                 
                 spawnedTile.transform.parent = parentGrid.transform;
                 spawnedTile.name = $"Tile {x} {y}";
@@ -98,7 +98,7 @@ public class GridManager : MonoBehaviour
 
             }
         }
-        _cam.transform.position = new Vector3(3f, 0.8f, -10);
+        _cam.transform.position = new Vector3(2.5f, 0.8f, -10);
 
     }
 

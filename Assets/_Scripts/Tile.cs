@@ -52,7 +52,7 @@ public class Tile : MonoBehaviour
     public void SetUnit(BaseUnit unit = null){
         if (unit != null){
             if(unit.OccupiedTile != null) unit.OccupiedTile.OccupiedUnit = null;
-            unit.transform.position = new Vector2(transform.position.x, transform.position.y + 0.4f);
+            unit.transform.position = new Vector2(transform.position.x, transform.position.y + 0.5f);
             OccupiedUnit = unit;
             unit.OccupiedTile = this;
         }
