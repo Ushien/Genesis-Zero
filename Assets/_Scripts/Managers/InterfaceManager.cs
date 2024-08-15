@@ -37,7 +37,10 @@ public class InterfaceManager : MonoBehaviour
     public Material grayscaleShader;
     public Sprite emptySpellSelectorSquare;
 
-    public GameObject tileSelector;
+    private GameObject tileSelector;
+
+    [SerializeField]
+    private Material tileOutliner;
     public Camera mainCamera; // Utile pour convertir des position in game à des positions en pixels sur l'écran
 
     public float tileSize = 250f; // A bit ugly but still good for now
@@ -67,6 +70,13 @@ public class InterfaceManager : MonoBehaviour
         {
             activated_states[state] = false;
         }
+
+        // On crée le tileSelector qui va naviguer pour la sélection des cases
+
+        tileSelector = Instantiate(GridManager.Instance.GetTilePrefab()).gameObject;
+        Material material = Instantiate(tileOutliner);
+        //tileSelector.transform.GetComponent<UnityEngine.UI.Image>().material = material;
+        tileSelector.transform.GetComponent<UnityEngine.SpriteRenderer>().material = material;
     }
     void Update()
     {   

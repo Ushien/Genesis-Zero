@@ -42,6 +42,14 @@ public class GridManager : MonoBehaviour
         Instance = this;
     }
 
+    /// <summary>
+    /// Return the prefab of the tile used to generate the map
+    /// </summary>
+    /// <returns></returns>
+    public Tile GetTilePrefab(){
+        return _tilePrefab;
+    }
+
     public void GenerateGrids() {
         GameObject emptyGrid = new GameObject("Grid");
         GenerateAlliesGrid(emptyGrid);
@@ -271,7 +279,8 @@ public class GridManager : MonoBehaviour
             }
 
             foreach (Tile tile in selected_tiles){
-                tile._highlight.SetActive(true);
+                // Que faire si une case est sélectionnée
+                //tile._highlight.SetActive(true);
             }
         }
     }
