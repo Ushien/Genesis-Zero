@@ -22,6 +22,7 @@ public class BaseUnit : MonoBehaviour
         #region Références à d'autres objets
 
     public Tile OccupiedTile;
+    public GameObject lifeBar;
     public Passive passive;
     public BaseSpell attack;
     public BaseSpell[] availableSpells = new BaseSpell[4];
@@ -74,7 +75,7 @@ public class BaseUnit : MonoBehaviour
     /// <param name="originUnit">Modèle d'unité</param>
     /// <param name="setup_level">Niveau de l'unité</param>
     /// <param name="team">Equipe de l'unité</param>
-    public void Setup(ScriptableUnit originUnit, int setup_level, Team team){
+    public void Setup(ScriptableUnit originUnit, int setup_level, Team team, Vector2 position){
         scriptableUnit = originUnit;
         this.name = scriptableUnit.unit_name;
         
@@ -87,6 +88,10 @@ public class BaseUnit : MonoBehaviour
         finalPower = GetStatFromLevel(scriptableUnit.original_power, level);
         totalHealth = GetStatFromLevel(scriptableUnit.original_health, level);
         finalHealth = totalHealth;
+
+        // LifeBar Setup
+        lifeBar = InterfaceManager.Instance.SetupLifebar(position, totalHealth, team);
+
 
         lore_description = scriptableUnit.lore_description;
         fight_description = scriptableUnit.fight_description;

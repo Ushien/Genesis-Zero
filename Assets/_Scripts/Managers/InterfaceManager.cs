@@ -19,6 +19,8 @@ public class InterfaceManager : MonoBehaviour
     public GameObject informationPanel;
     public GameObject passivePanel;
     public GameObject spellPanel;
+    public GameObject alliesLifeBar;
+    public GameObject ennemiesLifeBar;
     public TextMeshProUGUI unitNamePanel;
     public TextMeshProUGUI unitPowerPanel;
     public TextMeshProUGUI unitHealthPanel;
@@ -34,8 +36,10 @@ public class InterfaceManager : MonoBehaviour
     public Image spellPanelIcon;
     public GameObject spellSelector;
     public GameObject shade;
+    public GameObject lifeBarPrefab;
     public Material grayscaleShader;
     public Sprite emptySpellSelectorSquare;
+   
 
     public GameObject tileSelector;
     public Camera mainCamera; // Utile pour convertir des position in game à des positions en pixels sur l'écran
@@ -62,6 +66,7 @@ public class InterfaceManager : MonoBehaviour
     #endregion
 
     void Awake(){
+        Instance = this;
         activated_states = new Dictionary<BattleManager.PlayerActionChoiceState, bool>();
         foreach (BattleManager.PlayerActionChoiceState state in System.Enum.GetValues(typeof(BattleManager.PlayerActionChoiceState)))
         {
@@ -619,6 +624,17 @@ public class InterfaceManager : MonoBehaviour
         else
             PanelLine.sizeDelta = new Vector2(Screen.width-targetPosition.x - tileSize, targetPosition.y - spellPanel.GetComponent<RectTransform>().rect.height); // Hard coded, needs some update
     }
+
+    public GameObject SetupLifebar(Vector3 barPosition, int totalHealth ,Team team){
+        Debug.Log(barPosition);
+        GameObject lifeBar = Instantiate(lifeBarPrefab);
+        lifeBar.transform.parent = alliesLifeBar.transform;
+        lifeBar.transform.localScale = new Vector2(1, 1);
+        lifeBar.transform.position = barPosition;
+        return lifeBar;
+    }
+    
+
 }
 
 

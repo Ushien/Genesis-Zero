@@ -3,7 +3,11 @@ guid: 74e90ef35834eb84dbcc3899f95ea8e4
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - sprite: {instanceID: 0}
+  - lifeBar: {fileID: 365750388818752724, guid: f6bd6efb9959239418755f94895bf15c, type: 3}
+  - passive: {instanceID: 0}
+  - scriptableJob: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
