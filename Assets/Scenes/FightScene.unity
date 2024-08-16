@@ -3112,7 +3112,7 @@ MonoBehaviour:
   _enemy_height: 3
   _ally_width: 3
   _ally_height: 1
-  gap_between_tiles: 0.05
+  gap_between_tiles: 0.25
   _tilePrefab: {fileID: 7435666411490668235, guid: 6e7ac63a2d3576846a5edcb486197e4f, type: 3}
   _cam: {fileID: 1494868754}
 --- !u!1 &1550136855
@@ -3730,6 +3730,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b72fbeeba5547f3418daea7460dff2b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UIobject: {fileID: 2008520590}
   upPanel: {fileID: 1813412589}
   informationPanel: {fileID: 859587419}
   passivePanel: {fileID: 1553119223}
@@ -3754,7 +3755,8 @@ MonoBehaviour:
   lifeBarPrefab: {fileID: 365750388818752724, guid: f6bd6efb9959239418755f94895bf15c, type: 3}
   grayscaleShader: {fileID: 2100000, guid: ca5da941d3d390e49bef51a2d9610fa0, type: 2}
   emptySpellSelectorSquare: {fileID: 21300000, guid: 9d4d396a0d494f445bfea30e683f1b4c, type: 3}
-  tileSelector: {fileID: 185091824}
+  selectorSpeed: 10
+  tileOutliner: {fileID: 2100000, guid: 29bac064f9c8bfd4bab1f1bf7e92c24a, type: 2}
   mainCamera: {fileID: 1494868753}
   tileSize: 250
   overloaded: 0
@@ -4338,7 +4340,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1023284485}
-  - {fileID: 185091825}
   - {fileID: 313646596}
   - {fileID: 1813412590}
   - {fileID: 312944064}

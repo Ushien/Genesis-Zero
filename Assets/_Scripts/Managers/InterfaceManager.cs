@@ -15,6 +15,9 @@ public class InterfaceManager : MonoBehaviour
     public static InterfaceManager Instance;
 
     // UI elements
+
+    [SerializeField]
+    private GameObject UIobject;
     public GameObject upPanel;
     public GameObject informationPanel;
     public GameObject passivePanel;
@@ -41,7 +44,14 @@ public class InterfaceManager : MonoBehaviour
     public Sprite emptySpellSelectorSquare;
    
 
-    public GameObject tileSelector;
+    private GameObject tileSelector;
+    private Vector3 tileSelector_targetPos;
+    private Vector3 tileSelector_currentPos;
+    [SerializeField]
+    private float selectorSpeed;
+
+    [SerializeField]
+    private Material tileOutliner;
     public Camera mainCamera; // Utile pour convertir des position in game à des positions en pixels sur l'écran
 
     public float tileSize = 250f; // A bit ugly but still good for now
@@ -72,6 +82,22 @@ public class InterfaceManager : MonoBehaviour
         {
             activated_states[state] = false;
         }
+
+        // On crée le tileSelector qui va naviguer pour la sélection des cases
+
+        tileSelector = Instantiate(GridManager.Instance.GetTilePrefab()).gameObject;
+        Material material = Instantiate(tileOutliner);
+
+        tileSelector.transform.GetComponent<UnityEngine.SpriteRenderer>().material = material;
+        tileSelector.transform.GetComponent<UnityEngine.SpriteRenderer>().sortingOrder = 2;
+        tileSelector.transform.parent = UIobject.transform;
+        tileSelector.name = "Tile Selector";
+        tileSelector.transform.DetachChildren();
+
+        tileSelector_targetPos = tileSelector.transform.position;
+        tileSelector_currentPos = tileSelector.transform.position;
+
+
     }
     void Update()
     {   
@@ -109,7 +135,11 @@ public class InterfaceManager : MonoBehaviour
 
         }
         sourceTile = GridManager.Instance.GetMainSelection();
-        tileSelector.transform.position = sourceTile.transform.position;
+
+        // Change la position du sélector de case à l'aide d'un joli lerp
+        tileSelector_targetPos = sourceTile.transform.position;
+        tileSelector_currentPos = Vector3.Lerp(tileSelector_currentPos, tileSelector_targetPos, Time.deltaTime*selectorSpeed);
+        tileSelector.transform.position = tileSelector_currentPos;
 
         GridManager.Instance.DisplayHighlights();
 
@@ -480,7 +510,11 @@ public class InterfaceManager : MonoBehaviour
             
             ActivateState(BattleManager.PlayerActionChoiceState.TARGET_SELECTION);
         }
-        // Display selector on the target tile
+
+        // Change la position du sélector de case à l'aide d'un joli lerp
+        targetTile.transform.position = targetTile.transform.position;
+        tileSelector_currentPos = Vector3.Lerp(tileSelector_currentPos, tileSelector_targetPos, Time.deltaTime*selectorSpeed);
+        tileSelector.transform.position = tileSelector_currentPos;
         tileSelector.transform.position = targetTile.transform.position;
         GridManager.Instance.DisplayHighlights();
 

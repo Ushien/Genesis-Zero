@@ -15,7 +15,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] private int _enemy_width, _enemy_height;
     [SerializeField] private int _ally_width, _ally_height;
 
-    [SerializeField] private float gap_between_tiles = -0.2f;
+    [SerializeField] private float gap_between_tiles = 0.2f;
     [SerializeField] private Tile _tilePrefab;
     [SerializeField] private Transform _cam;
 
@@ -40,6 +40,14 @@ public class GridManager : MonoBehaviour
 
     void Awake(){
         Instance = this;
+    }
+
+    /// <summary>
+    /// Return the prefab of the tile used to generate the map
+    /// </summary>
+    /// <returns></returns>
+    public Tile GetTilePrefab(){
+        return _tilePrefab;
     }
 
     public void GenerateGrids() {
@@ -79,7 +87,9 @@ public class GridManager : MonoBehaviour
         for (int x = 0; x < width; x++) {
             for (int y = 0; y <height; y++) {
 
-                var spawnedTile = Instantiate(_tilePrefab, Tools.XYToIso(new Vector2(gap_between_tiles*x + x, gap_between_tiles*y + y + offset)), Quaternion.identity);
+                Vector3 position = Tools.XYToIso(new Vector2(gap_between_tiles*x + 0.5f*x, gap_between_tiles*y + 0.5f*y + offset));
+
+                var spawnedTile = Instantiate(_tilePrefab, new Vector3(position.x, position.y, y*0.1f), Quaternion.identity);
                 
                 spawnedTile.transform.parent = parentGrid.transform;
                 spawnedTile.name = $"Tile {x} {y}";
@@ -98,7 +108,7 @@ public class GridManager : MonoBehaviour
 
             }
         }
-        _cam.transform.position = new Vector3(3f, 0.8f, -10);
+        _cam.transform.position = new Vector3(2.5f, 0.8f, -10);
 
     }
 
@@ -269,7 +279,8 @@ public class GridManager : MonoBehaviour
             }
 
             foreach (Tile tile in selected_tiles){
-                tile._highlight.SetActive(true);
+                // Que faire si une case est sélectionnée
+                //tile._highlight.SetActive(true);
             }
         }
     }
