@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: bbe1475e07cd26c45a105eaf64b9e40e
+guid: 15c670d12e600c54f98a80c26dd2b049
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 0
-    sRGBTexture: 1
+    enableMipMap: 1
+    sRGBTexture: 0
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
@@ -20,7 +20,7 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
-    flipGreenChannel: 0
+    flipGreenChannel: 1
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
@@ -52,9 +52,9 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 1
+  alphaIsTransparency: 0
   spriteTessellationDetail: -1
-  textureType: 8
+  textureType: 1
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -98,7 +98,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: animated_blender_tile_0
+      name: normal_spritesheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 144
-        height: 106
+        width: 192
+        height: 108
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c4c1724dd69d2ae4abc34df4e640be3c
-      internalID: -397732107
+      spriteID: 1d7d02c8bfdd7f84ca7caf5cd888139f
+      internalID: 891539607
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: animated_blender_tile_1
+      name: normal_spritesheet_1
       rect:
         serializedVersion: 2
-        x: 144
+        x: 192
         y: 0
-        width: 144
-        height: 106
+        width: 192
+        height: 108
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,20 +145,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dd82a52cbd2711f4780c3162b66cad19
-      internalID: 336854706
+      spriteID: 8ff8e6a8703e3d54097b1ae955e62298
+      internalID: -249176078
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: animated_blender_tile_2
+      name: normal_spritesheet_2
       rect:
         serializedVersion: 2
-        x: 289
+        x: 384
         y: 0
-        width: 144
-        height: 106
+        width: 192
+        height: 108
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,20 +166,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6a0c10562b1f8034a9781aa23e775ef9
-      internalID: 199164893
+      spriteID: 06531cc5c14947940b6709054649a466
+      internalID: 463471912
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: animated_blender_tile_3
+      name: normal_spritesheet_3
       rect:
         serializedVersion: 2
-        x: 434
+        x: 576
         y: 0
-        width: 155
-        height: 106
+        width: 192
+        height: 108
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -187,20 +187,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 641b852f307b492489d455a6f718f84f
-      internalID: 1381455234
+      spriteID: 73313241653d12147907f7b6e0c6d877
+      internalID: 838615448
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: animated_blender_tile_4
+      name: normal_spritesheet_4
       rect:
         serializedVersion: 2
-        x: 588
+        x: 768
         y: 0
-        width: 155
-        height: 106
+        width: 192
+        height: 108
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,20 +208,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 34923e17f9091e044aaa67b6b2da62e8
-      internalID: 945988263
+      spriteID: a798ec1f7b6d068479d1c9a9c36339c1
+      internalID: -486799134
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: animated_blender_tile_5
+      name: normal_spritesheet_5
       rect:
         serializedVersion: 2
-        x: 743
+        x: 960
         y: 0
-        width: 155
-        height: 106
+        width: 192
+        height: 108
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -229,20 +229,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f4c06a4c4a82ef48ab26b0f88c9df32
-      internalID: 263096309
+      spriteID: 443d35e029fdbb94b8eba01b75eff6f3
+      internalID: 540897334
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: animated_blender_tile_6
+      name: normal_spritesheet_6
       rect:
         serializedVersion: 2
-        x: 899
+        x: 1152
         y: 0
-        width: 155
-        height: 106
+        width: 192
+        height: 108
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -250,20 +250,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 98a83a989dad0484787ccba7f52449d3
-      internalID: 97684000
+      spriteID: 335ab3685f22ecd4a923ab17ef8cdcd0
+      internalID: -1282194018
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: animated_blender_tile_7
+      name: normal_spritesheet_7
       rect:
         serializedVersion: 2
-        x: 1055
+        x: 1344
         y: 0
-        width: 165
-        height: 106
+        width: 192
+        height: 108
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -271,20 +271,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e63e87d012c81da46a4226050cf86060
-      internalID: 956004041
+      spriteID: c6002d1a3edfe9c479f3164e8f9b8041
+      internalID: -508532532
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: animated_blender_tile_8
+      name: normal_spritesheet_8
       rect:
         serializedVersion: 2
-        x: 1220
+        x: 1536
         y: 0
-        width: 165
-        height: 106
+        width: 192
+        height: 108
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -292,20 +292,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fe183a8810632a9439acb1487337d705
-      internalID: 1086507810
+      spriteID: 99a5cbab97c49774c9b90a8291575d5b
+      internalID: 1040906057
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: animated_blender_tile_9
+      name: normal_spritesheet_9
       rect:
         serializedVersion: 2
-        x: 1385
+        x: 1728
         y: 0
-        width: 165
-        height: 106
+        width: 192
+        height: 108
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -313,8 +313,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1681e27902300864c968896698a2b4fd
-      internalID: -1614019720
+      spriteID: 7539357e275144d40a13e02baab7994c
+      internalID: 1533013131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: normal_spritesheet_10
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 0
+        width: 192
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f03e44e57ac95848bb5556f89f79d00
+      internalID: -995952301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: normal_spritesheet_11
+      rect:
+        serializedVersion: 2
+        x: 2112
+        y: 0
+        width: 192
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd71560dd85e48243ac78694bcc5dd55
+      internalID: -653564930
       vertices: []
       indices: 
       edges: []
@@ -330,17 +372,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      animated_blender_tile_0: -397732107
-      animated_blender_tile_1: 336854706
-      animated_blender_tile_10: -1635021897
-      animated_blender_tile_2: 199164893
-      animated_blender_tile_3: 1381455234
-      animated_blender_tile_4: 945988263
-      animated_blender_tile_5: 263096309
-      animated_blender_tile_6: 97684000
-      animated_blender_tile_7: 956004041
-      animated_blender_tile_8: 1086507810
-      animated_blender_tile_9: -1614019720
+      normal_spritesheet_0: 891539607
+      normal_spritesheet_1: -249176078
+      normal_spritesheet_10: -995952301
+      normal_spritesheet_11: -653564930
+      normal_spritesheet_2: 463471912
+      normal_spritesheet_3: 838615448
+      normal_spritesheet_4: -486799134
+      normal_spritesheet_5: 540897334
+      normal_spritesheet_6: -1282194018
+      normal_spritesheet_7: -508532532
+      normal_spritesheet_8: 1040906057
+      normal_spritesheet_9: 1533013131
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
