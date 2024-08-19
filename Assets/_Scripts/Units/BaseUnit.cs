@@ -89,10 +89,6 @@ public class BaseUnit : MonoBehaviour
         totalHealth = GetStatFromLevel(scriptableUnit.original_health, level);
         finalHealth = totalHealth;
 
-        // LifeBar Setup
-        lifeBar = InterfaceManager.Instance.SetupLifebar(position, totalHealth, team);
-
-
         lore_description = scriptableUnit.lore_description;
         fight_description = scriptableUnit.fight_description;
 
@@ -598,8 +594,10 @@ public class BaseUnit : MonoBehaviour
         }
         if(AreHPBelowZero()){
             SetHP(0, false);
+            InterfaceManager.Instance.KillLifeBar(this.life);
             Kill();
         }
+        InterfaceManager.Instance.UpdateLifebar(this);
     }
 
     /// <summary>
@@ -673,6 +671,7 @@ public class BaseUnit : MonoBehaviour
         if(armor < 0){
             SetArmor(0);
         }
+        InterfaceManager.Instance.UpdateLifebar(this);
     }
 
     /// <summary>

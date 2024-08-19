@@ -47,6 +47,9 @@ public class InterfaceManager : MonoBehaviour
     private GameObject tileSelector;
     private Vector3 tileSelector_targetPos;
     private Vector3 tileSelector_currentPos;
+
+    public Vector3 lifeBarOffset;
+
     [SerializeField]
     private float selectorSpeed;
 
@@ -658,16 +661,47 @@ public class InterfaceManager : MonoBehaviour
         else
             PanelLine.sizeDelta = new Vector2(Screen.width-targetPosition.x - tileSize, targetPosition.y - spellPanel.GetComponent<RectTransform>().rect.height); // Hard coded, needs some update
     }
+    
+    public GameObject SetupLifebar(string unitName, Vector3 barPosition, int totalHealth, int armor, Team team){
+        
+        // GameObject instanciation
+        GameObject lifeBarPanel = Instantiate(lifeBarPrefab);
+        lifeBarPanel.transform.parent = (team == Team.Ally) ? alliesLifeBar.transform : ennemiesLifeBar.transform;
+        lifeBarPanel.transform.localScale = new Vector3(1, 1, 1);
+        lifeBarPanel.transform.position = barPosition + lifeBarOffset;
+        lifeBarPanel.name = $"{unitName}_LifeBar";
 
-    public GameObject SetupLifebar(Vector3 barPosition, int totalHealth ,Team team){
-        Debug.Log(barPosition);
-        GameObject lifeBar = Instantiate(lifeBarPrefab);
-        lifeBar.transform.parent = alliesLifeBar.transform;
-        lifeBar.transform.localScale = new Vector2(1, 1);
-        lifeBar.transform.position = barPosition;
-        return lifeBar;
+        // Child components access and modification, very ugly
+        TextMeshProUGUI HP = lifeBarPanel.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI AR = lifeBarPanel.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
+        HP.text = $"{totalHealth} HP";
+        AR. text = $"{armor} AR";
+
+        //Armor initialization
+        Transform armorBar = lifeBarPanel.transform.GetChild(4);
+        armorBar.localScale = new Vector3((float)armor/totalHealth, 1, 1);
+
+        return lifeBarPanel;
     }
     
+    public void UpdateLifebar(BaseUnit unit){
+        
+        // Child components access and modification, very ugly
+        TextMeshProUGUI HP = unit.lifeBar.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI AR = unit.lifeBar.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
+        HP.text = $"{unit.finalHealth} HP";
+        AR. text = $"{unit.armor} AR";
+
+        //Armor initialization
+        Transform lifeBar  = unit.lifeBar.transform.GetChild(3);
+        Transform armorBar = unit.lifeBar.transform.GetChild(4);
+        lifeBar.localScale = new Vector3((float)unit.finalHealth/unit.totalHealth, 1, 1);
+        armorBar.localScale = new Vector3((float)unit.armor/unit.totalHealth, 1, 1);
+    }
+
+    public void KillLifeBar(GameObject lifeBarPanel){
+        Destroy(lifeBarPanel);
+    }
 
 }
 

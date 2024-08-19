@@ -611,7 +611,7 @@ Transform:
   m_GameObject: {fileID: 377686252}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.891, y: -2.788, z: -0.6208795}
+  m_LocalPosition: {x: 5.73, y: -2.41, z: -0.6208795}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -655,7 +655,7 @@ MonoBehaviour:
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 3.62
+  m_PointLightInnerRadius: 5.051767
   m_PointLightOuterRadius: 8.71
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
@@ -3755,6 +3755,7 @@ MonoBehaviour:
   lifeBarPrefab: {fileID: 365750388818752724, guid: f6bd6efb9959239418755f94895bf15c, type: 3}
   grayscaleShader: {fileID: 2100000, guid: ca5da941d3d390e49bef51a2d9610fa0, type: 2}
   emptySpellSelectorSquare: {fileID: 21300000, guid: 9d4d396a0d494f445bfea30e683f1b4c, type: 3}
+  lifeBarOffset: {x: 0, y: 2, z: 0}
   selectorSpeed: 10
   tileOutliner: {fileID: 2100000, guid: 29bac064f9c8bfd4bab1f1bf7e92c24a, type: 2}
   mainCamera: {fileID: 1494868753}
