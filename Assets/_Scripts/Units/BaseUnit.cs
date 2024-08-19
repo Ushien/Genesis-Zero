@@ -594,7 +594,7 @@ public class BaseUnit : MonoBehaviour
         }
         if(AreHPBelowZero()){
             SetHP(0, false);
-            InterfaceManager.Instance.KillLifeBar(this.life);
+            InterfaceManager.Instance.KillLifeBar(this.lifeBar);
             Kill();
         }
         InterfaceManager.Instance.UpdateLifebar(this);
