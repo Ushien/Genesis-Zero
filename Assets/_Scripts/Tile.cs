@@ -10,6 +10,7 @@ public class Tile : MonoBehaviour
     [SerializeField] private Color _baseColor, _offsetColor;
     [SerializeField] private SpriteRenderer _renderer;
     [SerializeField] public GameObject _highlight;
+    [SerializeField] private Animator tileAnimator;
     //TODO Marqueur pour montrer la sélection principale
 
     public int x_position;
@@ -31,10 +32,12 @@ public class Tile : MonoBehaviour
 
     public void Select(){
         main_selection = true;
+        tileAnimator.Play("selection");
     }
 
     public void Unselect(){
         main_selection = false;
+        tileAnimator.Play("deselection");
     }
 
     void OnMouseDown() {
