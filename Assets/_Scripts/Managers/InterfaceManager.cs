@@ -18,7 +18,7 @@ public class InterfaceManager : MonoBehaviour
 
     [SerializeField]
     private GameObject UIobject;
-    public GameObject upPanel;
+    public GameObject infosPanel;
     public GameObject informationPanel;
     public GameObject passivePanel;
     public GameObject spellPanel;
@@ -29,13 +29,14 @@ public class InterfaceManager : MonoBehaviour
     public TextMeshProUGUI unitHealthPanel;
     public TextMeshProUGUI unitArmorPanel;
     public TextMeshProUGUI unitLevelPanel;
-    public RectTransform upPanelLine;
+    public RectTransform infosPanelLine;
     public TextMeshProUGUI unitPassiveNamePanel;
     public TextMeshProUGUI unitPassiveDescriptionPanel;
     public TextMeshProUGUI spellNamePanel;
     public TextMeshProUGUI spellCooldownPanel;
     public TextMeshProUGUI spellDescriptionPanel;
     public RectTransform spellPanelLine;
+    public RectTransform spellSelectorLine;
     public Image spellPanelIcon;
     public GameObject spellSelector;
     public GameObject shade;
@@ -128,7 +129,7 @@ public class InterfaceManager : MonoBehaviour
             ResetDisplay();
 
             // Activate the needed interface
-            upPanel.SetActive(true);
+            infosPanel.SetActive(true);
             tileSelector.SetActive(true);
 
             GridManager.Instance.GetMiddleTile(Team.Ally).Select();
@@ -184,12 +185,12 @@ public class InterfaceManager : MonoBehaviour
 
         BaseUnit currentUnit = sourceTile.GetUnit();
         if(currentUnit != null){
-            upPanel.SetActive(true);
+            infosPanel.SetActive(true);
             DisplayUnit(currentUnit);
-            DrawPanelLine(upPanelLine, sourceTile);
+            //DrawPanelLine(infosPanelLine, sourceTile);
         }
         else{
-            upPanel.SetActive(false);
+            infosPanel.SetActive(false);
         }
     }
     void SourceSelectionTrigger(BattleManager.Trigger trigger){
@@ -212,11 +213,12 @@ public class InterfaceManager : MonoBehaviour
             // Activate the needed interface
             spellSelector.SetActive(true);
             shade.SetActive(true);
-            upPanel.SetActive(true);
+            infosPanel.SetActive(true);
             spellPanel.SetActive(true);
             spellPanelLine.gameObject.SetActive(false);
 
-            spellSelector.transform.position = sourceTile.transform.position;
+            //spellSelector.transform.position = sourceTile.transform.position;
+            DrawPanelLine(spellSelectorLine, sourceTile);
 
             int currentSpellIndex = 0;
 
@@ -501,7 +503,7 @@ public class InterfaceManager : MonoBehaviour
             ResetDisplay();
 
             // Activate the needed interface
-            upPanel.SetActive(true);
+            infosPanel.SetActive(true);
             tileSelector.SetActive(true);
             spellSelector.SetActive(true);
             shade.SetActive(true);
@@ -569,12 +571,12 @@ public class InterfaceManager : MonoBehaviour
         // N'aidait pas à la lisibilité d'après moi
         // (en gros, le personnage ennemi était toujours sélectionné, je préfère qu'on ait toujours les infos sur le lanceur)
         //if(currentUnit != null){
-            //upPanel.SetActive(true);
+            //infosPanel.SetActive(true);
             //DisplayUnit(currentUnit);
-            //DrawPanelLine(upPanelLine, targetTile);
+            //DrawPanelLine(infosPanelLine, targetTile);
         //}
         //else{
-            //upPanel.SetActive(false);
+            //infosPanel.SetActive(false);
         //}
 
         // Write into a variable the instruction if validated
@@ -631,7 +633,7 @@ public class InterfaceManager : MonoBehaviour
     void ResetDisplay(){
             spellSelector.SetActive(false);
             shade.SetActive(false);
-            upPanel.SetActive(false);
+            infosPanel.SetActive(false);
             tileSelector.SetActive(false);
             spellPanel.SetActive(false);
     }
@@ -656,11 +658,14 @@ public class InterfaceManager : MonoBehaviour
 
     private void DrawPanelLine(RectTransform PanelLine, Tile tile){
         Vector3 targetPosition = mainCamera.WorldToScreenPoint(tile.transform.position);
-        if(PanelLine == upPanelLine)
-            PanelLine.sizeDelta = new Vector2(targetPosition.x - tileSize, Screen.height - upPanel.GetComponent<RectTransform>().rect.height - targetPosition.y); // a bit ugly but still good
-        else
+        if(PanelLine == spellSelectorLine)
+            PanelLine.sizeDelta = new Vector2(targetPosition.x - tileSize,  Screen.height - spellSelector.GetComponent<RectTransform>().rect.height - targetPosition.y); // a bit ugly but still good      
+        //if(PanelLine == infosPanelLine)
+        //    PanelLine.sizeDelta = new Vector2(targetPosition.x - tileSize, Screen.height - infosPanel.GetComponent<RectTransform>().rect.height - targetPosition.y); // a bit ugly but still good
+            //PanelLine.sizeDelta = new Vector2(targetPosition.x - tileSize, targetPosition.y - infosPanel.GetComponent<RectTransform>().rect.height); // a bit ugly but still good      
+        if (PanelLine == spellPanelLine)
             PanelLine.sizeDelta = new Vector2(Screen.width-targetPosition.x - tileSize, targetPosition.y - spellPanel.GetComponent<RectTransform>().rect.height); // Hard coded, needs some update
-    }
+    } 
     
     public GameObject SetupLifebar(string unitName, Vector3 barPosition, int totalHealth, int armor, Team team){
         

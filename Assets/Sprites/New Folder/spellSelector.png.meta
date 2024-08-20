@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fdc6e7504a77f544d8b0c0a34ed462c9
+guid: 22a9ee5f852c6324fae9888ee33987bc
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: spritesheet_0
+      name: spellSelector_0
       rect:
         serializedVersion: 2
         x: 0
@@ -118,20 +118,20 @@ TextureImporter:
         width: 192
         height: 108
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c9698ed9c948f204191faddd2203b9d3
-      internalID: 217820175
+      spriteID: fbca20844c4660344bfe844c0918d7c3
+      internalID: -824542813
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_1
+      name: spellSelector_1
       rect:
         serializedVersion: 2
         x: 192
@@ -139,20 +139,20 @@ TextureImporter:
         width: 192
         height: 108
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 44fd95fd56ba71f42b5b461150ed852e
-      internalID: 1219198118
+      spriteID: 93e31c1ab23e96e4b8a446ee2e59d09b
+      internalID: -716942021
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_2
+      name: spellSelector_2
       rect:
         serializedVersion: 2
         x: 384
@@ -160,20 +160,20 @@ TextureImporter:
         width: 192
         height: 108
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 04093637d558c59438df332eabb899c2
-      internalID: -340008056
+      spriteID: 0f876fec614edfb4cbb6916fda854d7d
+      internalID: 1011977351
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_3
+      name: spellSelector_3
       rect:
         serializedVersion: 2
         x: 576
@@ -181,20 +181,20 @@ TextureImporter:
         width: 192
         height: 108
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9f0083c2880796c48b48ebab79a8d610
-      internalID: -968321750
+      spriteID: 2093467338ce5894cad8101912761a36
+      internalID: -2127707532
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_4
+      name: spellSelector_4
       rect:
         serializedVersion: 2
         x: 768
@@ -202,20 +202,20 @@ TextureImporter:
         width: 192
         height: 108
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5bd2a2308d81cf3498d30f71e40f4708
-      internalID: -1938378526
+      spriteID: feaa8f4c1f8d2b445b554a8863ed3048
+      internalID: -1618218331
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_5
+      name: spellSelector_5
       rect:
         serializedVersion: 2
         x: 960
@@ -223,20 +223,20 @@ TextureImporter:
         width: 192
         height: 108
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 61fc6d2ebc12bc04b90f1e6c979c1339
-      internalID: 1909368379
+      spriteID: 596d386dbcb42a048be2dae373e574ee
+      internalID: 1370106773
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_6
+      name: spellSelector_6
       rect:
         serializedVersion: 2
         x: 1152
@@ -244,20 +244,20 @@ TextureImporter:
         width: 192
         height: 108
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fe8043f5d22809f41bedd71b34ffdaca
-      internalID: -318231528
+      spriteID: 3766e86672d2e654eae824187a134d81
+      internalID: -1061464287
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_7
+      name: spellSelector_7
       rect:
         serializedVersion: 2
         x: 1344
@@ -265,20 +265,20 @@ TextureImporter:
         width: 192
         height: 108
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e481b08d60764d41b1e54f81bb99eea
-      internalID: -1980750687
+      spriteID: 177d1a8c8b572d44f8100ab02cd1dbb2
+      internalID: -723553612
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_8
+      name: spellSelector_8
       rect:
         serializedVersion: 2
         x: 1536
@@ -286,20 +286,20 @@ TextureImporter:
         width: 192
         height: 108
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 68f7d523edbf38d4ba7b200ac1c41c71
-      internalID: 1854950563
+      spriteID: 53f3775ad617d1340a3e25475643547f
+      internalID: -1839473671
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_9
+      name: spellSelector_9
       rect:
         serializedVersion: 2
         x: 1728
@@ -307,20 +307,20 @@ TextureImporter:
         width: 192
         height: 108
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a00fa310574cb024c835e38be927c098
-      internalID: -18798395
+      spriteID: 8cb79bde40d7abf418114145385ecaa3
+      internalID: -1486595174
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_10
+      name: spellSelector_10
       rect:
         serializedVersion: 2
         x: 1920
@@ -328,20 +328,20 @@ TextureImporter:
         width: 192
         height: 108
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 21f9de2b8fdcd274c8c9223a5b02fbbf
-      internalID: -1477253989
+      spriteID: e3f57e020cd137c4abd946bc386c935b
+      internalID: 149347463
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spritesheet_11
+      name: spellSelector_11
       rect:
         serializedVersion: 2
         x: 2112
@@ -349,14 +349,161 @@ TextureImporter:
         width: 192
         height: 108
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 495e2bb45bc5f3f478ab7e69b5be3536
-      internalID: 602968937
+      spriteID: b32d2b73642d8a149ac2a8087ac3c2f5
+      internalID: 1555751931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spellSelector_12
+      rect:
+        serializedVersion: 2
+        x: 2304
+        y: 0
+        width: 192
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 318a8729b42f16a4582fe29fdca15e1a
+      internalID: 1207065784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spellSelector_13
+      rect:
+        serializedVersion: 2
+        x: 2496
+        y: 0
+        width: 192
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b9b078b6e299e4428ed0f4a596990ff
+      internalID: 1594450669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spellSelector_14
+      rect:
+        serializedVersion: 2
+        x: 2688
+        y: 0
+        width: 192
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5fc046c631d6a3e439d892dc15121f1c
+      internalID: 97141508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spellSelector_15
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 0
+        width: 192
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b21604e9c0ba5d44283b4ebfc71a2129
+      internalID: -1549847683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spellSelector_16
+      rect:
+        serializedVersion: 2
+        x: 3072
+        y: 0
+        width: 192
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4549fba531a928e4c9c177ef5e6bff96
+      internalID: -832112530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spellSelector_17
+      rect:
+        serializedVersion: 2
+        x: 3264
+        y: 0
+        width: 192
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 208519a5ac409d447a909d902cffe006
+      internalID: 1709350537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spellSelector_18
+      rect:
+        serializedVersion: 2
+        x: 3456
+        y: 0
+        width: 192
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02ff04a8f525a7f4ab4e189647b12aa7
+      internalID: 1793842113
       vertices: []
       indices: 
       edges: []
@@ -370,24 +517,27 @@ TextureImporter:
     indices: 
     edges: []
     weights: []
-    secondaryTextures:
-    - texture: {fileID: 2800000, guid: 15c670d12e600c54f98a80c26dd2b049, type: 3}
-      name: _NormalMap
-    - texture: {fileID: 2800000, guid: cb3511a9ec5a10045a0adf677a8c73cf, type: 3}
-      name: _Emission
+    secondaryTextures: []
     nameFileIdTable:
-      spritesheet_0: 217820175
-      spritesheet_1: 1219198118
-      spritesheet_10: -1477253989
-      spritesheet_11: 602968937
-      spritesheet_2: -340008056
-      spritesheet_3: -968321750
-      spritesheet_4: -1938378526
-      spritesheet_5: 1909368379
-      spritesheet_6: -318231528
-      spritesheet_7: -1980750687
-      spritesheet_8: 1854950563
-      spritesheet_9: -18798395
+      spellSelector_0: -824542813
+      spellSelector_1: -716942021
+      spellSelector_10: 149347463
+      spellSelector_11: 1555751931
+      spellSelector_12: 1207065784
+      spellSelector_13: 1594450669
+      spellSelector_14: 97141508
+      spellSelector_15: -1549847683
+      spellSelector_16: -832112530
+      spellSelector_17: 1709350537
+      spellSelector_18: 1793842113
+      spellSelector_2: 1011977351
+      spellSelector_3: -2127707532
+      spellSelector_4: -1618218331
+      spellSelector_5: 1370106773
+      spellSelector_6: -1061464287
+      spellSelector_7: -723553612
+      spellSelector_8: -1839473671
+      spellSelector_9: -1486595174
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
