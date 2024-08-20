@@ -661,17 +661,28 @@ public class InterfaceManager : MonoBehaviour
         //
     }
 
+
+    // Fonction pour gérer la ligne d'UI qui pointe sur les objets. assez rigide pour l'instant
     private void DrawPanelLine(RectTransform PanelLine, Tile tile){
+
+        // Convertit la position dans le gameworld en position en px sur l'écran.
         Vector3 targetPosition = mainCamera.WorldToScreenPoint(tile.transform.position);
+
+        // Pour l'instant, au cas par cas en fonction de quelle ligne de quel panneau est utilisée.... A voir si on en a beaucoup par la suite
         if(PanelLine == spellSelectorLine)
             PanelLine.sizeDelta = new Vector2(targetPosition.x - tileSize,  Screen.height - spellSelector.GetComponent<RectTransform>().rect.height - targetPosition.y); // a bit ugly but still good      
+        
+        /// Ces lignes géraient la ligne de l'info panel, qui n'en a plus dans le layout actuel
         //if(PanelLine == infosPanelLine)
         //    PanelLine.sizeDelta = new Vector2(targetPosition.x - tileSize, Screen.height - infosPanel.GetComponent<RectTransform>().rect.height - targetPosition.y); // a bit ugly but still good
             //PanelLine.sizeDelta = new Vector2(targetPosition.x - tileSize, targetPosition.y - infosPanel.GetComponent<RectTransform>().rect.height); // a bit ugly but still good      
+        
+        // Gère la position de la ligne du sort pendant la sélection de target
         if (PanelLine == spellPanelLine)
             PanelLine.sizeDelta = new Vector2(Screen.width-targetPosition.x - tileSize, targetPosition.y - spellPanel.GetComponent<RectTransform>().rect.height); // Hard coded, needs some update
     } 
-    
+
+    // Setup la barre de vie d'un perso
     public GameObject SetupLifebar(string unitName, Vector3 barPosition, int totalHealth, int armor, Team team){
         
         // GameObject instanciation
@@ -694,6 +705,7 @@ public class InterfaceManager : MonoBehaviour
         return lifeBarPanel;
     }
     
+    // Update la barre de vie d'un perso
     public void UpdateLifebar(BaseUnit unit){
         
         // Child components access and modification, very ugly
@@ -709,26 +721,33 @@ public class InterfaceManager : MonoBehaviour
         armorBar.localScale = new Vector3((float)unit.armor/unit.totalHealth, 1, 1);
     }
 
+    // Détruit la barre de vie d'un perso
     public void KillLifeBar(GameObject lifeBarPanel){
         Destroy(lifeBarPanel);
     }
 
+    // Fonction pour gérer les anims de la croix de sorts. La solution actuelles est dégeu, il faudra la rebosser intelligemment.
+    // Notamment on peut réduire le nombre d'animations requises par 5 si j'apprends à faire des anims paramétrables.
     private void AnimateSpellChoice(int index){
+        //Liste contenant le nom des animations disponibles pour le spellChoicePanel
+        List<string> spellChoiceAnims = new List<string>
+        {"LeftSelected", "RightSelected", "TopSelected",
+         "DownSelected", "AttackSelected",};
+
+        // On récupère l'Animator de chaque choix de spell
         for (int i=0; i<5; i++){
-            if (i == index)
+            Animator spellChoiceAnimator = spellSelector.transform.GetChild(i).GetComponent<Animator>();
+
+            // Si c'est le spell sélectionné
+            if (i == index){
+                spellChoiceAnimator.Play(spellChoiceAnims[i]);
                 continue;
-            spellSelector.transform.GetChild(3).gameObject.GetComponent<Animator>().Play("Empty");
+            }
+
+            // S'il était précédemment sélectionné, on le déselctionne
+            if (spellChoiceAnimator.GetCurrentAnimatorStateInfo(0).IsName(spellChoiceAnims[i]))
+                spellChoiceAnimator.Play($"Not{spellChoiceAnims[i]}");
         }
-        if (index==0)
-            spellSelector.transform.GetChild(0).GetComponent<Animator>().Play("LeftSelected");
-        if (index==1)
-            spellSelector.transform.GetChild(1).GetComponent<Animator>().Play("RightSelected");
-        if (index==2)
-            spellSelector.transform.GetChild(2).GetComponent<Animator>().Play("TopSelected");
-        if (index==3)
-            spellSelector.transform.GetChild(3).GetComponent<Animator>().Play("DownSelected");
-        if (index==4)
-            spellSelector.transform.GetChild(4).GetComponent<Animator>().Play("AttackSelected");
     }
 }
 
