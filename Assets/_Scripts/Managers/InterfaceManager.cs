@@ -255,18 +255,23 @@ public class InterfaceManager : MonoBehaviour
         switch(spellChoice){
             case SpellChoice.CHARACTER:
                 spellSelector.transform.GetChild(4).transform.GetChild(0).gameObject.SetActive(true);
+                AnimateSpellChoice(4);
                 break;
             case SpellChoice.LEFT:
                 spellSelector.transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(true);
+                AnimateSpellChoice(0);
                 break;
             case SpellChoice.RIGHT:
                 spellSelector.transform.GetChild(1).transform.GetChild(0).gameObject.SetActive(true);
+                AnimateSpellChoice(1);
                 break;
             case SpellChoice.UP:
                 spellSelector.transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(true);
+                AnimateSpellChoice(2);
                 break;
             case SpellChoice.DOWN:
                 spellSelector.transform.GetChild(3).transform.GetChild(0).gameObject.SetActive(true);
+                AnimateSpellChoice(3);
                 break;
             default:
                 break;
@@ -708,6 +713,23 @@ public class InterfaceManager : MonoBehaviour
         Destroy(lifeBarPanel);
     }
 
+    private void AnimateSpellChoice(int index){
+        for (int i=0; i<5; i++){
+            if (i == index)
+                continue;
+            spellSelector.transform.GetChild(3).gameObject.GetComponent<Animator>().Play("Empty");
+        }
+        if (index==0)
+            spellSelector.transform.GetChild(0).GetComponent<Animator>().Play("LeftSelected");
+        if (index==1)
+            spellSelector.transform.GetChild(1).GetComponent<Animator>().Play("RightSelected");
+        if (index==2)
+            spellSelector.transform.GetChild(2).GetComponent<Animator>().Play("TopSelected");
+        if (index==3)
+            spellSelector.transform.GetChild(3).GetComponent<Animator>().Play("DownSelected");
+        if (index==4)
+            spellSelector.transform.GetChild(4).GetComponent<Animator>().Play("AttackSelected");
+    }
 }
 
 
