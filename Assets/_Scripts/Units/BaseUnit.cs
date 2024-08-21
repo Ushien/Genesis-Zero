@@ -75,7 +75,7 @@ public class BaseUnit : MonoBehaviour
     /// <param name="originUnit">Modèle d'unité</param>
     /// <param name="setup_level">Niveau de l'unité</param>
     /// <param name="team">Equipe de l'unité</param>
-    public void Setup(ScriptableUnit originUnit, int setup_level, Team team, Vector2 position){
+    public void Setup(ScriptableUnit originUnit, int setup_level, Team team){
         scriptableUnit = originUnit;
         this.name = scriptableUnit.unit_name;
         

@@ -331,6 +331,27 @@ public class GridManager : MonoBehaviour
             selection_mode = Selection_mode.Single_selection;
         }
     }
+
+    /// <summary>
+    /// Renvoie la première unité sur une ligne donnée, pour une équipe donnée, et en regardant dans une direction donnée. Renvoie null si aucune unité n'est présente.
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="y_position"></param>
+    /// <param name="direction">LEFT ou RIGHT</param>
+    /// <returns></returns>
+    internal Tile GetFirstUnit(Team _team, int y_position, Directions direction)
+    {
+        List<Tile> _tileList = ReturnTilesList(_team, height : y_position, occupiedByUnit : true);
+        if(direction == Directions.LEFT){
+            return _tileList.Count > 0 ? _tileList[_tileList.Count-1] : null;
+        }
+        else if(direction == Directions.RIGHT){
+            return _tileList.Count > 0 ? _tileList[0] : null;
+        }
+        else{
+            return null;
+        }
+    }
 }
 
 public static class Tools
@@ -351,5 +372,22 @@ public static class Tools
 
     public static Vector2 XYToIso(Vector2 v){
         return new Vector2(v.x + v.y,  0.5f * (v.y - v.x));
+    }
+
+    /// <summary>
+    /// Transform Team.Enemy into Team.Ally, and Team.Ally into Team.Enemy
+    /// </summary>
+    /// <param name="team"></param>
+    /// <returns></returns>
+    public static Team GetOppositeTeam(Team team){
+        if(team == Team.Ally){
+            return Team.Enemy;
+        }
+        if(team == Team.Enemy){
+            return Team.Ally;
+        }
+        else{
+            return team;
+        }
     }
 }

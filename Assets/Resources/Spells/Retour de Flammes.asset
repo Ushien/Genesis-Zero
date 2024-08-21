@@ -16,9 +16,11 @@ MonoBehaviour:
   lore_description: 
   fight_description: "Attaque un ennemi et \xE9change la place du personnage avec
     un alli\xE9 en r\xE9serve. (N)"
+  overloaded_fight_description: 
   cooldown: 0
   properties: 00000000
   range: 0
   team_restriction: 0
+  default_target: 1
   artwork: {fileID: 0}
-  spellScriptPrefab: {fileID: 862956936155830111, guid: 110f973f2f01d6b4b8492ba7b844a425, type: 3}
+  spellScriptPrefab: {fileID: 698457534554450155, guid: 110f973f2f01d6b4b8492ba7b844a425, type: 3}

@@ -68,6 +68,7 @@ public class InterfaceManager : MonoBehaviour
 
     [SerializeField]
     private bool overloaded = false;
+    private bool stratView = false;
 
     // Le spell pour lequel on va sélectionner une cible
     private BaseSpell selectedSpell;
@@ -182,6 +183,7 @@ public class InterfaceManager : MonoBehaviour
                 sourceTile.Unselect();
             }
         }
+        CheckStratView();
 
         BaseUnit currentUnit = sourceTile.GetUnit();
         if(currentUnit != null){
@@ -251,6 +253,9 @@ public class InterfaceManager : MonoBehaviour
         spellSelector.transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(false);
         spellSelector.transform.GetChild(3).transform.GetChild(0).gameObject.SetActive(false);
         spellSelector.transform.GetChild(4).transform.GetChild(0).gameObject.SetActive(false);
+
+        // Vérifie si la vue stratégique doit être activée/désactivée
+        CheckStratView();
 
         switch(spellChoice){
             case SpellChoice.CHARACTER:
@@ -516,7 +521,8 @@ public class InterfaceManager : MonoBehaviour
             spellPanelLine.gameObject.SetActive(true);
 
             // TODO Définir par défaut l'emplacement de la targetTile, l'aléatoire c'est nul
-            targetTile = GridManager.Instance.GetRandomTile(Team.Enemy);
+            //targetTile = GridManager.Instance.GetRandomTile(Team.Enemy);
+            targetTile = selectedSpell.GetPreviousTile();
             
             ActivateState(BattleManager.PlayerActionChoiceState.TARGET_SELECTION);
         }
@@ -566,6 +572,9 @@ public class InterfaceManager : MonoBehaviour
             }
         }
 
+        // Vérifie si la vue stratégique doit être activée/désactivée
+        CheckStratView();
+
         targetTile.Select();
         DrawPanelLine(spellPanelLine, targetTile);
         GridManager.Instance.SetSelectionMode(selectedSpell.GetRange());
@@ -596,6 +605,8 @@ public class InterfaceManager : MonoBehaviour
             if(selectedSpell == null){
                 Debug.Log("Pas normal ça");
             }
+            // Retire la vue stratégique lors du passage au tour adverse. On pourrait imaginer qu'on le laisse, ou alors qu'on l'efface temporairement pour le remettre lors de la prochaine sourceSelection.
+            stratView = false;
             ResetDisplay();
             Instruction instruction = BattleManager.Instance.CreateInstruction(sourceTile.GetUnit(), selectedSpell, targetTile, hyper : overloaded);
             BattleManager.Instance.AssignInstruction(instruction);
@@ -633,6 +644,17 @@ public class InterfaceManager : MonoBehaviour
         unitPassiveNamePanel.text = unit.GetPassive().GetName();
         unitPassiveDescriptionPanel.text = unit.GetPassive().GetFightDescription();
         spellCooldownPanel.text = "";
+    }
+
+    private void CheckStratView(){
+        // Vérifie si la commande de changement d'écran est poussée
+        if (Input.GetKeyDown(KeyCode.C)){
+            stratView = !stratView;
+        }
+
+        if (stratView){
+            // Affichage de la vue stratégique
+        }
     }
     
     void ResetDisplay(){

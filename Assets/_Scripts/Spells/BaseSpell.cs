@@ -38,6 +38,7 @@ public class BaseSpell : MonoBehaviour
     private GridManager.Selection_mode range;
     // Indique si un sort ne peut être lancé que sur une équipe en particulier
     private GridManager.Team_restriction team_restriction;
+    private Tile previousTile;
 
     /// Ratio associés au sort, doivent être définis au sein de la fonction Awake propre au sort.
     private float ratio1 = 1f;
@@ -78,6 +79,10 @@ public class BaseSpell : MonoBehaviour
         artwork = scriptableSpell.artwork;
         range = scriptableSpell.range;
         team_restriction = scriptableSpell.team_restriction;
+        
+        // Définit la position de départ par défaut du sort
+        SetupDefaultTarget();
+
     }
         #endregion
         #region Actions du sort
@@ -262,6 +267,10 @@ public class BaseSpell : MonoBehaviour
         }
     }
 
+    public Tile GetPreviousTile(){
+        return previousTile;
+    }
+
         #endregion
 
         #region Gestion des cooldowns
@@ -350,11 +359,38 @@ public class BaseSpell : MonoBehaviour
     }
 
     /// <summary>
+    /// Initialise la case ciblée par défaut par le sort
+    /// </summary>
+    public void SetupDefaultTarget(){
+
+        // Si la position par départ indique l'équipe alliée, définit la position par défaut sur le lanceur
+        if(scriptableSpell.default_target == Team.Ally){
+            previousTile = owner.GetTile();
+        }
+        // Si la position par départ indique l'équipe adverse, définit la position par défaut sur le premier ennemi aligné
+        else{
+            //int _temp = GetOwner().GetTile().y_position;
+            //Team _temp2 = GetOwner().GetTeam();
+            previousTile = GridManager.Instance.GetFirstUnit(Tools.GetOppositeTeam(GetOwner().GetTeam()), GetOwner().GetTile().y_position, GetOwner().GetTeam() == Team.Enemy ? Directions.LEFT : Directions.RIGHT);
+            // S'il n'existe aucun ennemi en face, en choisit un au hasard dans l'équipe adverse
+            //TODO Un autre algorithme possible ?
+            if (previousTile == null){
+                previousTile = UnitManager.Instance.GetRandomUnit(Tools.GetOppositeTeam(GetOwner().GetTeam())).GetTile();
+            }
+        }
+    }
+
+    /// <summary>
     /// Applique tous les effets de fin de tour liés au sort
     /// </summary>
     public void ApplyEndTurnEffects(){
         ModifyCooldown(+1);
         ModifierEndTurn();
+    }
+
+    public void NewBattle(){
+        //Réinitialise la case ciblée par défaut
+        SetupDefaultTarget();
     }
         #endregion
 

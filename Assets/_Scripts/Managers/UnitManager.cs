@@ -45,12 +45,11 @@ public class UnitManager : MonoBehaviour
         else{
             new_unit.transform.parent = all_enemies.transform;
         }
-        
-        new_unit.Setup(unit_to_spawn, level, team, position);
+        Tile SpawnTile = GridManager.Instance.GetTileAtPosition(team, position);
+        SpawnTile.SetUnit(new_unit);
         units.Add(new_unit);
 
-        var SpawnTile = GridManager.Instance.GetTileAtPosition(team, position);
-        SpawnTile.SetUnit(new_unit);
+        new_unit.Setup(unit_to_spawn, level, team);
     }
 
     public void SpawnEnemies(List<Tuple<Vector2, ScriptableUnit, int>> units_to_spawn){

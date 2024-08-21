@@ -19,6 +19,7 @@ public class ScriptableSpell : ScriptableObject
     public List<Properties> properties;
     public GridManager.Selection_mode range;
     public GridManager.Team_restriction team_restriction;
+    public Team default_target = Team.Enemy;
 
     public Sprite artwork;
 

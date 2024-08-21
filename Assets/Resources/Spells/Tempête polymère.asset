@@ -16,9 +16,11 @@ MonoBehaviour:
   lore_description: 
   fight_description: "Conf\xE8re Polym\xE8re \xE0 toutes les unit\xE9s sur le terrain.
     (N)"
+  overloaded_fight_description: 
   cooldown: 0
   properties: 
   range: 0
   team_restriction: 0
+  default_target: 0
   artwork: {fileID: 0}
   spellScriptPrefab: {fileID: 0}
