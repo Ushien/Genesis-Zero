@@ -670,7 +670,7 @@ public class InterfaceManager : MonoBehaviour
 
         // Pour l'instant, au cas par cas en fonction de quelle ligne de quel panneau est utilisée.... A voir si on en a beaucoup par la suite
         if(PanelLine == spellSelectorLine)
-            PanelLine.sizeDelta = new Vector2(targetPosition.x - tileSize,  Screen.height - spellSelector.GetComponent<RectTransform>().rect.height - targetPosition.y); // a bit ugly but still good      
+            PanelLine.sizeDelta = new Vector2(targetPosition.x - tileSize*1.6f,  Screen.height - spellSelector.GetComponent<RectTransform>().rect.height - targetPosition.y-tileSize*0.3f); // a bit ugly but still good      
         
         /// Ces lignes géraient la ligne de l'info panel, qui n'en a plus dans le layout actuel
         //if(PanelLine == infosPanelLine)
