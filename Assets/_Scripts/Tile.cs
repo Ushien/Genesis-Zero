@@ -8,7 +8,6 @@ using UnityEngine;
 public class Tile : MonoBehaviour
 {
     [SerializeField] private Color _baseColor, _offsetColor;
-    [SerializeField] private SpriteRenderer _renderer;
     [SerializeField] public GameObject _highlight;
     [SerializeField] private Animator tileAnimator;
     //TODO Marqueur pour montrer la sélection principale
@@ -22,7 +21,8 @@ public class Tile : MonoBehaviour
     public bool main_selection = false;
 
     public void Init(bool isOffset, Team teamToSet) {
-        _renderer.color = isOffset ? _offsetColor : _baseColor;
+        Color newColor = isOffset ? _offsetColor : _baseColor;
+        GetComponent<Renderer>().material.SetColor("_BaseColor", newColor);
         team = teamToSet;
     }
 
