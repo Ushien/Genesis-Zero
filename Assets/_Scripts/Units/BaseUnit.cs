@@ -110,13 +110,25 @@ public class BaseUnit : MonoBehaviour
         availableSpells = new BaseSpell[4];
         int i = 0;
         foreach (BaseSpell spell in scriptableUnit.spells)
-        {
-            Debug.Log(i);   
+        {  
             availableSpells[i] = SpellManager.Instance.SetupSpell(spell, this);
             i++;
         }
         if (scriptableUnit.scriptableJob != null){
             LoadJob(scriptableUnit.scriptableJob);
+        }
+
+        // LifeBar Setup
+        lifeBar = InterfaceManager.Instance.SetupLifebar(name, gameObject.transform.position, totalHealth, armor, Team);
+    }
+
+    public void AdditionalSetup(){
+        foreach (BaseSpell _spell in GetSpells(includingAttack : true))
+        {
+            if(_spell != null){
+                _spell.SetupDefaultTarget();
+            }
+
         }
     }
 

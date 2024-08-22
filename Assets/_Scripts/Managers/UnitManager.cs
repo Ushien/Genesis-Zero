@@ -47,9 +47,18 @@ public class UnitManager : MonoBehaviour
         }
         Tile SpawnTile = GridManager.Instance.GetTileAtPosition(team, position);
         SpawnTile.SetUnit(new_unit);
-        units.Add(new_unit);
 
         new_unit.Setup(unit_to_spawn, level, team);
+        units.Add(new_unit);
+    }
+
+    public void SpawnUnits(List<Tuple<Vector2, ScriptableUnit, int>> allies_to_spawn, List<Tuple<Vector2, ScriptableUnit, int>> enemies_to_spawn){
+        SpawnAllies(allies_to_spawn);
+        SpawnEnemies(enemies_to_spawn);
+        foreach (BaseUnit unit in units)
+        {
+            unit.AdditionalSetup();
+        }
     }
 
     public void SpawnEnemies(List<Tuple<Vector2, ScriptableUnit, int>> units_to_spawn){
@@ -58,7 +67,7 @@ public class UnitManager : MonoBehaviour
         }
     }
 
-    public void spawnAllies(List<Tuple<Vector2, ScriptableUnit, int>> units_to_spawn){
+    public void SpawnAllies(List<Tuple<Vector2, ScriptableUnit, int>> units_to_spawn){
         foreach(Tuple<Vector2, ScriptableUnit, int> unit in units_to_spawn){
             SpawnUnit(unit.Item1, unit.Item2, unit.Item3, Team.Ally);
         }

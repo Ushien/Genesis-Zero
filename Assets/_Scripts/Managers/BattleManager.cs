@@ -56,8 +56,7 @@ public class BattleManager : MonoBehaviour
     public void LaunchBattle(List<Tuple<Vector2, ScriptableUnit, int>> ally_composition, List<Tuple<Vector2, ScriptableUnit, int>> enemy_composition){
         
         GridManager.Instance.GenerateGrids();
-        UnitManager.Instance.spawnAllies(ally_composition);
-        UnitManager.Instance.SpawnEnemies(enemy_composition);
+        UnitManager.Instance.SpawnUnits(ally_composition, enemy_composition);
 
         StartBattle();
     }

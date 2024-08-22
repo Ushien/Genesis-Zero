@@ -528,7 +528,6 @@ public class InterfaceManager : MonoBehaviour
         }
 
         // Change la position du sélector de case à l'aide d'un joli lerp
-        targetTile.transform.position = targetTile.transform.position;
         tileSelector_currentPos = Vector3.Lerp(tileSelector_currentPos, tileSelector_targetPos, Time.deltaTime*selectorSpeed);
         tileSelector.transform.position = tileSelector_currentPos;
         tileSelector.transform.position = targetTile.transform.position;
@@ -601,13 +600,12 @@ public class InterfaceManager : MonoBehaviour
     void TargetSelectionTrigger(BattleManager.Trigger trigger){
         // On sort de la sélection de la cible pour aller vers un autre état
         if(trigger == BattleManager.Trigger.VALIDATE){
-            // Ajouter l'instruction dans la liste d'instructions
-            if(selectedSpell == null){
-                Debug.Log("Pas normal ça");
-            }
             // Retire la vue stratégique lors du passage au tour adverse. On pourrait imaginer qu'on le laisse, ou alors qu'on l'efface temporairement pour le remettre lors de la prochaine sourceSelection.
             stratView = false;
+            // Définit la dernière case de visée pour le sort
+            selectedSpell.SetPreviousTarget(targetTile);
             ResetDisplay();
+            // Ajouter l'instruction dans la liste d'instructions
             Instruction instruction = BattleManager.Instance.CreateInstruction(sourceTile.GetUnit(), selectedSpell, targetTile, hyper : overloaded);
             BattleManager.Instance.AssignInstruction(instruction);
         }

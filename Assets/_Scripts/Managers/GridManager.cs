@@ -155,6 +155,37 @@ public class GridManager : MonoBehaviour
                 return null;
         }
     }
+    /// <summary>
+    /// Renvoie la première unité sur une ligne donnée, pour une équipe donnée, et en regardant dans une direction donnée. Renvoie null si aucune unité n'est présente.
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="y_position"></param>
+    /// <param name="direction">LEFT ou RIGHT</param>
+    /// <returns></returns>
+    public Tile GetFirstUnit(Team _team, int y_position, Directions direction)
+    {
+        List<Tile> _tileList = ReturnTilesList(team :_team, height : y_position, occupiedByUnit : true);
+        _tileList = _tileList.Where(tile => tile.OccupiedUnit != null).OrderBy(tile => tile.x_position).ToList();
+        if(direction == Directions.LEFT){
+            //return _tileList.Count > 0 ? _tileList[_tileList.Count-1] : null;
+            for (int i = _tileList.Count-1; i >= 0; i--)
+            {
+                if(_tileList[i].OccupiedUnit != null){
+                    return _tileList[i];
+                }
+            }
+        }
+        else if(direction == Directions.RIGHT){
+            //return _tileList.Count > 0 ? _tileList[0] : null;
+            for (int i = 0; i < _tileList.Count; i++)
+            {
+                if(_tileList[i].OccupiedUnit != null){
+                    return _tileList[i];
+                }
+            }
+        }
+        return null;
+    }
 
     /// <summary>
     /// Renvoie la liste de cases du jeu respectant certaines conditions.
@@ -165,6 +196,9 @@ public class GridManager : MonoBehaviour
     /// <param name="occupiedByUnit"></param>
     /// <returns></returns>
     public List<Tile> ReturnTilesList(Team team = Team.Both, int width = -1, int height = -1, bool occupiedByUnit = false){
+        //TODO CETTE METHODE DEMANDE UN REFACTORING
+        // Actuellement, elle renvoie une liste simple de tiles
+        // Il faudrait qu'elle les renvoie de manière plus structurée, en listes de listes de tiles, afin que l'on puisse se représenter les positions des éléments
 
         List<Tile> tiles_list = new List<Tile>();
         int compteur = 0;
@@ -201,16 +235,16 @@ public class GridManager : MonoBehaviour
                     for (int j = 0; j < grid_height; j++)
                     {
                         if((width == -1 || width == i)&&(height == -1 || height == j)){
-                            if(occupiedByUnit){
-                                //TODO
-                            }
                             tiles_list.Add(GetTileAtPosition(individual_team, new Vector2(i, j)));
                             compteur++;
                         }
                     }
                 }
         }
-        
+        if(occupiedByUnit){
+            //TODO Cette ligne fait bug le code et je n'ai aucune idée de pourquoi
+            //tiles_list = tiles_list.Where(tile => tile.OccupiedUnit != null).ToList();
+        }
         return tiles_list;
     }
 
@@ -329,27 +363,6 @@ public class GridManager : MonoBehaviour
         }
         else{
             selection_mode = Selection_mode.Single_selection;
-        }
-    }
-
-    /// <summary>
-    /// Renvoie la première unité sur une ligne donnée, pour une équipe donnée, et en regardant dans une direction donnée. Renvoie null si aucune unité n'est présente.
-    /// </summary>
-    /// <param name="value"></param>
-    /// <param name="y_position"></param>
-    /// <param name="direction">LEFT ou RIGHT</param>
-    /// <returns></returns>
-    internal Tile GetFirstUnit(Team _team, int y_position, Directions direction)
-    {
-        List<Tile> _tileList = ReturnTilesList(_team, height : y_position, occupiedByUnit : true);
-        if(direction == Directions.LEFT){
-            return _tileList.Count > 0 ? _tileList[_tileList.Count-1] : null;
-        }
-        else if(direction == Directions.RIGHT){
-            return _tileList.Count > 0 ? _tileList[0] : null;
-        }
-        else{
-            return null;
         }
     }
 }
