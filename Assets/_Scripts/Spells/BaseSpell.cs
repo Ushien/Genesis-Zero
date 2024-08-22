@@ -363,17 +363,14 @@ public class BaseSpell : MonoBehaviour
     /// Initialise la case ciblée par défaut par le sort
     /// </summary>
     public void SetupDefaultTarget(){
-        Debug.Log(GetName());
-        Debug.Log(scriptableSpell.default_target);
-
         // Si la position par départ indique l'équipe alliée, définit la position par défaut sur le lanceur
         if(scriptableSpell.default_target == Team.Ally){
-            Debug.Log("Test");
             previousTile = owner.GetTile();
         }
         // Si la position par départ indique l'équipe adverse, définit la position par défaut sur le premier ennemi aligné
         else{
-            previousTile = GridManager.Instance.GetFirstUnit(Tools.GetOppositeTeam(GetOwner().GetTeam()), GetOwner().GetTile().y_position, GetOwner().GetTeam() == Team.Enemy ? Directions.LEFT : Directions.RIGHT);
+            Debug.Log(GetName());
+            previousTile = GridManager.Instance.GetFirstUnit(Tools.GetOppositeTeam(GetOwner().GetTeam()), GetOwner().GetTile().x_position, GetOwner().GetTeam() == Team.Enemy ? Directions.DOWN : Directions.UP);
             // S'il n'existe aucun ennemi en face, en choisit un au hasard dans l'équipe adverse
             //TODO Un autre algorithme possible ?
             if (previousTile == null){

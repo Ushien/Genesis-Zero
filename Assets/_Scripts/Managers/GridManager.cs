@@ -156,33 +156,41 @@ public class GridManager : MonoBehaviour
         }
     }
     /// <summary>
-    /// Renvoie la première unité sur une ligne donnée, pour une équipe donnée, et en regardant dans une direction donnée. Renvoie null si aucune unité n'est présente.
+    /// Renvoie la première unité sur une colonne donnée, pour une équipe donnée, et en regardant dans une direction donnée. Renvoie null si aucune unité n'est présente.
     /// </summary>
     /// <param name="value"></param>
     /// <param name="y_position"></param>
-    /// <param name="direction">LEFT ou RIGHT</param>
+    /// <param name="direction">UP ou DOWN</param>
     /// <returns></returns>
-    public Tile GetFirstUnit(Team _team, int y_position, Directions direction)
+    public Tile GetFirstUnit(Team _team, int x_position, Directions direction)
     {
-        List<Tile> _tileList = ReturnTilesList(team :_team, height : y_position, occupiedByUnit : true);
-        _tileList = _tileList.Where(tile => tile.OccupiedUnit != null).OrderBy(tile => tile.x_position).ToList();
-        if(direction == Directions.LEFT){
-            //return _tileList.Count > 0 ? _tileList[_tileList.Count-1] : null;
-            for (int i = _tileList.Count-1; i >= 0; i--)
+        List<Tile> _tileList = ReturnTilesList();
+        _tileList = _tileList.Where(tile => (tile.OccupiedUnit != null)).OrderBy(tile => tile.y_position).ToList();
+        Debug.Log(_tileList.Count);
+        _tileList = _tileList.Where(tile => (tile.x_position == x_position)).OrderBy(tile => tile.y_position).ToList();
+        Debug.Log("position " + x_position);
+        Debug.Log(_tileList.Count);
+        _tileList = _tileList.Where(tile => (tile.team == _team)).OrderBy(tile => tile.y_position).ToList();
+        Debug.Log(_tileList.Count);
+        if(direction == Directions.DOWN){
+            return _tileList.Count > 0 ? _tileList[_tileList.Count-1] : null;
+            /*for (int i = _tileList.Count-1; i >= 0; i--)
             {
                 if(_tileList[i].OccupiedUnit != null){
                     return _tileList[i];
                 }
             }
+            */
         }
-        else if(direction == Directions.RIGHT){
-            //return _tileList.Count > 0 ? _tileList[0] : null;
-            for (int i = 0; i < _tileList.Count; i++)
+        else if(direction == Directions.UP){
+            return _tileList.Count > 0 ? _tileList[0] : null;
+            /*for (int i = 0; i < _tileList.Count; i++)
             {
                 if(_tileList[i].OccupiedUnit != null){
                     return _tileList[i];
                 }
             }
+            */
         }
         return null;
     }
