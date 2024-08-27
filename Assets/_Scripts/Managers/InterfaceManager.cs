@@ -53,7 +53,8 @@ public class InterfaceManager : MonoBehaviour
 
     [SerializeField]
     private float selectorSpeed;
-
+    [SerializeField]
+    private GameObject stratViewCanvas;
     [SerializeField]
     private Material tileOutliner;
     public Camera mainCamera; // Utile pour convertir des position in game à des positions en pixels sur l'écran
@@ -68,6 +69,7 @@ public class InterfaceManager : MonoBehaviour
 
     [SerializeField]
     private bool overloaded = false;
+    [SerializeField]
     private bool stratView = false;
 
     // Le spell pour lequel on va sélectionner une cible
@@ -648,6 +650,7 @@ public class InterfaceManager : MonoBehaviour
         // Vérifie si la commande de changement d'écran est poussée
         if (Input.GetKeyDown(KeyCode.C)){
             stratView = !stratView;
+            stratViewCanvas.SetActive(stratView);
         }
 
         if (stratView){
