@@ -29,19 +29,16 @@ public class BattleManager : MonoBehaviour
     public TeamTurn teamTurn;
 
     public Instruction emptyInstruction;
-
-    private List<Instruction> playerInstructions;
-    public BattleTurn currentTurnEvents = new BattleTurn(0);
-
-    public List<BattleTurn> archivedTurnEvents = new List<BattleTurn>();
-
+    
     public int nTurn = 0;
+    public BattleTurn currentTurn = new BattleTurn(0);
+
+    public List<BattleTurn> archivedTurns = new List<BattleTurn>();
 
     private bool inAnimation = false;
 
     void Awake(){
         Instance = this;
-        CleanPlayerInstructions();
     }
 
     void Update(){
@@ -204,7 +201,7 @@ public class BattleManager : MonoBehaviour
                     
                     default:
                         if(teamTurn == TeamTurn.ENEMY){
-                            playerInstructions = AIManager.Instance.GetAIOrders(ConvertTeamTurn(teamTurn));
+                            currentTurn.SetInstructions(AIManager.Instance.GetAIOrders(ConvertTeamTurn(teamTurn)));
                             turnState = TurnState.APPLY_ACTIONS;
                         }
                         break;
@@ -213,10 +210,6 @@ public class BattleManager : MonoBehaviour
 
             case TurnState.APPLY_ACTIONS:
                 ApplyInstructions();
-                // Sauvegarder l'historique d'instructions
-                // TODO
-                // Clean les instructions actuelles
-                CleanPlayerInstructions();
 
                 turnState = TurnState.END;
                 break;
@@ -248,7 +241,8 @@ public class BattleManager : MonoBehaviour
                         else{
                             EndTurnEffects();
                             AnimateElements();
-                            CleanTurnEvents();
+                            ArchiveTurn();
+                            UnitManager.Instance.MakeUnitsActive();
                             SwitchCurrentTeam();
                             nTurn ++;
                             ChangeTurnState(Trigger.FORWARD);
@@ -283,11 +277,6 @@ public class BattleManager : MonoBehaviour
         else{
             teamTurn = TeamTurn.ALLY;
         }
-    }
-
-    private void CleanPlayerInstructions(){
-        playerInstructions = new List<Instruction>();
-        UnitManager.Instance.MakeUnitsActive();
     }
 
     public void DebugSetState(){
@@ -328,10 +317,11 @@ public class BattleManager : MonoBehaviour
         UnitManager.Instance.ApplyEndTurnEffects(ConvertTeamTurn(teamTurn));
     }
 
-    private void CleanTurnEvents(){
-        archivedTurnEvents.Add(currentTurnEvents);
+    private void ArchiveTurn(){
+        currentTurn.ArchiveTurn();
+        archivedTurns.Add(currentTurn);
         //TODO Choisir le bon numéro de tour
-        currentTurnEvents = new BattleTurn(0);
+        currentTurn = new BattleTurn(nTurn);
     }
 
     public Team ConvertTeamTurn(TeamTurn teamTurn){
@@ -359,23 +349,15 @@ public class BattleManager : MonoBehaviour
     }
 
     public void CancelLastInstruction(){
-        RemoveInstruction(playerInstructions.Count - 1);
-    }
-
-    private void RemoveInstruction(int index){
-        if(playerInstructions.Count > index && index >= 0){
-            playerInstructions[index].GetSourceUnit().GiveInstruction(false);
-            //Destroy(playerInstructions[index].gameObject);
-            playerInstructions.RemoveAt(index);
-        }
+        currentTurn.RemoveInstruction(currentTurn.GetInstructions().Count - 1);
     }
 
     private void AddInstruction(Instruction instruction){
-        playerInstructions.Add(instruction);
+        currentTurn.AddInstruction(instruction);
     }
 
     private void ApplyInstructions(){
-        foreach (Instruction instruction in playerInstructions)
+        foreach (Instruction instruction in currentTurn.GetInstructions())
         {
             ApplyInstruction(instruction);    
         }
@@ -392,14 +374,14 @@ public class BattleManager : MonoBehaviour
     }
 
     public int CountInstructions(){
-        return playerInstructions.Count;
+        return currentTurn.GetInstructions().Count;
     }
 
     public bool AreInstructionsFull(){
         int registeredInstructionCount = 0;
         foreach (BaseUnit unit in UnitManager.Instance.GetUnits(Team.Ally))
         {
-            foreach (Instruction instruction in playerInstructions){
+            foreach (Instruction instruction in currentTurn.GetInstructions()){
                 if(instruction.GetSourceUnit() == unit){
                     registeredInstructionCount ++;
                 }
@@ -409,7 +391,7 @@ public class BattleManager : MonoBehaviour
     }
 
     public void AddEvent(BattleEvent _event){
-        currentTurnEvents.AddEvent(_event);
+        currentTurn.AddEvent(_event);
     }
 
     public void SetInAnimation(bool value){
@@ -418,6 +400,6 @@ public class BattleManager : MonoBehaviour
 
     public void AnimateElements(){
         SetInAnimation(true);
-        var task = AnimationManager.Instance.Animate(currentTurnEvents.GetBattleEvents());
+        var task = AnimationManager.Instance.Animate(currentTurn.GetBattleEvents());
     }
 }
