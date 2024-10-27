@@ -1,13 +1,14 @@
 using System.Collections.Generic;
+using UnityEngine;
 
-public class BattleTurn{
+public class BattleTurn : MonoBehaviour{
         private int turnNb;
         private List<BattleEvent> battleEvents;
         private List<Instruction> instructions;
 
         bool archived = false;
 
-        public BattleTurn(int _turnNb){
+        public void Setup(int _turnNb){
                 turnNb = _turnNb;
                 battleEvents = new List<BattleEvent>();
                 instructions = new List<Instruction>();

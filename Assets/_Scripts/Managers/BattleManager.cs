@@ -29,9 +29,10 @@ public class BattleManager : MonoBehaviour
     public TeamTurn teamTurn;
 
     public Instruction emptyInstruction;
+    public BattleTurn emptyBattleTurn;
     
     public int nTurn = 0;
-    public BattleTurn currentTurn = new BattleTurn(0);
+    public BattleTurn currentTurn;
 
     public List<BattleTurn> archivedTurns = new List<BattleTurn>();
 
@@ -39,6 +40,8 @@ public class BattleManager : MonoBehaviour
 
     void Awake(){
         Instance = this;
+        currentTurn = Instantiate(emptyBattleTurn);
+        currentTurn.Setup(nTurn);
     }
 
     void Update(){
@@ -321,7 +324,8 @@ public class BattleManager : MonoBehaviour
         currentTurn.ArchiveTurn();
         archivedTurns.Add(currentTurn);
         //TODO Choisir le bon numéro de tour
-        currentTurn = new BattleTurn(nTurn);
+        currentTurn = Instantiate(emptyBattleTurn);
+        currentTurn.Setup(nTurn);
     }
 
     public Team ConvertTeamTurn(TeamTurn teamTurn){
