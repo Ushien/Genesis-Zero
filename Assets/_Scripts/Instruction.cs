@@ -7,14 +7,14 @@ using UnityEngine;
 /// <summary>
 /// Contient les informations sur la prochaine action de l'unité.
 /// </summary>
-public class Instruction
+public class Instruction : MonoBehaviour
 {
     public BaseUnit source;
     public BaseSpell spell;
     public Tile target;
     public bool overloaded;
     
-    public Instruction(BaseUnit source_unit, BaseSpell spell_to_cast, Tile target_tile, bool hyper = false){
+    public void Setup(BaseUnit source_unit, BaseSpell spell_to_cast, Tile target_tile, bool hyper = false){
         source = source_unit;
         spell = spell_to_cast;
         target = target_tile;

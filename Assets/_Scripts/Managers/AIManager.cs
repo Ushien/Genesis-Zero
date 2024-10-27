@@ -9,6 +9,7 @@ using UnityEngine;
 public class AIManager : MonoBehaviour
 {
     public static AIManager Instance;
+    public Instruction emptyInstruction;
 
     void Awake(){
         Instance = this;
@@ -21,7 +22,9 @@ public class AIManager : MonoBehaviour
         List<Instruction> instructions = new List<Instruction>();
 
         foreach (BaseUnit unit in UnitManager.Instance.GetUnits(Team.Enemy)){
-            instructions.Add(new Instruction(unit, unit.GetRandomSpell(includingAttack : true), UnitManager.Instance.GetRandomUnit(Team.Ally).GetTile()));
+            Instruction newInstruction = Instantiate(emptyInstruction);
+            newInstruction.Setup(unit, unit.GetRandomSpell(includingAttack : true), UnitManager.Instance.GetRandomUnit(Team.Ally).GetTile());
+            instructions.Add(newInstruction);
         }
 
         return instructions;
