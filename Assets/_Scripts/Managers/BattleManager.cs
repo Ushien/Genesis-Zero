@@ -31,9 +31,9 @@ public class BattleManager : MonoBehaviour
     public Instruction emptyInstruction;
 
     private List<Instruction> playerInstructions;
-    public List<BattleEvent> currentTurnEvents = new List<BattleEvent>();
+    public BattleTurn currentTurnEvents = new BattleTurn(0);
 
-    public List<List<BattleEvent>> archivedTurnEvents = new List<List<BattleEvent>>();
+    public List<BattleTurn> archivedTurnEvents = new List<BattleTurn>();
 
     public int nTurn = 0;
 
@@ -330,7 +330,8 @@ public class BattleManager : MonoBehaviour
 
     private void CleanTurnEvents(){
         archivedTurnEvents.Add(currentTurnEvents);
-        currentTurnEvents = new List<BattleEvent>();
+        //TODO Choisir le bon numéro de tour
+        currentTurnEvents = new BattleTurn(0);
     }
 
     public Team ConvertTeamTurn(TeamTurn teamTurn){
@@ -408,7 +409,7 @@ public class BattleManager : MonoBehaviour
     }
 
     public void AddEvent(BattleEvent _event){
-        currentTurnEvents.Add(_event);
+        currentTurnEvents.AddEvent(_event);
     }
 
     public void SetInAnimation(bool value){
@@ -417,6 +418,6 @@ public class BattleManager : MonoBehaviour
 
     public void AnimateElements(){
         SetInAnimation(true);
-        var task = AnimationManager.Instance.Animate(currentTurnEvents);
+        var task = AnimationManager.Instance.Animate(currentTurnEvents.GetBattleEvents());
     }
 }
