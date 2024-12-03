@@ -403,8 +403,12 @@ public class BattleManager : MonoBehaviour
         inAnimation = value;
     }
 
+    public bool IsInAnimation(){
+        return inAnimation;
+    }
+
     public void AnimateElements(){
-        SetInAnimation(true);
-        var task = AnimationManager.Instance.Animate(currentTurn.GetBattleEvents());
+        //SetInAnimation(true);
+        //var task = AnimationManager.Instance.Animate(currentTurn.GetBattleEvents());
     }
 }

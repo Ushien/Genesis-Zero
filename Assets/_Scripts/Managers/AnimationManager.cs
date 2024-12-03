@@ -14,8 +14,24 @@ public class AnimationManager : MonoBehaviour
     public TextMeshProUGUI damageText;
     public GameObject DamageSection;
 
+    private List<BattleEvent> animationQueue;
+
     void Awake(){
+        animationQueue = new List<BattleEvent>();
         Instance = this;
+    }
+
+    void Update(){
+        if (!BattleManager.Instance.IsInAnimation() && animationQueue.Count != 0){
+            //Si la file n'est pas vide, animer le premier évènement, en mode fifo
+            BattleManager.Instance.SetInAnimation(true);
+            List<BattleEvent> listWrapper = new()
+            {
+                animationQueue[0]
+            };
+            animationQueue.RemoveAt(0);
+            var task = Animate(listWrapper);
+        }
     }
 
     public async Task Animate(List<BattleEvent> battleEvents){
@@ -28,7 +44,7 @@ public class AnimationManager : MonoBehaviour
         BattleManager.Instance.SetInAnimation(false);
     }
 
-    private async Task Animate(CastEvent castEvent){
+    public async Task Animate(CastEvent castEvent){
         for (float distance = 0.0f; distance <= 0.4f; distance += 0.02f)
         {
             castEvent.GetSourceUnit().gameObject.transform.Translate(new Vector3(0, 0.02f, 0));
@@ -64,5 +80,9 @@ public class AnimationManager : MonoBehaviour
         if (battleEvent is DamageEvent){
             await Animate((DamageEvent)battleEvent);
         }
+    }
+
+    public void addAnimation(BattleEvent battleEvent){
+        animationQueue.Add(battleEvent);
     }
 }
