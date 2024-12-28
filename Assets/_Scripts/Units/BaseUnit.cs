@@ -704,14 +704,14 @@ public class BaseUnit : MonoBehaviour
         if(finalDamage > 0){
             if(GetArmor() > 0){
                 ModifyArmor(-GetArmor());
-                BattleManager.Instance.AddEvent(new DamageEvent(this, -GetArmor(), true));
+                BattleEventManager.Instance.CreateDamageEvent(this, -GetArmor(), true);
             }
             ModifyHP(-finalDamage);
-            BattleManager.Instance.AddEvent(new DamageEvent(this, finalDamage));
+            BattleEventManager.Instance.CreateDamageEvent(this, finalDamage);
         }
         else{
             ModifyArmor(-amount);
-            BattleManager.Instance.AddEvent(new DamageEvent(this, amount, true));
+            BattleEventManager.Instance.CreateDamageEvent(this, amount, true);
         }
     }
 

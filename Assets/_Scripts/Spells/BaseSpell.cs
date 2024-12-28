@@ -137,9 +137,10 @@ public class BaseSpell : MonoBehaviour
             else{
                 Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.name);
             }
-            CastEvent newCastEvent = new CastEvent(GetOwner(), this, targetTile);
-            BattleManager.Instance.AddEvent(newCastEvent);
-            AnimateCast(newCastEvent);
+            BattleEventManager.Instance.CreateCastEvent(GetOwner(), this, targetTile);
+            //CastEvent newCastEvent = new CastEvent(GetOwner(), this, targetTile);
+            //BattleManager.Instance.AddEvent(newCastEvent);
+            //AnimateCast(newCastEvent);
 
             //await AnimationManager.Instance.Jump(GetOwner().gameObject);
 
@@ -434,8 +435,8 @@ public class BaseSpell : MonoBehaviour
         #endregion
     
     private void AnimateCast(CastEvent castEvent){
-        AnimationManager.Instance.addAnimation(castEvent);
-        /*
+        /*AnimationManager.Instance.addAnimation(castEvent);
+
         BattleManager.Instance.SetInAnimation(true);
         List<BattleEvent> listWrapper = new()
         {
