@@ -65,6 +65,11 @@ public class BaseUnit : MonoBehaviour
         #endregion
         #endregion
 
+        #region Field relatif à l'interface
+    public Vector3 targetLifeBarScale = Vector3.one;
+
+        #endregion
+
     ////////////////////////////////////////////////////////
 
         #region Méthodes d'initialisation
@@ -153,6 +158,7 @@ public class BaseUnit : MonoBehaviour
         else{
             this.gameObject.GetComponent<SpriteRenderer>().color = new Color32( 255, 255, 255, 255);
         }
+        lifeBar.transform.GetChild(3).localScale = Vector3.Lerp(lifeBar.transform.GetChild(3).localScale, targetLifeBarScale, Time.deltaTime*3);
     }
     
     /// <summary>
@@ -597,7 +603,7 @@ public class BaseUnit : MonoBehaviour
             InterfaceManager.Instance.KillLifeBar(this.lifeBar);
             Kill();
         }
-        InterfaceManager.Instance.UpdateLifebar(this);
+        //InterfaceManager.Instance.UpdateLifebar(this);
     }
 
     /// <summary>
@@ -671,7 +677,7 @@ public class BaseUnit : MonoBehaviour
         if(armor < 0){
             SetArmor(0);
         }
-        InterfaceManager.Instance.UpdateLifebar(this);
+        //InterfaceManager.Instance.UpdateLifebar(this);
     }
 
     /// <summary>

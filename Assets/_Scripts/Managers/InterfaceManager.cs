@@ -717,7 +717,7 @@ public class InterfaceManager : MonoBehaviour
         //Armor initialization
         Transform lifeBar  = unit.lifeBar.transform.GetChild(3);
         Transform armorBar = unit.lifeBar.transform.GetChild(4);
-        lifeBar.localScale = new Vector3((float)unit.finalHealth/unit.totalHealth, 1, 1);
+        unit.targetLifeBarScale = new Vector3((float)unit.finalHealth/unit.totalHealth, 1, 1);
         armorBar.localScale = new Vector3((float)unit.armor/unit.totalHealth, 1, 1);
     }
 

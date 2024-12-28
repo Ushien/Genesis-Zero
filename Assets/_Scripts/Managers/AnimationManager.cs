@@ -64,6 +64,7 @@ public class AnimationManager : MonoBehaviour
         damageDisplay.transform.position = damageEvent.GetTargetUnit().transform.position;
         damageDisplay.transform.localScale = new Vector3(1, 1, 1);
         damageDisplay.gameObject.SetActive(true);
+        InterfaceManager.Instance.UpdateLifebar(damageEvent.GetTargetUnit());
         for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f)
         {
             damageDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));
