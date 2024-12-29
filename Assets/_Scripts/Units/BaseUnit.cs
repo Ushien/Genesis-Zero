@@ -163,8 +163,10 @@ public class BaseUnit : MonoBehaviour
 
         // Mise à jour des barres de HP
 
+        /*
         lifeBar.transform.GetChild(3).localScale = Vector3.Lerp(lifeBar.transform.GetChild(3).localScale, targetLifeBarScale, Time.deltaTime*3);
         lifeBar.transform.GetChild(4).localScale = Vector3.Lerp(lifeBar.transform.GetChild(4).localScale, targetArmorBarScale, Time.deltaTime*3);
+        */
     }
     
     /// <summary>

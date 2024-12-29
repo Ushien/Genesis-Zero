@@ -99,23 +99,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scriptableUnit: {fileID: 0}
   scriptableJob: {fileID: 0}
-  OccupiedTile: {fileID: 0}
-  attack: {fileID: 0}
   emptyPassive: {fileID: 3810670229972875663, guid: 6217b02478aa69f4d89ff893ae28e53e, type: 3}
-  passive: {fileID: 0}
-  availableSpells: []
-  Team: 1
-  level: 1
-  stunTime: 0
-  stun: 0
-  heroSpell1: {fileID: 0}
-  heroSpell2: {fileID: 0}
-  unit_name: Name
-  finalPower: 1
-  totalHealth: 1
-  finalHealth: 1
-  lore_description: Lore Description
-  fight_description: Fight Description
-  dead: 0
-  armor: 0
   emptyModifier: {fileID: 3725732595186329557, guid: 9649bcacdc3281c47b9a5985c44e62d8, type: 3}
+  OccupiedTile: {fileID: 0}
+  lifeBar: {fileID: 0}
+  passive: {fileID: 0}
+  attack: {fileID: 0}
+  availableSpells: []

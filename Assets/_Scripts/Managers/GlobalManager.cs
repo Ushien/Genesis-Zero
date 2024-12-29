@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GlobalManager : MonoBehaviour
@@ -13,6 +14,10 @@ public class GlobalManager : MonoBehaviour
     public AnimationManager animationManagerPrefab;
     public AIManager AIManagerPrefab;
     public BattleEventManager battleEventManagerPrefab;
+
+    [SerializeField] private Transform _cam;
+    [SerializeField] private GameObject alliesLifeBar;
+    [SerializeField] private GameObject ennemiesLifeBar;
 
     //
 
@@ -43,6 +48,7 @@ public class GlobalManager : MonoBehaviour
 
     public void LaunchBattle(){
         gridManager = Instantiate(gridManagerPrefab);
+        GridManager.Instance.SetCam(_cam);
         gridManager.transform.SetParent(this.transform.parent);
         battleManager = Instantiate(battleManagerPrefab);
         battleManager.transform.SetParent(this.transform.parent);
@@ -51,6 +57,7 @@ public class GlobalManager : MonoBehaviour
         spellManager = Instantiate(spellManagerPrefab);
         spellManager.transform.SetParent(this.transform.parent);
         interfaceManager = Instantiate(interfaceManagerPrefab);
+        InterfaceManager.Instance.SetLifeBars(alliesLifeBar, ennemiesLifeBar);
         interfaceManager.transform.SetParent(this.transform.parent);
         animationManager = Instantiate(animationManagerPrefab);
         animationManager.transform.SetParent(this.transform.parent);

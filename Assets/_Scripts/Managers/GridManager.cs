@@ -50,6 +50,10 @@ public class GridManager : MonoBehaviour
         return _tilePrefab;
     }
 
+    public void SetCam(Transform cam){
+        _cam = cam;
+    }
+
     public void GenerateGrids() {
         GameObject emptyGrid = new GameObject("Grid");
         GenerateAlliesGrid(emptyGrid);

@@ -86,7 +86,9 @@ public class InterfaceManager : MonoBehaviour
         {
             activated_states[state] = false;
         }
+    }
 
+    void Start(){
         // On crée le tileSelector qui va naviguer pour la sélection des cases
 
         tileSelector = Instantiate(GridManager.Instance.GetTilePrefab()).gameObject;
@@ -119,7 +121,12 @@ public class InterfaceManager : MonoBehaviour
                 break;
         }
         
-    }   
+    }
+
+    public void SetLifeBars(GameObject _alliesLifebar, GameObject _ennemiesLifeBar){
+        alliesLifeBar = _alliesLifebar;
+        ennemiesLifeBar = _ennemiesLifeBar;
+    }
 
     void SourceSelectionDisplay(){
         if(!activated_states[BattleManager.PlayerActionChoiceState.CHARACTER_SELECTION]){
