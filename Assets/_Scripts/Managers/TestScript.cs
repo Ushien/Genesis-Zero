@@ -15,6 +15,9 @@ public class TestScript : MonoBehaviour
 
     void Start()
     {
+
+        GlobalManager.Instance.LaunchBattle();
+        
         BattleManager.Instance.LaunchBattle(ally_composition.GetTuples(), enemy_composition.GetTuples());
 
         BattleManager.Instance.DebugSetState();
