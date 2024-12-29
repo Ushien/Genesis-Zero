@@ -74,7 +74,7 @@ public class UnitManager : MonoBehaviour
             return units.OrderBy(o=> UnityEngine.Random.value).First();
         }
         else{
-            return units.Where(unit => unit.Team == team).OrderBy(o=> UnityEngine.Random.value).First();
+            return units.Where(unit => unit.GetTeam() == team).OrderBy(o=> UnityEngine.Random.value).First();
         }
     }
 
@@ -83,7 +83,7 @@ public class UnitManager : MonoBehaviour
             return units.ToList();
         }
         else{
-            return units.Where(unit => unit.Team == team).ToList();
+            return units.Where(unit => unit.GetTeam() == team).ToList();
         }
     }
 

@@ -13,7 +13,7 @@ public class Explosion : BaseSpell
     }
 
     private void _Explosion(Tile targetTile){
-        SpellManager.Instance.InflictDamage(GetRatio()[0] * GetOwner().finalPower, targetTile.GetUnit());
-        SpellManager.Instance.InflictDamage(GetRatio()[1] * GetOwner().finalPower, UnitManager.Instance.GetUnitsExcept(targetTile.GetUnit()));
+        SpellManager.Instance.InflictDamage(GetRatio()[0] * GetOwner().GetFinalPower(), targetTile.GetUnit());
+        SpellManager.Instance.InflictDamage(GetRatio()[1] * GetOwner().GetFinalPower(), UnitManager.Instance.GetUnitsExcept(targetTile.GetUnit()));
     }
 }

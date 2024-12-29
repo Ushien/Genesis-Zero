@@ -31,33 +31,33 @@ public class BaseUnit : MonoBehaviour
 
         #region Caractéristiques
 
-    public string unit_name = "Name";
+    private string unit_name = "Name";
     // Puissance de l'unité
-    public int finalPower = 1;
+    private int finalPower = 1;
     // Points de vie maximaux
-    public int totalHealth = 1;
+    private int totalHealth = 1;
     // Points de vie actuels
-    public int finalHealth = 1;
+    private int finalHealth = 1;
     // Niveau (influence la vie et la puissance)
-    public int level = 1;
+    private int level = 1;
     [TextArea(5,10)]
-    public string lore_description = "Lore Description";
+    private string lore_description = "Lore Description";
     [TextArea(5,10)]
-    public string fight_description = "Fight Description";
-    public Team Team = Team.Enemy;
+    private string fight_description = "Fight Description";
+    private Team Team = Team.Enemy;
     // Combien de tours d'étourdissement restants
-    public int stunTime = 0;
+    private int stunTime = 0;
     // Est-ce que l'unité est étourdie ?
-    public bool stun;
+    private bool stun;
     // Est-ce que l'unité est hors-combat ?
-    public bool dead = false;
-    public int armor = 0;
+    private bool dead = false;
+    private int armor = 0;
         #endregion
 
         #region Fields relatifs au moteur de jeu
 
     // Liste des modificateurs associés à l'unité
-    public Dictionary<Action<int>, List<Modifier>> modifiers = new Dictionary<Action<int>, List<Modifier>>();
+    private Dictionary<Action<int>, List<Modifier>> modifiers = new Dictionary<Action<int>, List<Modifier>>();
     // Liste des actions enregistrées. Le tuple est composé de 3 éléments: La méthode qui doit être appelée, le paramètre avec lequel elle doit être appelée, le nombre de tours dans lequel l'action doit être effectuée.
     private List<Tuple<Action<int>, int, int>> actionQueue = new List<Tuple<Action<int>, int, int>>();
     // L'unité a-t-elle déjà reçu une instruction ?
@@ -65,8 +65,9 @@ public class BaseUnit : MonoBehaviour
         #endregion
         #endregion
 
-        #region Field relatif à l'interface
-    public Vector3 targetLifeBarScale = Vector3.one;
+        #region Fields relatifs à l'interface
+    private Vector3 targetLifeBarScale = Vector3.one;
+    private Vector3 targetArmorBarScale = Vector3.one;
 
         #endregion
 
@@ -123,6 +124,8 @@ public class BaseUnit : MonoBehaviour
         if (scriptableUnit.scriptableJob != null){
             LoadJob(scriptableUnit.scriptableJob);
         }
+
+        targetArmorBarScale = new Vector3((float)GetArmor()/GetTotalHealth(), 1, 1);
     }
 
     /// <summary>
@@ -158,7 +161,11 @@ public class BaseUnit : MonoBehaviour
         else{
             this.gameObject.GetComponent<SpriteRenderer>().color = new Color32( 255, 255, 255, 255);
         }
+
+        // Mise à jour des barres de HP
+
         lifeBar.transform.GetChild(3).localScale = Vector3.Lerp(lifeBar.transform.GetChild(3).localScale, targetLifeBarScale, Time.deltaTime*3);
+        lifeBar.transform.GetChild(4).localScale = Vector3.Lerp(lifeBar.transform.GetChild(4).localScale, targetArmorBarScale, Time.deltaTime*3);
     }
     
     /// <summary>
@@ -809,6 +816,22 @@ public class BaseUnit : MonoBehaviour
         EventManager.Instance.UnitDied(this);
         UnitManager.Instance.Kill(this);
     }
+        #endregion
+    
+        #region Gestion des interfaces
+    public void SetTargetLifeBarScale(Vector3 targetVector){
+        targetLifeBarScale = targetVector;
+    }
+    public Vector3 GetTargetLifeBarScale(){
+        return targetLifeBarScale;
+    }
+    public void SetTargetArmorBarScale(Vector3 targetVector){
+        targetArmorBarScale = targetVector;
+    }
+    public Vector3 GetTargetArmorBarScale(){
+        return targetArmorBarScale;
+    }
+
         #endregion
 
     #endregion

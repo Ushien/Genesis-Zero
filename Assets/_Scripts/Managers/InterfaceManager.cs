@@ -696,7 +696,7 @@ public class InterfaceManager : MonoBehaviour
         TextMeshProUGUI HP = lifeBarPanel.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI AR = lifeBarPanel.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
         HP.text = $"{totalHealth} HP";
-        AR. text = $"{armor} AR";
+        AR.text = $"{armor} AR";
 
         //Armor initialization
         Transform armorBar = lifeBarPanel.transform.GetChild(4);
@@ -711,14 +711,11 @@ public class InterfaceManager : MonoBehaviour
         // Child components access and modification, very ugly
         TextMeshProUGUI HP = unit.lifeBar.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI AR = unit.lifeBar.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
-        HP.text = $"{unit.finalHealth} HP";
-        AR. text = $"{unit.armor} AR";
+        HP.text = $"{unit.GetFinalHealth()} HP";
+        AR. text = $"{unit.GetArmor()} AR";
 
-        //Armor initialization
-        Transform lifeBar  = unit.lifeBar.transform.GetChild(3);
-        Transform armorBar = unit.lifeBar.transform.GetChild(4);
-        unit.targetLifeBarScale = new Vector3((float)unit.finalHealth/unit.totalHealth, 1, 1);
-        armorBar.localScale = new Vector3((float)unit.armor/unit.totalHealth, 1, 1);
+        unit.SetTargetLifeBarScale(new Vector3((float)unit.GetFinalHealth()/unit.GetTotalHealth(), 1, 1));
+        unit.SetTargetArmorBarScale(new Vector3((float)unit.GetArmor()/unit.GetTotalHealth(), 1, 1));
     }
 
     // Détruit la barre de vie d'un perso

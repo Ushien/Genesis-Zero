@@ -13,8 +13,8 @@ public class Sacrements : BaseSpell
     }
 
     private void _Sacrements(Tile targetTile){
-        float finalAmount1 = GetRatio()[0] * GetOwner().finalPower;
-        float finalAmount2 = GetRatio()[1] * GetOwner().finalPower;
+        float finalAmount1 = GetRatio()[0] * GetOwner().GetFinalPower();
+        float finalAmount2 = GetRatio()[1] * GetOwner().GetFinalPower();
        
         if(targetTile.GetUnit().isArmored()){
             SpellManager.Instance.InflictDamage(finalAmount2, targetTile.GetUnit());

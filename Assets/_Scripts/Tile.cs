@@ -58,7 +58,7 @@ public class Tile : MonoBehaviour
             unit.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
 
             // LifeBar Setup
-            unit.lifeBar = InterfaceManager.Instance.SetupLifebar(unit.name, unit.transform.position, unit.totalHealth, unit.armor, unit.Team);
+            unit.lifeBar = InterfaceManager.Instance.SetupLifebar(unit.GetName(), unit.transform.position, unit.GetTotalHealth(), unit.GetArmor(), unit.GetTeam());
             
             OccupiedUnit = unit;
             unit.OccupiedTile = this;
