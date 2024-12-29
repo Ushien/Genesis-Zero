@@ -36,7 +36,7 @@ public class InterfaceManager : MonoBehaviour
     public RectTransform spellPanelLine;
     public RectTransform spellSelectorLine;
     public Image spellPanelIcon;
-    public GameObject spellSelector;
+    private GameObject spellSelector;
     public GameObject shade;
     public GameObject lifeBarPrefab;
     public Material grayscaleShader;
@@ -86,6 +86,8 @@ public class InterfaceManager : MonoBehaviour
 
         infosPanel = UI.transform.Find("InfosPanel").gameObject;
         spellPanel = UI.transform.Find("SpellPanel").gameObject;
+        spellSelector = UI.transform.Find("SpellSelector").gameObject;
+        shade = UI.transform.Find("Shade").gameObject;
 
         unitNamePanel = infosPanel.transform.Find("InformationPanel").transform.Find("UnitName").GetComponent<TextMeshProUGUI>();
         unitPowerPanel = infosPanel.transform.Find("InformationPanel").transform.Find("UnitPower").GetComponent<TextMeshProUGUI>();
@@ -99,6 +101,11 @@ public class InterfaceManager : MonoBehaviour
         spellNamePanel = spellPanel.transform.Find("Name").GetComponent<TextMeshProUGUI>();
         spellCooldownPanel = spellPanel.transform.Find("Cooldown").GetComponent<TextMeshProUGUI>();
         spellDescriptionPanel = spellPanel.transform.Find("Description").GetComponent<TextMeshProUGUI>();
+        spellPanelLine = spellPanel.transform.Find("SpellPanelLine").GetComponent<RectTransform>();
+
+        spellSelectorLine = spellSelector.transform.Find("SpellSelectorLine").GetComponent<RectTransform>();
+
+        mainCamera = GlobalManager.Instance.GetCam();
 
         activated_states = new Dictionary<BattleManager.PlayerActionChoiceState, bool>();
         foreach (BattleManager.PlayerActionChoiceState state in System.Enum.GetValues(typeof(BattleManager.PlayerActionChoiceState)))
