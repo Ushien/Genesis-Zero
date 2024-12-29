@@ -687,7 +687,7 @@ public class InterfaceManager : MonoBehaviour
         
         // GameObject instanciation
         GameObject lifeBarPanel = Instantiate(lifeBarPrefab);
-        lifeBarPanel.transform.parent = (team == Team.Ally) ? alliesLifeBar.transform : ennemiesLifeBar.transform;
+        lifeBarPanel.transform.SetParent((team == Team.Ally) ? alliesLifeBar.transform : ennemiesLifeBar.transform);
         lifeBarPanel.transform.localScale = new Vector3(1, 1, 1);
         lifeBarPanel.transform.position = barPosition + lifeBarOffset;
         lifeBarPanel.name = $"{unitName}_LifeBar";

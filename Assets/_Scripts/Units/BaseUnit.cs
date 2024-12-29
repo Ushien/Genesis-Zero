@@ -67,7 +67,7 @@ public class BaseUnit : MonoBehaviour
 
         #region Fields relatifs à l'interface
     private Vector3 targetLifeBarScale = Vector3.one;
-    private Vector3 targetArmorBarScale = Vector3.one;
+    private Vector3 targetArmorBarScale = new Vector3(0, 1, 1);
 
         #endregion
 
@@ -116,8 +116,7 @@ public class BaseUnit : MonoBehaviour
         availableSpells = new BaseSpell[4];
         int i = 0;
         foreach (BaseSpell spell in scriptableUnit.spells)
-        {
-            Debug.Log(i);   
+        { 
             availableSpells[i] = SpellManager.Instance.SetupSpell(spell, this);
             i++;
         }
