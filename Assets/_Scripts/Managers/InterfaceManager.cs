@@ -123,9 +123,10 @@ public class InterfaceManager : MonoBehaviour
         
     }
 
-    public void SetLifeBars(GameObject _alliesLifebar, GameObject _ennemiesLifeBar){
+    public void Setup(GameObject _alliesLifebar, GameObject _ennemiesLifeBar, GameObject _UIObject){
         alliesLifeBar = _alliesLifebar;
         ennemiesLifeBar = _ennemiesLifeBar;
+        UIobject = _UIObject;
     }
 
     void SourceSelectionDisplay(){

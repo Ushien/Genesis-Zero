@@ -4403,6 +4403,7 @@ MonoBehaviour:
   _cam: {fileID: 1779551968}
   alliesLifeBar: {fileID: 2098330695}
   ennemiesLifeBar: {fileID: 1987538059}
+  UIobject: {fileID: 439286259}
 --- !u!4 &1797857822
 Transform:
   m_ObjectHideFlags: 0

@@ -19,6 +19,8 @@ public class GlobalManager : MonoBehaviour
     [SerializeField] private GameObject alliesLifeBar;
     [SerializeField] private GameObject ennemiesLifeBar;
 
+    [SerializeField] private GameObject UIobject;
+
     //
 
     GridManager gridManager;
@@ -57,7 +59,7 @@ public class GlobalManager : MonoBehaviour
         spellManager = Instantiate(spellManagerPrefab);
         spellManager.transform.SetParent(this.transform.parent);
         interfaceManager = Instantiate(interfaceManagerPrefab);
-        InterfaceManager.Instance.SetLifeBars(alliesLifeBar, ennemiesLifeBar);
+        InterfaceManager.Instance.Setup(alliesLifeBar, ennemiesLifeBar, UIobject);
         interfaceManager.transform.SetParent(this.transform.parent);
         animationManager = Instantiate(animationManagerPrefab);
         animationManager.transform.SetParent(this.transform.parent);
