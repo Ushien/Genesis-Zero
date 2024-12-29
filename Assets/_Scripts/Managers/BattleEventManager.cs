@@ -33,4 +33,9 @@ public class BattleEventManager : MonoBehaviour
         BattleManager.Instance.AddEvent(newDamageEvent);
         AnimationManager.Instance.addAnimation(newDamageEvent);
     }
+
+    public void CreateArmorGainEvent(BaseUnit targetUnit, int amount){
+        ArmorGainEvent newArmorGainEvent = new ArmorGainEvent(targetUnit, amount);
+        AnimationManager.Instance.addAnimation(newArmorGainEvent);
+    }
 }

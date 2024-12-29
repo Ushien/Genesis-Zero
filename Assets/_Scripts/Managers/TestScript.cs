@@ -25,7 +25,9 @@ public class TestScript : MonoBehaviour
         foreach (BaseUnit unit in UnitManager.Instance.GetUnits(Team.Ally)){
             //unit.SetHP(20);
         }
-        UnitManager.Instance.GetRandomUnit(Team.Enemy).ModifyArmor(+50);
+        BaseUnit randomUnit = UnitManager.Instance.GetRandomUnit(Team.Enemy);
+
+        randomUnit.ModifyArmor(+50);
 
     }
 

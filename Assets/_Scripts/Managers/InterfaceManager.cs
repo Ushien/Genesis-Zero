@@ -100,9 +100,8 @@ public class InterfaceManager : MonoBehaviour
 
         tileSelector_targetPos = tileSelector.transform.position;
         tileSelector_currentPos = tileSelector.transform.position;
-
-
     }
+
     void Update()
     {   
         switch (BattleManager.Instance.GetPlayerActionChoiceState())
@@ -712,7 +711,7 @@ public class InterfaceManager : MonoBehaviour
         TextMeshProUGUI HP = unit.lifeBar.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI AR = unit.lifeBar.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
         HP.text = $"{unit.GetFinalHealth()} HP";
-        AR. text = $"{unit.GetArmor()} AR";
+        AR.text = $"{unit.GetArmor()} AR";
 
         unit.SetTargetLifeBarScale(new Vector3((float)unit.GetFinalHealth()/unit.GetTotalHealth(), 1, 1));
         unit.SetTargetArmorBarScale(new Vector3((float)unit.GetArmor()/unit.GetTotalHealth(), 1, 1));

@@ -74,12 +74,32 @@ public class AnimationManager : MonoBehaviour
         Destroy(damageDisplay.gameObject);
     }
 
+    private async Task Animate(ArmorGainEvent armorGainEvent){
+        TextMeshProUGUI armorGainDisplay = Instantiate(damageText);
+        armorGainDisplay.transform.SetParent(DamageSection.transform);
+        armorGainDisplay.text = "+" + armorGainEvent.GetAmount().ToString();
+        armorGainDisplay.transform.position = armorGainEvent.GetTargetUnit().transform.position;
+        armorGainDisplay.transform.localScale = new Vector3(1, 1, 1);
+        armorGainDisplay.gameObject.SetActive(true);
+        InterfaceManager.Instance.UpdateLifebar(armorGainEvent.GetTargetUnit());
+        for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f)
+        {
+            armorGainDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));
+            await Task.Yield();
+        }
+        armorGainDisplay.gameObject.SetActive(false);
+        Destroy(armorGainDisplay.gameObject);
+    }
+
     private async Task Animate(BattleEvent battleEvent){
         if (battleEvent is CastEvent){
             await Animate((CastEvent)battleEvent);
         }
         if (battleEvent is DamageEvent){
             await Animate((DamageEvent)battleEvent);
+        }
+        if (battleEvent is ArmorGainEvent){
+            await Animate((ArmorGainEvent)battleEvent);
         }
     }
 

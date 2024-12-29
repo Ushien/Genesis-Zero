@@ -673,6 +673,9 @@ public class BaseUnit : MonoBehaviour
     /// <param name="amount"></param>
     public void ModifyArmor(int amount){
         armor += amount;
+        if(amount > 0){
+            BattleEventManager.Instance.CreateArmorGainEvent(this, amount);
+        }
         CheckArmor();
     }
 
