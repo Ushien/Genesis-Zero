@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b72fbeeba5547f3418daea7460dff2b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIobject: {fileID: 0}
+  UIPrefab: {fileID: 2703114003398457339, guid: 78d60f1959b850c43ab69f3bb197ff2c, type: 3}
   infosPanel: {fileID: 0}
   informationPanel: {fileID: 0}
   passivePanel: {fileID: 0}

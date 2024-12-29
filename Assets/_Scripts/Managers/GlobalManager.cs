@@ -15,7 +15,7 @@ public class GlobalManager : MonoBehaviour
     public AIManager AIManagerPrefab;
     public BattleEventManager battleEventManagerPrefab;
 
-    [SerializeField] private Transform _cam;
+    [SerializeField] private Camera _cam;
     [SerializeField] private GameObject alliesLifeBar;
     [SerializeField] private GameObject ennemiesLifeBar;
 
@@ -50,7 +50,7 @@ public class GlobalManager : MonoBehaviour
 
     public void LaunchBattle(){
         gridManager = Instantiate(gridManagerPrefab);
-        GridManager.Instance.SetCam(_cam);
+        GridManager.Instance.SetCam(_cam.transform);
         gridManager.transform.SetParent(this.transform.parent);
         battleManager = Instantiate(battleManagerPrefab);
         battleManager.transform.SetParent(this.transform.parent);
@@ -67,5 +67,9 @@ public class GlobalManager : MonoBehaviour
         AIManager.transform.SetParent(this.transform.parent);
         battleEventManager = Instantiate(battleEventManagerPrefab);
         battleEventManager.transform.SetParent(this.transform.parent);
+    }
+
+    public Camera GetCam(){
+        return _cam;
     }
 }

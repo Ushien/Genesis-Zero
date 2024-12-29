@@ -15,26 +15,24 @@ public class InterfaceManager : MonoBehaviour
     public static InterfaceManager Instance;
 
     // UI elements
-
     [SerializeField]
-    private GameObject UIobject;
-    public GameObject infosPanel;
-    public GameObject informationPanel;
-    public GameObject passivePanel;
-    public GameObject spellPanel;
-    public GameObject alliesLifeBar;
-    public GameObject ennemiesLifeBar;
-    public TextMeshProUGUI unitNamePanel;
-    public TextMeshProUGUI unitPowerPanel;
-    public TextMeshProUGUI unitHealthPanel;
-    public TextMeshProUGUI unitArmorPanel;
-    public TextMeshProUGUI unitLevelPanel;
-    public RectTransform infosPanelLine;
-    public TextMeshProUGUI unitPassiveNamePanel;
-    public TextMeshProUGUI unitPassiveDescriptionPanel;
-    public TextMeshProUGUI spellNamePanel;
-    public TextMeshProUGUI spellCooldownPanel;
-    public TextMeshProUGUI spellDescriptionPanel;
+    private Canvas UIPrefab;
+    private Canvas UI;
+
+    private GameObject infosPanel;
+    private GameObject spellPanel;
+    private GameObject alliesLifeBar;
+    private GameObject ennemiesLifeBar;
+    private TextMeshProUGUI unitNamePanel;
+    private TextMeshProUGUI unitPowerPanel;
+    private TextMeshProUGUI unitHealthPanel;
+    private TextMeshProUGUI unitArmorPanel;
+    private TextMeshProUGUI unitLevelPanel;
+    private TextMeshProUGUI unitPassiveNamePanel;
+    private TextMeshProUGUI unitPassiveDescriptionPanel;
+    private TextMeshProUGUI spellNamePanel;
+    private TextMeshProUGUI spellCooldownPanel;
+    private TextMeshProUGUI spellDescriptionPanel;
     public RectTransform spellPanelLine;
     public RectTransform spellSelectorLine;
     public Image spellPanelIcon;
@@ -81,6 +79,27 @@ public class InterfaceManager : MonoBehaviour
 
     void Awake(){
         Instance = this;
+
+        // On initialise la UI
+        UI = Instantiate(UIPrefab);
+        UI.worldCamera = GlobalManager.Instance.GetCam();
+
+        infosPanel = UI.transform.Find("InfosPanel").gameObject;
+        spellPanel = UI.transform.Find("SpellPanel").gameObject;
+
+        unitNamePanel = infosPanel.transform.Find("InformationPanel").transform.Find("UnitName").GetComponent<TextMeshProUGUI>();
+        unitPowerPanel = infosPanel.transform.Find("InformationPanel").transform.Find("UnitPower").GetComponent<TextMeshProUGUI>();
+        unitHealthPanel = infosPanel.transform.Find("InformationPanel").transform.Find("UnitHealth").GetComponent<TextMeshProUGUI>();
+        unitArmorPanel = infosPanel.transform.Find("InformationPanel").transform.Find("UnitArmor").GetComponent<TextMeshProUGUI>();
+        unitLevelPanel = infosPanel.transform.Find("InformationPanel").transform.Find("UnitLevel").GetComponent<TextMeshProUGUI>();
+
+        unitPassiveNamePanel = infosPanel.transform.Find("PassivePanel").transform.Find("Name").GetComponent<TextMeshProUGUI>();
+        unitPassiveDescriptionPanel = infosPanel.transform.Find("PassivePanel").transform.Find("Description").GetComponent<TextMeshProUGUI>();
+
+        spellNamePanel = spellPanel.transform.Find("Name").GetComponent<TextMeshProUGUI>();
+        spellCooldownPanel = spellPanel.transform.Find("Cooldown").GetComponent<TextMeshProUGUI>();
+        spellDescriptionPanel = spellPanel.transform.Find("Description").GetComponent<TextMeshProUGUI>();
+
         activated_states = new Dictionary<BattleManager.PlayerActionChoiceState, bool>();
         foreach (BattleManager.PlayerActionChoiceState state in System.Enum.GetValues(typeof(BattleManager.PlayerActionChoiceState)))
         {
@@ -89,6 +108,7 @@ public class InterfaceManager : MonoBehaviour
     }
 
     void Start(){
+
         // On crée le tileSelector qui va naviguer pour la sélection des cases
 
         tileSelector = Instantiate(GridManager.Instance.GetTilePrefab()).gameObject;
@@ -96,7 +116,7 @@ public class InterfaceManager : MonoBehaviour
 
         tileSelector.transform.GetComponent<UnityEngine.SpriteRenderer>().material = material;
         tileSelector.transform.GetComponent<UnityEngine.SpriteRenderer>().sortingOrder = 2;
-        tileSelector.transform.parent = UIobject.transform;
+        tileSelector.transform.parent = UI.transform;
         tileSelector.name = "Tile Selector";
         tileSelector.transform.DetachChildren();
 
@@ -126,7 +146,7 @@ public class InterfaceManager : MonoBehaviour
     public void Setup(GameObject _alliesLifebar, GameObject _ennemiesLifeBar, GameObject _UIObject){
         alliesLifeBar = _alliesLifebar;
         ennemiesLifeBar = _ennemiesLifeBar;
-        UIobject = _UIObject;
+        //UIobject = _UIObject;
     }
 
     void SourceSelectionDisplay(){
