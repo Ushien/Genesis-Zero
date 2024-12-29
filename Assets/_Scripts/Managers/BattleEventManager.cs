@@ -22,20 +22,27 @@ public class BattleEventManager : MonoBehaviour
         
     }
 
-    public void CreateCastEvent(BaseUnit sourceUnit, BaseSpell castedSpell, Tile targetTile){
+    public void CreateCastEvent(BaseUnit sourceUnit, BaseSpell castedSpell, Tile targetTile, bool animation = true){
         CastEvent newCastEvent = new CastEvent(sourceUnit, castedSpell, targetTile);
         BattleManager.Instance.AddEvent(newCastEvent);
-        AnimationManager.Instance.addAnimation(newCastEvent);
+        if(animation){
+            AnimationManager.Instance.addAnimation(newCastEvent);
+        }
     }
 
-    public void CreateDamageEvent(BaseUnit targetUnit, int amount, bool _armorDamages = false){
+    public void CreateDamageEvent(BaseUnit targetUnit, int amount, bool _armorDamages = false, bool animation = true){
         DamageEvent newDamageEvent = new DamageEvent(targetUnit, amount, _armorDamages);
         BattleManager.Instance.AddEvent(newDamageEvent);
-        AnimationManager.Instance.addAnimation(newDamageEvent);
+        if(animation){
+            AnimationManager.Instance.addAnimation(newDamageEvent);
+        }
     }
 
-    public void CreateArmorGainEvent(BaseUnit targetUnit, int amount){
+    public void CreateArmorGainEvent(BaseUnit targetUnit, int amount, bool animation = true){
         ArmorGainEvent newArmorGainEvent = new ArmorGainEvent(targetUnit, amount);
-        AnimationManager.Instance.addAnimation(newArmorGainEvent);
+        BattleManager.Instance.AddEvent(newArmorGainEvent);
+        if(animation){
+            AnimationManager.Instance.addAnimation(newArmorGainEvent);
+        }
     }
 }

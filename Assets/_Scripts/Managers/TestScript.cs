@@ -30,7 +30,7 @@ public class TestScript : MonoBehaviour
         }
         BaseUnit randomUnit = UnitManager.Instance.GetRandomUnit(Team.Enemy);
 
-        randomUnit.ModifyArmor(+50);
+        randomUnit.ModifyArmor(+50, false);
 
     }
 

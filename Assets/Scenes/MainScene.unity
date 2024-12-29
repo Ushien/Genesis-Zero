@@ -628,7 +628,7 @@ MonoBehaviour:
   animationManagerPrefab: {fileID: 7439604365020406878, guid: ce3466b7633b405478627d03d67c0949, type: 3}
   AIManagerPrefab: {fileID: 3802776597445336118, guid: 22580b0be7b21af41b409edb774395bf, type: 3}
   battleEventManagerPrefab: {fileID: 4870162288617126403, guid: 35cb69db407e7ed4abd2260a0fdd904f, type: 3}
-  _cam: {fileID: 1779551968}
+  _cam: {fileID: 1779551971}
   alliesLifeBar: {fileID: 2098330695}
   ennemiesLifeBar: {fileID: 1987538059}
   UIobject: {fileID: 0}

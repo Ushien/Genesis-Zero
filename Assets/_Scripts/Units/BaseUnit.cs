@@ -665,7 +665,9 @@ public class BaseUnit : MonoBehaviour
     /// <param name="amount"></param>
     public void SetArmor(int amount){
         if(amount >= 0){
-            armor = amount;
+            if(amount != GetArmor()){
+                ModifyArmor(GetArmor()-amount);
+            }
         }
     }
 
@@ -673,10 +675,10 @@ public class BaseUnit : MonoBehaviour
     /// Ajoute une quantité d'armure donnée à l'unité
     /// </summary>
     /// <param name="amount"></param>
-    public void ModifyArmor(int amount){
+    public void ModifyArmor(int amount, bool animation = true){
         armor += amount;
         if(amount > 0){
-            BattleEventManager.Instance.CreateArmorGainEvent(this, amount);
+            BattleEventManager.Instance.CreateArmorGainEvent(this, amount, animation);
         }
         CheckArmor();
     }
