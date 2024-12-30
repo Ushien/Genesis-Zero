@@ -722,7 +722,6 @@ public class InterfaceManager : MonoBehaviour
         
         // GameObject instanciation
         GameObject lifeBarPanel = Instantiate(lifeBarPrefab);
-        Debug.Log("Je suis ici");
         lifeBarPanel.transform.SetParent((team == Team.Ally) ? alliesLifeBar.transform : ennemiesLifeBar.transform);
         lifeBarPanel.transform.localScale = new Vector3(1, 1, 1);
         lifeBarPanel.transform.position = barPosition + lifeBarOffset;
@@ -743,13 +742,11 @@ public class InterfaceManager : MonoBehaviour
     
     // Update la barre de vie d'un perso
     public void UpdateLifebar(BaseUnit unit){
-        
         // Child components access and modification, very ugly
         TextMeshProUGUI HP = unit.lifeBar.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI AR = unit.lifeBar.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
         HP.text = $"{unit.GetFinalHealth()} HP";
         AR.text = $"{unit.GetArmor()} AR";
-
         unit.SetTargetLifeBarScale(new Vector3((float)unit.GetFinalHealth()/unit.GetTotalHealth(), 1, 1));
         unit.SetTargetArmorBarScale(new Vector3((float)unit.GetArmor()/unit.GetTotalHealth(), 1, 1));
     }

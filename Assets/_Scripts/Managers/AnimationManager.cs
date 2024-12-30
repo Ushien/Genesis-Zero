@@ -42,8 +42,8 @@ public class AnimationManager : MonoBehaviour
     public async Task Animate(List<BattleEvent> battleEvents){
         for (var i = 0; i < battleEvents.Count; i++)
         {
-           await Animate(battleEvents[i]);
-           await Task.Delay(500);
+            await Animate(battleEvents[i]);
+            await Task.Delay(500);
         }
         BattleManager.Instance.SetInAnimation(false);
     }

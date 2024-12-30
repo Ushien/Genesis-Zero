@@ -45,7 +45,6 @@ public class BattleManager : MonoBehaviour
     }
 
     void Update(){
-
         if(!inAnimation){
             ChangeState(Machine.PLAYERACTIONCHOICESTATE, Trigger.EMPTY);
             ChangeState(Machine.PLAYERTURNSTATE, Trigger.EMPTY);

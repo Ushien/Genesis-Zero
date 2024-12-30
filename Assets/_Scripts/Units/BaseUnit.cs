@@ -606,7 +606,7 @@ public class BaseUnit : MonoBehaviour
         }
         if(AreHPBelowZero()){
             SetHP(0, false);
-            InterfaceManager.Instance.KillLifeBar(this.lifeBar);
+            //InterfaceManager.Instance.KillLifeBar(this.lifeBar);
             Kill();
         }
         //InterfaceManager.Instance.UpdateLifebar(this);
@@ -830,7 +830,6 @@ public class BaseUnit : MonoBehaviour
         return targetLifeBarScale;
     }
     public void SetTargetArmorBarScale(Vector3 targetVector){
-        Debug.Log(targetVector);
         targetArmorBarScale = targetVector;
     }
     public Vector3 GetTargetArmorBarScale(){
