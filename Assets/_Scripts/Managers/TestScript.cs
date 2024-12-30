@@ -30,7 +30,11 @@ public class TestScript : MonoBehaviour
         }
         BaseUnit randomUnit = UnitManager.Instance.GetRandomUnit(Team.Enemy);
 
-        randomUnit.ModifyArmor(+50, false);
+        randomUnit.ModifyArmor(+50);
+        foreach (BaseUnit unit in UnitManager.Instance.GetUnits())
+        {
+            InterfaceManager.Instance.UpdateLifebar(unit);
+        }
 
     }
 

@@ -35,7 +35,7 @@ public class InterfaceManager : MonoBehaviour
     private TextMeshProUGUI spellDescriptionPanel;
     public RectTransform spellPanelLine;
     public RectTransform spellSelectorLine;
-    public Image spellPanelIcon;
+    private Image spellPanelIcon;
     private GameObject spellSelector;
     public GameObject shade;
     public GameObject lifeBarPrefab;
@@ -102,6 +102,7 @@ public class InterfaceManager : MonoBehaviour
         spellCooldownPanel = spellPanel.transform.Find("Cooldown").GetComponent<TextMeshProUGUI>();
         spellDescriptionPanel = spellPanel.transform.Find("Description").GetComponent<TextMeshProUGUI>();
         spellPanelLine = spellPanel.transform.Find("SpellPanelLine").GetComponent<RectTransform>();
+        spellPanelIcon = spellPanel.transform.Find("SpellPanelIcon").GetComponent<Image>();
 
         spellSelectorLine = spellSelector.transform.Find("SpellSelectorLine").GetComponent<RectTransform>();
 
@@ -721,6 +722,7 @@ public class InterfaceManager : MonoBehaviour
         
         // GameObject instanciation
         GameObject lifeBarPanel = Instantiate(lifeBarPrefab);
+        Debug.Log("Je suis ici");
         lifeBarPanel.transform.SetParent((team == Team.Ally) ? alliesLifeBar.transform : ennemiesLifeBar.transform);
         lifeBarPanel.transform.localScale = new Vector3(1, 1, 1);
         lifeBarPanel.transform.position = barPosition + lifeBarOffset;
