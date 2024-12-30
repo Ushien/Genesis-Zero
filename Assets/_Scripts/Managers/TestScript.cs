@@ -15,14 +15,6 @@ public class TestScript : MonoBehaviour
 
     public void LaunchDebug()
     {
-        
-        BattleManager.Instance.LaunchBattle(ally_composition.GetTuples(), enemy_composition.GetTuples());
-
-        BattleManager.Instance.DebugSetState();
-
-        BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, BattleManager.Trigger.FORWARD);
-
-        
         foreach (BaseUnit unit in UnitManager.Instance.GetUnits(Team.Ally)){
             //unit.SetHP(20);
         }
@@ -43,9 +35,11 @@ public class TestScript : MonoBehaviour
     }
     void OnGUI()
     {
-        if (GUI.Button(new Rect(Screen.width / 2 - 50, 5, 100, 30), "Click"))
-        {
-            GlobalManager.Instance.LaunchBattle();
+        if(!GlobalManager.Instance.isInBattle()){
+            if (GUI.Button(new Rect(Screen.width / 2 - 50, 5, 100, 30), "Easy Battle"))
+            {
+                GlobalManager.Instance.LaunchBattle();
+            }
         }
     }
 }

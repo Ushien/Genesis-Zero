@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -36,6 +37,7 @@ public class GlobalManager : MonoBehaviour
     [SerializeField] private TestScript testScript;
 
     public bool debug;
+    private bool inBattle;
 
     void Awake(){
         Instance = this;
@@ -50,35 +52,72 @@ public class GlobalManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(battleManager != null){
+            if(BattleManager.Instance.GetBattleState() == BattleManager.BattleState.WON || BattleManager.Instance.GetBattleState() == BattleManager.BattleState.LOST){
+                EndBattle();
+            }
+        }
     }
 
     public void LaunchBattle(){
         gridManager = Instantiate(gridManagerPrefab);
         GridManager.Instance.SetCam(_cam.transform);
-        gridManager.transform.SetParent(this.transform.parent);
+        gridManager.transform.SetParent(transform.parent);
         battleManager = Instantiate(battleManagerPrefab);
-        battleManager.transform.SetParent(this.transform.parent);
+        battleManager.transform.SetParent(transform.parent);
         unitManager = Instantiate(unitManagerPrefab);
-        unitManager.transform.SetParent(this.transform.parent);
+        unitManager.transform.SetParent(transform.parent);
         spellManager = Instantiate(spellManagerPrefab);
-        spellManager.transform.SetParent(this.transform.parent);
+        spellManager.transform.SetParent(transform.parent);
         interfaceManager = Instantiate(interfaceManagerPrefab);
         InterfaceManager.Instance.Setup(alliesLifeBar, ennemiesLifeBar, UIobject);
-        interfaceManager.transform.SetParent(this.transform.parent);
+        interfaceManager.transform.SetParent(transform.parent);
         animationManager = Instantiate(animationManagerPrefab);
-        animationManager.transform.SetParent(this.transform.parent);
+        animationManager.transform.SetParent(transform.parent);
         AIManager = Instantiate(AIManagerPrefab);
-        AIManager.transform.SetParent(this.transform.parent);
+        AIManager.transform.SetParent(transform.parent);
         battleEventManager = Instantiate(battleEventManagerPrefab);
-        battleEventManager.transform.SetParent(this.transform.parent);
+        battleEventManager.transform.SetParent(transform.parent);
         eventManager = Instantiate(eventManagerPrefab);
-        eventManager.transform.SetParent(this.transform.parent);
+        eventManager.transform.SetParent(transform.parent);
+
+        BattleManager.Instance.LaunchBattle(testScript.ally_composition.GetTuples(), testScript.enemy_composition.GetTuples());
+        BattleManager.Instance.DebugSetState();
+        BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, BattleManager.Trigger.FORWARD);
+
+        inBattle = true;
 
         if(debug){
-            Debug.Log("Test");
             testScript.LaunchDebug();
         }
+    }
+
+    public void EndBattle(){
+        //Deleting all the managers
+        Destroy(gridManager.gameObject);
+        Destroy(battleManager.gameObject);
+        Destroy(unitManager.gameObject);
+        Destroy(spellManager.gameObject);
+        Destroy(interfaceManager.gameObject);
+        Destroy(animationManager.gameObject);
+        Destroy(AIManager.gameObject);
+        Destroy(battleEventManager.gameObject);
+        Destroy(eventManager.gameObject);
+
+        
+        GameObject[] rootGameObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
+        foreach (GameObject _gameobject in rootGameObjects)
+        {
+            if(_gameobject.name == "Grid" || _gameobject.name == "Units" || _gameobject.name.Contains("UI Screen Space")){
+                Destroy(_gameobject);
+            }
+        }
+
+        inBattle = false;
+    }
+
+    public bool isInBattle(){
+        return inBattle;
     }
 
     public Camera GetCam(){
