@@ -237,7 +237,7 @@ public class BattleManager : MonoBehaviour
                 {
                     case Trigger.FORWARD:
                         // Check if game is over
-                        if(isGameOver()){
+                        if(isGameOver() != BattleState.OUT){
                             battleState = BattleState.END;
                         }
                         else{
@@ -255,20 +255,36 @@ public class BattleManager : MonoBehaviour
                 }
                 break;
             case BattleState.END:
+                switch (trigger){
+                    case Trigger.FORWARD:
+                        battleState = isGameOver();
+                        break;
+                    default:
+                        // Trigger qui intervient quand les trucs d'après batailles sont conclus
+                        ChangeBattleState(Trigger.FORWARD);
+                        break;
+                }
                 break;
             case BattleState.WON:
+                Debug.Log("Cool il n'y a plus d'ennemi");
                 break;
             case BattleState.LOST:
+                Debug.Log("Cool il n'y a plus d'allié'");
                 break;
             default:
                 break;
         }
     }
 
-    private bool isGameOver()
+    private BattleState isGameOver()
     {
-        //TODO Implémenter
-        return false;
+        if(UnitManager.Instance.GetUnits(Team.Ally).Count == 0){
+            return BattleState.LOST;
+        }
+        if(UnitManager.Instance.GetUnits(Team.Enemy).Count == 0){
+            return BattleState.WON;
+        }
+        return BattleState.OUT;
     }
 
     private void SwitchCurrentTeam()

@@ -13,10 +13,8 @@ public class TestScript : MonoBehaviour
     public ScriptableComposition enemy_composition;
     public ScriptableComposition ally_composition;
 
-    void Start()
+    public void LaunchDebug()
     {
-
-        GlobalManager.Instance.LaunchBattle();
         
         BattleManager.Instance.LaunchBattle(ally_composition.GetTuples(), enemy_composition.GetTuples());
 
@@ -39,17 +37,15 @@ public class TestScript : MonoBehaviour
     }
 
     void Update(){
-        if(UnitManager.Instance.GetUnits(Team.Enemy).Count == 0){
-            UnitManager.Instance.SpawnEnemies(enemy_composition.GetTuples());
-        }
+        //if(UnitManager.Instance.GetUnits(Team.Enemy).Count == 0){
+            //UnitManager.Instance.SpawnEnemies(enemy_composition.GetTuples());
+        //}
     }
-    /*
     void OnGUI()
     {
         if (GUI.Button(new Rect(Screen.width / 2 - 50, 5, 100, 30), "Click"))
         {
-            EventManager.Instance.Click();
+            GlobalManager.Instance.LaunchBattle();
         }
-    }¨
-    */
+    }
 }

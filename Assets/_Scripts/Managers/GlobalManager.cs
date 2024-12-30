@@ -33,6 +33,9 @@ public class GlobalManager : MonoBehaviour
     private AIManager AIManager;
     private BattleEventManager battleEventManager;
     private EventManager eventManager;
+    [SerializeField] private TestScript testScript;
+
+    public bool debug;
 
     void Awake(){
         Instance = this;
@@ -71,6 +74,11 @@ public class GlobalManager : MonoBehaviour
         battleEventManager.transform.SetParent(this.transform.parent);
         eventManager = Instantiate(eventManagerPrefab);
         eventManager.transform.SetParent(this.transform.parent);
+
+        if(debug){
+            Debug.Log("Test");
+            testScript.LaunchDebug();
+        }
     }
 
     public Camera GetCam(){
