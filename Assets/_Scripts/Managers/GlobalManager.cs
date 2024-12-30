@@ -6,14 +6,15 @@ using UnityEngine;
 public class GlobalManager : MonoBehaviour
 {
     public static GlobalManager Instance;
-    public GridManager gridManagerPrefab;
-    public BattleManager battleManagerPrefab;
-    public UnitManager unitManagerPrefab;
-    public SpellManager spellManagerPrefab;
-    public InterfaceManager interfaceManagerPrefab;
-    public AnimationManager animationManagerPrefab;
-    public AIManager AIManagerPrefab;
-    public BattleEventManager battleEventManagerPrefab;
+    [SerializeField] private GridManager gridManagerPrefab;
+    [SerializeField] private BattleManager battleManagerPrefab;
+    [SerializeField] private UnitManager unitManagerPrefab;
+    [SerializeField] private SpellManager spellManagerPrefab;
+    [SerializeField] private InterfaceManager interfaceManagerPrefab;
+    [SerializeField] private AnimationManager animationManagerPrefab;
+    [SerializeField] private AIManager AIManagerPrefab;
+    [SerializeField] private BattleEventManager battleEventManagerPrefab;
+    [SerializeField] private EventManager eventManagerPrefab;
 
     [SerializeField] private Camera _cam;
     [SerializeField] private GameObject alliesLifeBar;
@@ -23,14 +24,15 @@ public class GlobalManager : MonoBehaviour
 
     //
 
-    GridManager gridManager;
-    BattleManager battleManager;
-    UnitManager unitManager;
-    SpellManager spellManager;
-    InterfaceManager interfaceManager;
-    AnimationManager animationManager;
-    AIManager AIManager;
-    BattleEventManager battleEventManager;
+    private GridManager gridManager;
+    private BattleManager battleManager;
+    private UnitManager unitManager;
+    private SpellManager spellManager;
+    private InterfaceManager interfaceManager;
+    private AnimationManager animationManager;
+    private AIManager AIManager;
+    private BattleEventManager battleEventManager;
+    private EventManager eventManager;
 
     void Awake(){
         Instance = this;
@@ -67,6 +69,8 @@ public class GlobalManager : MonoBehaviour
         AIManager.transform.SetParent(this.transform.parent);
         battleEventManager = Instantiate(battleEventManagerPrefab);
         battleEventManager.transform.SetParent(this.transform.parent);
+        eventManager = Instantiate(eventManagerPrefab);
+        eventManager.transform.SetParent(this.transform.parent);
     }
 
     public Camera GetCam(){
