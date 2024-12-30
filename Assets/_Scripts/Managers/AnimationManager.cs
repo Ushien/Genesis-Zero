@@ -12,13 +12,18 @@ public class AnimationManager : MonoBehaviour
 {
     public static AnimationManager Instance;
     public TextMeshProUGUI damageText;
-    public GameObject DamageSection;
+    public Transform DamageSection;
 
     private List<BattleEvent> animationQueue;
 
     void Awake(){
         animationQueue = new List<BattleEvent>();
         Instance = this;
+    }
+
+    void Start(){
+        DamageSection = InterfaceManager.Instance.GetUI().transform.Find("Damages").transform;
+        damageText = DamageSection.Find("DamagesText").GetComponent<TextMeshProUGUI>();
     }
 
     void Update(){
@@ -35,7 +40,6 @@ public class AnimationManager : MonoBehaviour
     }
 
     public async Task Animate(List<BattleEvent> battleEvents){
-
         for (var i = 0; i < battleEvents.Count; i++)
         {
            await Animate(battleEvents[i]);
@@ -59,7 +63,7 @@ public class AnimationManager : MonoBehaviour
 
     private async Task Animate(DamageEvent damageEvent){
         TextMeshProUGUI damageDisplay = Instantiate(damageText);
-        damageDisplay.transform.SetParent(DamageSection.transform);
+        damageDisplay.transform.SetParent(DamageSection);
         damageDisplay.text = "-" + damageEvent.GetAmount().ToString();
         damageDisplay.transform.position = damageEvent.GetTargetUnit().transform.position;
         damageDisplay.transform.localScale = new Vector3(1, 1, 1);
@@ -76,7 +80,7 @@ public class AnimationManager : MonoBehaviour
 
     private async Task Animate(ArmorGainEvent armorGainEvent){
         TextMeshProUGUI armorGainDisplay = Instantiate(damageText);
-        armorGainDisplay.transform.SetParent(DamageSection.transform);
+        armorGainDisplay.transform.SetParent(DamageSection);
         armorGainDisplay.text = "+" + armorGainEvent.GetAmount().ToString();
         armorGainDisplay.transform.position = armorGainEvent.GetTargetUnit().transform.position;
         armorGainDisplay.transform.localScale = new Vector3(1, 1, 1);

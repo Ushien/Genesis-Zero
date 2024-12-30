@@ -628,7 +628,7 @@ public class InterfaceManager : MonoBehaviour
         if(trigger == BattleManager.Trigger.VALIDATE){
             // Ajouter l'instruction dans la liste d'instructions
             if(selectedSpell == null){
-                Debug.Log("Pas normal ça");
+
             }
             ResetDisplay();
             Instruction instruction = BattleManager.Instance.CreateInstruction(sourceTile.GetUnit(), selectedSpell, targetTile, hyper : overloaded);
@@ -779,6 +779,10 @@ public class InterfaceManager : MonoBehaviour
             if (spellChoiceAnimator.GetCurrentAnimatorStateInfo(0).IsName(spellChoiceAnims[i]))
                 spellChoiceAnimator.Play($"Not{spellChoiceAnims[i]}");
         }
+    }
+
+    public Canvas GetUI(){
+        return UI;
     }
 }
 
