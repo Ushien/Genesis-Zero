@@ -15,12 +15,9 @@ public class TestScript : MonoBehaviour
 
     public void LaunchDebug()
     {
-        foreach (BaseUnit unit in UnitManager.Instance.GetUnits(Team.Ally)){
-            //unit.SetHP(20);
-        }
         BaseUnit randomUnit = UnitManager.Instance.GetRandomUnit(Team.Enemy);
-
         randomUnit.ModifyArmor(+10, false);
+
         foreach (BaseUnit unit in UnitManager.Instance.GetUnits())
         {
             InterfaceManager.Instance.UpdateLifebar(unit);
@@ -35,10 +32,10 @@ public class TestScript : MonoBehaviour
     }
     void OnGUI()
     {
-        if(!GlobalManager.Instance.isInBattle()){
+        if(GlobalManager.Instance.GetRunPhase() == GlobalManager.RunPhase.PICKPHASE){
             if (GUI.Button(new Rect(Screen.width / 2 - 50, 5, 100, 30), "Easy Battle"))
             {
-                GlobalManager.Instance.LaunchBattle();
+                GlobalManager.Instance.ChangeState(GlobalManager.RunPhase.BATTLEPHASE);
             }
         }
     }

@@ -530,6 +530,7 @@ MonoBehaviour:
   alliesLifeBar: {fileID: 0}
   ennemiesLifeBar: {fileID: 0}
   UIobject: {fileID: 0}
+  pickPhaseManagerPrefab: {fileID: 1361717538261662388, guid: ebe14cec091ccab4dacc68438bd7408b, type: 3}
   testScript: {fileID: 454166813}
   debug: 1
 --- !u!4 &1797857822

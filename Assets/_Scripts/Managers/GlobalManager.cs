@@ -23,7 +23,11 @@ public class GlobalManager : MonoBehaviour
 
     [SerializeField] private GameObject UIobject;
 
-    //
+    [SerializeField] private PickPhaseManager pickPhaseManagerPrefab;
+
+    public enum RunPhase {OUT, PICKPHASE, BATTLEPHASE}
+    [SerializeField]
+    private RunPhase runPhase;
 
     private GridManager gridManager;
     private BattleManager battleManager;
@@ -36,8 +40,9 @@ public class GlobalManager : MonoBehaviour
     private EventManager eventManager;
     [SerializeField] private TestScript testScript;
 
+    private PickPhaseManager pickPhaseManager;
+
     public bool debug;
-    private bool inBattle;
 
     void Awake(){
         Instance = this;
@@ -46,7 +51,7 @@ public class GlobalManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        ChangeState(RunPhase.PICKPHASE);
     }
 
     // Update is called once per frame
@@ -54,12 +59,12 @@ public class GlobalManager : MonoBehaviour
     {
         if(battleManager != null){
             if(BattleManager.Instance.GetBattleState() == BattleManager.BattleState.WON || BattleManager.Instance.GetBattleState() == BattleManager.BattleState.LOST){
-                EndBattle();
+                ChangeState(RunPhase.PICKPHASE);
             }
         }
     }
 
-    public void LaunchBattle(){
+    public void BattlePhaseIn(){
         gridManager = Instantiate(gridManagerPrefab);
         GridManager.Instance.SetCam(_cam.transform);
         gridManager.transform.SetParent(transform.parent);
@@ -84,14 +89,12 @@ public class GlobalManager : MonoBehaviour
         BattleManager.Instance.DebugSetState();
         BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, BattleManager.Trigger.FORWARD);
 
-        inBattle = true;
-
         if(debug){
             testScript.LaunchDebug();
         }
     }
 
-    public void EndBattle(){
+    public void BattlePhaseOut(){
         //Deleting all the managers
         Destroy(gridManager.gameObject);
         Destroy(battleManager.gameObject);
@@ -110,15 +113,68 @@ public class GlobalManager : MonoBehaviour
                 Destroy(_gameobject);
             }
         }
-
-        inBattle = false;
-    }
-
-    public bool isInBattle(){
-        return inBattle;
     }
 
     public Camera GetCam(){
         return _cam;
     }
+
+    public void PickPhaseIn(){
+        pickPhaseManager = Instantiate(pickPhaseManagerPrefab);
+        pickPhaseManager.transform.SetParent(transform.parent);
+    }
+
+    public void PickPhaseOut(){
+        Destroy(pickPhaseManager.gameObject);
+    }
+
+    public void ChangeState(RunPhase trigger){
+        if(runPhase == RunPhase.OUT){
+            switch(trigger){
+                case RunPhase.PICKPHASE:
+                    PickPhaseIn();
+                    break;
+                case RunPhase.BATTLEPHASE:
+                    BattlePhaseIn();
+                    break;
+                default:
+                    break;
+            }
+            runPhase = trigger;
+        }
+        switch (runPhase)
+        {
+            case RunPhase.PICKPHASE:
+                switch (trigger)
+                {
+                    case RunPhase.BATTLEPHASE:
+                        PickPhaseOut();
+                        runPhase = RunPhase.BATTLEPHASE;
+                        BattlePhaseIn();
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case RunPhase.BATTLEPHASE:
+                switch (trigger)
+                {
+                    case RunPhase.PICKPHASE:
+                        BattlePhaseOut();
+                        runPhase = RunPhase.PICKPHASE;
+                        PickPhaseIn();
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    public RunPhase GetRunPhase(){
+        return runPhase;
+    }
+
 }
