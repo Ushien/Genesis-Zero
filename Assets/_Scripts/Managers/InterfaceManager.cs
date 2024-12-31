@@ -718,8 +718,11 @@ public class InterfaceManager : MonoBehaviour
         // GameObject instanciation
         GameObject lifeBarPanel = Instantiate(lifeBarPrefab);
         lifeBarPanel.transform.SetParent((unit.GetTeam() == Team.Ally) ? lifeBarsUI.transform.Find("Allies").transform : lifeBarsUI.transform.Find("Ennemies").transform);
-        lifeBarPanel.transform.localScale = new Vector3(1, 1, 1);
+        lifeBarPanel.transform.localScale = Vector3.one;
         lifeBarPanel.transform.position = unit.transform.position + lifeBarOffset;
+        Debug.Log(unit.GetName());
+        Debug.Log(unit.transform.position);
+        Debug.Log(lifeBarPanel.transform.position);
         lifeBarPanel.name = $"{unit.GetName()}_LifeBar";
 
         // Child components access and modification, very ugly
@@ -744,6 +747,10 @@ public class InterfaceManager : MonoBehaviour
         AR.text = $"{unit.GetArmor()} AR";
         unit.SetTargetLifeBarScale(new Vector3((float)unit.GetFinalHealth()/unit.GetTotalHealth(), 1, 1));
         unit.SetTargetArmorBarScale(new Vector3((float)unit.GetArmor()/unit.GetTotalHealth(), 1, 1));
+    }
+
+    public void UpdateLifeBarPosition(BaseUnit unit){
+        unit.lifeBar.transform.position = unit.transform.position + lifeBarOffset;
     }
 
     // Détruit la barre de vie d'un perso

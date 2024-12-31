@@ -56,6 +56,7 @@ public class Tile : MonoBehaviour
         if (unit != null){
             if(unit.OccupiedTile != null) unit.OccupiedTile.OccupiedUnit = null;
             unit.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+            InterfaceManager.Instance.UpdateLifeBarPosition(unit);
             
             OccupiedUnit = unit;
             unit.OccupiedTile = this;
