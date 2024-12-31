@@ -70,7 +70,6 @@ public class GlobalManager : MonoBehaviour
         spellManager = Instantiate(spellManagerPrefab);
         spellManager.transform.SetParent(transform.parent);
         interfaceManager = Instantiate(interfaceManagerPrefab);
-        InterfaceManager.Instance.Setup(alliesLifeBar, ennemiesLifeBar, UIobject);
         interfaceManager.transform.SetParent(transform.parent);
         animationManager = Instantiate(animationManagerPrefab);
         animationManager.transform.SetParent(transform.parent);
@@ -103,12 +102,11 @@ public class GlobalManager : MonoBehaviour
         Destroy(AIManager.gameObject);
         Destroy(battleEventManager.gameObject);
         Destroy(eventManager.gameObject);
-
         
         GameObject[] rootGameObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
         foreach (GameObject _gameobject in rootGameObjects)
         {
-            if(_gameobject.name == "Grid" || _gameobject.name == "Units" || _gameobject.name.Contains("UI Screen Space")){
+            if(_gameobject.name == "Grid" || _gameobject.name == "Units" || _gameobject.name.Contains("UI Screen Space") || _gameobject.name.Contains("UI - World Space")){
                 Destroy(_gameobject);
             }
         }

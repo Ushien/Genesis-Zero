@@ -45,28 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIPrefab: {fileID: 2703114003398457339, guid: 78d60f1959b850c43ab69f3bb197ff2c, type: 3}
-  infosPanel: {fileID: 0}
-  informationPanel: {fileID: 0}
-  passivePanel: {fileID: 0}
-  spellPanel: {fileID: 0}
-  alliesLifeBar: {fileID: 0}
-  ennemiesLifeBar: {fileID: 0}
-  unitNamePanel: {fileID: 0}
-  unitPowerPanel: {fileID: 0}
-  unitHealthPanel: {fileID: 0}
-  unitArmorPanel: {fileID: 0}
-  unitLevelPanel: {fileID: 0}
-  infosPanelLine: {fileID: 0}
-  unitPassiveNamePanel: {fileID: 0}
-  unitPassiveDescriptionPanel: {fileID: 0}
-  spellNamePanel: {fileID: 0}
-  spellCooldownPanel: {fileID: 0}
-  spellDescriptionPanel: {fileID: 0}
   spellPanelLine: {fileID: 0}
   spellSelectorLine: {fileID: 0}
-  spellPanelIcon: {fileID: 0}
-  spellSelector: {fileID: 0}
   shade: {fileID: 0}
+  UIWorldSpace: {fileID: 3722291128606437924, guid: 7d72b36445a86f446892d74aff8d2150, type: 3}
   lifeBarPrefab: {fileID: 365750388818752724, guid: f6bd6efb9959239418755f94895bf15c, type: 3}
   grayscaleShader: {fileID: 2100000, guid: ca5da941d3d390e49bef51a2d9610fa0, type: 2}
   emptySpellSelectorSquare: {fileID: 21300000, guid: 9d4d396a0d494f445bfea30e683f1b4c, type: 3}

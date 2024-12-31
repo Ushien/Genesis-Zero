@@ -125,6 +125,7 @@ public class BaseUnit : MonoBehaviour
         }
 
         targetArmorBarScale = new Vector3((float)GetArmor()/GetTotalHealth(), 1, 1);
+        lifeBar = InterfaceManager.Instance.SetupLifebar(this);
     }
 
     /// <summary>
@@ -162,10 +163,11 @@ public class BaseUnit : MonoBehaviour
         }
 
         // Mise à jour des barres de HP
-
-        lifeBar.transform.GetChild(3).localScale = Vector3.Lerp(lifeBar.transform.GetChild(3).localScale, targetLifeBarScale, Time.deltaTime*8);
-        lifeBar.transform.GetChild(4).localScale = Vector3.Lerp(lifeBar.transform.GetChild(4).localScale, targetArmorBarScale, Time.deltaTime*8);
-    }
+        if(lifeBar != null){
+            lifeBar.transform.GetChild(3).localScale = Vector3.Lerp(lifeBar.transform.GetChild(3).localScale, targetLifeBarScale, Time.deltaTime*8);
+            lifeBar.transform.GetChild(4).localScale = Vector3.Lerp(lifeBar.transform.GetChild(4).localScale, targetArmorBarScale, Time.deltaTime*8);
+            }
+         }
     
     /// <summary>
     /// Applique tous les effets de fin de tour liés à l'unité
@@ -819,6 +821,7 @@ public class BaseUnit : MonoBehaviour
         dead = true;
         EventManager.Instance.UnitDied(this);
         UnitManager.Instance.Kill(this);
+        Destroy(lifeBar);
     }
         #endregion
     

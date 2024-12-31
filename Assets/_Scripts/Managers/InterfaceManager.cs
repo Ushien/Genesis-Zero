@@ -21,8 +21,6 @@ public class InterfaceManager : MonoBehaviour
 
     private GameObject infosPanel;
     private GameObject spellPanel;
-    private GameObject alliesLifeBar;
-    private GameObject ennemiesLifeBar;
     private TextMeshProUGUI unitNamePanel;
     private TextMeshProUGUI unitPowerPanel;
     private TextMeshProUGUI unitHealthPanel;
@@ -38,6 +36,8 @@ public class InterfaceManager : MonoBehaviour
     private Image spellPanelIcon;
     private GameObject spellSelector;
     public GameObject shade;
+    public Canvas UIWorldSpace;
+    private Canvas lifeBarsUI;
     public GameObject lifeBarPrefab;
     public Material grayscaleShader;
     public Sprite emptySpellSelectorSquare;
@@ -82,6 +82,7 @@ public class InterfaceManager : MonoBehaviour
 
         // On initialise la UI
         UI = Instantiate(UIPrefab);
+        lifeBarsUI = Instantiate(UIWorldSpace);
         UI.worldCamera = GlobalManager.Instance.GetCam();
 
         infosPanel = UI.transform.Find("InfosPanel").gameObject;
@@ -149,12 +150,6 @@ public class InterfaceManager : MonoBehaviour
                 break;
         }
         
-    }
-
-    public void Setup(GameObject _alliesLifebar, GameObject _ennemiesLifeBar, GameObject _UIObject){
-        alliesLifeBar = _alliesLifebar;
-        ennemiesLifeBar = _ennemiesLifeBar;
-        //UIobject = _UIObject;
     }
 
     void SourceSelectionDisplay(){
@@ -718,24 +713,24 @@ public class InterfaceManager : MonoBehaviour
     } 
 
     // Setup la barre de vie d'un perso
-    public GameObject SetupLifebar(string unitName, Vector3 barPosition, int totalHealth, int armor, Team team){
+    public GameObject SetupLifebar(BaseUnit unit){
         
         // GameObject instanciation
         GameObject lifeBarPanel = Instantiate(lifeBarPrefab);
-        lifeBarPanel.transform.SetParent((team == Team.Ally) ? alliesLifeBar.transform : ennemiesLifeBar.transform);
+        lifeBarPanel.transform.SetParent((unit.GetTeam() == Team.Ally) ? lifeBarsUI.transform.Find("Allies").transform : lifeBarsUI.transform.Find("Ennemies").transform);
         lifeBarPanel.transform.localScale = new Vector3(1, 1, 1);
-        lifeBarPanel.transform.position = barPosition + lifeBarOffset;
-        lifeBarPanel.name = $"{unitName}_LifeBar";
+        lifeBarPanel.transform.position = unit.transform.position + lifeBarOffset;
+        lifeBarPanel.name = $"{unit.GetName()}_LifeBar";
 
         // Child components access and modification, very ugly
         TextMeshProUGUI HP = lifeBarPanel.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI AR = lifeBarPanel.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
-        HP.text = $"{totalHealth} HP";
-        AR.text = $"{armor} AR";
+        HP.text = $"{unit.GetFinalHealth()} HP";
+        AR.text = $"{unit.GetArmor()} AR";
 
         //Armor initialization
         Transform armorBar = lifeBarPanel.transform.GetChild(4);
-        armorBar.localScale = new Vector3((float)armor/totalHealth, 1, 1);
+        armorBar.localScale = new Vector3((float)unit.GetArmor()/unit.GetFinalHealth(), 1, 1);
 
         return lifeBarPanel;
     }
