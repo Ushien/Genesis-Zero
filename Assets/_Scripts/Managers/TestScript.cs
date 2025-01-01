@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using System.IO;
 
 /// <summary>
 /// Méthodes de débug et de test
@@ -22,7 +23,6 @@ public class TestScript : MonoBehaviour
         {
             InterfaceManager.Instance.UpdateLifebar(unit);
         }
-
     }
 
     void Update(){
