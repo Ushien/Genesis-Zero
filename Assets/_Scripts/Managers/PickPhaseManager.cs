@@ -6,23 +6,18 @@ using System.IO;
 
 public class PickPhaseManager : MonoBehaviour
 {
+    public static PickPhaseManager Instance;
+    
     [SerializeField]
     private GameObject choiceCell;
     public enum RewardType{EMPTY, PASSIVE, SPELL}
-    private List<System.IO.FileInfo> spellList = new List<System.IO.FileInfo>();
+    private UnityEngine.Object[] spellList;
 
     // Start is called before the first frame update
     void Start()
     {
-        string worldsFolder = "./Assets/Resources/Spells";
-        if (Directory.Exists(worldsFolder))
-        {
-            DirectoryInfo d = new DirectoryInfo(worldsFolder);
-            foreach (FileInfo file in d.GetFiles("*.asset"))
-            {
-                spellList.Add(file);
-            }
-        }
+        Instance = this;
+        spellList = Resources.LoadAll("Spells", typeof(ScriptableSpell));
     }
 
     // Update is called once per frame
@@ -31,9 +26,9 @@ public class PickPhaseManager : MonoBehaviour
         
     }
 
-    private Reward GenerateReward(RewardType rewardType){
+    public Reward GenerateReward(RewardType rewardType){
         if(rewardType == RewardType.SPELL){
-            //
+            ScriptableSpell spell = (ScriptableSpell)spellList[UnityEngine.Random.Range(0, spellList.Length)];
         }
         return new Reward();
     }
