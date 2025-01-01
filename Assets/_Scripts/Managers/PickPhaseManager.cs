@@ -7,17 +7,20 @@ using System.IO;
 public class PickPhaseManager : MonoBehaviour
 {
     public static PickPhaseManager Instance;
+    private ResourceManager resourceManager;
     
     [SerializeField]
     private GameObject choiceCell;
     public enum RewardType{EMPTY, PASSIVE, SPELL}
-    private UnityEngine.Object[] spellList;
 
     // Start is called before the first frame update
     void Start()
     {
+
+    }
+
+    void Awake(){
         Instance = this;
-        spellList = Resources.LoadAll("Spells", typeof(ScriptableSpell));
     }
 
     // Update is called once per frame
@@ -26,9 +29,13 @@ public class PickPhaseManager : MonoBehaviour
         
     }
 
+    public void SetResourceManager(ResourceManager _resourceManager){
+        resourceManager = _resourceManager;
+    }
+
     public Reward GenerateReward(RewardType rewardType){
         if(rewardType == RewardType.SPELL){
-            ScriptableSpell spell = (ScriptableSpell)spellList[UnityEngine.Random.Range(0, spellList.Length)];
+            ScriptableSpell spell = (ScriptableSpell)resourceManager.GetSpells()[UnityEngine.Random.Range(0, resourceManager.Instance.GetSpells().Length)];
         }
         return new Reward();
     }

@@ -18,12 +18,9 @@ public class GlobalManager : MonoBehaviour
     [SerializeField] private EventManager eventManagerPrefab;
 
     [SerializeField] private Camera _cam;
-    [SerializeField] private GameObject alliesLifeBar;
-    [SerializeField] private GameObject ennemiesLifeBar;
-
-    [SerializeField] private GameObject UIobject;
 
     [SerializeField] private PickPhaseManager pickPhaseManagerPrefab;
+    [SerializeField] private ResourceManager resourceManagerPrefab;
 
     public enum RunPhase {OUT, PICKPHASE, BATTLEPHASE}
     [SerializeField]
@@ -41,6 +38,7 @@ public class GlobalManager : MonoBehaviour
     [SerializeField] private TestScript testScript;
 
     private PickPhaseManager pickPhaseManager;
+    private ResourceManager resourceManager;
 
     public bool debug;
 
@@ -51,6 +49,10 @@ public class GlobalManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        resourceManager = Instantiate(resourceManagerPrefab);
+        resourceManager.transform.SetParent(transform.parent);
+        resourceManager.LoadResources();
+
         ChangeState(RunPhase.PICKPHASE);
     }
 
@@ -122,6 +124,7 @@ public class GlobalManager : MonoBehaviour
     public void PickPhaseIn(){
         pickPhaseManager = Instantiate(pickPhaseManagerPrefab);
         pickPhaseManager.transform.SetParent(transform.parent);
+        pickPhaseManager.SetResourceManager(resourceManager);
     }
 
     public void PickPhaseOut(){

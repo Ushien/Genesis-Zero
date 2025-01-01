@@ -527,10 +527,9 @@ MonoBehaviour:
   battleEventManagerPrefab: {fileID: 4870162288617126403, guid: 35cb69db407e7ed4abd2260a0fdd904f, type: 3}
   eventManagerPrefab: {fileID: 6882506551565756176, guid: b7dd4567f953f1f4da20d768c505f26a, type: 3}
   _cam: {fileID: 1779551971}
-  alliesLifeBar: {fileID: 0}
-  ennemiesLifeBar: {fileID: 0}
-  UIobject: {fileID: 0}
   pickPhaseManagerPrefab: {fileID: 1361717538261662388, guid: ebe14cec091ccab4dacc68438bd7408b, type: 3}
+  resourceManagerPrefab: {fileID: 3759869079455970956, guid: 74daf401835ff7e49a64955c157a2328, type: 3}
+  runPhase: 0
   testScript: {fileID: 454166813}
   debug: 1
 --- !u!4 &1797857822
