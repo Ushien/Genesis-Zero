@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class SpellReward : Reward
 {
-    private BaseSpell spell;
+    private ScriptableSpell spell;
 
-    public SpellReward(BaseSpell _spell){
+    public SpellReward(ScriptableSpell _spell){
         spell = _spell;
     }
 
-    public BaseSpell GetSpell(){
+    public ScriptableSpell GetSpell(){
         return spell;
     }
 
-    public void SetSpell(BaseSpell _spell){
+    public void SetSpell(ScriptableSpell _spell){
         spell = _spell;
+    }
+
+    public override string GetTitle(){
+        return spell.name;
     }
 }

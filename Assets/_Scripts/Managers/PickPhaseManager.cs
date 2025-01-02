@@ -36,15 +36,18 @@ public class PickPhaseManager : MonoBehaviour
     public Reward GenerateReward(RewardType rewardType){
         if(rewardType == RewardType.SPELL){
             ScriptableSpell spell = (ScriptableSpell)resourceManager.GetSpells()[UnityEngine.Random.Range(0, resourceManager.Instance.GetSpells().Length)];
+            return new SpellReward(spell);
         }
+        
         return new Reward();
     }
 
 
-    private void DisplayRewards(List<Reward> rewards){
+    public void DisplayRewards(List<Reward> rewards){
         foreach (Reward reward in rewards)
         {
-            Instantiate(choiceCell);
+            GameObject _object = Instantiate(choiceCell);
+            _object.transform.name = reward.GetTitle();
         }
 
     }

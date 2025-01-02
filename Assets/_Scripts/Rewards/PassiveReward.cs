@@ -17,4 +17,8 @@ public class PassiveReward : Reward
     public void SetPassive(Passive _passive){
         passive = _passive;
     }
+
+    public override string GetTitle(){
+        return passive.name;
+    }
 }
