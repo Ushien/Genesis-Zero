@@ -44,10 +44,17 @@ public class PickPhaseManager : MonoBehaviour
 
 
     public void DisplayRewards(List<Reward> rewards){
+        int x_pos = 0;
         foreach (Reward reward in rewards)
         {
             GameObject _object = Instantiate(choiceCell);
             _object.transform.name = reward.GetTitle();
+            _object.transform.position = new Vector3(x_pos + Screen.width/(rewards.Count+1), Screen.height/2, 0);
+            if(reward is SpellReward){
+                SpellReward spellReward = (SpellReward)reward;
+                _object.GetComponent<SpriteRenderer>().sprite = spellReward.GetSpell().artwork;
+            }
+
         }
 
     }
