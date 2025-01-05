@@ -8,6 +8,7 @@ public class PickPhaseManager : MonoBehaviour
 {
     public static PickPhaseManager Instance;
     private ResourceManager resourceManager;
+    private Camera cam;
     
     [SerializeField]
     private GameObject choiceCell;
@@ -16,7 +17,7 @@ public class PickPhaseManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        cam = GlobalManager.Instance.GetCam();
     }
 
     void Awake(){
@@ -49,7 +50,8 @@ public class PickPhaseManager : MonoBehaviour
         {
             GameObject _object = Instantiate(choiceCell);
             _object.transform.name = reward.GetTitle();
-            _object.transform.position = new Vector3(x_pos + Screen.width/(rewards.Count+1), Screen.height/2, 0);
+            x_pos = x_pos + Screen.width/(rewards.Count+1);
+            _object.transform.position = cam.ScreenToWorldPoint(new Vector3(x_pos, Screen.height/2, 1));
             if(reward is SpellReward){
                 SpellReward spellReward = (SpellReward)reward;
                 _object.GetComponent<SpriteRenderer>().sprite = spellReward.GetSpell().artwork;
