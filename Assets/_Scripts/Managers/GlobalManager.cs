@@ -17,7 +17,7 @@ public class GlobalManager : MonoBehaviour
     [SerializeField] private BattleEventManager battleEventManagerPrefab;
     [SerializeField] private EventManager eventManagerPrefab;
 
-    [SerializeField] private Camera _cam;
+    [SerializeField] private Camera camPrefab;
 
     [SerializeField] private PickPhaseManager pickPhaseManagerPrefab;
     [SerializeField] private ResourceManager resourceManagerPrefab;
@@ -39,6 +39,9 @@ public class GlobalManager : MonoBehaviour
 
     private PickPhaseManager pickPhaseManager;
     private ResourceManager resourceManager;
+    private Camera cam;
+
+    [SerializeField]
 
     public bool debug;
 
@@ -49,6 +52,7 @@ public class GlobalManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        cam = Instantiate(camPrefab);
         resourceManager = Instantiate(resourceManagerPrefab);
         resourceManager.transform.SetParent(transform.parent);
         resourceManager.LoadResources();
@@ -68,7 +72,7 @@ public class GlobalManager : MonoBehaviour
 
     public void BattlePhaseIn(){
         gridManager = Instantiate(gridManagerPrefab);
-        GridManager.Instance.SetCam(_cam.transform);
+        GridManager.Instance.SetCam(cam.transform);
         gridManager.transform.SetParent(transform.parent);
         battleManager = Instantiate(battleManagerPrefab);
         battleManager.transform.SetParent(transform.parent);
@@ -78,6 +82,7 @@ public class GlobalManager : MonoBehaviour
         spellManager.transform.SetParent(transform.parent);
         interfaceManager = Instantiate(interfaceManagerPrefab);
         interfaceManager.transform.SetParent(transform.parent);
+        
         animationManager = Instantiate(animationManagerPrefab);
         animationManager.transform.SetParent(transform.parent);
         AIManager = Instantiate(AIManagerPrefab);
@@ -118,7 +123,7 @@ public class GlobalManager : MonoBehaviour
     }
 
     public Camera GetCam(){
-        return _cam;
+        return cam;
     }
 
     public void PickPhaseIn(){
