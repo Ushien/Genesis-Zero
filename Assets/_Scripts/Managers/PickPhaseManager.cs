@@ -9,6 +9,7 @@ public class PickPhaseManager : MonoBehaviour
     public static PickPhaseManager Instance;
     private ResourceManager resourceManager;
     private Camera cam;
+    private GameObject rewardParent;
     
     [SerializeField]
     private GameObject choiceCell;
@@ -18,6 +19,11 @@ public class PickPhaseManager : MonoBehaviour
     void Start()
     {
         cam = GlobalManager.Instance.GetCam();
+        rewardParent = new GameObject("Rewards");
+    }
+
+    public void End(){
+        Destroy(rewardParent);
     }
 
     void Awake(){
@@ -52,6 +58,7 @@ public class PickPhaseManager : MonoBehaviour
             _object.transform.name = reward.GetTitle();
             x_pos = x_pos + Screen.width/(rewards.Count+1);
             _object.transform.position = cam.ScreenToWorldPoint(new Vector3(x_pos, Screen.height/2, 1));
+            _object.transform.SetParent(rewardParent.transform);
             if(reward is SpellReward){
                 SpellReward spellReward = (SpellReward)reward;
                 _object.GetComponent<SpriteRenderer>().sprite = spellReward.GetSpell().artwork;

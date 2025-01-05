@@ -133,6 +133,7 @@ public class GlobalManager : MonoBehaviour
     }
 
     public void PickPhaseOut(){
+        pickPhaseManager.End();
         Destroy(pickPhaseManager.gameObject);
     }
 
