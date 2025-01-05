@@ -13,6 +13,7 @@ public class PickPhaseManager : MonoBehaviour
     
     [SerializeField]
     private GameObject choiceCell;
+    private List<Reward> currentRewards;
     public enum RewardType{EMPTY, PASSIVE, SPELL}
 
     // Start is called before the first frame update
@@ -23,6 +24,7 @@ public class PickPhaseManager : MonoBehaviour
     }
 
     public void End(){
+        currentRewards = new List<Reward>();
         Destroy(rewardParent);
     }
 
@@ -49,8 +51,17 @@ public class PickPhaseManager : MonoBehaviour
         return new Reward();
     }
 
+    public void SetCurrentRewards(List<Reward> rewards){
+        currentRewards = rewards;
+    }
 
-    public void DisplayRewards(List<Reward> rewards){
+    public List<Reward> GetCurrentRewards(){
+        return currentRewards;
+    }
+
+
+    public void DisplayRewards(){
+        List<Reward> rewards = GetCurrentRewards();
         int x_pos = 0;
         foreach (Reward reward in rewards)
         {

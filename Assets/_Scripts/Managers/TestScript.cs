@@ -41,11 +41,12 @@ public class TestScript : MonoBehaviour
         if(GlobalManager.Instance.GetRunPhase() == GlobalManager.RunPhase.PICKPHASE){
             if (GUI.Button(new Rect(Screen.width / 3 - 50, 5, 100, 30), "Test"))
             {
-                PickPhaseManager.Instance.DisplayRewards(new List<Reward>{
+                PickPhaseManager.Instance.SetCurrentRewards(new List<Reward>{
                     PickPhaseManager.Instance.GenerateReward(PickPhaseManager.RewardType.SPELL),
                     PickPhaseManager.Instance.GenerateReward(PickPhaseManager.RewardType.SPELL),
                     PickPhaseManager.Instance.GenerateReward(PickPhaseManager.RewardType.SPELL)
                 });
+                PickPhaseManager.Instance.DisplayRewards();
             }
         }   
     }
