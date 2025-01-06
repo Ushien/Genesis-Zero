@@ -14,17 +14,21 @@ public class PickPhaseManager : MonoBehaviour
     [SerializeField]
     private GameObject choiceCell;
     private List<Reward> currentRewards;
+    private int currentSelectionIndex;
     public enum RewardType{EMPTY, PASSIVE, SPELL}
+    public enum Directions{NONE, LEFT, RIGHT}
 
     // Start is called before the first frame update
     void Start()
     {
         cam = GlobalManager.Instance.GetCam();
         rewardParent = new GameObject("Rewards");
+        currentSelectionIndex = 0;
     }
 
     public void End(){
         currentRewards = new List<Reward>();
+        currentSelectionIndex = 0;
         Destroy(rewardParent);
     }
 
@@ -35,7 +39,12 @@ public class PickPhaseManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.LeftArrow)){
+            Move(Directions.LEFT);
+        }
+        if(Input.GetKeyDown(KeyCode.RightArrow)){
+            Move(Directions.RIGHT);
+        }
     }
 
     public void SetResourceManager(ResourceManager _resourceManager){
@@ -77,5 +86,36 @@ public class PickPhaseManager : MonoBehaviour
 
         }
 
+    }
+
+    public void Move(Directions direction){
+        switch (direction)
+        {
+            case Directions.LEFT:
+                if(currentSelectionIndex != 0){
+                    UnselectReward(GetCurrentRewards()[currentSelectionIndex]);
+                    currentSelectionIndex = currentSelectionIndex-1;
+                    SelectReward(GetCurrentRewards()[currentSelectionIndex]);
+                }
+                break;
+            case Directions.RIGHT:
+                if(currentSelectionIndex != GetCurrentRewards().Count-1){
+                    UnselectReward(GetCurrentRewards()[currentSelectionIndex]);
+                    currentSelectionIndex = currentSelectionIndex + 1;
+                    SelectReward(GetCurrentRewards()[currentSelectionIndex]);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    public void SelectReward(Reward reward){
+        Debug.Log("Récompense sélectionnée: " + reward.GetTitle());
+    }
+
+    private void UnselectReward(Reward reward){
+        //
     }
 }
