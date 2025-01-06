@@ -16,9 +16,11 @@ MonoBehaviour:
   lore_description: 
   fight_description: "Inflige %%1 d\xE9gats \xE0 tous les adversaires et soigne les
     alli\xE9s de 50% des d\xE9gats totaux, r\xE9partis \xE9quitablement (N)"
+  overloaded_fight_description: 
   cooldown: 5
   properties: 
   range: 3
   team_restriction: 3
   artwork: {fileID: 21300000, guid: f46c398996406d640be9f00857f5908c, type: 3}
   spellScriptPrefab: {fileID: 2999990872894262757, guid: 5a54959b7a3ec2c4981e9b78fa7c4652, type: 3}
+  lootable: 0

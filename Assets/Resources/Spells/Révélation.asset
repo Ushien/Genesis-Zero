@@ -17,9 +17,11 @@ MonoBehaviour:
   fight_description: "S\xE9lectionne une unit\xE9 et lui procure %%1 d'armure. Si
     ce montant est pr\xE9sent apr\xE8s 2 tours, celui-ci est converti en PV suppl\xE9mentaires
     d\xE9finitifs."
+  overloaded_fight_description: 
   cooldown: 2
   properties: 
   range: 0
   team_restriction: 0
   artwork: {fileID: 21300000, guid: cb7efb230ff04ea4ca3dde7ca74ea0aa, type: 3}
   spellScriptPrefab: {fileID: 5747960691504219851, guid: 9a1282facf019fa41b48d6a9f0153d8a, type: 3}
+  lootable: 1

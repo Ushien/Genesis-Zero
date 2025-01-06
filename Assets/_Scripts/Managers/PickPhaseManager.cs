@@ -53,7 +53,8 @@ public class PickPhaseManager : MonoBehaviour
 
     public Reward GenerateReward(RewardType rewardType){
         if(rewardType == RewardType.SPELL){
-            ScriptableSpell spell = (ScriptableSpell)resourceManager.GetSpells()[UnityEngine.Random.Range(0, resourceManager.Instance.GetSpells().Length)];
+            List<ScriptableSpell> spellList = resourceManager.GetSpells(lootable:true);
+            ScriptableSpell spell = spellList[UnityEngine.Random.Range(0, spellList.Count)];
             return new SpellReward(spell);
         }
         
@@ -67,7 +68,6 @@ public class PickPhaseManager : MonoBehaviour
     public List<Reward> GetCurrentRewards(){
         return currentRewards;
     }
-
 
     public void DisplayRewards(){
         List<Reward> rewards = GetCurrentRewards();

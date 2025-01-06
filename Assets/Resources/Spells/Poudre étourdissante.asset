@@ -16,9 +16,11 @@ MonoBehaviour:
   lore_description: 
   fight_description: Etourdit un adversaire pour un tour, et double ses points de
     vie. (P)
+  overloaded_fight_description: 
   cooldown: 1
   properties: 
   range: 0
   team_restriction: 2
   artwork: {fileID: 21300000, guid: 7216f086de2d4d848a8ff5dba8b586f3, type: 3}
   spellScriptPrefab: {fileID: 794894405015748919, guid: de410596f443dcd4693903a533ac73d7, type: 3}
+  lootable: 1

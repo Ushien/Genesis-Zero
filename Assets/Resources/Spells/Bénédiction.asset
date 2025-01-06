@@ -15,9 +15,11 @@ MonoBehaviour:
   spell_name: "B\xE9n\xE9diction"
   lore_description: 
   fight_description: "Renforce l'attaque d'une unit\xE9 de __1% pendant 3 tours."
+  overloaded_fight_description: 
   cooldown: 2
   properties: 
   range: 0
   team_restriction: 0
   artwork: {fileID: 21300000, guid: e07c56de5141eea4a9a6d3792c558fe1, type: 3}
   spellScriptPrefab: {fileID: 1582391806160194776, guid: a3c45c4dd48520240938f21343c52882, type: 3}
+  lootable: 1

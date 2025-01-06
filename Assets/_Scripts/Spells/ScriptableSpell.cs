@@ -23,4 +23,5 @@ public class ScriptableSpell : ScriptableObject
     public Sprite artwork;
 
     public BaseSpell spellScriptPrefab;
+    public bool lootable;
 }
