@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd3ba187e4300ca48b593cbf16208e93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rewardSelectorPrefab: {fileID: 8956214222160928716, guid: d9239a4fafe0a1e4583c846d4ee6d932, type: 3}
   choiceCell: {fileID: 3235262677852364864, guid: 93420ad097203f14bb668b79246484a8, type: 3}

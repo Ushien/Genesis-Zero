@@ -10,6 +10,9 @@ public class PickPhaseManager : MonoBehaviour
     private ResourceManager resourceManager;
     private Camera cam;
     private GameObject rewardParent;
+    [SerializeField]
+    private Transform rewardSelectorPrefab;
+    private Transform rewardSelector;
     
     [SerializeField]
     private GameObject choiceCell;
@@ -18,18 +21,24 @@ public class PickPhaseManager : MonoBehaviour
     public enum RewardType{EMPTY, PASSIVE, SPELL}
     public enum Directions{NONE, LEFT, RIGHT}
 
+    private Vector3 currentSelectorPosition;
+    private Vector3 targetSelectorPosition;
+
     // Start is called before the first frame update
     void Start()
     {
         cam = GlobalManager.Instance.GetCam();
         rewardParent = new GameObject("Rewards");
         currentSelectionIndex = 0;
+        rewardSelector = Instantiate(rewardSelectorPrefab);
+        rewardSelector.gameObject.SetActive(false);
     }
 
     public void End(){
         currentRewards = new List<Reward>();
         currentSelectionIndex = 0;
         Destroy(rewardParent);
+        Destroy(rewardSelector);
     }
 
     void Awake(){
@@ -39,6 +48,8 @@ public class PickPhaseManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        currentSelectorPosition = Vector3.Lerp(currentSelectorPosition, targetSelectorPosition, Time.deltaTime*6);
+        rewardSelector.position = currentSelectorPosition;
         if(Input.GetKeyDown(KeyCode.LeftArrow)){
             Move(Directions.LEFT);
         }
@@ -75,6 +86,7 @@ public class PickPhaseManager : MonoBehaviour
         foreach (Reward reward in rewards)
         {
             GameObject _object = Instantiate(choiceCell);
+            reward.SetCell(_object);
             _object.transform.name = reward.GetTitle();
             x_pos = x_pos + Screen.width/(rewards.Count+1);
             _object.transform.position = cam.ScreenToWorldPoint(new Vector3(x_pos, Screen.height/2, 1));
@@ -85,6 +97,9 @@ public class PickPhaseManager : MonoBehaviour
             }
 
         }
+        rewardSelector.gameObject.SetActive(true);
+        currentSelectorPosition = rewards[0].GetCell().transform.position;
+        targetSelectorPosition = rewards[0].GetCell().transform.position;
 
     }
 
@@ -112,7 +127,21 @@ public class PickPhaseManager : MonoBehaviour
 
 
     public void SelectReward(Reward reward){
-        Debug.Log("Récompense sélectionnée: " + reward.GetTitle());
+        if(reward.GetCell() != null){
+            targetSelectorPosition = reward.GetCell().transform.position;
+        }
+        else{
+            Debug.Log("Pas censé arriver ici");
+        }
+        
+    }
+
+    public void PickReward(Reward reward, BaseUnit unit){
+        reward.Pick(unit);
+    }
+
+    private void PickReward(Reward reward){
+        Debug.Log("Je prends cette récompense");
     }
 
     private void UnselectReward(Reward reward){
