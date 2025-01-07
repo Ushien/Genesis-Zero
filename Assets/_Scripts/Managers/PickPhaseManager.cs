@@ -38,7 +38,7 @@ public class PickPhaseManager : MonoBehaviour
         currentRewards = new List<Reward>();
         currentSelectionIndex = 0;
         Destroy(rewardParent);
-        Destroy(rewardSelector);
+        Destroy(rewardSelector.gameObject);
     }
 
     void Awake(){
@@ -55,6 +55,12 @@ public class PickPhaseManager : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.RightArrow)){
             Move(Directions.RIGHT);
+        }
+        if(Input.GetKeyDown(KeyCode.B)){
+            if(currentRewards.Count > 0){
+                PickReward(currentRewards[currentSelectionIndex]);
+                GlobalManager.Instance.ChangeState(GlobalManager.RunPhase.BATTLEPHASE);
+            }
         }
     }
 
@@ -136,12 +142,8 @@ public class PickPhaseManager : MonoBehaviour
         
     }
 
-    public void PickReward(Reward reward, BaseUnit unit){
-        reward.Pick(unit);
-    }
-
-    private void PickReward(Reward reward){
-        Debug.Log("Je prends cette récompense");
+    public void PickReward(Reward reward){
+        reward.Pick();
     }
 
     private void UnselectReward(Reward reward){

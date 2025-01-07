@@ -6,7 +6,7 @@ public class Reward
 {
         public GameObject cell;
 
-        virtual public void Pick(BaseUnit unit){
+        virtual public void Pick(){
                 Debug.Log("Doit être overridé");
         }
 
