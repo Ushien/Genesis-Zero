@@ -8,6 +8,7 @@ public class ResourceManager : MonoBehaviour
 {
     public ResourceManager Instance;
     private List<ScriptableSpell> spellList;
+    private List<ScriptableUnit> enemyUnitList;
 
     // Start is called before the first frame update
     void Awake()
@@ -17,6 +18,7 @@ public class ResourceManager : MonoBehaviour
 
     public void LoadResources(){
         spellList = Resources.LoadAll("Spells", typeof(ScriptableSpell)).Cast<ScriptableSpell>().ToList();
+        enemyUnitList = Resources.LoadAll<ScriptableUnit>("Units/Enemies").ToList();
     }
 
     public List<ScriptableSpell> GetSpells(bool lootable = false){
@@ -24,6 +26,10 @@ public class ResourceManager : MonoBehaviour
             return spellList.Where(spell => spell.lootable == true).ToList();
         }
         return spellList;
+    }
+
+    public List<ScriptableUnit> GetEnemyUnit(){
+        return enemyUnitList;
     }
 
     // Update is called once per frame

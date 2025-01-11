@@ -11,8 +11,6 @@ using System;
 public class UnitManager : MonoBehaviour
 {
     public static UnitManager Instance;
-
-    private List<ScriptableUnit> _units;
     private List<BaseUnit> units;
     public BaseUnit EmptyUnit;
     public Passive EmptyPassive;
@@ -23,8 +21,7 @@ public class UnitManager : MonoBehaviour
 
     void Awake(){
         Instance = this;
-        
-        _units = Resources.LoadAll<ScriptableUnit>("Units/Enemies").ToList();
+
         units = new List<BaseUnit>();
 
         all_units = new GameObject("Units");
@@ -86,10 +83,6 @@ public class UnitManager : MonoBehaviour
         foreach(BaseUnit unit in units_to_spawn){
             SpawnUnit(unit, Team.Ally);
         }  
-    }
-
-    public ScriptableUnit GetRandomScriptableUnit(){
-        return _units.OrderBy(o=> UnityEngine.Random.value).First();
     }
 
     public BaseUnit GetRandomUnit(Team team = Team.Both){

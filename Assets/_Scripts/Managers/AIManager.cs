@@ -22,8 +22,7 @@ public class AIManager : MonoBehaviour
         List<Instruction> instructions = new List<Instruction>();
 
         foreach (BaseUnit unit in UnitManager.Instance.GetUnits(Team.Enemy)){
-            Instruction newInstruction = Instantiate(emptyInstruction);
-            newInstruction.Setup(unit, unit.GetRandomSpell(includingAttack : true), UnitManager.Instance.GetRandomUnit(Team.Ally).GetTile());
+            Instruction newInstruction = BattleManager.Instance.CreateInstruction(unit, unit.GetRandomSpell(includingAttack : true), UnitManager.Instance.GetRandomUnit(Team.Ally).GetTile());
             instructions.Add(newInstruction);
         }
 

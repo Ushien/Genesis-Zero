@@ -31,17 +31,20 @@ public class BattleManager : MonoBehaviour
     public Instruction emptyInstruction;
     public BattleTurn emptyBattleTurn;
     
-    public int nTurn = 0;
+    private int battleId;
+    public int nTurn = 1;
     public BattleTurn currentTurn;
 
     public List<BattleTurn> archivedTurns = new List<BattleTurn>();
 
     private bool inAnimation = false;
+    private GameObject battleArchive;
+    private 
 
     void Awake(){
         Instance = this;
-        currentTurn = Instantiate(emptyBattleTurn);
-        currentTurn.Setup(nTurn);
+
+        battleArchive = new GameObject("Current Battle Archive");
     }
 
     void Update(){
@@ -198,6 +201,7 @@ public class BattleManager : MonoBehaviour
                 // Do stuff
                 // Start turn effects
                 turnState = TurnState.ACTION_CHOICE;
+                NextTurn();
                 if(teamTurn == TeamTurn.ALLY){
                     ChangeState(Machine.PLAYERACTIONCHOICESTATE, Trigger.FORWARD);
                 }
@@ -255,7 +259,6 @@ public class BattleManager : MonoBehaviour
                             ArchiveTurn();
                             UnitManager.Instance.MakeUnitsActive();
                             SwitchCurrentTeam();
-                            nTurn ++;
                             ChangeTurnState(Trigger.FORWARD);
                         }
                         break;
@@ -310,7 +313,7 @@ public class BattleManager : MonoBehaviour
         teamTurn = TeamTurn.ALLY;
 
         battleState = BattleState.TURN;
-        turnState = TurnState.ACTION_CHOICE;
+        turnState = TurnState.START;
         playerActionChoiceState = PlayerActionChoiceState.OUT;
     }
 
@@ -347,9 +350,6 @@ public class BattleManager : MonoBehaviour
     private void ArchiveTurn(){
         currentTurn.ArchiveTurn();
         archivedTurns.Add(currentTurn);
-        //TODO Choisir le bon numéro de tour
-        currentTurn = Instantiate(emptyBattleTurn);
-        currentTurn.Setup(nTurn);
     }
 
     public Team ConvertTeamTurn(TeamTurn teamTurn){
@@ -366,9 +366,19 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    private void NextTurn(){
+        nTurn ++;
+        currentTurn = Instantiate(emptyBattleTurn);
+        currentTurn.transform.SetParent(battleArchive.transform);
+        currentTurn.name = "Turn " + nTurn;
+        currentTurn.Setup(nTurn);
+    }
+
     public Instruction CreateInstruction(BaseUnit source_unit, BaseSpell spell_to_cast, Tile target_tile, bool hyper = false){
         Instruction new_instruction = Instantiate(emptyInstruction);
+        new_instruction.transform.SetParent(currentTurn.transform);
         new_instruction.Setup(source_unit, spell_to_cast, target_tile, hyper : hyper);
+        new_instruction.name = new_instruction.GetSummary();
         return new_instruction;
     }
 
@@ -429,6 +439,10 @@ public class BattleManager : MonoBehaviour
 
     public bool IsInAnimation(){
         return inAnimation;
+    }
+
+    public GameObject GetArchive(){
+        return battleArchive;
     }
 
     public void AnimateElements(){

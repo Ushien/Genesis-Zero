@@ -40,12 +40,13 @@ public class GlobalManager : MonoBehaviour
     private PickPhaseManager pickPhaseManager;
     private ResourceManager resourceManager;
     private Camera cam;
-
     private List<BaseUnit> allies;
+    private GameObject battleArchive;
 
     [SerializeField]
 
     public bool debug;
+    private int battleID = 0;
 
     void Awake(){
         Instance = this;
@@ -58,6 +59,9 @@ public class GlobalManager : MonoBehaviour
         resourceManager = Instantiate(resourceManagerPrefab);
         resourceManager.transform.SetParent(transform.parent);
         resourceManager.LoadResources();
+        unitManager = Instantiate(unitManagerPrefab);
+        unitManager.transform.SetParent(transform.parent);
+        battleArchive = new GameObject("Battle Archive");
 
         ChangeState(RunPhase.PICKPHASE);
     }
@@ -73,13 +77,12 @@ public class GlobalManager : MonoBehaviour
     }
 
     public void BattlePhaseIn(){
+        battleID += 1;
         gridManager = Instantiate(gridManagerPrefab);
         GridManager.Instance.SetCam(cam.transform);
         gridManager.transform.SetParent(transform.parent);
         battleManager = Instantiate(battleManagerPrefab);
         battleManager.transform.SetParent(transform.parent);
-        unitManager = Instantiate(unitManagerPrefab);
-        unitManager.transform.SetParent(transform.parent);
         spellManager = Instantiate(spellManagerPrefab);
         spellManager.transform.SetParent(transform.parent);
         interfaceManager = Instantiate(interfaceManagerPrefab);
@@ -120,10 +123,11 @@ public class GlobalManager : MonoBehaviour
     public void BattlePhaseOut(){
         //Deleting all the managers
         Destroy(gridManager.gameObject);
+        battleManager.GetArchive().name = "Battle " + battleID;
+        battleManager.GetArchive().transform.SetParent(battleArchive.transform);
         Destroy(battleManager.gameObject);
         allies = UnitManager.Instance.GetUnits(Team.Ally);
         unitManager.EndBattle();
-        Destroy(unitManager.gameObject);
         Destroy(spellManager.gameObject);
         Destroy(interfaceManager.gameObject);
         Destroy(animationManager.gameObject);
