@@ -21,4 +21,8 @@ public class SpellReward : Reward
     public override string GetTitle(){
         return spell.name;
     }
+
+    public override void Pick(BaseUnit unit){
+        SpellManager.Instance.SetupSpell(spell.spellScriptPrefab, unit, 2);
+    }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Unity.VisualScripting;
 
 /// <summary>
 /// Représente une attaque ou une technique
@@ -64,8 +65,8 @@ public class BaseSpell : MonoBehaviour
     /// Initialise le sort
     /// </summary>
     /// <param name="ownerUnit">Unité possédant le sort</param>
-    public void Setup(BaseUnit ownerUnit){
-        this.name = scriptableSpell.spell_name;
+    public void Setup(BaseUnit ownerUnit, int spellListIndex = -1){
+        name = scriptableSpell.spell_name;
 
         owner = ownerUnit;
         
@@ -78,6 +79,9 @@ public class BaseSpell : MonoBehaviour
         artwork = scriptableSpell.artwork;
         range = scriptableSpell.range;
         team_restriction = scriptableSpell.team_restriction;
+        if(spellListIndex != -1){
+            ownerUnit.GetSpells()[spellListIndex] = this;
+        }
     }
         #endregion
         #region Actions du sort

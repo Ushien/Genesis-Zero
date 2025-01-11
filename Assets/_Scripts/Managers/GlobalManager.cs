@@ -66,7 +66,7 @@ public class GlobalManager : MonoBehaviour
         battleArchive = new GameObject("Battle Archive");
         lifeBarUI = Instantiate(UIWorldSpacePrefab);
 
-        ChangeState(RunPhase.PICKPHASE);
+        ChangeState(RunPhase.BATTLEPHASE);
     }
 
     // Update is called once per frame
@@ -216,6 +216,10 @@ public class GlobalManager : MonoBehaviour
 
     public Canvas GetUIWorldSpace(){
         return lifeBarUI;
+    }
+
+    public List<BaseUnit> GetAllies(){
+        return allies;
     }
 
 }

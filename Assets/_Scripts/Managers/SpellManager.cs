@@ -42,10 +42,10 @@ public class SpellManager : MonoBehaviour
         return new_spell;
     }
 
-    public BaseSpell SetupSpell(BaseSpell spell, BaseUnit unit){
+    public BaseSpell SetupSpell(BaseSpell spell, BaseUnit unit, int availableSpellsIndex){
         BaseSpell new_spell = Instantiate(spell);
         new_spell.transform.parent = unit.transform;
-        new_spell.Setup(unit);
+        new_spell.Setup(unit, availableSpellsIndex);
         return new_spell;
     }
 

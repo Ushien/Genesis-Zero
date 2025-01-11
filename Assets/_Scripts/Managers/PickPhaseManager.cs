@@ -143,7 +143,7 @@ public class PickPhaseManager : MonoBehaviour
     }
 
     public void PickReward(Reward reward){
-        reward.Pick();
+        reward.Pick(GlobalManager.Instance.GetAllies()[0]);
     }
 
     private void UnselectReward(Reward reward){
