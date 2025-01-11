@@ -16,6 +16,7 @@ public class GlobalManager : MonoBehaviour
     [SerializeField] private AIManager AIManagerPrefab;
     [SerializeField] private BattleEventManager battleEventManagerPrefab;
     [SerializeField] private EventManager eventManagerPrefab;
+    [SerializeField] private Canvas UIWorldSpacePrefab;
 
     [SerializeField] private Camera camPrefab;
 
@@ -35,6 +36,7 @@ public class GlobalManager : MonoBehaviour
     private AIManager AIManager;
     private BattleEventManager battleEventManager;
     private EventManager eventManager;
+    private Canvas lifeBarUI;
     [SerializeField] private TestScript testScript;
 
     private PickPhaseManager pickPhaseManager;
@@ -62,6 +64,7 @@ public class GlobalManager : MonoBehaviour
         unitManager = Instantiate(unitManagerPrefab);
         unitManager.transform.SetParent(transform.parent);
         battleArchive = new GameObject("Battle Archive");
+        lifeBarUI = Instantiate(UIWorldSpacePrefab);
 
         ChangeState(RunPhase.PICKPHASE);
     }
@@ -209,6 +212,10 @@ public class GlobalManager : MonoBehaviour
 
     public RunPhase GetRunPhase(){
         return runPhase;
+    }
+
+    public Canvas GetUIWorldSpace(){
+        return lifeBarUI;
     }
 
 }

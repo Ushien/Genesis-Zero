@@ -247,7 +247,6 @@ public class GridManager : MonoBehaviour
     }
     public void DisplayHighlights(){
 
-        TurnHighlightsOff();
         GetMainSelection();
 
         if(main_selection != null){
@@ -284,15 +283,7 @@ public class GridManager : MonoBehaviour
 
             foreach (Tile tile in selected_tiles){
                 // Que faire si une case est sélectionnée
-                //tile._highlight.SetActive(true);
             }
-        }
-    }
-
-    public void TurnHighlightsOff(){
-        foreach (Tile tile in ReturnTilesList())
-        {
-            tile._highlight.SetActive(false);
         }
     }
 

@@ -321,6 +321,7 @@ MonoBehaviour:
   AIManagerPrefab: {fileID: 3802776597445336118, guid: 22580b0be7b21af41b409edb774395bf, type: 3}
   battleEventManagerPrefab: {fileID: 4870162288617126403, guid: 35cb69db407e7ed4abd2260a0fdd904f, type: 3}
   eventManagerPrefab: {fileID: 6882506551565756176, guid: b7dd4567f953f1f4da20d768c505f26a, type: 3}
+  UIWorldSpacePrefab: {fileID: 3722291128606437924, guid: 7d72b36445a86f446892d74aff8d2150, type: 3}
   camPrefab: {fileID: 2605031425265215567, guid: 639849246cd26ac4da7cb572d53af85b, type: 3}
   pickPhaseManagerPrefab: {fileID: 1361717538261662388, guid: ebe14cec091ccab4dacc68438bd7408b, type: 3}
   resourceManagerPrefab: {fileID: 3759869079455970956, guid: 74daf401835ff7e49a64955c157a2328, type: 3}

@@ -8,7 +8,6 @@ using UnityEngine;
 public class Tile : MonoBehaviour
 {
     [SerializeField] private Color _baseColor, _offsetColor;
-    [SerializeField] public GameObject _highlight;
     [SerializeField] private Animator tileAnimator;
     //TODO Marqueur pour montrer la sélection principale
 

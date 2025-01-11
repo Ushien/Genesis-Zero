@@ -82,7 +82,7 @@ public class InterfaceManager : MonoBehaviour
 
         // On initialise la UI
         UI = Instantiate(UIPrefab);
-        lifeBarsUI = Instantiate(UIWorldSpace);
+        lifeBarsUI = GlobalManager.Instance.GetUIWorldSpace();
         UI.worldCamera = GlobalManager.Instance.GetCam();
 
         infosPanel = UI.transform.Find("InfosPanel").gameObject;
