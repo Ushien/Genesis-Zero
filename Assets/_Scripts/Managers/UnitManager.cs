@@ -158,6 +158,15 @@ public class UnitManager : MonoBehaviour
             unit.ApplyEndturnEffects();
         }
     }
+
+    /// <summary>
+    /// Rend toutes les unités encore en vie prêtes pour leur combat suivant.
+    /// </summary>
+    public void EndBattle(){
+        foreach (BaseUnit unit in GetUnits()){
+            unit.EndBattle();
+        }
+    }
 }
 
 public enum Team {

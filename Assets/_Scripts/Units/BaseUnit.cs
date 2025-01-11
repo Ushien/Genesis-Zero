@@ -152,7 +152,15 @@ public class BaseUnit : MonoBehaviour
             }
         }
 
-    
+    /// <summary>
+    /// Rend l'unité prête pour le combat suivant.
+    /// Les HP et certains états sont maintenus, le reste est remis à jour en conséquence.
+    /// </summary>
+    public void EndBattle(){
+        GiveInstruction(false);
+        Cleanse();
+    }
+
     /// <summary>
     /// Applique tous les effets de fin de tour liés à l'unité
     /// </summary>

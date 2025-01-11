@@ -94,6 +94,14 @@ public class GlobalManager : MonoBehaviour
         eventManager = Instantiate(eventManagerPrefab);
         eventManager.transform.SetParent(transform.parent);
 
+        GameObject[] rootGameObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
+        foreach (GameObject _gameobject in rootGameObjects)
+        {
+            if(_gameobject.name == "Units" || _gameobject.name.Contains("UI - World Space")){
+                _gameobject.SetActive(true);
+            }
+        }
+
         if(allies == null){
             BattleManager.Instance.LaunchBattle(testScript.ally_composition.GetTuples(), testScript.enemy_composition.GetTuples());
         }
@@ -114,6 +122,7 @@ public class GlobalManager : MonoBehaviour
         Destroy(gridManager.gameObject);
         Destroy(battleManager.gameObject);
         allies = UnitManager.Instance.GetUnits(Team.Ally);
+        unitManager.EndBattle();
         Destroy(unitManager.gameObject);
         Destroy(spellManager.gameObject);
         Destroy(interfaceManager.gameObject);
@@ -125,8 +134,11 @@ public class GlobalManager : MonoBehaviour
         GameObject[] rootGameObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
         foreach (GameObject _gameobject in rootGameObjects)
         {
-            if(_gameobject.name == "Grid" || _gameobject.name == "Units" || _gameobject.name.Contains("UI Screen Space") || _gameobject.name.Contains("UI - World Space")){
+            if(_gameobject.name == "Grid" || _gameobject.name.Contains("UI Screen Space")){
                 Destroy(_gameobject);
+            }
+            if(_gameobject.name == "Units" || _gameobject.name.Contains("UI - World Space")){
+                _gameobject.SetActive(false);
             }
         }
     }
