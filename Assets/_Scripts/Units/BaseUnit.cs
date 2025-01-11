@@ -52,6 +52,8 @@ public class BaseUnit : MonoBehaviour
     // Est-ce que l'unité est hors-combat ?
     private bool dead = false;
     private int armor = 0;
+
+    private Vector2 position;
         #endregion
 
         #region Fields relatifs au moteur de jeu
@@ -81,14 +83,16 @@ public class BaseUnit : MonoBehaviour
     /// <param name="originUnit">Modèle d'unité</param>
     /// <param name="setup_level">Niveau de l'unité</param>
     /// <param name="team">Equipe de l'unité</param>
-    public void Setup(ScriptableUnit originUnit, int setup_level, Team team, Vector2 position){
+    public void Setup(ScriptableUnit originUnit, int setup_level, Team team, Vector2 _position){
         scriptableUnit = originUnit;
-        this.name = scriptableUnit.unit_name;
+        name = scriptableUnit.unit_name;
         
-        this.GetComponent<SpriteRenderer>().sprite = scriptableUnit.sprite;
+        GetComponent<SpriteRenderer>().sprite = scriptableUnit.sprite;
         unit_name = scriptableUnit.unit_name;
 
         Team = team;
+        position = _position;
+
         level = setup_level;
 
         finalPower = GetStatFromLevel(scriptableUnit.original_power, level);
@@ -120,30 +124,9 @@ public class BaseUnit : MonoBehaviour
             availableSpells[i] = SpellManager.Instance.SetupSpell(spell, this);
             i++;
         }
-        if (scriptableUnit.scriptableJob != null){
-            LoadJob(scriptableUnit.scriptableJob);
-        }
 
         targetArmorBarScale = new Vector3((float)GetArmor()/GetTotalHealth(), 1, 1);
         lifeBar = InterfaceManager.Instance.SetupLifebar(this);
-    }
-
-    /// <summary>
-    /// Charger la classe de l'unité
-    /// </summary>
-    /// <param name="scriptableJob"></param>
-    public void LoadJob(ScriptableJob scriptableJob){
-        int i = 2;
-        foreach (BaseSpell spell in scriptableJob.spells)
-        {
-            availableSpells[i] = SpellManager.Instance.SetupSpell(spell, this);
-            i++;
-        }
-        if (scriptableJob.passive != null){
-            Destroy(passive.gameObject);
-            passive = Instantiate(scriptableJob.passive);
-            passive.Setup(this);
-        }
     }
 
     #endregion
@@ -374,6 +357,14 @@ public class BaseUnit : MonoBehaviour
     /// <returns></returns>
     public Team GetTeam(){
         return Team;
+    }
+
+    public void SetTeam(Team _team){
+        Team = _team;
+    }
+
+    public Vector2 GetPosition(){
+        return position;
     }
 
     /// <summary>

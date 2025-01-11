@@ -41,6 +41,8 @@ public class GlobalManager : MonoBehaviour
     private ResourceManager resourceManager;
     private Camera cam;
 
+    private List<BaseUnit> allies;
+
     [SerializeField]
 
     public bool debug;
@@ -92,7 +94,13 @@ public class GlobalManager : MonoBehaviour
         eventManager = Instantiate(eventManagerPrefab);
         eventManager.transform.SetParent(transform.parent);
 
-        BattleManager.Instance.LaunchBattle(testScript.ally_composition.GetTuples(), testScript.enemy_composition.GetTuples());
+        if(allies == null){
+            BattleManager.Instance.LaunchBattle(testScript.ally_composition.GetTuples(), testScript.enemy_composition.GetTuples());
+        }
+        else
+        {
+            BattleManager.Instance.LaunchBattle(allies, testScript.enemy_composition.GetTuples());
+        }
         BattleManager.Instance.DebugSetState();
         BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, BattleManager.Trigger.FORWARD);
 
@@ -105,6 +113,7 @@ public class GlobalManager : MonoBehaviour
         //Deleting all the managers
         Destroy(gridManager.gameObject);
         Destroy(battleManager.gameObject);
+        allies = UnitManager.Instance.GetUnits(Team.Ally);
         Destroy(unitManager.gameObject);
         Destroy(spellManager.gameObject);
         Destroy(interfaceManager.gameObject);

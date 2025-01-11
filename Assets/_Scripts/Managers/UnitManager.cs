@@ -23,7 +23,7 @@ public class UnitManager : MonoBehaviour
 
     void Awake(){
         Instance = this;
-
+        
         _units = Resources.LoadAll<ScriptableUnit>("Units/Enemies").ToList();
         units = new List<BaseUnit>();
 
@@ -49,8 +49,25 @@ public class UnitManager : MonoBehaviour
         new_unit.Setup(unit_to_spawn, level, team, position);
         units.Add(new_unit);
 
-        var SpawnTile = GridManager.Instance.GetTileAtPosition(team, position);
-        SpawnTile.SetUnit(new_unit);
+        Tile spawnTile = GridManager.Instance.GetTileAtPosition(team, position);
+        spawnTile.SetUnit(new_unit);
+    }
+
+    public void SpawnUnit(BaseUnit unit_to_spawn, Team team){
+
+        if(team == Team.Ally){
+            unit_to_spawn.transform.parent = all_allies.transform;
+            unit_to_spawn.SetTeam(Team.Ally);
+        }
+        else{
+            unit_to_spawn.transform.parent = all_enemies.transform;
+            unit_to_spawn.SetTeam(Team.Enemy);
+        }
+        
+        units.Add(unit_to_spawn);
+
+        Tile spawnTile = GridManager.Instance.GetTileAtPosition(team, unit_to_spawn.GetPosition());
+        spawnTile.SetUnit(unit_to_spawn); 
     }
 
     public void SpawnEnemies(List<Tuple<Vector2, ScriptableUnit, int>> units_to_spawn){
@@ -59,10 +76,16 @@ public class UnitManager : MonoBehaviour
         }
     }
 
-    public void spawnAllies(List<Tuple<Vector2, ScriptableUnit, int>> units_to_spawn){
+    public void SpawnAllies(List<Tuple<Vector2, ScriptableUnit, int>> units_to_spawn){
         foreach(Tuple<Vector2, ScriptableUnit, int> unit in units_to_spawn){
             SpawnUnit(unit.Item1, unit.Item2, unit.Item3, Team.Ally);
         }
+    }
+
+    public void SpawnAllies(List<BaseUnit> units_to_spawn){
+        foreach(BaseUnit unit in units_to_spawn){
+            SpawnUnit(unit, Team.Ally);
+        }  
     }
 
     public ScriptableUnit GetRandomScriptableUnit(){
