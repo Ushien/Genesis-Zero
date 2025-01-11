@@ -430,7 +430,9 @@ public class BattleManager : MonoBehaviour
     }
 
     public void AddEvent(BattleEvent _event){
-        currentTurn.AddEvent(_event);
+        if(currentTurn != null){
+            currentTurn.AddEvent(_event);
+        }
     }
 
     public void SetInAnimation(bool value){
