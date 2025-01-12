@@ -25,6 +25,7 @@ public class PickPhaseManager : MonoBehaviour
     [SerializeField]
     private Canvas informationPanelPrefab;
     private Canvas informationPanel;
+    private BaseUnit selectedUnit;
 
     private Vector3 currentSelectorPosition;
     private Vector3 targetSelectorPosition;
@@ -40,6 +41,7 @@ public class PickPhaseManager : MonoBehaviour
         informationPanel = Instantiate(informationPanelPrefab);
         informationPanel.worldCamera = GlobalManager.Instance.GetCam();
         ResetDisplay();
+        selectedUnit = GlobalManager.Instance.GetAllies()[0];
 
         SetCurrentRewards(new List<Reward>{
             GenerateReward(PickPhaseManager.RewardType.SPELL),
@@ -91,6 +93,9 @@ public class PickPhaseManager : MonoBehaviour
             List<ScriptableSpell> spellList = resourceManager.GetSpells(lootable:true);
             ScriptableSpell spell = spellList[UnityEngine.Random.Range(0, spellList.Count)];
             return new SpellReward(spell);
+        }
+        if(rewardType == RewardType.PASSIVE){
+            //
         }
         
         return new Reward();
@@ -162,7 +167,12 @@ public class PickPhaseManager : MonoBehaviour
     }
 
     public void PickReward(Reward reward){
-        reward.Pick(GlobalManager.Instance.GetAllies()[0]);
+        if(selectedUnit.GetAvailableSpellIndex() == -1){
+            //
+        }
+        else{
+            reward.Pick(selectedUnit);
+        }
     }
 
     private void UnselectReward(Reward reward){

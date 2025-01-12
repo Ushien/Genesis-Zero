@@ -292,6 +292,17 @@ public class BaseUnit : MonoBehaviour
 
         actionQueue = newQueue;
     }
+
+    public int GetAvailableSpellIndex(){
+        for (int index = 1; index <= 3; index++)
+        {
+            if(availableSpells[index] == null){
+                return index;
+            }
+        }
+        return -1;
+    }
+
     #endregion
 
         #region Gestion des modificateurs
