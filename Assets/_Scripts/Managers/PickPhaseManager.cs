@@ -40,6 +40,13 @@ public class PickPhaseManager : MonoBehaviour
         informationPanel = Instantiate(informationPanelPrefab);
         informationPanel.worldCamera = GlobalManager.Instance.GetCam();
         ResetDisplay();
+
+        SetCurrentRewards(new List<Reward>{
+            GenerateReward(PickPhaseManager.RewardType.SPELL),
+            GenerateReward(PickPhaseManager.RewardType.SPELL),
+            GenerateReward(PickPhaseManager.RewardType.SPELL)
+        });
+        DisplayRewards();
     }
 
     public void End(){
