@@ -121,7 +121,6 @@ public class BaseUnit : MonoBehaviour
         int i = 0;
         foreach (BaseSpell spell in scriptableUnit.spells)
         { 
-            Debug.Log(i);
             SpellManager.Instance.SetupSpell(spell, this, i);
             i++;
         }
