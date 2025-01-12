@@ -46,3 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rewardSelectorPrefab: {fileID: 8956214222160928716, guid: d9239a4fafe0a1e4583c846d4ee6d932, type: 3}
   choiceCell: {fileID: 3235262677852364864, guid: 93420ad097203f14bb668b79246484a8, type: 3}
+  informationPanelPrefab: {fileID: 2703114003398457339, guid: 78d60f1959b850c43ab69f3bb197ff2c, type: 3}

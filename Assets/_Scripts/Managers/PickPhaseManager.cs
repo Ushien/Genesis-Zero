@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.IO;
+using TMPro;
 
 public class PickPhaseManager : MonoBehaviour
 {
@@ -20,6 +22,9 @@ public class PickPhaseManager : MonoBehaviour
     private int currentSelectionIndex;
     public enum RewardType{EMPTY, PASSIVE, SPELL}
     public enum Directions{NONE, LEFT, RIGHT}
+    [SerializeField]
+    private Canvas informationPanelPrefab;
+    private Canvas informationPanel;
 
     private Vector3 currentSelectorPosition;
     private Vector3 targetSelectorPosition;
@@ -32,6 +37,9 @@ public class PickPhaseManager : MonoBehaviour
         currentSelectionIndex = 0;
         rewardSelector = Instantiate(rewardSelectorPrefab);
         rewardSelector.gameObject.SetActive(false);
+        informationPanel = Instantiate(informationPanelPrefab);
+        informationPanel.worldCamera = GlobalManager.Instance.GetCam();
+        ResetDisplay();
     }
 
     public void End(){
@@ -39,6 +47,7 @@ public class PickPhaseManager : MonoBehaviour
         currentSelectionIndex = 0;
         Destroy(rewardParent);
         Destroy(rewardSelector.gameObject);
+        Destroy(informationPanel.gameObject);
     }
 
     void Awake(){
@@ -50,16 +59,18 @@ public class PickPhaseManager : MonoBehaviour
     {
         currentSelectorPosition = Vector3.Lerp(currentSelectorPosition, targetSelectorPosition, Time.deltaTime*6);
         rewardSelector.position = currentSelectorPosition;
-        if(Input.GetKeyDown(KeyCode.LeftArrow)){
-            Move(Directions.LEFT);
-        }
-        if(Input.GetKeyDown(KeyCode.RightArrow)){
-            Move(Directions.RIGHT);
-        }
-        if(Input.GetKeyDown(KeyCode.B)){
-            if(currentRewards.Count > 0){
-                PickReward(currentRewards[currentSelectionIndex]);
-                GlobalManager.Instance.ChangeState(GlobalManager.RunPhase.BATTLEPHASE);
+        if(currentRewards != null){
+            if(Input.GetKeyDown(KeyCode.LeftArrow)){
+                Move(Directions.LEFT);
+            }
+            if(Input.GetKeyDown(KeyCode.RightArrow)){
+                Move(Directions.RIGHT);
+            }
+            if(Input.GetKeyDown(KeyCode.B)){
+                if(currentRewards.Count > 0){
+                    PickReward(currentRewards[currentSelectionIndex]);
+                    GlobalManager.Instance.ChangeState(GlobalManager.RunPhase.BATTLEPHASE);
+                }
             }
         }
     }
@@ -129,6 +140,7 @@ public class PickPhaseManager : MonoBehaviour
             default:
                 break;
         }
+        UpdateDisplay();
     }
 
 
@@ -148,5 +160,35 @@ public class PickPhaseManager : MonoBehaviour
 
     private void UnselectReward(Reward reward){
         //
+    }
+
+    public void UpdateDisplay(){
+        ResetDisplay();
+        if(currentRewards.Count > currentSelectionIndex){
+            if(currentRewards[currentSelectionIndex] is SpellReward){
+                // Devrait idéalement fonctionner avec un BaseSpell et non un ScriptableSpell
+                ScriptableSpell spell = ((SpellReward)currentRewards[currentSelectionIndex]).GetSpell();
+                informationPanel.gameObject.SetActive(true);
+                Transform spellPanel = informationPanel.transform.Find("SpellPanel");
+                spellPanel.gameObject.SetActive(true);
+                spellPanel.Find("Name").GetComponent<TextMeshProUGUI>().text = spell.name;
+                spellPanel.Find("Description").GetComponent<TextMeshProUGUI>().text = spell.fight_description;
+                spellPanel.Find("Cooldown").GetComponent<TextMeshProUGUI>().text = spell.cooldown.ToString();
+                spellPanel.Find("Name").GetComponent<TextMeshProUGUI>().text = spell.name;
+                spellPanel.Find("SpellPanelIcon").GetComponent<Image>().sprite = spell.artwork;
+            }
+            else{
+                informationPanel.gameObject.SetActive(false);
+            }
+        }
+        else{
+            informationPanel.gameObject.SetActive(false);
+        }
+    }
+
+    private void ResetDisplay(){
+            informationPanel.transform.Find("InfosPanel").gameObject.SetActive(false);
+            informationPanel.transform.Find("SpellPanel").gameObject.SetActive(false);
+            informationPanel.transform.Find("SpellSelector").gameObject.SetActive(false);
     }
 }
