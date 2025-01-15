@@ -212,6 +212,7 @@ public class BaseSpell : MonoBehaviour
         _fight_description = _fight_description.Replace("__3", DisplayPercents(GetRatio(hyper:hyper)[2]));
         return _fight_description;
     }
+    
     /// <summary>
     /// Renvoie les différents ratios associés au sort
     /// </summary>

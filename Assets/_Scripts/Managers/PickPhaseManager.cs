@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using TMPro;
+using System.Linq;
 
 public class PickPhaseManager : MonoBehaviour
 {
@@ -29,6 +30,8 @@ public class PickPhaseManager : MonoBehaviour
 
     private Vector3 currentSelectorPosition;
     private Vector3 targetSelectorPosition;
+
+    private static System.Random rng;
 
     // Start is called before the first frame update
     void Start()
@@ -61,6 +64,7 @@ public class PickPhaseManager : MonoBehaviour
 
     void Awake(){
         Instance = this;
+        rng = new System.Random();
     }
 
     // Update is called once per frame
@@ -91,7 +95,8 @@ public class PickPhaseManager : MonoBehaviour
     public Reward GenerateReward(RewardType rewardType){
         if(rewardType == RewardType.SPELL){
             List<ScriptableSpell> spellList = resourceManager.GetSpells(lootable:true);
-            ScriptableSpell spell = spellList[UnityEngine.Random.Range(0, spellList.Count)];
+            spellList = spellList.OrderBy(_ => rng.Next()).ToList();
+            ScriptableSpell spell = spellList[0];
             return new SpellReward(spell);
         }
         if(rewardType == RewardType.PASSIVE){
@@ -127,9 +132,9 @@ public class PickPhaseManager : MonoBehaviour
 
         }
         rewardSelector.gameObject.SetActive(true);
-        currentSelectorPosition = rewards[0].GetCell().transform.position;
-        targetSelectorPosition = rewards[0].GetCell().transform.position;
-
+        currentSelectorPosition = new Vector3(rewards[0].GetCell().transform.position.x, rewards[0].GetCell().transform.position.y, (float)-9.5);
+        targetSelectorPosition = currentSelectorPosition;
+        UpdateDisplay();
     }
 
     public void Move(Directions direction){
@@ -158,7 +163,7 @@ public class PickPhaseManager : MonoBehaviour
 
     public void SelectReward(Reward reward){
         if(reward.GetCell() != null){
-            targetSelectorPosition = reward.GetCell().transform.position;
+            targetSelectorPosition = new Vector3(reward.GetCell().transform.position.x, reward.GetCell().transform.position.y, (float)-9.5);
         }
         else{
             Debug.Log("Pas censé arriver ici");
@@ -168,7 +173,7 @@ public class PickPhaseManager : MonoBehaviour
 
     public void PickReward(Reward reward){
         if(selectedUnit.GetAvailableSpellIndex() == -1){
-            //
+            // 
         }
         else{
             reward.Pick(selectedUnit);
