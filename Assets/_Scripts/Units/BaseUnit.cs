@@ -24,6 +24,7 @@ public class BaseUnit : MonoBehaviour
     public Tile OccupiedTile;
     public GameObject lifeBar;
     public Passive passive;
+    private List<Passive> passives;
     public BaseSpell attack;
     public BaseSpell[] availableSpells = new BaseSpell[4];
 
@@ -303,6 +304,18 @@ public class BaseUnit : MonoBehaviour
         return -1;
     }
 
+    public bool HasSpell(ScriptableSpell _spell){
+        foreach (BaseSpell spell in availableSpells)
+        {
+            if(spell != null){
+                if(_spell == spell.GetScriptableSpell()){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     #endregion
 
         #region Gestion des modificateurs
@@ -392,6 +405,14 @@ public class BaseUnit : MonoBehaviour
     /// <returns></returns>
     public Passive GetPassive(){
         return passive;
+    }
+
+    public List<Passive> GetPassives(){
+        return passives;
+    }
+
+    public void AddPassive(Passive newPassive){
+        passives.Add(newPassive);
     }
 
     /// <summary>

@@ -178,6 +178,10 @@ public class BaseSpell : MonoBehaviour
         owner = new_owner;
     }
 
+    public ScriptableSpell GetScriptableSpell(){
+        return scriptableSpell;
+    }
+
     /// <summary>
     /// Renvoie la portée du sort
     /// </summary>

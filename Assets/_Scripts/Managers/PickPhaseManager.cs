@@ -95,7 +95,7 @@ public class PickPhaseManager : MonoBehaviour
     public Reward GenerateReward(RewardType rewardType){
         if(rewardType == RewardType.SPELL){
             List<ScriptableSpell> spellList = resourceManager.GetSpells(lootable:true);
-            spellList = spellList.OrderBy(_ => rng.Next()).ToList();
+            spellList = spellList.Where(_spell => !(selectedUnit.HasSpell(_spell))).OrderBy(_ => rng.Next()).ToList();
             ScriptableSpell spell = spellList[0];
             return new SpellReward(spell);
         }
