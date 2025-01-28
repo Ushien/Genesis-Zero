@@ -14,8 +14,6 @@ public class BaseUnit : MonoBehaviour
         #region Fields de setup
 
     public ScriptableUnit scriptableUnit;
-    public ScriptableJob scriptableJob;
-    public Passive emptyPassive;
     public Modifier emptyModifier;
         #endregion
 
@@ -106,18 +104,12 @@ public class BaseUnit : MonoBehaviour
         modifiers[Heal] = new List<Modifier>();
         modifiers[Damage] = new List<Modifier>();
 
-        Passive newPassive;
-
-        if(scriptableUnit.passive != null){
-            newPassive = Instantiate(scriptableUnit.passive);
-        }
-        else{
-            newPassive = Instantiate(emptyPassive);
-        }
-
         passives = new List<Passive>();
 
-        newPassive.Setup(this);
+        foreach(ScriptablePassive _passive in originUnit.passives)
+        {
+            _passive.SetupPassive(this);
+        }
 
         attack = SpellManager.Instance.SetupAttack(this);
 

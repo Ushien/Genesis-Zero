@@ -661,8 +661,14 @@ public class InterfaceManager : MonoBehaviour
         }
         unitLevelPanel.text = "Niveau : " + unit.GetLevel().ToString();
         // TODO Il faut changer ça, là on n'affiche que le premier passif de la liste
-        unitPassiveNamePanel.text = unit.GetPassives()[0].GetName();
-        unitPassiveDescriptionPanel.text = unit.GetPassives()[0].GetFightDescription();
+        if(unit.GetPassives().Count >= 1){
+            unitPassiveNamePanel.text = unit.GetPassives()[0].GetName();
+            unitPassiveDescriptionPanel.text = unit.GetPassives()[0].GetFightDescription();
+        }
+        else{
+            unitPassiveNamePanel.text = "";
+            unitPassiveDescriptionPanel.text = "";
+        }
         spellCooldownPanel.text = "";
     }
     

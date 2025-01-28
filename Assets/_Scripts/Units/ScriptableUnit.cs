@@ -17,9 +17,6 @@ public class ScriptableUnit : ScriptableObject
     public string lore_description;
     [TextArea(5,10)]
     public string fight_description;
-
-    public Passive passive;
+    public List<ScriptablePassive> passives;
     public List<BaseSpell> spells;
-    
-    public ScriptableJob scriptableJob = null;
 }
