@@ -660,8 +660,9 @@ public class InterfaceManager : MonoBehaviour
             unitArmorPanel.text = "";
         }
         unitLevelPanel.text = "Niveau : " + unit.GetLevel().ToString();
-        unitPassiveNamePanel.text = unit.GetPassive().GetName();
-        unitPassiveDescriptionPanel.text = unit.GetPassive().GetFightDescription();
+        // TODO Il faut changer ça, là on n'affiche que le premier passif de la liste
+        unitPassiveNamePanel.text = unit.GetPassives()[0].GetName();
+        unitPassiveDescriptionPanel.text = unit.GetPassives()[0].GetFightDescription();
         spellCooldownPanel.text = "";
     }
     

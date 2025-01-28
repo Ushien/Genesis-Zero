@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class PassiveReward : Reward
 {
-    private Passive passive;
+    private ScriptablePassive passive;
 
-    public PassiveReward(Passive _passive){
+    public PassiveReward(ScriptablePassive _passive){
         passive = _passive;
     }
 
-    public Passive GetPassive(){
+    public ScriptablePassive GetPassive(){
         return passive;
     }
 
-    public void SetPassive(Passive _passive){
+    public void SetPassive(ScriptablePassive _passive){
         passive = _passive;
     }
 

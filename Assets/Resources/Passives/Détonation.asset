@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb5537ca8029f6d4082df846b5a8501c, type: 3}
+  m_Name: "D\xE9tonation"
+  m_EditorClassIdentifier: 
+  passive_name: "D\xE9tonation"
+  fight_description: 
+  artwork: {fileID: 21300000, guid: 94b44ae35d535944e90a22160621a7d1, type: 3}
+  passivePrefab: {fileID: 6541320857499053826, guid: 7a584848ed3aceb4db7a86d1327693b7, type: 3}
+  lootable: 1

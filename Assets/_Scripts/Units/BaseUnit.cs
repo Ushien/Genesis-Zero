@@ -23,7 +23,6 @@ public class BaseUnit : MonoBehaviour
 
     public Tile OccupiedTile;
     public GameObject lifeBar;
-    public Passive passive;
     private List<Passive> passives;
     public BaseSpell attack;
     public BaseSpell[] availableSpells = new BaseSpell[4];
@@ -107,14 +106,17 @@ public class BaseUnit : MonoBehaviour
         modifiers[Heal] = new List<Modifier>();
         modifiers[Damage] = new List<Modifier>();
 
+        Passive newPassive;
+
         if(scriptableUnit.passive != null){
-            passive = Instantiate(scriptableUnit.passive);
+            newPassive = Instantiate(scriptableUnit.passive);
         }
         else{
-            passive = Instantiate(emptyPassive);
+            newPassive = Instantiate(emptyPassive);
         }
 
-        passive.Setup(this);
+        newPassive.Setup(this);
+        AddPassive(newPassive);
 
         attack = SpellManager.Instance.SetupAttack(this);
 
@@ -397,14 +399,6 @@ public class BaseUnit : MonoBehaviour
 
     public Vector2 GetPosition(){
         return position;
-    }
-
-    /// <summary>
-    /// Renvoie le passif de l'unité
-    /// </summary>
-    /// <returns></returns>
-    public Passive GetPassive(){
-        return passive;
     }
 
     public List<Passive> GetPassives(){
