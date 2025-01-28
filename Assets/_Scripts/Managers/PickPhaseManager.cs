@@ -46,10 +46,11 @@ public class PickPhaseManager : MonoBehaviour
         ResetDisplay();
         selectedUnit = GlobalManager.Instance.GetAllies()[0];
 
+        //TODO Génération de Rewards
         SetCurrentRewards(new List<Reward>{
-            GenerateReward(PickPhaseManager.RewardType.SPELL),
-            GenerateReward(PickPhaseManager.RewardType.SPELL),
-            GenerateReward(PickPhaseManager.RewardType.SPELL)
+            GenerateReward(RewardType.PASSIVE),
+            GenerateReward(RewardType.SPELL),
+            GenerateReward(RewardType.SPELL)
         });
         DisplayRewards();
     }
@@ -93,6 +94,7 @@ public class PickPhaseManager : MonoBehaviour
     }
 
     public Reward GenerateReward(RewardType rewardType){
+        //ADD Reward here
         if(rewardType == RewardType.SPELL){
             List<ScriptableSpell> spellList = resourceManager.GetSpells(lootable:true);
             spellList = spellList.Where(_spell => !(selectedUnit.HasSpell(_spell))).OrderBy(_ => rng.Next()).ToList();
@@ -100,7 +102,10 @@ public class PickPhaseManager : MonoBehaviour
             return new SpellReward(spell);
         }
         if(rewardType == RewardType.PASSIVE){
-            //
+            List<ScriptablePassive> passiveList = resourceManager.GetPassives(lootable:true);
+            passiveList = passiveList.Where(_passive => !(selectedUnit.HasPassive(_passive))).OrderBy(_ => rng.Next()).ToList();
+            ScriptablePassive passive = passiveList[0];
+            return new PassiveReward(passive);
         }
         
         return new Reward();
@@ -125,9 +130,15 @@ public class PickPhaseManager : MonoBehaviour
             x_pos = x_pos + Screen.width/(rewards.Count+1);
             _object.transform.position = cam.ScreenToWorldPoint(new Vector3(x_pos, Screen.height/2, 1));
             _object.transform.SetParent(rewardParent.transform);
+
+            //ADD Reward here
             if(reward is SpellReward){
                 SpellReward spellReward = (SpellReward)reward;
                 _object.GetComponent<SpriteRenderer>().sprite = spellReward.GetSpell().artwork;
+            }
+            else if(reward is PassiveReward){
+                PassiveReward passiveReward = (PassiveReward)reward;
+                _object.GetComponent<SpriteRenderer>().sprite = passiveReward.GetPassive().artwork;
             }
 
         }
@@ -187,6 +198,7 @@ public class PickPhaseManager : MonoBehaviour
     public void UpdateDisplay(){
         ResetDisplay();
         if(currentRewards.Count > currentSelectionIndex){
+            //ADD Reward here
             if(currentRewards[currentSelectionIndex] is SpellReward){
                 // Devrait idéalement fonctionner avec un BaseSpell et non un ScriptableSpell
                 ScriptableSpell spell = ((SpellReward)currentRewards[currentSelectionIndex]).GetSpell();
@@ -196,8 +208,18 @@ public class PickPhaseManager : MonoBehaviour
                 spellPanel.Find("Name").GetComponent<TextMeshProUGUI>().text = spell.name;
                 spellPanel.Find("Description").GetComponent<TextMeshProUGUI>().text = spell.fight_description;
                 spellPanel.Find("Cooldown").GetComponent<TextMeshProUGUI>().text = spell.cooldown.ToString();
-                spellPanel.Find("Name").GetComponent<TextMeshProUGUI>().text = spell.name;
                 spellPanel.Find("SpellPanelIcon").GetComponent<Image>().sprite = spell.artwork;
+            }
+            else if(currentRewards[currentSelectionIndex] is PassiveReward){
+                // Devrait idéalement fonctionner avec un Passive et non un ScriptablePassive
+                ScriptablePassive passive = ((PassiveReward)currentRewards[currentSelectionIndex]).GetPassive();
+                informationPanel.gameObject.SetActive(true);
+                Transform spellPanel = informationPanel.transform.Find("SpellPanel");
+                spellPanel.gameObject.SetActive(true);
+                spellPanel.Find("Name").GetComponent<TextMeshProUGUI>().text = passive.name;
+                spellPanel.Find("Description").GetComponent<TextMeshProUGUI>().text = passive.fight_description;
+                spellPanel.Find("Cooldown").GetComponent<TextMeshProUGUI>().text = "";
+                spellPanel.Find("SpellPanelIcon").GetComponent<Image>().sprite = passive.artwork;
             }
             else{
                 informationPanel.gameObject.SetActive(false);

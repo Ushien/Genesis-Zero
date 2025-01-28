@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: "D\xE9tonation"
   m_EditorClassIdentifier: 
   passive_name: "D\xE9tonation"
-  fight_description: 
+  fight_description: "Lorsqu'une unit\xE9 adverse meurt, elle inflige %%1 d\xE9gats
+    aux unit\xE9s adjacentes"
   artwork: {fileID: 21300000, guid: 94b44ae35d535944e90a22160621a7d1, type: 3}
   passivePrefab: {fileID: 6541320857499053826, guid: 7a584848ed3aceb4db7a86d1327693b7, type: 3}
   lootable: 1

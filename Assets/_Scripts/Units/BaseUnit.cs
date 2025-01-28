@@ -115,8 +115,9 @@ public class BaseUnit : MonoBehaviour
             newPassive = Instantiate(emptyPassive);
         }
 
+        passives = new List<Passive>();
+
         newPassive.Setup(this);
-        AddPassive(newPassive);
 
         attack = SpellManager.Instance.SetupAttack(this);
 
@@ -318,6 +319,18 @@ public class BaseUnit : MonoBehaviour
         return false;
     }
 
+    public bool HasPassive(ScriptablePassive _passive){
+        foreach (Passive passive in GetPassives())
+        {
+            if(passive != null){
+                if(_passive == passive.GetScriptablePassive()){
+                    return true;
+                }
+            }
+        }
+        return false; 
+    }
+
     #endregion
 
         #region Gestion des modificateurs
@@ -406,6 +419,7 @@ public class BaseUnit : MonoBehaviour
     }
 
     public void AddPassive(Passive newPassive){
+        Debug.Log(newPassive.name);
         passives.Add(newPassive);
     }
 

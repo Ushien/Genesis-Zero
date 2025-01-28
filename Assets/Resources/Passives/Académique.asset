@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: "Acad\xE9mique"
   m_EditorClassIdentifier: 
   passive_name: "Acad\xE9mique"
-  fight_description: 
+  fight_description: "Apr\xE8s avoir lanc\xE9 une technique, le lanceur gagne __1%
+    de puissance"
   artwork: {fileID: 21300000, guid: 469db11e2f178c340a2ce8d7e9cd0098, type: 3}
   passivePrefab: {fileID: 1300072096745834880, guid: 6a1429a24283a104caf9667f4367106a, type: 3}
   lootable: 1

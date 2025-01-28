@@ -50,4 +50,5 @@ MonoBehaviour:
   passiveName: 
   fight_description: 
   holder: {fileID: 0}
+  scriptablePassive: {fileID: 11400000, guid: ecb5ac0dcea4a3b44a525005fd628f26, type: 2}
   modifier: {fileID: 0}

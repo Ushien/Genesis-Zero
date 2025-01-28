@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Frappe Diesel
   m_EditorClassIdentifier: 
   passive_name: 
-  fight_description: 
+  fight_description: "Les attaques de base du personnage font des d\xE9gats suppl\xE9mentaires
+    et appliquent l'\xE9l\xE9ment pyro."
   artwork: {fileID: 0}
   passivePrefab: {fileID: 4618570809523265024, guid: f23559c46aea4014cb0e9566fcfe7f70, type: 3}
   lootable: 0

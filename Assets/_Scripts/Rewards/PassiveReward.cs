@@ -19,6 +19,11 @@ public class PassiveReward : Reward
     }
 
     public override string GetTitle(){
-        return passive.name;
+        return passive.passive_name;
+    }
+
+    public override void Pick(BaseUnit unit)
+    {
+        passive.SetupPassive(unit);
     }
 }

@@ -15,6 +15,7 @@ public class Passive : MonoBehaviour
     public string passiveName;
     public string fight_description;
     public BaseUnit holder;
+    public ScriptablePassive scriptablePassive;
 
     public Modifier modifier;
 
@@ -25,6 +26,7 @@ public class Passive : MonoBehaviour
     virtual public void Setup(BaseUnit unit){
         name = passiveName;
         AttachToUnit(unit);
+        unit.AddPassive(this);
         transform.parent = unit.transform;
 
         Activate();
@@ -65,6 +67,10 @@ public class Passive : MonoBehaviour
 
     public BaseUnit GetOwner(){
         return holder;
+    }
+
+    public ScriptablePassive GetScriptablePassive(){
+        return scriptablePassive;
     }
 
     public string DisplayPercents(float percentRatio){

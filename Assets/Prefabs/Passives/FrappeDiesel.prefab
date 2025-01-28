@@ -44,6 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8135f9f7c12890f418ab445e1d225dd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 
+  ratio1: 1
+  ratio2: 1
+  ratio3: 1
+  passiveName: 
   fight_description: 
   holder: {fileID: 0}
+  scriptablePassive: {fileID: 11400000, guid: 4bcbecea440752347b6f5abdef930463, type: 2}
+  modifier: {fileID: 0}

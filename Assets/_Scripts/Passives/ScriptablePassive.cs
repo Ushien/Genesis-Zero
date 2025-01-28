@@ -10,4 +10,9 @@ public class ScriptablePassive : ScriptableObject
     public Sprite artwork;
     public Passive passivePrefab;
     public bool lootable;
+
+    public void SetupPassive(BaseUnit unit){
+        Passive passive = Instantiate(passivePrefab);
+        passive.Setup(unit);
+    }
 }
