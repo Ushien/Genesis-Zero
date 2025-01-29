@@ -32,12 +32,14 @@ public class TestScript : MonoBehaviour
     }
     void OnGUI()
     {
+        /*
         if(GlobalManager.Instance.GetRunPhase() == GlobalManager.RunPhase.PICKPHASE){
             if (GUI.Button(new Rect(Screen.width / 2 - 50, 5, 100, 30), "Easy Battle"))
             {
                 GlobalManager.Instance.ChangeState(GlobalManager.RunPhase.BATTLEPHASE);
             }
         }
+        */
         /* if(GlobalManager.Instance.GetRunPhase() == GlobalManager.RunPhase.PICKPHASE){
             if (GUI.Button(new Rect(Screen.width / 3 - 50, 5, 100, 30), "Test"))
             {

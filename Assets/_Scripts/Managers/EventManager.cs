@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
 using System;
+using Unity.VisualScripting;
 
 /// <summary>
 /// Gestion du système d'évènements
@@ -16,6 +17,8 @@ public class EventManager : MonoBehaviour
     public static event Action<BaseSpell, Tile> AfterCast;
     public delegate void BeforeSpellAction();
     public static event Action<BaseSpell, Tile> BeforeCast;
+    public delegate void AfterHealAction();
+    public static event Action<BaseUnit> AfterHeal;
     public delegate void DeathAction();
     public static event Action<BaseUnit> OnDeath;
     void Awake(){
@@ -31,6 +34,12 @@ public class EventManager : MonoBehaviour
     public void BeforeTechCast(BaseSpell spell, Tile targetTile){
         if (BeforeCast != null){
             BeforeCast(spell, targetTile);
+        }
+    }
+
+    public void UnitHealed(BaseUnit unit){
+        if (AfterHeal != null){
+            AfterHeal(unit);
         }
     }
 

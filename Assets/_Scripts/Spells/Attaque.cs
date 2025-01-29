@@ -13,6 +13,6 @@ public class AAttack : BaseSpell
     }
 
     private void _Attaque(Tile targetTile){
-        SpellManager.Instance.InflictDamage(GetFinalDamages(GetRatio()[0]), targetTile.GetUnit());
+        SpellManager.Instance.InflictDamage(GetOwner(), GetFinalDamages(GetRatio()[0]), targetTile.GetUnit());
     }
 }

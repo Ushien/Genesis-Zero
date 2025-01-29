@@ -18,10 +18,10 @@ public class Bouledefeu : BaseSpell
     }
 
     private void _Bouledefeu(Tile targetTile){
-        SpellManager.Instance.InflictDamage(GetFinalDamages(GetRatio()[0]), targetTile.GetUnit(), Properties.Pyro);
+        SpellManager.Instance.InflictDamage(GetOwner(), GetFinalDamages(GetRatio()[0]), targetTile.GetUnit(), new List<Properties>(){Properties.Pyro});
     }
 
     private void _Bouledefeu_H(Tile targetTile){
-        SpellManager.Instance.InflictDamage(GetFinalDamages(GetRatio(hyper:true)[0]), targetTile.GetUnit(), Properties.Pyro);
+        SpellManager.Instance.InflictDamage(GetOwner(), GetFinalDamages(GetRatio(hyper:true)[0]), targetTile.GetUnit(), new List<Properties>(){Properties.Pyro});
     }
 }

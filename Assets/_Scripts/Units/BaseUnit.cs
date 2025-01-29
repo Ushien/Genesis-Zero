@@ -777,6 +777,7 @@ public class BaseUnit : MonoBehaviour
             finalAmount = Tools.Ceiling(_modifier.GetNewAmount(finalAmount));
         }
         ModifyHP(+finalAmount);
+        EventManager.Instance.UnitHealed(this);
     }
 
         #region Gestion des états

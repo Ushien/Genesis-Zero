@@ -17,10 +17,10 @@ public class Sacrements : BaseSpell
         float finalAmount2 = GetRatio()[1] * GetOwner().GetFinalPower();
        
         if(targetTile.GetUnit().isArmored()){
-            SpellManager.Instance.InflictDamage(finalAmount2, targetTile.GetUnit());
+            SpellManager.Instance.InflictDamage(GetOwner(), finalAmount2, targetTile.GetUnit());
         }
         else{
-            SpellManager.Instance.InflictDamage(finalAmount1, targetTile.GetUnit());
+            SpellManager.Instance.InflictDamage(GetOwner(), finalAmount1, targetTile.GetUnit());
         }
     }
 }

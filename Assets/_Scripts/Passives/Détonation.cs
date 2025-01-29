@@ -27,7 +27,7 @@ public class NewBehaviourScript : Passive
         if(unit.GetTeam() != holder.GetTeam()){
             foreach (BaseUnit adjUnit in UnitManager.Instance.GetAdjacentUnits(unit))
             {
-                SpellManager.Instance.InflictDamage(GetFinalDamages(ratio1), adjUnit);
+                SpellManager.Instance.InflictDamage(GetOwner(), GetFinalDamages(ratio1), adjUnit);
             }
             
         }

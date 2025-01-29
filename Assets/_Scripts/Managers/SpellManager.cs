@@ -16,6 +16,7 @@ public class SpellManager : MonoBehaviour
     [SerializeField]
     private Modifier baseModifier;
     private List<ScriptableSpell> _spells;
+    private List<Properties> emptyProperties;
 
     private List<Status> cleansableStatus = new List<Status>(){Status.Poison, Status.Stun};
     void Awake(){
@@ -24,6 +25,7 @@ public class SpellManager : MonoBehaviour
     void Start()
     {
         _spells = LoadSpells();
+        emptyProperties = new List<Properties>();
     }
     
     public ScriptableSpell GetRandomSpell(){
@@ -53,16 +55,26 @@ public class SpellManager : MonoBehaviour
         Debug.Log("J'inflige des dégats avec mon attaque");
     }
 
-    public void InflictDamage(float amount, BaseUnit target, Properties property= Properties.Empty){
+    public void InflictDamage(BaseUnit originUnit, float amount, BaseUnit target, List<Properties> property = null){
         int finalDamages = Tools.Ceiling(amount);
         target.Damage(finalDamages);
+        if(property != null){
+            if(property.Contains(Properties.Vampirisme)){
+                
+            }
+        }
     }
 
-    public void InflictDamage(float amount, List<BaseUnit> targets, Properties property= Properties.Empty){
+    public void InflictDamage(BaseUnit originUnit, float amount, List<BaseUnit> targets, List<Properties> property = null){
         foreach (BaseUnit target in targets)
         {
             int finalDamages = Tools.Ceiling(amount);
             target.Damage(finalDamages);
+            if(property != null){
+                if(property.Contains(Properties.Vampirisme)){
+                    
+                }
+            }
         }        
     }
 
@@ -100,7 +112,14 @@ public enum Properties {
     Empty = 0, 
     Pyro = 1,
     Létalité = 2,
-    Curatif = 3
+    Curatif = 3,
+    Vampirisme = 4
+}
+
+public enum Rarity {
+    Common = 0,
+    Rare = 1,
+    Mythic = 2
 }
 
 public enum Ranges {
