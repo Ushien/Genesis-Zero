@@ -45,4 +45,13 @@ public class BattleEventManager : MonoBehaviour
             AnimationManager.Instance.addAnimation(newArmorGainEvent);
         }
     }
+
+    public void CreateHealEvent(BaseUnit targetUnit, int amount, bool animation = true){
+        HealEvent newHealEvent = new HealEvent(targetUnit, amount);
+        EventManager.Instance.UnitHealed(targetUnit);
+        BattleManager.Instance.AddEvent(newHealEvent);
+        if(animation){
+            AnimationManager.Instance.addAnimation(newHealEvent);
+        }
+    }
 }

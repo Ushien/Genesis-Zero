@@ -372,7 +372,7 @@ public class BaseSpell : MonoBehaviour
     /// </summary>
     /// <param name="_ratio"></param>
     /// <returns></returns>
-    public int GetFinalDamages(float _ratio){
+    virtual public int GetFinalDamages(float _ratio){
         int finalAmount = Tools.Ceiling(_ratio * GetOwner().GetFinalPower());
         
         foreach (Modifier _modifier in modifiers)

@@ -6,6 +6,7 @@ using UnityEngine;
 public class ScriptablePassive : ScriptableObject
 {
     public string passive_name;
+    [TextArea(5,10)]
     public string fight_description;
     public Sprite artwork;
     public Passive passivePrefab;

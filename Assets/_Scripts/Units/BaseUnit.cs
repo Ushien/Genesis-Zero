@@ -777,7 +777,7 @@ public class BaseUnit : MonoBehaviour
             finalAmount = Tools.Ceiling(_modifier.GetNewAmount(finalAmount));
         }
         ModifyHP(+finalAmount);
-        EventManager.Instance.UnitHealed(this);
+        BattleEventManager.Instance.CreateHealEvent(this, amount, true);
     }
 
         #region Gestion des états

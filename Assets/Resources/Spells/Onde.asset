@@ -24,3 +24,5 @@ MonoBehaviour:
   artwork: {fileID: 21300000, guid: e2c194a3fc273f3448240d7c2d50aa9c, type: 3}
   spellScriptPrefab: {fileID: 590099213569081121, guid: 95cc6951c6e44d44ba78b2dfc6e6ef94, type: 3}
   lootable: 1
+  rarity: 0
+  tags: 0300000007000000

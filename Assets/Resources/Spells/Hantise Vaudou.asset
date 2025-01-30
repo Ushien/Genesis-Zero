@@ -26,3 +26,4 @@ MonoBehaviour:
   spellScriptPrefab: {fileID: 0}
   lootable: 0
   rarity: 1
+  tags: 0b0000000d0000000c0000000e000000

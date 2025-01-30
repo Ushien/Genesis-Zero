@@ -60,22 +60,26 @@ public class SpellManager : MonoBehaviour
         target.Damage(finalDamages);
         if(property != null){
             if(property.Contains(Properties.Vampirisme)){
-                
+                originUnit.Heal(finalDamages);
             }
         }
     }
 
     public void InflictDamage(BaseUnit originUnit, float amount, List<BaseUnit> targets, List<Properties> property = null){
+        
+        int totalDamages = 0;
         foreach (BaseUnit target in targets)
         {
             int finalDamages = Tools.Ceiling(amount);
+            totalDamages += finalDamages;
             target.Damage(finalDamages);
-            if(property != null){
-                if(property.Contains(Properties.Vampirisme)){
-                    
-                }
+        }
+
+        if(property != null){
+            if(property.Contains(Properties.Vampirisme)){
+                originUnit.Heal(totalDamages);
             }
-        }        
+        }   
     }
 
     public void HealDamage(float amount, BaseUnit target, Properties property = Properties.Empty){
@@ -132,4 +136,27 @@ public enum Status {
     Kill = 1,
     Stun = 2,
     Poison = 3
+}
+
+/// <summary>
+/// Tags communiquant au jeu les synergies possibles autour d'un passif ou d'une technique.
+/// Influence le taux de drop de cette récompense.
+/// </summary>
+public enum Tag {
+    Empty = 0,
+    Multi_hit,
+    Vampirisme,
+    Heal,
+    Pyro,
+    Attack,
+    AOE,
+    Buff,
+    Armor,
+    Shield,
+    Debuff,
+    Status,
+    Poison,
+    Stun,
+    Silence
+
 }

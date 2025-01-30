@@ -25,4 +25,5 @@ public class ScriptableSpell : ScriptableObject
     public BaseSpell spellScriptPrefab;
     public bool lootable;
     public Rarity rarity = Rarity.Common;
+    public List<Tag> tags;
 }

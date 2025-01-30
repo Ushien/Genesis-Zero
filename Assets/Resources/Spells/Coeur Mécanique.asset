@@ -25,3 +25,4 @@ MonoBehaviour:
   spellScriptPrefab: {fileID: 8555355187402037432, guid: 628f7189031b65e4caa5ca700158b30b, type: 3}
   lootable: 1
   rarity: 2
+  tags: 0800000009000000
