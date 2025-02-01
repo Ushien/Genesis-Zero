@@ -13,6 +13,12 @@ public class TestScript : MonoBehaviour
 {
     public ScriptableComposition enemy_composition;
     public ScriptableComposition ally_composition;
+    public List<ScriptableObject> rewardsToSpawn;
+    public static TestScript Instance;
+
+    public void Awake(){
+        Instance = this;
+    }
 
     public void LaunchDebug()
     {

@@ -33,6 +33,9 @@ public class PickPhaseManager : MonoBehaviour
 
     private static System.Random rng;
 
+    [SerializeField]
+    int howManyRewards = 3;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,12 +49,25 @@ public class PickPhaseManager : MonoBehaviour
         ResetDisplay();
         selectedUnit = GlobalManager.Instance.GetAllies()[0];
 
+        List<Reward> rewardsToSpawn = new List<Reward>();
         //TODO Génération de Rewards
-        SetCurrentRewards(new List<Reward>{
-            GenerateReward(RewardType.PASSIVE),
-            GenerateReward(RewardType.SPELL),
-            GenerateReward(RewardType.SPELL)
-        });
+        for (int i = 0; i < howManyRewards; i++)
+        {
+            if(GlobalManager.Instance.debug){
+                if(TestScript.Instance.rewardsToSpawn.Count > 0){
+                    rewardsToSpawn.Add(GenerateReward(TestScript.Instance.rewardsToSpawn[0]));
+                    TestScript.Instance.rewardsToSpawn.RemoveAt(0);
+                }
+                else{
+                    rewardsToSpawn.Add(GenerateReward(new List<RewardType>{RewardType.SPELL, RewardType.PASSIVE}[rng.Next(2)]));
+                }
+            }
+            else{
+                rewardsToSpawn.Add(GenerateReward(new List<RewardType>{RewardType.SPELL, RewardType.PASSIVE}[rng.Next(2)]));
+            }
+        }
+        SetCurrentRewards(rewardsToSpawn);
+
         DisplayRewards();
     }
 
@@ -109,6 +125,16 @@ public class PickPhaseManager : MonoBehaviour
         }
         
         return new Reward();
+    }
+
+    public Reward GenerateReward(ScriptableObject scriptableObject){
+        if(scriptableObject is ScriptablePassive){
+            return new PassiveReward((ScriptablePassive)scriptableObject);
+        }
+        if(scriptableObject is ScriptableSpell){
+            return new SpellReward((ScriptableSpell)scriptableObject);
+        }
+        return null;
     }
 
     public void SetCurrentRewards(List<Reward> rewards){
