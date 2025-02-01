@@ -58,6 +58,7 @@ public class SpellManager : MonoBehaviour
     public void InflictDamage(BaseUnit originUnit, float amount, BaseUnit target, List<Properties> property = null){
         int finalDamages = Tools.Ceiling(amount);
         target.Damage(finalDamages);
+        
         if(property != null){
             if(property.Contains(Properties.Vampirisme)){
                 originUnit.Heal(finalDamages);

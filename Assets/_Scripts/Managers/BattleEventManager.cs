@@ -30,11 +30,15 @@ public class BattleEventManager : MonoBehaviour
         }
     }
 
-    public void CreateDamageEvent(BaseUnit targetUnit, int amount, bool _armorDamages = false, bool animation = true){
-        DamageEvent newDamageEvent = new DamageEvent(targetUnit, amount, _armorDamages);
-        BattleManager.Instance.AddEvent(newDamageEvent);
+    public DamageEvent CreateDamageEvent(BaseUnit targetUnit, int amount, bool _armorDamages = false){
+        return new DamageEvent(null, targetUnit, amount, _armorDamages);
+    }
+
+    public void ApplyDamageEvent(DamageEvent damageEvent, bool animation = true){
+        EventManager.Instance.UnitDamaged(damageEvent);
+        BattleManager.Instance.AddEvent(damageEvent);
         if(animation){
-            AnimationManager.Instance.addAnimation(newDamageEvent);
+            AnimationManager.Instance.addAnimation(damageEvent);
         }
     }
 

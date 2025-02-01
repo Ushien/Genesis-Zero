@@ -7,14 +7,23 @@ using UnityEngine;
 /// </summary>
 public class DamageEvent : BattleEvent
 {
+    private BaseUnit originUnit;
     private BaseUnit targetUnit;
     private int amount;
     private bool armorDamages;
 
-    public DamageEvent(BaseUnit _targetUnit, int _amount, bool _armorDamages = false){
+    public DamageEvent(BaseUnit _originUnit, BaseUnit _targetUnit, int _amount, bool _armorDamages = false){
+        originUnit = _originUnit;
         targetUnit = _targetUnit;
         amount = _amount;
         armorDamages = _armorDamages;
+    }
+    public void SetOriginUnit(BaseUnit _originUnit){
+        originUnit = _originUnit;
+    }
+
+    public BaseUnit GetOriginUnit(){
+        return originUnit;
     }
 
     public BaseUnit GetTargetUnit(){
