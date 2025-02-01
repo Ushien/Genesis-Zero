@@ -10,15 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb5537ca8029f6d4082df846b5a8501c, type: 3}
-  m_Name: "Armes Argent\xE9es"
+  m_Name: "A_ArmesArgent\xE9es"
   m_EditorClassIdentifier: 
-  passive_name: "Armes Argent\xE9es"
-  fight_description: "Frapper un adversaire avec 3 attaques ou techniques lui inflige
-    %%1 d\xE9gats suppl\xE9mentaires."
-  ratios:
-  - 1
-  - 1
-  - 1
+  passive_name: "A Armes Argent\xE9es"
+  fight_description: 
   artwork: {fileID: 0}
-  passivePrefab: {fileID: 7140660022501740396, guid: a6ff8d3ee8e73434b8c35f62d08b4cd6, type: 3}
-  lootable: 1
+  passivePrefab: {fileID: 5213626427440704530, guid: 275b8fa10c9b2034ab04975f4a921176, type: 3}
+  lootable: 0

@@ -36,6 +36,10 @@ public class Passive : MonoBehaviour
         Debug.Log("Must be overriden");
     }
 
+    virtual public void Trigger1(){
+        Debug.Log("Must be overriden");
+    }
+
     virtual public string GetName(){
         return passiveName;
     }

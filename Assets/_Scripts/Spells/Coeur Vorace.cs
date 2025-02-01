@@ -22,13 +22,11 @@ public class CoeurVorace : BaseSpell
     }
 
     override public int GetFinalDamages(float _ratio){
-        Debug.Log(_ratio * GetOwner().GetFinalPower());
-        Debug.Log(GetRatio()[1] * GetOwner().GetFinalPower() * healCount);
         return Tools.Ceiling(_ratio * GetOwner().GetFinalPower() + GetRatio()[1] * GetOwner().GetFinalPower() * healCount);
     }
 
-    public void IncrementHeal(BaseUnit unit){
-        if(unit == GetOwner()){
+    public void IncrementHeal(HealEvent healEvent){
+        if(healEvent.GetTargetUnit() == GetOwner()){
             healCount += 1;
         }
     }

@@ -18,7 +18,7 @@ public class EventManager : MonoBehaviour
     public delegate void BeforeSpellAction();
     public static event Action<BaseSpell, Tile> BeforeCast;
     public delegate void AfterHealAction();
-    public static event Action<BaseUnit> AfterHeal;
+    public static event Action<HealEvent> AfterHeal;
     public delegate void DeathAction();
     public static event Action<BaseUnit> OnDeath;
     public delegate void DamageAction();
@@ -39,9 +39,9 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    public void UnitHealed(BaseUnit unit){
+    public void UnitHealed(HealEvent healEvent){
         if (AfterHeal != null){
-            AfterHeal(unit);
+            AfterHeal(healEvent);
         }
     }
 

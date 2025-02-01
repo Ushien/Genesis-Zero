@@ -62,20 +62,25 @@ public class AnimationManager : MonoBehaviour
     }
 
     private async Task Animate(DamageEvent damageEvent){
-        TextMeshProUGUI damageDisplay = Instantiate(damageText);
-        damageDisplay.transform.SetParent(DamageSection);
-        damageDisplay.text = "-" + damageEvent.GetAmount().ToString();
-        damageDisplay.transform.position = damageEvent.GetTargetUnit().transform.position;
-        damageDisplay.transform.localScale = new Vector3(1, 1, 1);
-        damageDisplay.gameObject.SetActive(true);
-        InterfaceManager.Instance.UpdateLifebar(damageEvent.GetTargetUnit());
-        for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f)
+        foreach (int damage in new int[]{damageEvent.GetArmorAmount(), damageEvent.GetHealthAmount()})
         {
-            damageDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));
-            await Task.Yield();
+            if(damage > 0){
+                TextMeshProUGUI damageDisplay = Instantiate(damageText);
+                damageDisplay.transform.SetParent(DamageSection);
+                damageDisplay.text = "-" + damage.ToString();
+                damageDisplay.transform.position = damageEvent.GetTargetUnit().transform.position;
+                damageDisplay.transform.localScale = new Vector3(1, 1, 1);
+                damageDisplay.gameObject.SetActive(true);
+                InterfaceManager.Instance.UpdateLifebar(damageEvent.GetTargetUnit());
+                for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f)
+                {
+                    damageDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));
+                    await Task.Yield();
+                }
+                damageDisplay.gameObject.SetActive(false);
+                Destroy(damageDisplay.gameObject);
+            }
         }
-        damageDisplay.gameObject.SetActive(false);
-        Destroy(damageDisplay.gameObject);
     }
 
     private async Task Animate(ArmorGainEvent armorGainEvent){

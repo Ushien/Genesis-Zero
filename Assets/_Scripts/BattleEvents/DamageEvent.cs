@@ -9,14 +9,14 @@ public class DamageEvent : BattleEvent
 {
     private BaseUnit originUnit;
     private BaseUnit targetUnit;
-    private int amount;
-    private bool armorDamages;
+    private int health_amount;
+    private int armor_amount;
 
-    public DamageEvent(BaseUnit _originUnit, BaseUnit _targetUnit, int _amount, bool _armorDamages = false){
+    public DamageEvent(BaseUnit _originUnit, BaseUnit _targetUnit, int _health_amount, int _armor_amount){
         originUnit = _originUnit;
         targetUnit = _targetUnit;
-        amount = _amount;
-        armorDamages = _armorDamages;
+        health_amount = _health_amount;
+        armor_amount = _armor_amount;
     }
     public void SetOriginUnit(BaseUnit _originUnit){
         originUnit = _originUnit;
@@ -30,11 +30,24 @@ public class DamageEvent : BattleEvent
         return targetUnit;
     }
 
-    public int GetAmount(){
-        return amount;
+    public int GetHealthAmount(){
+        return health_amount;
+    }
+
+    public int GetArmorAmount(){
+        return armor_amount;
+    }
+
+    public int GetTotalAmount(){
+        return health_amount + armor_amount;
     }
 
     public bool IsArmorDamages(){
-        return armorDamages;
+        if(armor_amount > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

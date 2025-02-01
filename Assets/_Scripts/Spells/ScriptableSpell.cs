@@ -10,10 +10,9 @@ public class ScriptableSpell : ScriptableObject
 {
     public string spell_name;
     [TextArea(5,10)]
-    public string lore_description;
-    [TextArea(5,10)]
     public string fight_description;
-    [TextArea(5,10)]
+    public float[] ratios = {1f, 1f, 1f};
+    public float[] hyper_ratios = {1f, 1f, 1f};
     public string overloaded_fight_description;
     public int cooldown;
     public List<Properties> properties;

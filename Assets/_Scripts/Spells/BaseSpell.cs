@@ -25,8 +25,6 @@ public class BaseSpell : MonoBehaviour
     private string spell_name = "Name";
     private bool isATechnique = true;
     [TextArea(5,10)]
-    private string lore_description = "Lore Description";
-    [TextArea(5,10)]
     private string fight_description = "Fight Description";
     // Cooldown total du sort.
     [TextArea(5,10)]
@@ -71,7 +69,6 @@ public class BaseSpell : MonoBehaviour
         owner = ownerUnit;
         
         spell_name = scriptableSpell.spell_name;
-        lore_description = scriptableSpell.lore_description;
         fight_description = scriptableSpell.fight_description;
         fight_description_h = scriptableSpell.overloaded_fight_description;
         base_cooldown = scriptableSpell.cooldown;

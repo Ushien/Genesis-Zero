@@ -30,8 +30,12 @@ public class BattleEventManager : MonoBehaviour
         }
     }
 
-    public DamageEvent CreateDamageEvent(BaseUnit targetUnit, int amount, bool _armorDamages = false){
-        return new DamageEvent(null, targetUnit, amount, _armorDamages);
+    public DamageEvent CreateDamageEvent(BaseUnit targetUnit, int health_amount, int armor_amount){
+        return new DamageEvent(null, targetUnit, health_amount, armor_amount);
+    }
+
+    public DamageEvent CreateDamageEvent(BaseUnit originUnit, BaseUnit targetUnit, int health_amount, int armor_amount){
+        return new DamageEvent(originUnit, targetUnit, health_amount, armor_amount);
     }
 
     public void ApplyDamageEvent(DamageEvent damageEvent, bool animation = true){
@@ -50,12 +54,15 @@ public class BattleEventManager : MonoBehaviour
         }
     }
 
-    public void CreateHealEvent(BaseUnit targetUnit, int amount, bool animation = true){
-        HealEvent newHealEvent = new HealEvent(targetUnit, amount);
-        EventManager.Instance.UnitHealed(targetUnit);
-        BattleManager.Instance.AddEvent(newHealEvent);
+    public HealEvent CreateHealEvent(BaseUnit originUnit, BaseUnit targetUnit, int amount, bool animation = true){
+        return new HealEvent(originUnit, targetUnit, amount);
+    }
+    
+    public void ApplyHealEvent(HealEvent healEvent, bool animation = true){
+        EventManager.Instance.UnitHealed(healEvent);
+        BattleManager.Instance.AddEvent(healEvent);
         if(animation){
-            AnimationManager.Instance.addAnimation(newHealEvent);
+            AnimationManager.Instance.addAnimation(healEvent);
         }
     }
 }

@@ -8,6 +8,7 @@ public class ScriptablePassive : ScriptableObject
     public string passive_name;
     [TextArea(5,10)]
     public string fight_description;
+    public float[] ratios = {1f, 1f, 1f};
     public Sprite artwork;
     public Passive passivePrefab;
     public bool lootable;

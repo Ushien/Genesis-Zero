@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ArmesArgentées : Passive
 {
+    [SerializeField]
+    private ScriptablePassive a_ArmesArgentees;
     void Awake()
     {
         ratio1 = 0.1f;
@@ -11,16 +13,22 @@ public class ArmesArgentées : Passive
     // Lorsque le passif est setup, l'active
     override public void Activate()
     {
-        EventManager.AfterCast += RisingPower;
+        EventManager.OnDamage += Argent;
     }
     // Lorsque le passif disparaît, le désactive
     void OnDisable()
     {
-        EventManager.AfterCast -= RisingPower;
+        EventManager.OnDamage -= Argent;
     }
-    void RisingPower(BaseSpell spell, Tile targetTile){
-        if(spell.GetOwner() == holder){
-            holder.ModifyPower(0.1f);
+    void Argent(DamageEvent damageEvent){
+        if(damageEvent.GetOriginUnit() == holder){
+			if(!damageEvent.GetTargetUnit().HasPassive(a_ArmesArgentees)){
+				// Ajoute le passif
+                a_ArmesArgentees.SetupPassive(damageEvent.GetTargetUnit());
+
+			}
+            // Incrémente le passif
+            damageEvent.GetTargetUnit().GetPassive(a_ArmesArgentees).Trigger1();
         }
     }
 }

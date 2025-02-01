@@ -57,9 +57,9 @@ public class BaseUnit : MonoBehaviour
         #region Fields relatifs au moteur de jeu
 
     // Liste des modificateurs associés à l'unité
-    private Dictionary<Action<int>, List<Modifier>> modifiers = new Dictionary<Action<int>, List<Modifier>>();
+    private Dictionary<Func<int, BattleEvent>, List<Modifier>> modifiers = new Dictionary<Func<int, BattleEvent>, List<Modifier>>();
     // Liste des actions enregistrées. Le tuple est composé de 3 éléments: La méthode qui doit être appelée, le paramètre avec lequel elle doit être appelée, le nombre de tours dans lequel l'action doit être effectuée.
-    private List<Tuple<Action<int>, int, int>> actionQueue = new List<Tuple<Action<int>, int, int>>();
+    private List<Tuple<Func<int, BattleEvent>, int, int>> actionQueue = new List<Tuple<Func<int, BattleEvent>, int, int>>();
     // L'unité a-t-elle déjà reçu une instruction ?
     private bool instructionGiven = false;
         #endregion
@@ -248,19 +248,19 @@ public class BaseUnit : MonoBehaviour
     /// <param name="action"></param>
     /// <param name="parameter"></param>
     /// <param name="howManyTurns"></param>
-    public void QueueAction(Action<int> action, int parameter, int howManyTurns){
-        actionQueue.Add(new Tuple<Action<int>, int, int>(action, parameter, howManyTurns));
+    public void QueueAction(Func<int, BattleEvent> action, int parameter, int howManyTurns){
+        actionQueue.Add(new Tuple<Func<int, BattleEvent>, int, int>(action, parameter, howManyTurns));
     }
 
     /// <summary>
     /// Réduit de 1 le nombre de tours de la queue d'actions
     /// </summary>
     public void ReduceQueueTurns(){
-        List<Tuple<Action<int>, int, int>> newQueue = new List<Tuple<Action<int>, int, int>>();
+        List<Tuple<Func<int, BattleEvent>, int, int>> newQueue = new List<Tuple<Func<int, BattleEvent>, int, int>>();
 
-        foreach (Tuple<Action<int>, int, int> queuedAction in actionQueue)
+        foreach (Tuple<Func<int, BattleEvent>, int, int> queuedAction in actionQueue)
         {
-            newQueue.Add(new Tuple<Action<int>, int, int>(queuedAction.Item1, queuedAction.Item2, queuedAction.Item3 - 1));
+            newQueue.Add(new Tuple<Func<int, BattleEvent>, int, int>(queuedAction.Item1, queuedAction.Item2, queuedAction.Item3 - 1));
         }
 
         actionQueue = newQueue;
@@ -270,19 +270,19 @@ public class BaseUnit : MonoBehaviour
     /// Applique les actions de la queue dont le nombre de tour restants est de 0. Les supprime ensuite de la queue.
     /// </summary>
     public void ApplyQueueActions(){
-        foreach (Tuple<Action<int>, int, int> queuedAction in actionQueue)
+        foreach (Tuple<Func<int, BattleEvent>, int, int> queuedAction in actionQueue)
         {
             if(queuedAction.Item3 == 0){
                 queuedAction.Item1(queuedAction.Item2);
             }
         }
 
-        List<Tuple<Action<int>, int, int>> newQueue = new List<Tuple<Action<int>, int, int>>();
+        List<Tuple<Func<int, BattleEvent>, int, int>> newQueue = new List<Tuple<Func<int, BattleEvent>, int, int>>();
 
-        foreach (Tuple<Action<int>, int, int> queuedAction in actionQueue)
+        foreach (Tuple<Func<int, BattleEvent>, int, int> queuedAction in actionQueue)
         {
             if(queuedAction.Item3 != 0){
-                newQueue.Add(new Tuple<Action<int>, int, int>(queuedAction.Item1, queuedAction.Item2, queuedAction.Item3));
+                newQueue.Add(new Tuple<Func<int, BattleEvent>, int, int>(queuedAction.Item1, queuedAction.Item2, queuedAction.Item3));
             }
         }
 
@@ -311,11 +311,40 @@ public class BaseUnit : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Renvoie un passif précis, si l'unité en possède une copie.
+    /// </summary>
+    /// <param name="_passive"></param>
+    /// <returns></returns>
+    public Passive GetPassive(ScriptablePassive _passive){
+        foreach (Passive passive in GetPassives())
+        {
+            if(passive != null){
+                if(_passive == passive.GetScriptablePassive()){
+                    return passive;
+                }
+            }
+        }
+        return null;  
+    }
+
     public bool HasPassive(ScriptablePassive _passive){
         foreach (Passive passive in GetPassives())
         {
             if(passive != null){
                 if(_passive == passive.GetScriptablePassive()){
+                    return true;
+                }
+            }
+        }
+        return false; 
+    }
+
+    public  bool HasPassive(Passive _passive){
+        foreach (Passive passive in GetPassives())
+        {
+            if(passive != null){
+                if(_passive.GetScriptablePassive() == passive.GetScriptablePassive()){
                     return true;
                 }
             }
@@ -332,7 +361,7 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     /// <param name="modifier"></param>
     /// <param name="function"></param>
-    public void AddModifier(Modifier modifier, Action<int> function){
+    public void AddModifier(Modifier modifier, Func<int, BattleEvent> function){
         modifiers[function].Add(modifier);
     }
 
@@ -341,7 +370,7 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     /// <param name="modifier"></param>
     /// <param name="function"></param>
-    public void DeleteModifier(Modifier modifier, Action<int> function){
+    public void DeleteModifier(Modifier modifier, Func<int, BattleEvent> function){
         modifiers[function].Remove(modifier);
     }
 
@@ -738,11 +767,12 @@ public class BaseUnit : MonoBehaviour
     /// Si l'unité ne possède pas assez d'armure, la méthode ne fait rien
     /// </summary>
     /// <param name="amount"></param>
-    public void ConvertArmorIntoHP(int amount){
+    public BattleEvent ConvertArmorIntoHP(int amount){
         if(GetArmor() >= amount){
             ModifyArmor(-amount);
             ModifyBothHP(amount);
         }
+        return null;
     }
     #endregion
 
@@ -750,19 +780,25 @@ public class BaseUnit : MonoBehaviour
     /// Inflige un montant de dégats à l'unité
     /// </summary>
     /// <param name="amount"></param>
-    public void Damage(int amount){
+    public DamageEvent Damage(int amount){
+
         int finalDamage = amount - GetArmor();
+
+        // Si l'armure ne suffit pas à tanker l'attaque
         if(finalDamage > 0){
+            int armorDamages = 0;
+            // Si l'unité possède de l'armure, retire l'armure
             if(GetArmor() > 0){
+                armorDamages = GetArmor();
                 ModifyArmor(-GetArmor());
-                BattleEventManager.Instance.CreateDamageEvent(this, -GetArmor(), true);
             }
             ModifyHP(-finalDamage);
-            BattleEventManager.Instance.CreateDamageEvent(this, finalDamage);
+            return BattleEventManager.Instance.CreateDamageEvent(this, finalDamage, armorDamages);
         }
+        // Si l'armure suffit à tanker l'attaque
         else{
             ModifyArmor(-amount);
-            BattleEventManager.Instance.CreateDamageEvent(this, amount, true);
+            return BattleEventManager.Instance.CreateDamageEvent(this, 0, amount);
         }
     }
 
@@ -770,14 +806,14 @@ public class BaseUnit : MonoBehaviour
     /// Soigne l'unité d'un montant donné
     /// </summary>
     /// <param name="amount"></param>
-    public void Heal(int amount){
+    public HealEvent Heal(int amount){
         int finalAmount = amount;
         foreach (Modifier _modifier in modifiers[Heal])
         {
             finalAmount = Tools.Ceiling(_modifier.GetNewAmount(finalAmount));
         }
         ModifyHP(+finalAmount);
-        BattleEventManager.Instance.CreateHealEvent(this, amount, true);
+        return BattleEventManager.Instance.CreateHealEvent(null, this, amount, true);
     }
 
         #region Gestion des états

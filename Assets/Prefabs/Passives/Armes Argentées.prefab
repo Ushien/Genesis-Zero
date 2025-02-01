@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &40165620917736444
+--- !u!1 &3835829114339390337
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4073497738143579994}
-  - component: {fileID: 5213626427440704530}
+  - component: {fileID: 1154675958122861301}
+  - component: {fileID: 7140660022501740396}
   m_Layer: 0
-  m_Name: "A_ArmesArgent\xE9es"
+  m_Name: "Armes Argent\xE9es"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4073497738143579994
+--- !u!4 &1154675958122861301
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40165620917736444}
+  m_GameObject: {fileID: 3835829114339390337}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.309332, y: 3.0223155, z: 0.027494522}
@@ -32,15 +32,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5213626427440704530
+--- !u!114 &7140660022501740396
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40165620917736444}
+  m_GameObject: {fileID: 3835829114339390337}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04c8794ad5889594b9d4c280416cfee7, type: 3}
+  m_Script: {fileID: 11500000, guid: e8dd4b051db42024bb9ea076a47910ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ratio1: 1
+  ratio2: 1
+  ratio3: 1
+  passiveName: 
+  fight_description: 
+  holder: {fileID: 0}
+  scriptablePassive: {fileID: 11400000, guid: da6f866b5d6b105449228f563adb463c, type: 2}
+  modifier: {fileID: 0}
+  a_ArmesArgentees: {fileID: 11400000, guid: 4d903e6dd119cb046a7579330d28d094, type: 2}
