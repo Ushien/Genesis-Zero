@@ -165,12 +165,11 @@ public class InterfaceManager : MonoBehaviour
 
             if(UnitManager.Instance.GetUnits(Team.Ally).Count > 0){
                 sourceTile = UnitManager.Instance.GetUnits(Team.Ally).Where(_unit => !_unit.HasGivenInstruction()).First().GetTile();
-                UnitManager.Instance.GetUnits(Team.Ally)[0].GetTile().Select();
             }
             else{
                 sourceTile = UnitManager.Instance.GetUnits(Team.Ally)[0].GetTile();
-                GridManager.Instance.GetMiddleTile(Team.Ally).Select();
             }
+            sourceTile.Select();
             GridManager.Instance.SetSelectionMode(GridManager.Selection_mode.Single_selection);
 
             ActivateState(BattleManager.PlayerActionChoiceState.CHARACTER_SELECTION);
