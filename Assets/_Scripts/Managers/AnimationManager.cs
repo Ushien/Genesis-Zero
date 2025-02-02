@@ -15,6 +15,11 @@ public class AnimationManager : MonoBehaviour
     public Transform DamageSection;
 
     private List<BattleEvent> animationQueue;
+    
+    [SerializeField]
+    int delayTime = 300;
+    [SerializeField]
+    float accelerator = 1f;
 
     void Awake(){
         animationQueue = new List<BattleEvent>();
@@ -43,18 +48,18 @@ public class AnimationManager : MonoBehaviour
         for (var i = 0; i < battleEvents.Count; i++)
         {
             await Animate(battleEvents[i]);
-            await Task.Delay(500);
+            await Task.Delay((int)(delayTime / accelerator));
         }
         BattleManager.Instance.SetInAnimation(false);
     }
 
     public async Task Animate(CastEvent castEvent){
-        for (float distance = 0.0f; distance <= 0.4f; distance += 0.02f)
+        for (float distance = 0.0f; distance <= 0.4f; distance += 0.02f * accelerator)
         {
             castEvent.GetSourceUnit().gameObject.transform.Translate(new Vector3(0, 0.02f, 0));
             await Task.Yield();
         }
-        for (float distance = 0.4f; distance >= 0.0f; distance -= 0.02f)
+        for (float distance = 0.4f; distance >= 0.0f; distance -= 0.02f * accelerator)
         {
             castEvent.GetSourceUnit().gameObject.transform.Translate(new Vector3(0, -0.02f, 0));
             await Task.Yield();
@@ -72,7 +77,7 @@ public class AnimationManager : MonoBehaviour
                 damageDisplay.transform.localScale = new Vector3(1, 1, 1);
                 damageDisplay.gameObject.SetActive(true);
                 InterfaceManager.Instance.UpdateLifebar(damageEvent.GetTargetUnit());
-                for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f)
+                for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f * accelerator)
                 {
                     damageDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));
                     await Task.Yield();
@@ -91,7 +96,7 @@ public class AnimationManager : MonoBehaviour
         armorGainDisplay.transform.localScale = new Vector3(1, 1, 1);
         armorGainDisplay.gameObject.SetActive(true);
         InterfaceManager.Instance.UpdateLifebar(armorGainEvent.GetTargetUnit());
-        for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f)
+        for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f * accelerator)
         {
             armorGainDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));
             await Task.Yield();
@@ -108,13 +113,19 @@ public class AnimationManager : MonoBehaviour
         armorGainDisplay.transform.localScale = new Vector3(1, 1, 1);
         armorGainDisplay.gameObject.SetActive(true);
         InterfaceManager.Instance.UpdateLifebar(healEvent.GetTargetUnit());
-        for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f)
+        for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f * accelerator)
         {
             armorGainDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));
             await Task.Yield();
         }
         armorGainDisplay.gameObject.SetActive(false);
         Destroy(armorGainDisplay.gameObject);
+    }
+
+    private async Task Animate(DeathEvent deathEvent){
+        deathEvent.GetDeadUnit().gameObject.SetActive(false);
+        deathEvent.GetDeadUnit().lifeBar.gameObject.SetActive(false);
+        await Task.Yield();
     }
 
 
@@ -130,6 +141,9 @@ public class AnimationManager : MonoBehaviour
         }
         if (battleEvent is HealEvent){
             await Animate((HealEvent)battleEvent);
+        }
+        if (battleEvent is DeathEvent){
+            await Animate((DeathEvent)battleEvent);
         }
     }
 

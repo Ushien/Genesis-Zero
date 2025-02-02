@@ -20,7 +20,7 @@ public class EventManager : MonoBehaviour
     public delegate void AfterHealAction();
     public static event Action<HealEvent> AfterHeal;
     public delegate void DeathAction();
-    public static event Action<BaseUnit> OnDeath;
+    public static event Action<DeathEvent> OnDeath;
     public delegate void DamageAction();
     public static event Action<DamageEvent> OnDamage;
     void Awake(){
@@ -45,9 +45,9 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    public void UnitDied(BaseUnit unit){
+    public void UnitDied(DeathEvent deathEvent){
         if (OnDeath != null){
-            OnDeath(unit);
+            OnDeath(deathEvent);
         }
     }
 

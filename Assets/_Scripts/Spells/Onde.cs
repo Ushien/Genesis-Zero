@@ -14,7 +14,7 @@ public class Onde : BaseSpell
     }
 
     private void _Onde(Tile targetTile){   
-        SpellManager.Instance.HealDamage(GetFinalDamages(GetRatio()[0]), targetTile.GetUnit());
+        SpellManager.Instance.HealDamage(GetOwner(), GetFinalDamages(GetRatio()[0]), targetTile.GetUnit());
         SpellManager.Instance.ModifyPower(GetRatio()[1], targetTile.GetUnit());
     }
 }

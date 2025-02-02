@@ -12,5 +12,8 @@ using UnityEngine.Tilemaps;
 
 public class BattleEvent
 {
-    
+    public virtual string GetSummary(){
+        Debug.Log("Doit être overridé");
+        return "";
+    }
 }

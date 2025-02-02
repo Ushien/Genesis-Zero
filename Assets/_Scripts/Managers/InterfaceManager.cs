@@ -329,6 +329,7 @@ public class InterfaceManager : MonoBehaviour
                 }
                 if (Input.GetKeyDown(KeyCode.N)){
                     // Retour à la sélection de personnages
+                    sourceTile.Unselect();
                     SpellSelectionTrigger(BattleManager.Trigger.CANCEL);
                     break;
                 }
@@ -790,11 +791,6 @@ public class InterfaceManager : MonoBehaviour
 
     public void UpdateLifeBarPosition(BaseUnit unit){
         unit.lifeBar.transform.position = unit.transform.position + lifeBarOffset;
-    }
-
-    // Détruit la barre de vie d'un perso
-    public void KillLifeBar(GameObject lifeBarPanel){
-        Destroy(lifeBarPanel);
     }
 
     // Fonction pour gérer les anims de la croix de sorts. La solution actuelles est dégeu, il faudra la rebosser intelligemment.

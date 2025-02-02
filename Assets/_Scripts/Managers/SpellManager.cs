@@ -95,9 +95,11 @@ public class SpellManager : MonoBehaviour
         }
     }
 
-    public void HealDamage(float amount, BaseUnit target, Properties property = Properties.Empty){
+    public void HealDamage(BaseUnit originUnit, float amount, BaseUnit target, Properties property = Properties.Empty){
         int finalAmount = Tools.Ceiling(amount);
-        target.Heal(finalAmount);
+        HealEvent healEvent = target.Heal(finalAmount);
+        healEvent.SetOriginUnit(originUnit);
+        BattleEventManager.Instance.ApplyHealEvent(healEvent);
     }
 
     public void ModifyRange(BaseSpell spell, bool definitive, Ranges new_range){

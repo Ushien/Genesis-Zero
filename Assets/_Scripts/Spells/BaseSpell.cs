@@ -133,10 +133,10 @@ public class BaseSpell : MonoBehaviour
             }
 
             if(targetTile.GetUnit() != null){
-                Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.GetUnit().GetName());
+                //Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.GetUnit().GetName());
             }
             else{
-                Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.name);
+                //Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.name);
             }
             BattleEventManager.Instance.CreateCastEvent(GetOwner(), this, targetTile);
 

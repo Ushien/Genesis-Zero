@@ -22,4 +22,9 @@ public class ArmorGainEvent : BattleEvent
     public int GetAmount(){
         return amount;
     }
+
+    public override string GetSummary()
+    {
+        return "Armor Event: " + GetTargetUnit().GetName() + " - " + GetAmount();
+    }
 }

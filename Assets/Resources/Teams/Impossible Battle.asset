@@ -10,12 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1a35e8e7f2bab5479d800e9cec1846f, type: 3}
-  m_Name: Team2
+  m_Name: Impossible Battle
   m_EditorClassIdentifier: 
   units:
-  - {fileID: 11400000, guid: 0536ac5bf62366d40bdf721da1228ed1, type: 2}
-  - {fileID: 11400000, guid: 6afde0bbe41525346a2575007ed63835, type: 2}
+  - {fileID: 11400000, guid: a38bcd1d5b4d2c3478d5a85f4a30cdde, type: 2}
   positions:
-  - {x: 2, y: 0}
   - {x: 1, y: 0}
-  levels: 0a00000032000000
+  levels: 64000000

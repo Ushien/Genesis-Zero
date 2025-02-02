@@ -50,4 +50,9 @@ public class DamageEvent : BattleEvent
             return false;
         }
     }
+
+    public override string GetSummary()
+    {
+        return "Damage Event: " + GetOriginUnit().GetName() + " - " + GetTargetUnit().GetName() + " - " + GetTotalAmount();
+    }
 }

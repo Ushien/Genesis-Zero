@@ -887,9 +887,8 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     public void Kill(){
         dead = true;
-        EventManager.Instance.UnitDied(this);
+        BattleEventManager.Instance.ApplyDeathEvent(BattleEventManager.Instance.CreateDeathEvent(this, GetTile()));
         UnitManager.Instance.Kill(this);
-        Destroy(lifeBar);
     }
         #endregion
     

@@ -201,6 +201,7 @@ public class BattleManager : MonoBehaviour
                 // Do stuff
                 // Start turn effects
                 turnState = TurnState.ACTION_CHOICE;
+
                 NextTurn();
                 if(teamTurn == TeamTurn.ALLY){
                     ChangeState(Machine.PLAYERACTIONCHOICESTATE, Trigger.FORWARD);
@@ -224,6 +225,10 @@ public class BattleManager : MonoBehaviour
                 break;
 
             case TurnState.APPLY_ACTIONS:
+                foreach (Instruction instruc in currentTurn.GetInstructions())
+                {
+                    Debug.Log(instruc.GetSummary());
+                }
                 ApplyInstructions();
 
                 turnState = TurnState.END;

@@ -23,4 +23,13 @@ public class CastEvent : BattleEvent
     public BaseUnit GetSourceUnit(){
         return sourceUnit;
     }
+
+    public BaseSpell GetCastedSpell(){
+        return castedSpell;
+    }
+
+    public override string GetSummary()
+    {
+        return "Cast Event: " + GetSourceUnit().GetName() + " - " + GetCastedSpell().GetName() + " - " + targetTile.name;
+    }
 }

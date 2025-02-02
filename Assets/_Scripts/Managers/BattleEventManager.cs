@@ -6,22 +6,9 @@ public class BattleEventManager : MonoBehaviour
 {
     public static BattleEventManager Instance;
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     void Awake(){
         Instance = this;
     }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void CreateCastEvent(BaseUnit sourceUnit, BaseSpell castedSpell, Tile targetTile, bool animation = true){
         CastEvent newCastEvent = new CastEvent(sourceUnit, castedSpell, targetTile);
         BattleManager.Instance.AddEvent(newCastEvent);
@@ -63,6 +50,18 @@ public class BattleEventManager : MonoBehaviour
         BattleManager.Instance.AddEvent(healEvent);
         if(animation){
             AnimationManager.Instance.addAnimation(healEvent);
+        }
+    }
+
+    public DeathEvent CreateDeathEvent(BaseUnit deadUnit, Tile deathTile, bool animation = true){
+        return new DeathEvent(deadUnit, deathTile, null);
+    }
+
+    public void ApplyDeathEvent(DeathEvent deathEvent, bool animation = true){
+        EventManager.Instance.UnitDied(deathEvent);
+        BattleManager.Instance.AddEvent(deathEvent);
+        if(animation){
+            AnimationManager.Instance.addAnimation(deathEvent);
         }
     }
 }

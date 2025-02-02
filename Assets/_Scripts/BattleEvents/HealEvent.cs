@@ -28,4 +28,9 @@ public class HealEvent : BattleEvent
     public int GetAmount(){
         return amount;
     }
+
+    public override string GetSummary()
+    {
+        return "Heal Event: " + GetOriginUnit().GetName() + " - " + GetTargetUnit().GetName() + " - " + GetAmount();
+    }
 }

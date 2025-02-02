@@ -141,8 +141,8 @@ public class UnitManager : MonoBehaviour
     public void Kill(BaseUnit unit){
         units.Remove(unit);
         unit.OccupiedTile.SetUnit(null);
-        unit.OccupiedTile = null; 
-        unit.gameObject.SetActive(false);
+        unit.OccupiedTile = null;
+        //unit.gameObject.SetActive(false);
     }
 
     public void ApplyEndTurnEffects(Team team){
