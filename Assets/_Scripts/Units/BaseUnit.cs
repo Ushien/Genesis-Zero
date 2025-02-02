@@ -440,7 +440,6 @@ public class BaseUnit : MonoBehaviour
     }
 
     public void AddPassive(Passive newPassive){
-        Debug.Log(newPassive.name);
         passives.Add(newPassive);
     }
 

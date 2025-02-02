@@ -16,8 +16,7 @@ public class Tile : MonoBehaviour
     public BaseUnit OccupiedUnit;
     public bool free => OccupiedUnit == null;
     public Team team;
-
-    public bool main_selection = false;
+    public bool selected = false;
 
     public void Init(bool isOffset, Team teamToSet) {
         Color newColor = isOffset ? _offsetColor : _baseColor;
@@ -30,12 +29,12 @@ public class Tile : MonoBehaviour
     }
 
     public void Select(){
-        main_selection = true;
+        selected = true;
         tileAnimator.Play("selection");
     }
 
     public void Unselect(){
-        main_selection = false;
+        selected = false;
         tileAnimator.Play("deselection");
     }
 

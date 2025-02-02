@@ -247,7 +247,7 @@ public class GridManager : MonoBehaviour
     }
     public void DisplayHighlights(){
 
-        GetMainSelection();
+        InterfaceManager.Instance.GetMainSelection();
 
         if(main_selection != null){
 
@@ -296,17 +296,6 @@ public class GridManager : MonoBehaviour
     }
     private void SetMainSelection(Tile tile){
         main_selection = tile;
-    }
-
-    public Tile GetMainSelection(){
-
-        foreach (Tile tile in ReturnTilesList()){
-            if(tile.main_selection){
-                SetMainSelection(tile);
-            }
-        }
-
-        return main_selection;
     }
 
     public bool IsSelected(Tile tile){

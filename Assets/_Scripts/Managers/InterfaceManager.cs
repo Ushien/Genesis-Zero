@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
+using System.Linq;
 
 /// <summary>
 /// Gestion de l'interface de jeu
@@ -162,20 +163,26 @@ public class InterfaceManager : MonoBehaviour
             infosPanel.SetActive(true);
             tileSelector.SetActive(true);
 
-            GridManager.Instance.GetMiddleTile(Team.Ally).Select();
+            if(UnitManager.Instance.GetUnits(Team.Ally).Count > 0){
+                sourceTile = UnitManager.Instance.GetUnits(Team.Ally).Where(_unit => !_unit.HasGivenInstruction()).First().GetTile();
+                UnitManager.Instance.GetUnits(Team.Ally)[0].GetTile().Select();
+            }
+            else{
+                sourceTile = UnitManager.Instance.GetUnits(Team.Ally)[0].GetTile();
+                GridManager.Instance.GetMiddleTile(Team.Ally).Select();
+            }
             GridManager.Instance.SetSelectionMode(GridManager.Selection_mode.Single_selection);
 
             ActivateState(BattleManager.PlayerActionChoiceState.CHARACTER_SELECTION);
 
         }
-        sourceTile = GridManager.Instance.GetMainSelection();
 
         // Change la position du sélector de case à l'aide d'un joli lerp
         tileSelector_targetPos = sourceTile.transform.position;
         tileSelector_currentPos = Vector3.Lerp(tileSelector_currentPos, tileSelector_targetPos, Time.deltaTime*selectorSpeed);
         tileSelector.transform.position = tileSelector_currentPos;
 
-        GridManager.Instance.DisplayHighlights();
+        //GridManager.Instance.DisplayHighlights();
 
         if (Input.GetKeyDown(KeyCode.B)){
             if(sourceTile.GetUnit()!= null){
@@ -192,24 +199,28 @@ public class InterfaceManager : MonoBehaviour
             if(sourceTile.GetNextTile(Directions.UP) != null){
                 sourceTile.GetNextTile(Directions.UP).Select();
                 sourceTile.Unselect();
+                sourceTile = sourceTile.GetNextTile(Directions.UP);
             }
         }
         if (Input.GetKeyDown(KeyCode.DownArrow)){
             if(sourceTile.GetNextTile(Directions.DOWN) != null){
                 sourceTile.GetNextTile(Directions.DOWN).Select();
                 sourceTile.Unselect();
+                sourceTile = sourceTile.GetNextTile(Directions.DOWN);
             }
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow)){
             if(sourceTile.GetNextTile(Directions.LEFT) != null){
                 sourceTile.GetNextTile(Directions.LEFT).Select();
                 sourceTile.Unselect();
+                sourceTile = sourceTile.GetNextTile(Directions.LEFT);
             }
         }
         if (Input.GetKeyDown(KeyCode.RightArrow)){
             if(sourceTile.GetNextTile(Directions.RIGHT) != null){
                 sourceTile.GetNextTile(Directions.RIGHT).Select();
                 sourceTile.Unselect();
+                sourceTile = sourceTile.GetNextTile(Directions.RIGHT);
             }
         }
 
@@ -225,7 +236,6 @@ public class InterfaceManager : MonoBehaviour
     }
     void SourceSelectionTrigger(BattleManager.Trigger trigger){
         // On sort de la sélection de la source pour aller vers un autre état
-        sourceTile.Unselect();
         BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, trigger);
     }
 
@@ -314,6 +324,7 @@ public class InterfaceManager : MonoBehaviour
                 selectedSpell = sourceUnit.GetAttack();
                 if (Input.GetKeyDown(KeyCode.B)){
                     // Sélectionner attaque
+                    sourceTile.Unselect();
                     SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
                     break;
                 }
@@ -348,6 +359,7 @@ public class InterfaceManager : MonoBehaviour
                 //TODO Ce code se répète 4 fois, il y a moyen de refactor
                 if (Input.GetKeyDown(KeyCode.B) && selectedSpell != null){
                     if(selectedSpell.IsAvailable()){
+                        sourceTile.Unselect();
                         SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
                     }
                     break;
@@ -387,6 +399,7 @@ public class InterfaceManager : MonoBehaviour
                 selectedSpell = currentSpells[1];
                 if (Input.GetKeyDown(KeyCode.B) && selectedSpell != null){
                     if(selectedSpell.IsAvailable()){
+                        sourceTile.Unselect();
                         SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
                     }
                     break;
@@ -425,6 +438,7 @@ public class InterfaceManager : MonoBehaviour
                 selectedSpell = currentSpells[2];
                 if (Input.GetKeyDown(KeyCode.B) && selectedSpell != null){
                     if(selectedSpell.IsAvailable()){
+                        sourceTile.Unselect();
                         SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
                     }
                     break;
@@ -463,6 +477,7 @@ public class InterfaceManager : MonoBehaviour
                 selectedSpell = currentSpells[3];
                 if (Input.GetKeyDown(KeyCode.B) && selectedSpell != null){
                     if(selectedSpell.IsAvailable()){
+                        sourceTile.Unselect();
                         SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
                     }
                     break;
@@ -545,8 +560,9 @@ public class InterfaceManager : MonoBehaviour
             spellPanel.SetActive(true);
             spellPanelLine.gameObject.SetActive(true);
 
-            // TODO Définir par défaut l'emplacement de la targetTile, l'aléatoire c'est nul
-            targetTile = GridManager.Instance.GetRandomTile(Team.Enemy);
+            // TODO Définir un emplacement par défaut plus intelligent
+            targetTile = UnitManager.Instance.GetUnits(Team.Enemy)[0].GetTile();
+            targetTile.Select();
             
             ActivateState(BattleManager.PlayerActionChoiceState.TARGET_SELECTION);
         }
@@ -556,47 +572,53 @@ public class InterfaceManager : MonoBehaviour
         tileSelector_currentPos = Vector3.Lerp(tileSelector_currentPos, tileSelector_targetPos, Time.deltaTime*selectorSpeed);
         tileSelector.transform.position = tileSelector_currentPos;
         tileSelector.transform.position = targetTile.transform.position;
-        GridManager.Instance.DisplayHighlights();
+        //GridManager.Instance.DisplayHighlights();
 
         // Highlight the selected tiles depending on the range of the spell
 
         // Change the tile or the state depending on the input (same algorithm than the source selection !)
 
-        targetTile.Unselect();
-
         if (Input.GetKeyDown(KeyCode.B)){
             if(targetTile.GetUnit()!= null){
-                if(GridManager.Instance.IsSelected(targetTile)){
-                    TargetSelectionTrigger(BattleManager.Trigger.VALIDATE);
-                }
+                targetTile.Unselect();
+                TargetSelectionTrigger(BattleManager.Trigger.VALIDATE);
             }
         }
 
         if (Input.GetKeyDown(KeyCode.N)){
+            targetTile.Unselect();
+            sourceTile.Select();
             TargetSelectionTrigger(BattleManager.Trigger.CANCEL);
         }
         if (Input.GetKeyDown(KeyCode.UpArrow)){
             if(targetTile.GetNextTile(Directions.UP) != null){
+                targetTile.Unselect();
                 targetTile = targetTile.GetNextTile(Directions.UP);
+                targetTile.Select();
             }
         }
         if (Input.GetKeyDown(KeyCode.DownArrow)){
             if(targetTile.GetNextTile(Directions.DOWN) != null){
+                targetTile.Unselect();
                 targetTile = targetTile.GetNextTile(Directions.DOWN);
+                targetTile.Select();
             }
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow)){
             if(targetTile.GetNextTile(Directions.LEFT) != null){
+                targetTile.Unselect();
                 targetTile = targetTile.GetNextTile(Directions.LEFT);
+                targetTile.Select();
             }
         }
         if (Input.GetKeyDown(KeyCode.RightArrow)){
             if(targetTile.GetNextTile(Directions.RIGHT) != null){
+                targetTile.Unselect();
                 targetTile = targetTile.GetNextTile(Directions.RIGHT);
+                targetTile.Select();
             }
         }
 
-        targetTile.Select();
         DrawPanelLine(spellPanelLine, targetTile);
         GridManager.Instance.SetSelectionMode(selectedSpell.GetRange());
 
@@ -696,6 +718,20 @@ public class InterfaceManager : MonoBehaviour
 
     void Navigate(Directions direction){
         //
+    }
+
+    public Tile GetMainSelection(){
+        switch (BattleManager.Instance.GetPlayerActionChoiceState())
+        {
+            case BattleManager.PlayerActionChoiceState.CHARACTER_SELECTION:
+                return sourceTile;
+            case BattleManager.PlayerActionChoiceState.SPELL_SELECTION:
+                return sourceTile;
+            case BattleManager.PlayerActionChoiceState.TARGET_SELECTION:
+                return targetTile;
+            default:
+                return null;
+        }
     }
 
 
