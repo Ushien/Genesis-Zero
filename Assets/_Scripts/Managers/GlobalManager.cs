@@ -23,7 +23,7 @@ public class GlobalManager : MonoBehaviour
     [SerializeField] private PickPhaseManager pickPhaseManagerPrefab;
     [SerializeField] private ResourceManager resourceManagerPrefab;
 
-    public enum RunPhase {OUT, PICKPHASE, BATTLEPHASE}
+    public enum RunPhase {OUT, PICKPHASE, BATTLEPHASE, LOSESCREEN}
     [SerializeField]
     private RunPhase runPhase;
 
@@ -73,8 +73,16 @@ public class GlobalManager : MonoBehaviour
     void Update()
     {
         if(battleManager != null){
-            if(BattleManager.Instance.GetBattleState() == BattleManager.BattleState.WON || BattleManager.Instance.GetBattleState() == BattleManager.BattleState.LOST){
-                ChangeState(RunPhase.PICKPHASE);
+            switch (BattleManager.Instance.GetBattleState())
+            {
+                case BattleManager.BattleState.WON:
+                    ChangeState(RunPhase.PICKPHASE);
+                    break;
+                case BattleManager.BattleState.LOST:
+                    ChangeState(RunPhase.LOSESCREEN);
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -165,6 +173,14 @@ public class GlobalManager : MonoBehaviour
         Destroy(pickPhaseManager.gameObject);
     }
 
+    public void LoseScreenIn(){
+        //
+    }
+
+    public void LoseScreenOut(){
+        //
+    }
+
     public void ChangeState(RunPhase trigger){
         if(runPhase == RunPhase.OUT){
             switch(trigger){
@@ -173,6 +189,9 @@ public class GlobalManager : MonoBehaviour
                     break;
                 case RunPhase.BATTLEPHASE:
                     BattlePhaseIn();
+                    break;
+                case RunPhase.LOSESCREEN:
+                    LoseScreenIn();
                     break;
                 default:
                     break;
@@ -189,6 +208,11 @@ public class GlobalManager : MonoBehaviour
                         runPhase = RunPhase.BATTLEPHASE;
                         BattlePhaseIn();
                         break;
+                    case RunPhase.LOSESCREEN:
+                        BattlePhaseOut();
+                        runPhase = RunPhase.LOSESCREEN;
+                        LoseScreenIn();
+                        break;
                     default:
                         break;
                 }
@@ -196,6 +220,27 @@ public class GlobalManager : MonoBehaviour
             case RunPhase.BATTLEPHASE:
                 switch (trigger)
                 {
+                    case RunPhase.PICKPHASE:
+                        BattlePhaseOut();
+                        runPhase = RunPhase.PICKPHASE;
+                        PickPhaseIn();
+                        break;
+                    case RunPhase.LOSESCREEN:
+                        BattlePhaseOut();
+                        runPhase = RunPhase.LOSESCREEN;
+                        LoseScreenIn();
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case RunPhase.LOSESCREEN:
+                switch (trigger){
+                    case RunPhase.BATTLEPHASE:
+                        PickPhaseOut();
+                        runPhase = RunPhase.BATTLEPHASE;
+                        BattlePhaseIn();
+                        break;
                     case RunPhase.PICKPHASE:
                         BattlePhaseOut();
                         runPhase = RunPhase.PICKPHASE;
