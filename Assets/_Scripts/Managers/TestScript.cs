@@ -25,7 +25,10 @@ public class TestScript : MonoBehaviour
     {
         BaseUnit randomUnit = UnitManager.Instance.GetRandomUnit(Team.Enemy);
         randomUnit.ModifyArmor(+10, false);
+        BaseUnit randomAlly = UnitManager.Instance.GetRandomUnit(Team.Ally);
+        randomAlly.SetHP(300, false);
         InterfaceManager.Instance.UpdateLifebar(randomUnit, 0, 10);
+        InterfaceManager.Instance.UpdateLifebar(randomAlly, -(randomAlly.GetTotalHealth()-300), 0);
     }
 
     void Update(){

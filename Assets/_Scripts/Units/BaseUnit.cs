@@ -587,9 +587,9 @@ public class BaseUnit : MonoBehaviour
     /// Ajoute une quantité de HP au nombre de HP actuels
     /// </summary>
     /// <param name="amount"></param>
-    private void ModifyHP(int amount){
+    private int ModifyHP(int amount){
         finalHealth += amount;
-        CheckHP();
+        return CheckHP();
     }
 
     /// <summary>
@@ -658,15 +658,19 @@ public class BaseUnit : MonoBehaviour
     /// <summary>
     /// Vérifie que les HP actuels de l'unité sont à légaux et les fixe au besoin. Applique également le statut KO de l'unité si ses HP sont inférieurs ou égaux à 0.
     /// </summary>
-    public void CheckHP(){
+    public int CheckHP(){
+        int difference = 0;
         if(AreHPBeyondMax()){
+            difference = -(GetTotalHealth()-GetFinalHealth());
             SetHP(GetTotalHealth(), false);
         }
         if(AreHPBelowZero()){
+            difference = -GetFinalHealth();
             SetHP(0, false);
             //InterfaceManager.Instance.KillLifeBar(this.lifeBar);
             Kill();
         }
+        return difference;
     }
 
     /// <summary>
@@ -730,21 +734,24 @@ public class BaseUnit : MonoBehaviour
     /// Ajoute une quantité d'armure donnée à l'unité
     /// </summary>
     /// <param name="amount"></param>
-    public void ModifyArmor(int amount, bool animation = true){
+    public int ModifyArmor(int amount, bool animation = true){
         armor += amount;
         if(amount > 0){
             BattleEventManager.Instance.CreateArmorGainEvent(this, amount, animation);
         }
-        CheckArmor();
+        return CheckArmor();
     }
 
     /// <summary>
     /// Vérifie si l'armure de l'unité est légale et la fixe au besoin.
     /// </summary>
-    public void CheckArmor(){
+    public int CheckArmor(){
+        int armorDifference = 0;
         if(armor < 0){
+            armorDifference = -armor;
             SetArmor(0);
         }
+        return armorDifference;
     }
 
     /// <summary>
@@ -785,8 +792,8 @@ public class BaseUnit : MonoBehaviour
                 armorDamages = GetArmor();
                 ModifyArmor(-GetArmor());
             }
-            ModifyHP(-finalDamage);
-            return BattleEventManager.Instance.CreateDamageEvent(this, finalDamage, armorDamages);
+            int difference = ModifyHP(-finalDamage);
+            return BattleEventManager.Instance.CreateDamageEvent(this, finalDamage - difference, armorDamages);
         }
         // Si l'armure suffit à tanker l'attaque
         else{
@@ -805,8 +812,8 @@ public class BaseUnit : MonoBehaviour
         {
             finalAmount = Tools.Ceiling(_modifier.GetNewAmount(finalAmount));
         }
-        ModifyHP(+finalAmount);
-        return BattleEventManager.Instance.CreateHealEvent(null, this, amount, true);
+        int difference = ModifyHP(+finalAmount);
+        return BattleEventManager.Instance.CreateHealEvent(null, this, amount - difference, true);
     }
 
         #region Gestion des états
