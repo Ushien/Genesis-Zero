@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using System;
 using System.IO;
+using UnityEngine.Assertions;
 
 /// <summary>
 /// Méthodes de débug et de test
@@ -24,11 +25,7 @@ public class TestScript : MonoBehaviour
     {
         BaseUnit randomUnit = UnitManager.Instance.GetRandomUnit(Team.Enemy);
         randomUnit.ModifyArmor(+10, false);
-
-        foreach (BaseUnit unit in UnitManager.Instance.GetUnits())
-        {
-            InterfaceManager.Instance.UpdateLifebar(unit);
-        }
+        InterfaceManager.Instance.UpdateLifebar(randomUnit, 0, 10);
     }
 
     void Update(){

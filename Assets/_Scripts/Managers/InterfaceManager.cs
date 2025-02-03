@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
 using System.Linq;
+using UnityEngine.Assertions;
 
 /// <summary>
 /// Gestion de l'interface de jeu
@@ -765,28 +766,16 @@ public class InterfaceManager : MonoBehaviour
         lifeBarPanel.transform.position = unit.transform.position + lifeBarOffset;
         lifeBarPanel.name = $"{unit.GetName()}_LifeBar";
 
-        // Child components access and modification, very ugly
-        TextMeshProUGUI HP = lifeBarPanel.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI AR = lifeBarPanel.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
-        HP.text = $"{unit.GetFinalHealth()} HP";
-        AR.text = $"{unit.GetArmor()} AR";
-
-        //Armor initialization
-        Transform armorBar = lifeBarPanel.transform.GetChild(4);
-        armorBar.localScale = new Vector3((float)unit.GetArmor()/unit.GetFinalHealth(), 1, 1);
+        lifeBarPanel.GetComponent<LifeBar>().Setup(unit);
 
         return lifeBarPanel;
     }
     
     // Update la barre de vie d'un perso
-    public void UpdateLifebar(BaseUnit unit){
+    public void UpdateLifebar(BaseUnit unit, int HPChange, int armorChange){
         // Child components access and modification, very ugly
-        TextMeshProUGUI HP = unit.lifeBar.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI AR = unit.lifeBar.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
-        HP.text = $"{unit.GetFinalHealth()} HP";
-        AR.text = $"{unit.GetArmor()} AR";
-        unit.SetTargetLifeBarScale(new Vector3((float)unit.GetFinalHealth()/unit.GetTotalHealth(), 1, 1));
-        unit.SetTargetArmorBarScale(new Vector3((float)unit.GetArmor()/unit.GetTotalHealth(), 1, 1));
+        unit.lifeBar.GetComponent<LifeBar>().UpdateHP(HPChange);
+        unit.lifeBar.GetComponent<LifeBar>().UpdateArmor(armorChange);
     }
 
     public void UpdateLifeBarPosition(BaseUnit unit){

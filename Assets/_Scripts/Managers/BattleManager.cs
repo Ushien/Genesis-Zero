@@ -87,8 +87,6 @@ public class BattleManager : MonoBehaviour
             default:
                 break;
         }
-
-        
     }
 
     private void ChangePlayerActionChoiceState(Trigger trigger){
@@ -200,6 +198,10 @@ public class BattleManager : MonoBehaviour
                 // Start turn effects
                 turnState = TurnState.ACTION_CHOICE;
 
+                if (GlobalManager.Instance.debug){
+                    CheckAssertions();
+                };
+
                 NextTurn();
                 if(teamTurn == TeamTurn.ALLY){
                     ChangeState(Machine.PLAYERACTIONCHOICESTATE, Trigger.FORWARD);
@@ -253,6 +255,7 @@ public class BattleManager : MonoBehaviour
                 break;
         }
     }
+
     private void ChangeBattleState(Trigger trigger){
         switch (battleState){
             case BattleState.OUT:
@@ -387,6 +390,7 @@ public class BattleManager : MonoBehaviour
         currentTurn.Setup(nTurn);
     }
 
+
     public Instruction CreateInstruction(BaseUnit source_unit, BaseSpell spell_to_cast, Tile target_tile, bool hyper = false){
         Instruction new_instruction = Instantiate(emptyInstruction);
         new_instruction.transform.SetParent(currentTurn.transform);
@@ -460,8 +464,11 @@ public class BattleManager : MonoBehaviour
         return battleArchive;
     }
 
-    public void AnimateElements(){
-        //SetInAnimation(true);
-        //var task = AnimationManager.Instance.Animate(currentTurn.GetBattleEvents());
+    private void CheckAssertions()
+    {
+        foreach (BaseUnit unit in UnitManager.Instance.GetUnits())
+        {
+            unit.CheckAssertions();
+        }
     }
 }

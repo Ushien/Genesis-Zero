@@ -75,25 +75,47 @@ public class AnimationManager : MonoBehaviour
     }
 
     private async Task Animate(DamageEvent damageEvent){
-        foreach (int damage in new int[]{damageEvent.GetArmorAmount(), damageEvent.GetHealthAmount()})
-        {
-            if(damage > 0){
-                TextMeshProUGUI damageDisplay = Instantiate(damageText);
-                damageDisplay.transform.SetParent(DamageSection);
-                damageDisplay.text = "-" + damage.ToString();
-                damageDisplay.transform.position = damageEvent.GetTargetUnit().transform.position;
-                damageDisplay.transform.localScale = new Vector3(1, 1, 1);
-                damageDisplay.gameObject.SetActive(true);
-                InterfaceManager.Instance.UpdateLifebar(damageEvent.GetTargetUnit());
-                for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f * accelerator)
-                {
-                    damageDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));
-                    await Task.Yield();
-                }
-                damageDisplay.gameObject.SetActive(false);
-                Destroy(damageDisplay.gameObject);
+
+        // Animer les dégats d'armure
+        int damage = damageEvent.GetArmorAmount();
+        if(damage > 0){
+            TextMeshProUGUI damageDisplay = Instantiate(damageText);
+            damageDisplay.transform.SetParent(DamageSection);
+            damageDisplay.text = "-" + damage.ToString();
+            damageDisplay.transform.position = damageEvent.GetTargetUnit().transform.position;
+            damageDisplay.transform.localScale = new Vector3(1, 1, 1);
+            damageDisplay.gameObject.SetActive(true);
+            InterfaceManager.Instance.UpdateLifebar(damageEvent.GetTargetUnit(), 0, -damage);
+            for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f * accelerator)
+            {
+                damageDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));
+                await Task.Yield();
             }
+            damageDisplay.gameObject.SetActive(false);
+            Destroy(damageDisplay.gameObject);
         }
+
+        // Animer les dégats aux HP
+        damage = damageEvent.GetHealthAmount();
+        if(damage > 0){
+            TextMeshProUGUI damageDisplay = Instantiate(damageText);
+            damageDisplay.transform.SetParent(DamageSection);
+            damageDisplay.text = "-" + damage.ToString();
+            damageDisplay.transform.position = damageEvent.GetTargetUnit().transform.position;
+            damageDisplay.transform.localScale = new Vector3(1, 1, 1);
+            damageDisplay.gameObject.SetActive(true);
+            InterfaceManager.Instance.UpdateLifebar(damageEvent.GetTargetUnit(), -damage, 0);
+            for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f * accelerator)
+            {
+                damageDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));
+                await Task.Yield();
+            }
+            damageDisplay.gameObject.SetActive(false);
+            Destroy(damageDisplay.gameObject);
+        }
+
+    
+
     }
 
     private async Task Animate(ArmorGainEvent armorGainEvent){
@@ -103,7 +125,7 @@ public class AnimationManager : MonoBehaviour
         armorGainDisplay.transform.position = armorGainEvent.GetTargetUnit().transform.position;
         armorGainDisplay.transform.localScale = new Vector3(1, 1, 1);
         armorGainDisplay.gameObject.SetActive(true);
-        InterfaceManager.Instance.UpdateLifebar(armorGainEvent.GetTargetUnit());
+        InterfaceManager.Instance.UpdateLifebar(armorGainEvent.GetTargetUnit(), 0, armorGainEvent.GetAmount());
         for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f * accelerator)
         {
             armorGainDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));
@@ -120,7 +142,7 @@ public class AnimationManager : MonoBehaviour
         armorGainDisplay.transform.position = healEvent.GetTargetUnit().transform.position;
         armorGainDisplay.transform.localScale = new Vector3(1, 1, 1);
         armorGainDisplay.gameObject.SetActive(true);
-        InterfaceManager.Instance.UpdateLifebar(healEvent.GetTargetUnit());
+        InterfaceManager.Instance.UpdateLifebar(healEvent.GetTargetUnit(), healEvent.GetAmount(), 0);
         for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f * accelerator)
         {
             armorGainDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));

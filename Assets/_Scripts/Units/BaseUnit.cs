@@ -4,6 +4,8 @@ using UnityEngine;
 using System;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEngine.Assertions;
+using TMPro;
 
 /// <summary>
 /// Représente une unité au sens large
@@ -140,13 +142,7 @@ public class BaseUnit : MonoBehaviour
         else{
             this.gameObject.GetComponent<SpriteRenderer>().color = new Color32( 255, 255, 255, 255);
         }
-
-        // Mise à jour des barres de HP
-        if(lifeBar != null){
-            lifeBar.transform.GetChild(3).localScale = Vector3.Lerp(lifeBar.transform.GetChild(3).localScale, targetLifeBarScale, Time.deltaTime*8);
-            lifeBar.transform.GetChild(4).localScale = Vector3.Lerp(lifeBar.transform.GetChild(4).localScale, targetArmorBarScale, Time.deltaTime*8);
-            }
-        }
+    }
 
     /// <summary>
     /// Rend l'unité prête pour le combat suivant.
@@ -889,22 +885,11 @@ public class BaseUnit : MonoBehaviour
         UnitManager.Instance.Kill(this);
     }
         #endregion
-    
-        #region Gestion des interfaces
-    public void SetTargetLifeBarScale(Vector3 targetVector){
-        targetLifeBarScale = targetVector;
-    }
-    public Vector3 GetTargetLifeBarScale(){
-        return targetLifeBarScale;
-    }
-    public void SetTargetArmorBarScale(Vector3 targetVector){
-        targetArmorBarScale = targetVector;
-    }
-    public Vector3 GetTargetArmorBarScale(){
-        return targetArmorBarScale;
-    }
 
-        #endregion
+    public void CheckAssertions(){
+        Assert.AreEqual(GetFinalHealth().ToString() + " HP", lifeBar.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text);
+        Assert.AreEqual(GetArmor().ToString() + " AR", lifeBar.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text);
+    }
 
     #endregion
 
