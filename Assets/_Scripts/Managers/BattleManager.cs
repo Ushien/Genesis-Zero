@@ -16,7 +16,7 @@ public class BattleManager : MonoBehaviour
 
     //Game states
     public enum BattleState {OUT, START, TURN, END, WON, LOST}
-    public enum TurnState {OUT, START, ACTION_CHOICE, APPLY_ACTIONS, END}
+    public enum TurnState {OUT, START, ACTION_CHOICE, APPLY_ACTIONS, ANIMATION, END}
     public enum PlayerActionChoiceState {OUT, START, CHARACTER_SELECTION, SWITCH_CHARACTER, SPELL_SELECTION, TARGET_SELECTION, VALIDATED_ACTION, OTHER_STATE, EXIT}
 
     public enum Machine{BATTLESTATE, PLAYERTURNSTATE, PLAYERACTIONCHOICESTATE}
@@ -30,8 +30,6 @@ public class BattleManager : MonoBehaviour
 
     public Instruction emptyInstruction;
     public BattleTurn emptyBattleTurn;
-    
-    private int battleId;
     public int nTurn = 1;
     public BattleTurn currentTurn;
 
@@ -231,7 +229,18 @@ public class BattleManager : MonoBehaviour
                 }
                 ApplyInstructions();
 
-                turnState = TurnState.END;
+                turnState = TurnState.ANIMATION;
+                break;
+
+            case TurnState.ANIMATION:
+                switch (trigger)
+                {
+                    case Trigger.FORWARD:
+                        turnState = TurnState.END;
+                        break;
+                    default:
+                        break;
+                }
                 break;
 
             case TurnState.END:
@@ -260,7 +269,6 @@ public class BattleManager : MonoBehaviour
                         }
                         else{
                             EndTurnEffects();
-                            AnimateElements();
                             ArchiveTurn();
                             UnitManager.Instance.MakeUnitsActive();
                             SwitchCurrentTeam();

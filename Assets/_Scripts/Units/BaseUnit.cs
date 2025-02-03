@@ -671,7 +671,6 @@ public class BaseUnit : MonoBehaviour
             //InterfaceManager.Instance.KillLifeBar(this.lifeBar);
             Kill();
         }
-        //InterfaceManager.Instance.UpdateLifebar(this);
     }
 
     /// <summary>
@@ -750,7 +749,6 @@ public class BaseUnit : MonoBehaviour
         if(armor < 0){
             SetArmor(0);
         }
-        //InterfaceManager.Instance.UpdateLifebar(this);
     }
 
     /// <summary>

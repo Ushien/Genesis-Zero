@@ -32,15 +32,23 @@ public class AnimationManager : MonoBehaviour
     }
 
     void Update(){
-        if (!BattleManager.Instance.IsInAnimation() && animationQueue.Count != 0){
-            //Si la file n'est pas vide, animer le premier évènement, en mode fifo
-            BattleManager.Instance.SetInAnimation(true);
-            List<BattleEvent> listWrapper = new()
-            {
-                animationQueue[0]
-            };
-            animationQueue.RemoveAt(0);
-            var task = Animate(listWrapper);
+        if (BattleManager.Instance.GetTurnState() == BattleManager.TurnState.ANIMATION){
+            if (animationQueue.Count != 0){
+                if(!BattleManager.Instance.IsInAnimation()){
+                    //Si la file n'est pas vide, animer le premier évènement, en mode fifo
+                    BattleManager.Instance.SetInAnimation(true);
+                    List<BattleEvent> listWrapper = new()
+                    {
+                        animationQueue[0]
+                    };
+                    animationQueue.RemoveAt(0);
+                    var task = Animate(listWrapper);
+                }
+            }
+
+            else{
+                BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERTURNSTATE, BattleManager.Trigger.FORWARD);
+            }
         }
     }
 
