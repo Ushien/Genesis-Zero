@@ -17,11 +17,11 @@ public class GlobalManager : MonoBehaviour
     [SerializeField] private BattleEventManager battleEventManagerPrefab;
     [SerializeField] private EventManager eventManagerPrefab;
     [SerializeField] private Canvas UIWorldSpacePrefab;
-
     [SerializeField] private Camera camPrefab;
 
     [SerializeField] private PickPhaseManager pickPhaseManagerPrefab;
     [SerializeField] private ResourceManager resourceManagerPrefab;
+    [SerializeField] private EndScreenManager endScreenManagerPrefab;
 
     public enum RunPhase {OUT, PICKPHASE, BATTLEPHASE, LOSESCREEN}
     [SerializeField]
@@ -41,6 +41,7 @@ public class GlobalManager : MonoBehaviour
 
     private PickPhaseManager pickPhaseManager;
     private ResourceManager resourceManager;
+    private EndScreenManager endScreenManager;
     private Camera cam;
     private List<BaseUnit> allies;
     private GameObject battleArchive;
@@ -65,6 +66,8 @@ public class GlobalManager : MonoBehaviour
         unitManager.transform.SetParent(transform.parent);
         battleArchive = new GameObject("Battle Archive");
         lifeBarUI = Instantiate(UIWorldSpacePrefab);
+        interfaceManager = Instantiate(interfaceManagerPrefab);
+        interfaceManager.transform.SetParent(transform.parent);
 
         ChangeState(RunPhase.BATTLEPHASE);
     }
@@ -96,8 +99,6 @@ public class GlobalManager : MonoBehaviour
         battleManager.transform.SetParent(transform.parent);
         spellManager = Instantiate(spellManagerPrefab);
         spellManager.transform.SetParent(transform.parent);
-        interfaceManager = Instantiate(interfaceManagerPrefab);
-        interfaceManager.transform.SetParent(transform.parent);
         
         animationManager = Instantiate(animationManagerPrefab);
         animationManager.transform.SetParent(transform.parent);
@@ -140,7 +141,6 @@ public class GlobalManager : MonoBehaviour
         allies = UnitManager.Instance.GetUnits(Team.Ally);
         unitManager.EndBattle();
         Destroy(spellManager.gameObject);
-        Destroy(interfaceManager.gameObject);
         Destroy(animationManager.gameObject);
         Destroy(AIManager.gameObject);
         Destroy(battleEventManager.gameObject);
@@ -149,7 +149,7 @@ public class GlobalManager : MonoBehaviour
         GameObject[] rootGameObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
         foreach (GameObject _gameobject in rootGameObjects)
         {
-            if(_gameobject.name == "Grid" || _gameobject.name.Contains("UI Screen Space")){
+            if(_gameobject.name == "Grid"){
                 Destroy(_gameobject);
             }
             if(_gameobject.name == "Units" || _gameobject.name.Contains("UI - World Space")){
@@ -174,11 +174,12 @@ public class GlobalManager : MonoBehaviour
     }
 
     public void LoseScreenIn(){
-        //
+        endScreenManager = Instantiate(endScreenManagerPrefab);
+        endScreenManager.Setup(false);
     }
 
     public void LoseScreenOut(){
-        //
+        Destroy(endScreenManager.gameObject);
     }
 
     public void ChangeState(RunPhase trigger){
