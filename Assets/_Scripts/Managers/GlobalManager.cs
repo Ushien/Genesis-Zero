@@ -23,7 +23,7 @@ public class GlobalManager : MonoBehaviour
     [SerializeField] private ResourceManager resourceManagerPrefab;
     [SerializeField] private EndScreenManager endScreenManagerPrefab;
 
-    public enum RunPhase {OUT, PICKPHASE, BATTLEPHASE, LOSESCREEN}
+    public enum RunPhase {OUT, STARTPHASE, PICKPHASE, BATTLEPHASE, LOSESCREEN, ENDPHASE}
     [SerializeField]
     private RunPhase runPhase;
 
@@ -44,6 +44,7 @@ public class GlobalManager : MonoBehaviour
     private EndScreenManager endScreenManager;
     private Camera cam;
     private List<BaseUnit> allies;
+    private List<BaseUnit> enemies;
     private GameObject battleArchive;
 
     [SerializeField]
@@ -68,26 +69,16 @@ public class GlobalManager : MonoBehaviour
         lifeBarUI = Instantiate(UIWorldSpacePrefab);
         interfaceManager = Instantiate(interfaceManagerPrefab);
         interfaceManager.transform.SetParent(transform.parent);
+        spellManager = Instantiate(spellManagerPrefab);
+        spellManager.transform.SetParent(transform.parent);
 
-        ChangeState(RunPhase.BATTLEPHASE);
+        ChangeState(RunPhase.STARTPHASE);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(battleManager != null){
-            switch (BattleManager.Instance.GetBattleState())
-            {
-                case BattleManager.BattleState.WON:
-                    ChangeState(RunPhase.PICKPHASE);
-                    break;
-                case BattleManager.BattleState.LOST:
-                    ChangeState(RunPhase.LOSESCREEN);
-                    break;
-                default:
-                    break;
-            }
-        }
+
     }
 
     public void BattlePhaseIn(){
@@ -97,8 +88,6 @@ public class GlobalManager : MonoBehaviour
         gridManager.transform.SetParent(transform.parent);
         battleManager = Instantiate(battleManagerPrefab);
         battleManager.transform.SetParent(transform.parent);
-        spellManager = Instantiate(spellManagerPrefab);
-        spellManager.transform.SetParent(transform.parent);
         
         animationManager = Instantiate(animationManagerPrefab);
         animationManager.transform.SetParent(transform.parent);
@@ -117,13 +106,12 @@ public class GlobalManager : MonoBehaviour
             }
         }
 
-        if(allies == null){
-            BattleManager.Instance.LaunchBattle(testScript.ally_composition.GetTuples(), testScript.enemy_composition.GetTuples());
-        }
-        else
-        {
-            BattleManager.Instance.LaunchBattle(allies, testScript.enemy_composition.GetTuples());
-        }
+
+        // Générer un nouveau groupe d'ennemis
+        enemies = UnitManager.Instance.CreateUnits(testScript.enemy_composition.GetTuples(), Team.Enemy);
+
+        BattleManager.Instance.LaunchBattle(allies, enemies);
+
         BattleManager.Instance.DebugSetState();
         BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, BattleManager.Trigger.FORWARD);
 
@@ -140,7 +128,6 @@ public class GlobalManager : MonoBehaviour
         Destroy(battleManager.gameObject);
         allies = UnitManager.Instance.GetUnits(Team.Ally);
         unitManager.EndBattle();
-        Destroy(spellManager.gameObject);
         Destroy(animationManager.gameObject);
         Destroy(AIManager.gameObject);
         Destroy(battleEventManager.gameObject);
@@ -179,80 +166,173 @@ public class GlobalManager : MonoBehaviour
     }
 
     public void LoseScreenOut(){
+        endScreenManager.Out();
         Destroy(endScreenManager.gameObject);
+    }
+
+    public void StartPhaseIn(){
+        // Spawn allies units
+        allies = UnitManager.Instance.CreateUnits(testScript.ally_composition.GetTuples(), Team.Ally);
+
+        ChangeState(RunPhase.BATTLEPHASE);
+    }
+
+    public void StartPhaseOut(){
+        //
+    }
+
+    public void EndPhaseIn(){
+        // Reset the game
+        UnitManager.Instance.Reset();
+
+        ChangeState(RunPhase.STARTPHASE);
+    }
+
+    public void EndPhaseOut(){
+        //
     }
 
     public void ChangeState(RunPhase trigger){
         if(runPhase == RunPhase.OUT){
             switch(trigger){
                 case RunPhase.PICKPHASE:
+                    runPhase = RunPhase.PICKPHASE;
                     PickPhaseIn();
                     break;
                 case RunPhase.BATTLEPHASE:
+                    runPhase = RunPhase.BATTLEPHASE;
                     BattlePhaseIn();
                     break;
                 case RunPhase.LOSESCREEN:
+                    runPhase = RunPhase.LOSESCREEN;
                     LoseScreenIn();
+                    break;
+                case RunPhase.STARTPHASE:
+                    runPhase = RunPhase.STARTPHASE;
+                    StartPhaseIn();
                     break;
                 default:
                     break;
             }
-            runPhase = trigger;
         }
-        switch (runPhase)
-        {
-            case RunPhase.PICKPHASE:
-                switch (trigger)
-                {
-                    case RunPhase.BATTLEPHASE:
-                        PickPhaseOut();
-                        runPhase = RunPhase.BATTLEPHASE;
-                        BattlePhaseIn();
-                        break;
-                    case RunPhase.LOSESCREEN:
-                        BattlePhaseOut();
-                        runPhase = RunPhase.LOSESCREEN;
-                        LoseScreenIn();
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case RunPhase.BATTLEPHASE:
-                switch (trigger)
-                {
-                    case RunPhase.PICKPHASE:
-                        BattlePhaseOut();
-                        runPhase = RunPhase.PICKPHASE;
-                        PickPhaseIn();
-                        break;
-                    case RunPhase.LOSESCREEN:
-                        BattlePhaseOut();
-                        runPhase = RunPhase.LOSESCREEN;
-                        LoseScreenIn();
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case RunPhase.LOSESCREEN:
-                switch (trigger){
-                    case RunPhase.BATTLEPHASE:
-                        PickPhaseOut();
-                        runPhase = RunPhase.BATTLEPHASE;
-                        BattlePhaseIn();
-                        break;
-                    case RunPhase.PICKPHASE:
-                        BattlePhaseOut();
-                        runPhase = RunPhase.PICKPHASE;
-                        PickPhaseIn();
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            default:
-                break;
+        else{
+            switch (runPhase)
+            {
+                case RunPhase.PICKPHASE:
+                    switch (trigger)
+                    {
+                        case RunPhase.BATTLEPHASE:
+                            PickPhaseOut();
+                            runPhase = RunPhase.BATTLEPHASE;
+                            BattlePhaseIn();
+                            break;
+                        case RunPhase.LOSESCREEN:
+                            PickPhaseOut();
+                            runPhase = RunPhase.LOSESCREEN;
+                            LoseScreenIn();
+                            break;
+                        case RunPhase.STARTPHASE:
+                            PickPhaseOut();
+                            runPhase = RunPhase.STARTPHASE;
+                            StartPhaseIn();
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case RunPhase.BATTLEPHASE:
+                    switch (trigger)
+                    {
+                        case RunPhase.PICKPHASE:
+                            BattlePhaseOut();
+                            runPhase = RunPhase.PICKPHASE;
+                            PickPhaseIn();
+                            break;
+                        case RunPhase.LOSESCREEN:
+                            BattlePhaseOut();
+                            runPhase = RunPhase.LOSESCREEN;
+                            LoseScreenIn();
+                            break;
+                        case RunPhase.STARTPHASE:
+                            BattlePhaseOut();
+                            runPhase = RunPhase.STARTPHASE;
+                            StartPhaseIn();
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case RunPhase.LOSESCREEN:
+                    switch (trigger){
+                        /*
+                        case RunPhase.BATTLEPHASE:
+                            LoseScreenOut();
+                            runPhase = RunPhase.BATTLEPHASE;
+                            BattlePhaseIn();
+                            break;
+                        */
+                        /*
+                        case RunPhase.PICKPHASE:
+                            LoseScreenOut();
+                            runPhase = RunPhase.PICKPHASE;
+                            PickPhaseIn();
+                            break;
+                        */
+                        case RunPhase.STARTPHASE:
+                            LoseScreenOut();
+                            runPhase = RunPhase.ENDPHASE;
+                            StartPhaseIn();
+                            break;
+                        case RunPhase.ENDPHASE:
+                            LoseScreenOut();
+                            runPhase = RunPhase.ENDPHASE;
+                            EndPhaseIn();
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case RunPhase.STARTPHASE:
+                    switch (trigger)
+                    {
+                        case RunPhase.BATTLEPHASE:
+                            StartPhaseOut();
+                            runPhase = RunPhase.BATTLEPHASE;
+                            BattlePhaseIn();
+                            break;
+                        /*
+                        case RunPhase.LOSESCREEN:
+                            StartPhaseOut();
+                            runPhase = RunPhase.LOSESCREEN;
+                            LoseScreenIn();
+                            break;
+                        */
+                        /*
+                        case RunPhase.PICKPHASE:
+                            StartPhaseOut();
+                            runPhase = RunPhase.PICKPHASE;
+                            PickPhaseIn();
+                            break;
+                        */
+                        default:
+                            break;
+                    }
+                    break;
+                case RunPhase.ENDPHASE:
+                    switch (trigger)
+                    {
+                        case RunPhase.STARTPHASE:
+                            EndPhaseOut();
+                            runPhase = RunPhase.STARTPHASE;
+                            StartPhaseIn();
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

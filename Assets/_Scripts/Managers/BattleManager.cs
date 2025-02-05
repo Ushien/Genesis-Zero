@@ -53,6 +53,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    /*
     public void LaunchBattle(List<Tuple<Vector2, ScriptableUnit, int>> ally_composition, List<Tuple<Vector2, ScriptableUnit, int>> enemy_composition){
         
         GridManager.Instance.GenerateGrids();
@@ -61,8 +62,20 @@ public class BattleManager : MonoBehaviour
 
         StartBattle();
     }
+    */
 
+    /*
     public void LaunchBattle(List<BaseUnit> ally_composition, List<Tuple<Vector2, ScriptableUnit, int>> enemy_composition){
+
+        GridManager.Instance.GenerateGrids();
+        UnitManager.Instance.SpawnAllies(ally_composition);
+        UnitManager.Instance.SpawnEnemies(enemy_composition);
+
+        StartBattle();
+    }
+    */
+
+    public void LaunchBattle(List<BaseUnit> ally_composition, List<BaseUnit> enemy_composition){
 
         GridManager.Instance.GenerateGrids();
         UnitManager.Instance.SpawnAllies(ally_composition);
@@ -294,10 +307,10 @@ public class BattleManager : MonoBehaviour
                 }
                 break;
             case BattleState.WON:
-                Debug.Log("Cool il n'y a plus d'ennemi");
+                GlobalManager.Instance.ChangeState(GlobalManager.RunPhase.PICKPHASE);
                 break;
             case BattleState.LOST:
-                Debug.Log("Cool il n'y a plus d'allié'");
+                GlobalManager.Instance.ChangeState(GlobalManager.RunPhase.LOSESCREEN);
                 break;
             default:
                 break;

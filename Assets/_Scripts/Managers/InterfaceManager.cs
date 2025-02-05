@@ -137,20 +137,23 @@ public class InterfaceManager : MonoBehaviour
 
     void Update()
     {   
-        switch (BattleManager.Instance.GetPlayerActionChoiceState())
-        {
-            case BattleManager.PlayerActionChoiceState.CHARACTER_SELECTION:
-                SourceSelectionDisplay();
-                break;
-            case BattleManager.PlayerActionChoiceState.SPELL_SELECTION:
-                SpellSelectionDisplay();
-                break;
-            case BattleManager.PlayerActionChoiceState.TARGET_SELECTION:
-                TargetSelectionDisplay();
-                break;
-            default:
-                break;
+        if(BattleManager.Instance != null){
+            switch (BattleManager.Instance.GetPlayerActionChoiceState())
+            {
+                case BattleManager.PlayerActionChoiceState.CHARACTER_SELECTION:
+                    SourceSelectionDisplay();
+                    break;
+                case BattleManager.PlayerActionChoiceState.SPELL_SELECTION:
+                    SpellSelectionDisplay();
+                    break;
+                case BattleManager.PlayerActionChoiceState.TARGET_SELECTION:
+                    TargetSelectionDisplay();
+                    break;
+                default:
+                    break;
+            }   
         }
+
         
     }
 

@@ -32,7 +32,11 @@ public class UnitManager : MonoBehaviour
         all_enemies.transform.parent = all_units.transform;
     }
 
+    public void Reset(){
+        units = new List<BaseUnit>();
+    }
 
+    /*
     public void SpawnUnit(Vector2 position, ScriptableUnit unit_to_spawn, int level, Team team){
 
         var new_unit = Instantiate(EmptyUnit);
@@ -49,6 +53,7 @@ public class UnitManager : MonoBehaviour
         Tile spawnTile = GridManager.Instance.GetTileAtPosition(team, position);
         spawnTile.SetUnit(new_unit);
     }
+    */
 
     public void SpawnUnit(BaseUnit unit_to_spawn, Team team){
 
@@ -67,6 +72,7 @@ public class UnitManager : MonoBehaviour
         spawnTile.SetUnit(unit_to_spawn); 
     }
 
+    /*
     public void SpawnEnemies(List<Tuple<Vector2, ScriptableUnit, int>> units_to_spawn){
         foreach(Tuple<Vector2, ScriptableUnit, int> unit in units_to_spawn){
             SpawnUnit(unit.Item1, unit.Item2, unit.Item3, Team.Enemy);
@@ -78,11 +84,33 @@ public class UnitManager : MonoBehaviour
             SpawnUnit(unit.Item1, unit.Item2, unit.Item3, Team.Ally);
         }
     }
+    */
 
     public void SpawnAllies(List<BaseUnit> units_to_spawn){
         foreach(BaseUnit unit in units_to_spawn){
             SpawnUnit(unit, Team.Ally);
         }  
+    }
+
+    public void SpawnEnemies(List<BaseUnit> units_to_spawn){
+        foreach(BaseUnit unit in units_to_spawn){
+            SpawnUnit(unit, Team.Enemy);
+        }  
+    }
+
+
+    public BaseUnit CreateUnit(Vector2 position, ScriptableUnit unit_to_create, int level, Team team){
+        var new_unit = Instantiate(EmptyUnit);
+        new_unit.Setup(unit_to_create, level, team, position);
+        return new_unit;
+    }
+
+    public List<BaseUnit> CreateUnits(List<Tuple<Vector2, ScriptableUnit, int>> units_to_create, Team team){
+        List<BaseUnit> unitList = new List<BaseUnit>();
+        foreach(Tuple<Vector2, ScriptableUnit, int> unit in units_to_create){
+            unitList.Add(CreateUnit(unit.Item1, unit.Item2, unit.Item3, team));
+        }
+        return unitList;
     }
 
     public BaseUnit GetRandomUnit(Team team = Team.Both){
