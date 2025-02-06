@@ -173,8 +173,8 @@ public class UnitManager : MonoBehaviour
         //unit.gameObject.SetActive(false);
     }
 
-    public void ApplyEndTurnEffects(Team team){
-        foreach (BaseUnit unit in GetUnits(team))
+    public void ApplyEndTurnEffects(){
+        foreach (BaseUnit unit in GetUnits())
         {
             unit.ApplyEndturnEffects();
         }

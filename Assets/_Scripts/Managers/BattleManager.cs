@@ -285,7 +285,9 @@ public class BattleManager : MonoBehaviour
                             battleState = BattleState.END;
                         }
                         else{
-                            EndTurnEffects();
+                            if(teamTurn == TeamTurn.ENEMY){
+                                EndTurnEffects();
+                            }
                             ArchiveTurn();
                             UnitManager.Instance.MakeUnitsActive();
                             SwitchCurrentTeam();
@@ -374,7 +376,7 @@ public class BattleManager : MonoBehaviour
     }
 
     public void EndTurnEffects(){
-        UnitManager.Instance.ApplyEndTurnEffects(ConvertTeamTurn(teamTurn));
+        UnitManager.Instance.ApplyEndTurnEffects();
     }
 
     private void ArchiveTurn(){
