@@ -80,6 +80,7 @@ public class BattleManager : MonoBehaviour
         GridManager.Instance.GenerateGrids();
         UnitManager.Instance.SpawnAllies(ally_composition);
         UnitManager.Instance.SpawnEnemies(enemy_composition);
+        UnitManager.Instance.MakeUnitsVisible(Team.Both, true);
 
         StartBattle();
     }
@@ -482,6 +483,17 @@ public class BattleManager : MonoBehaviour
         foreach (BaseUnit unit in UnitManager.Instance.GetUnits())
         {
             unit.CheckAssertions();
+        }
+    }
+
+    public void Out(){
+        UnitManager.Instance.EndBattle();
+        if(GetBattleState() == BattleState.WON){
+            UnitManager.Instance.RemoveUnits(Team.Enemy);
+            UnitManager.Instance.MakeUnitsVisible(Team.Ally, false);
+        }
+        if(GetBattleState() == BattleState.LOST){
+            UnitManager.Instance.RemoveUnits(Team.Both);
         }
     }
 }

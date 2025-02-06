@@ -188,6 +188,36 @@ public class UnitManager : MonoBehaviour
             unit.EndBattle();
         }
     }
+
+    public void RemoveUnits(Team team){
+        if(team == Team.Ally || team == Team.Both){
+            foreach (Transform unit in all_allies.transform)
+            {
+                Destroy(unit.gameObject);
+            }
+        }
+        if(team == Team.Enemy || team == Team.Both){
+            foreach (Transform unit in all_enemies.transform)
+            {
+                Destroy(unit.gameObject);
+            }
+        }
+    }
+
+    public void MakeUnitsVisible(Team team, bool visibility){
+        if(team == Team.Ally || team == Team.Both){
+            foreach (Transform unit in all_allies.transform)
+            {
+                unit.gameObject.SetActive(visibility);
+            }
+        }
+        if(team == Team.Enemy || team == Team.Both){
+            foreach (Transform unit in all_enemies.transform)
+            {
+                unit.gameObject.SetActive(visibility);
+            }
+        }
+    }
 }
 
 public enum Team {

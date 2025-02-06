@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class GlobalManager : MonoBehaviour
 {
@@ -125,13 +126,16 @@ public class GlobalManager : MonoBehaviour
         Destroy(gridManager.gameObject);
         battleManager.GetArchive().name = "Battle " + battleID;
         battleManager.GetArchive().transform.SetParent(battleArchive.transform);
-        Destroy(battleManager.gameObject);
+
         allies = UnitManager.Instance.GetUnits(Team.Ally);
-        unitManager.EndBattle();
+        BattleManager.Instance.Out();
+
+        Destroy(battleManager.gameObject);
         Destroy(animationManager.gameObject);
         Destroy(AIManager.gameObject);
         Destroy(battleEventManager.gameObject);
         Destroy(eventManager.gameObject);
+
         
         GameObject[] rootGameObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
         foreach (GameObject _gameobject in rootGameObjects)
@@ -139,7 +143,7 @@ public class GlobalManager : MonoBehaviour
             if(_gameobject.name == "Grid"){
                 Destroy(_gameobject);
             }
-            if(_gameobject.name == "Units" || _gameobject.name.Contains("UI - World Space")){
+            if(_gameobject.name.Contains("UI - World Space")){
                 _gameobject.SetActive(false);
             }
         }
