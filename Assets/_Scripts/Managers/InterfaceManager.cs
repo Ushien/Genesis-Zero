@@ -171,8 +171,10 @@ public class InterfaceManager : MonoBehaviour
                 sourceTile = UnitManager.Instance.GetUnits(Team.Ally).Where(_unit => !_unit.HasGivenInstruction()).First().GetTile();
             }
             else{
-                sourceTile = UnitManager.Instance.GetUnits(Team.Ally)[0].GetTile();
+                // On prend une case au hasard je ne comprends pas pourquoi il crash si je ne lui en donne pas
+                sourceTile = GridManager.Instance.GetRandomTile(Team.Both);
             }
+
             sourceTile.Select();
             GridManager.Instance.SetSelectionMode(GridManager.Selection_mode.Single_selection);
 
