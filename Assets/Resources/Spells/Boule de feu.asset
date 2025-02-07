@@ -13,8 +13,15 @@ MonoBehaviour:
   m_Name: Boule de feu
   m_EditorClassIdentifier: 
   spell_name: Boule de feu (P)
-  lore_description: 
   fight_description: "Inflige %%1 d\xE9gats \xE0 une unit\xE9 - Pyro (P)"
+  ratios:
+  - 1
+  - 1
+  - 1
+  hyper_ratios:
+  - 1
+  - 2
+  - 1
   overloaded_fight_description: "Inflige %%1 d\xE9gats \xE0 une unit\xE9 - Pyro (P)
     - Surcharge"
   cooldown: 1

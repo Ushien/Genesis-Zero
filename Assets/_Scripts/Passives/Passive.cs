@@ -9,9 +9,9 @@ using UnityEngine;
 
 public class Passive : MonoBehaviour
 {
-    public float ratio1 = 1f;
-    public float ratio2 = 1f;
-    public float ratio3 = 1f;
+    public float ratio1;
+    public float ratio2;
+    public float ratio3;
     public string passiveName;
     public string fight_description;
     public BaseUnit holder;
@@ -23,8 +23,15 @@ public class Passive : MonoBehaviour
         holder = unit;
     }
 
-    virtual public void Setup(BaseUnit unit){
+    virtual public void Setup(BaseUnit unit, ScriptablePassive _scriptablePassive){
+        passiveName = _scriptablePassive.passive_name;
         name = passiveName;
+        fight_description = _scriptablePassive.fight_description;
+        ratio1 = _scriptablePassive.ratios[0];
+        ratio2 = _scriptablePassive.ratios[1];
+        ratio3 = _scriptablePassive.ratios[2];
+        scriptablePassive = _scriptablePassive;
+
         AttachToUnit(unit);
         unit.AddPassive(this);
         transform.parent = unit.transform;

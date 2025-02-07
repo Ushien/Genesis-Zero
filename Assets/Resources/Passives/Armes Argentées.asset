@@ -16,9 +16,9 @@ MonoBehaviour:
   fight_description: "Frapper un adversaire avec 3 attaques ou techniques lui inflige
     %%1 d\xE9gats suppl\xE9mentaires."
   ratios:
+  - 0.1
   - 1
   - 1
-  - 1
-  artwork: {fileID: 0}
+  artwork: {fileID: 21300000, guid: 97209abe28f63394e9637856187a3a04, type: 3}
   passivePrefab: {fileID: 7140660022501740396, guid: a6ff8d3ee8e73434b8c35f62d08b4cd6, type: 3}
   lootable: 1

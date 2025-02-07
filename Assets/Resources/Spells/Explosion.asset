@@ -13,9 +13,16 @@ MonoBehaviour:
   m_Name: Explosion
   m_EditorClassIdentifier: 
   spell_name: Explosion
-  lore_description: 
   fight_description: "Inflige %%1 d\xE9gats \xE0 une cible, et %%2 d\xE9gats \xE0
     ses alli\xE9s"
+  ratios:
+  - 1.2
+  - 0.2
+  - 1
+  hyper_ratios:
+  - 1
+  - 1
+  - 1
   overloaded_fight_description: 
   cooldown: 3
   properties: 

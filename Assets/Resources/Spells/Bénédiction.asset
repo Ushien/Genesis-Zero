@@ -13,8 +13,15 @@ MonoBehaviour:
   m_Name: "B\xE9n\xE9diction"
   m_EditorClassIdentifier: 
   spell_name: "B\xE9n\xE9diction"
-  lore_description: 
   fight_description: "Renforce l'attaque d'une unit\xE9 de __1% pendant 3 tours."
+  ratios:
+  - 0.15
+  - 0.5
+  - 1
+  hyper_ratios:
+  - 1
+  - 1
+  - 1
   overloaded_fight_description: 
   cooldown: 2
   properties: 

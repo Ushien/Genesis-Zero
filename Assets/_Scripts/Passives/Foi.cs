@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class Foi : Passive
 {
-    void Awake()
-    {
-        ratio1 = 0.15f;
-
-        passiveName = "Foi";
-        fight_description = "L'unité reçoit un bonus de __1% sur tous les soins qu'elle reçoit";
-    }
     // Lorsque le passif est setup, l'active
     override public void Activate()
     {

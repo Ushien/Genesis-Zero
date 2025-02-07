@@ -4,15 +4,6 @@ using UnityEngine;
 
 public class NewBehaviourScript : Passive
 {
-    void Awake()
-    {
-        ratio1 = 0.2f;
-        ratio2 = 1f;
-        ratio3 = 1f;
-
-        passiveName = "Détonation";
-        fight_description = "Lorsqu'une unité adverse meurt, elle inflige %%1 dégats aux unités adjacentes";
-    }
     // Lorsque le passif est setup, l'active
     override public void Activate()
     {

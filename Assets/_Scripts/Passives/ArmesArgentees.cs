@@ -6,10 +6,7 @@ public class ArmesArgentées : Passive
 {
     [SerializeField]
     private ScriptablePassive a_ArmesArgentees;
-    void Awake()
-    {
-        ratio1 = 0.1f;
-    }
+
     // Lorsque le passif est setup, l'active
     override public void Activate()
     {

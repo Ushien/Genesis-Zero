@@ -15,7 +15,7 @@ MonoBehaviour:
   spell_name: Puit de Vie
   fight_description: "Soigne une unit\xE9 de %%1 d\xE9gats."
   ratios:
-  - 1
+  - 4.5
   - 1
   - 1
   hyper_ratios:

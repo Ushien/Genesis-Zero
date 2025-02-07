@@ -64,10 +64,9 @@ public class BaseSpell : MonoBehaviour
     /// </summary>
     /// <param name="ownerUnit">Unité possédant le sort</param>
     public void Setup(BaseUnit ownerUnit, int spellListIndex = -1){
-        name = scriptableSpell.spell_name;
-
         owner = ownerUnit;
         
+        name = scriptableSpell.spell_name;
         spell_name = scriptableSpell.spell_name;
         fight_description = scriptableSpell.fight_description;
         fight_description_h = scriptableSpell.overloaded_fight_description;
@@ -79,6 +78,14 @@ public class BaseSpell : MonoBehaviour
         if(spellListIndex != -1){
             ownerUnit.GetSpells()[spellListIndex] = this;
         }
+
+        ratio1 = scriptableSpell.ratios[0];
+        ratio2 = scriptableSpell.ratios[1];
+        ratio3 = scriptableSpell.ratios[2];
+
+        h_ratio1 = scriptableSpell.hyper_ratios[0];
+        h_ratio2 = scriptableSpell.hyper_ratios[1];
+        h_ratio3 = scriptableSpell.hyper_ratios[2];
     }
         #endregion
         #region Actions du sort

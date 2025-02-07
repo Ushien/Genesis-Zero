@@ -228,6 +228,7 @@ public class PickPhaseManager : MonoBehaviour
                     UnselectReward(GetCurrentRewards()[currentSelectionIndex]);
                     currentSelectionIndex = currentSelectionIndex-1;
                     SelectReward(GetCurrentRewards()[currentSelectionIndex]);
+                    UpdateDisplay();
                 }
                 break;
             case Directions.RIGHT:
@@ -235,6 +236,7 @@ public class PickPhaseManager : MonoBehaviour
                     UnselectReward(GetCurrentRewards()[currentSelectionIndex]);
                     currentSelectionIndex = currentSelectionIndex + 1;
                     SelectReward(GetCurrentRewards()[currentSelectionIndex]);
+                    UpdateDisplay();
                 }
                 break;
             case Directions.UP:
@@ -242,12 +244,14 @@ public class PickPhaseManager : MonoBehaviour
                     //UnselectUnit()
                     currentUnitIndex -= 1;
                     SelectNewUnit(currentUnitIndex);
+                    UpdateDisplay();
                 }
                 break;
             case Directions.DOWN:
                 if(currentUnitIndex != allies.Count-1){
                     currentUnitIndex += 1;
                     SelectNewUnit(currentUnitIndex);
+                    UpdateDisplay();
                 }
                 break;
             default:
@@ -295,7 +299,7 @@ public class PickPhaseManager : MonoBehaviour
                 Transform spellPanel = informationPanel.transform.Find("SpellPanel");
                 spellPanel.gameObject.SetActive(true);
                 spellPanel.Find("Name").GetComponent<TextMeshProUGUI>().text = spell.name;
-                spellPanel.Find("Description").GetComponent<TextMeshProUGUI>().text = spell.fight_description;
+                spellPanel.Find("Description").GetComponent<TextMeshProUGUI>().text = spell.GetFightDescription(allies[currentUnitIndex]);
                 spellPanel.Find("Cooldown").GetComponent<TextMeshProUGUI>().text = spell.cooldown.ToString();
                 spellPanel.Find("SpellPanelIcon").GetComponent<Image>().sprite = spell.artwork;
             }
@@ -306,7 +310,7 @@ public class PickPhaseManager : MonoBehaviour
                 Transform spellPanel = informationPanel.transform.Find("SpellPanel");
                 spellPanel.gameObject.SetActive(true);
                 spellPanel.Find("Name").GetComponent<TextMeshProUGUI>().text = passive.name;
-                spellPanel.Find("Description").GetComponent<TextMeshProUGUI>().text = passive.fight_description;
+                spellPanel.Find("Description").GetComponent<TextMeshProUGUI>().text = passive.GetFightDescription(allies[currentUnitIndex]);
                 spellPanel.Find("Cooldown").GetComponent<TextMeshProUGUI>().text = "";
                 spellPanel.Find("SpellPanelIcon").GetComponent<Image>().sprite = passive.artwork;
             }

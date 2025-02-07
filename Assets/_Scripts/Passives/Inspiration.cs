@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class Inspiration : Passive
 {
-    void Awake()
-    {
-        passiveName = "Inspiration";
-        fight_description = "Avant de lancer une technique sur un allié, retire ses états négatifs.";
-    }
     // Lorsque le passif est setup, l'active
     override public void Activate()
     {

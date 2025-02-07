@@ -19,6 +19,4 @@ MonoBehaviour:
   lore_description: 
   fight_description: 
   passives: []
-  spells:
-  - {fileID: 2314959605954725291, guid: 243e5c35ecd0b574aaa9b6c0e5d951bb, type: 3}
-  - {fileID: 2804910480797656173, guid: a9f692055fffe75449a6c92529bdda48, type: 3}
+  spells: []

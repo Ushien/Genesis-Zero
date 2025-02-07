@@ -13,9 +13,17 @@ MonoBehaviour:
   m_Name: "Coeur M\xE9canique"
   m_EditorClassIdentifier: 
   spell_name: "Coeur M\xE9canique"
-  lore_description: 
   fight_description: "Conf\xE8re un bouclier et %%1 armure au lanceur. Si le lanceur
-    poss\xE8de d\xE9j\xE0 un bouclier, inflige %%2 d\xE9gats \xE0 tous les adversaires."
+    poss\xE8de d\xE9j\xE0 un bouclier, inflige %%2 d\xE9gats \xE0 tous les adversaires.
+    (N)"
+  ratios:
+  - 1
+  - 1
+  - 1
+  hyper_ratios:
+  - 1
+  - 1
+  - 1
   overloaded_fight_description: 
   cooldown: 2
   properties: 
@@ -23,6 +31,6 @@ MonoBehaviour:
   team_restriction: 1
   artwork: {fileID: 21300000, guid: d579c6bf2d3157d408503dc098a950aa, type: 3}
   spellScriptPrefab: {fileID: 8555355187402037432, guid: 628f7189031b65e4caa5ca700158b30b, type: 3}
-  lootable: 1
+  lootable: 0
   rarity: 2
   tags: 0800000009000000
