@@ -6,6 +6,8 @@ using UnityEngine.UI;
 using System.IO;
 using TMPro;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
+using Unity.VisualScripting;
 
 public class PickPhaseManager : MonoBehaviour
 {
@@ -16,20 +18,25 @@ public class PickPhaseManager : MonoBehaviour
     [SerializeField]
     private Transform rewardSelectorPrefab;
     private Transform rewardSelector;
+    private Transform unitSelector;
     
     [SerializeField]
     private GameObject choiceCell;
     private List<Reward> currentRewards;
+    private List<GameObject> alliesCells;
+    [SerializeField]
+    private List<BaseUnit> allies;
     private int currentSelectionIndex;
+    private int currentUnitIndex;
     public enum RewardType{EMPTY, PASSIVE, SPELL}
-    public enum Directions{NONE, LEFT, RIGHT}
+    public enum Directions{NONE, LEFT, RIGHT,UP, DOWN}
     [SerializeField]
     private Canvas informationPanelPrefab;
     private Canvas informationPanel;
-    private BaseUnit selectedUnit;
-
-    private Vector3 currentSelectorPosition;
+    private Vector3 currentRewardSelectorPosition;
     private Vector3 targetSelectorPosition;
+    private Vector3 currentUnitSelectorPosition;
+    private Vector3 targetUnitPosition;
 
     private static System.Random rng;
 
@@ -41,13 +48,20 @@ public class PickPhaseManager : MonoBehaviour
     {
         cam = GlobalManager.Instance.GetCam();
         rewardParent = new GameObject("Rewards");
+        allies = GlobalManager.Instance.GetAllies();
+        alliesCells = new List<GameObject>();
+
         currentSelectionIndex = 0;
         rewardSelector = Instantiate(rewardSelectorPrefab);
         rewardSelector.gameObject.SetActive(false);
+
+        currentUnitIndex = 1;
+        unitSelector = Instantiate(rewardSelectorPrefab);
+        unitSelector.gameObject.SetActive(false);
+
         informationPanel = Instantiate(informationPanelPrefab);
         informationPanel.worldCamera = GlobalManager.Instance.GetCam();
         ResetDisplay();
-        selectedUnit = GlobalManager.Instance.GetAllies()[0];
 
         List<Reward> rewardsToSpawn = new List<Reward>();
         //TODO Génération de Rewards
@@ -68,6 +82,23 @@ public class PickPhaseManager : MonoBehaviour
         }
         SetCurrentRewards(rewardsToSpawn);
 
+        int y_pos = 0;
+        for (int i = allies.Count-1; i >= 0; i--)
+        {
+            GameObject _object = Instantiate(choiceCell);
+            alliesCells.Insert(0, _object);
+            
+            _object.transform.name = allies[i].GetName();
+            _object.GetComponent<SpriteRenderer>().sprite = allies[i].GetComponent<SpriteRenderer>().sprite;
+
+            y_pos = y_pos + Screen.height/2/(allies.Count+1);
+            _object.transform.position = cam.ScreenToWorldPoint(new Vector3(Screen.width/7, y_pos, 1));
+            //_object.transform.SetParent(rewardParent.transform);
+        }
+        unitSelector.gameObject.SetActive(true);
+        currentUnitSelectorPosition = alliesCells[currentUnitIndex].transform.position;
+        targetUnitPosition = currentUnitSelectorPosition;
+
         DisplayRewards();
     }
 
@@ -77,6 +108,11 @@ public class PickPhaseManager : MonoBehaviour
         Destroy(rewardParent);
         Destroy(rewardSelector.gameObject);
         Destroy(informationPanel.gameObject);
+        Destroy(unitSelector.gameObject);
+        foreach (GameObject unitCell in alliesCells)
+        {
+            Destroy(unitCell);
+        }
     }
 
     void Awake(){
@@ -87,8 +123,12 @@ public class PickPhaseManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentSelectorPosition = Vector3.Lerp(currentSelectorPosition, targetSelectorPosition, Time.deltaTime*6);
-        rewardSelector.position = currentSelectorPosition;
+        currentRewardSelectorPosition = Vector3.Lerp(currentRewardSelectorPosition, targetSelectorPosition, Time.deltaTime*6);
+        rewardSelector.position = currentRewardSelectorPosition;
+
+        currentUnitSelectorPosition = Vector3.Lerp(currentUnitSelectorPosition, targetUnitPosition, Time.deltaTime*6);
+        unitSelector.position = currentUnitSelectorPosition;
+
         if(currentRewards != null){
             if(Input.GetKeyDown(KeyCode.LeftArrow)){
                 Move(Directions.LEFT);
@@ -96,9 +136,15 @@ public class PickPhaseManager : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.RightArrow)){
                 Move(Directions.RIGHT);
             }
+            if(Input.GetKeyDown(KeyCode.UpArrow)){
+                Move(Directions.UP);
+            }
+            if(Input.GetKeyDown(KeyCode.DownArrow)){
+                Move(Directions.DOWN);
+            }
             if(Input.GetKeyDown(KeyCode.B)){
                 if(currentRewards.Count > 0){
-                    PickReward(currentRewards[currentSelectionIndex]);
+                    PickReward(currentRewards[currentSelectionIndex], allies[currentUnitIndex]);
                     GlobalManager.Instance.ChangeState(GlobalManager.RunPhase.BATTLEPHASE);
                 }
             }
@@ -113,13 +159,13 @@ public class PickPhaseManager : MonoBehaviour
         //ADD Reward here
         if(rewardType == RewardType.SPELL){
             List<ScriptableSpell> spellList = resourceManager.GetSpells(lootable:true);
-            spellList = spellList.Where(_spell => !(selectedUnit.HasSpell(_spell))).OrderBy(_ => rng.Next()).ToList();
+            spellList = spellList.Where(_spell => !(allies[currentUnitIndex].HasSpell(_spell))).OrderBy(_ => rng.Next()).ToList();
             ScriptableSpell spell = spellList[0];
             return new SpellReward(spell);
         }
         if(rewardType == RewardType.PASSIVE){
             List<ScriptablePassive> passiveList = resourceManager.GetPassives(lootable:true);
-            passiveList = passiveList.Where(_passive => !(selectedUnit.HasPassive(_passive))).OrderBy(_ => rng.Next()).ToList();
+            passiveList = passiveList.Where(_passive => !(allies[currentUnitIndex].HasPassive(_passive))).OrderBy(_ => rng.Next()).ToList();
             ScriptablePassive passive = passiveList[0];
             return new PassiveReward(passive);
         }
@@ -169,8 +215,8 @@ public class PickPhaseManager : MonoBehaviour
 
         }
         rewardSelector.gameObject.SetActive(true);
-        currentSelectorPosition = new Vector3(rewards[0].GetCell().transform.position.x, rewards[0].GetCell().transform.position.y, (float)-9.5);
-        targetSelectorPosition = currentSelectorPosition;
+        currentRewardSelectorPosition = new Vector3(rewards[0].GetCell().transform.position.x, rewards[0].GetCell().transform.position.y, (float)-9.5);
+        targetSelectorPosition = currentRewardSelectorPosition;
         UpdateDisplay();
     }
 
@@ -191,6 +237,19 @@ public class PickPhaseManager : MonoBehaviour
                     SelectReward(GetCurrentRewards()[currentSelectionIndex]);
                 }
                 break;
+            case Directions.UP:
+                if(currentUnitIndex != 0){
+                    //UnselectUnit()
+                    currentUnitIndex -= 1;
+                    SelectNewUnit(currentUnitIndex);
+                }
+                break;
+            case Directions.DOWN:
+                if(currentUnitIndex != allies.Count-1){
+                    currentUnitIndex += 1;
+                    SelectNewUnit(currentUnitIndex);
+                }
+                break;
             default:
                 break;
         }
@@ -208,12 +267,16 @@ public class PickPhaseManager : MonoBehaviour
         
     }
 
-    public void PickReward(Reward reward){
-        if(selectedUnit.GetAvailableSpellIndex() == -1){
+    private void SelectNewUnit(int unitIndex){
+        targetUnitPosition = new Vector3(alliesCells[unitIndex].transform.position.x, alliesCells[unitIndex].transform.position.y, (float)-9.5);
+    }
+
+    public void PickReward(Reward reward, BaseUnit unit){
+        if(allies[currentUnitIndex].GetAvailableSpellIndex() == -1){
             // 
         }
         else{
-            reward.Pick(selectedUnit);
+            reward.Pick(unit);
         }
     }
 

@@ -44,6 +44,8 @@ public class GlobalManager : MonoBehaviour
     private ResourceManager resourceManager;
     private EndScreenManager endScreenManager;
     private Camera cam;
+    [SerializeField]
+
     private List<BaseUnit> allies;
     private List<BaseUnit> enemies;
     private GameObject battleArchive;
@@ -110,7 +112,7 @@ public class GlobalManager : MonoBehaviour
 
         // Générer un nouveau groupe d'ennemis
         enemies = UnitManager.Instance.CreateUnits(testScript.enemy_composition.GetTuples(), Team.Enemy);
-
+        
         BattleManager.Instance.LaunchBattle(allies, enemies);
 
         BattleManager.Instance.DebugSetState();
