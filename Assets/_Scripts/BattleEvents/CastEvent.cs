@@ -28,6 +28,10 @@ public class CastEvent : BattleEvent
         return castedSpell;
     }
 
+    public Tile GetTargetTile(){
+        return targetTile;
+    }
+
     public override string GetSummary()
     {
         return "Cast Event: " + GetSourceUnit().GetName() + " - " + GetCastedSpell().GetName() + " - " + targetTile.name;

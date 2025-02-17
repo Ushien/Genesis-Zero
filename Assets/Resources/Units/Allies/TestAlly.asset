@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74e90ef35834eb84dbcc3899f95ea8e4, type: 3}
-  m_Name: PunchingBall
+  m_Name: TestAlly
   m_EditorClassIdentifier: 
-  unit_name: Punching Ball
-  sprite: {fileID: 21300000, guid: d19f9321838faf944b11fa4b12b7904d, type: 3}
-  original_power: 5
-  original_health: 100000
+  unit_name: Anasta
+  sprite: {fileID: 21300000, guid: 5b2f00b3fc239ca48ab321f3d815827e, type: 3}
+  original_power: 200
+  original_health: 1000
   lore_description: 
   fight_description: 
   passives: []
   spells:
+  - {fileID: 617788342436211795, guid: 8fb0029126e92ae42ba126b878ffe7be, type: 3}
   - {fileID: 6708877276925215642, guid: 2712a1912af1cd346850b35190ee8e8e, type: 3}

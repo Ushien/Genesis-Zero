@@ -14,9 +14,9 @@ public class EventManager : MonoBehaviour
 
     public static EventManager Instance;
     public delegate void AfterSpellAction();
-    public static event Action<BaseSpell, Tile> AfterCast;
+    public static event Action<CastEvent> AfterCast;
     public delegate void BeforeSpellAction();
-    public static event Action<BaseSpell, Tile> BeforeCast;
+    public static event Action<CastEvent> BeforeCast;
     public delegate void AfterHealAction();
     public static event Action<HealEvent> AfterHeal;
     public delegate void DeathAction();
@@ -27,15 +27,15 @@ public class EventManager : MonoBehaviour
         Instance = this;
     }
 
-    public void AfterTechCast(BaseSpell spell, Tile targetTile){
+    public void AfterTechCast(CastEvent castEvent){
         if (AfterCast != null){
-            AfterCast(spell, targetTile);
+            AfterCast(castEvent);
         }
     }
 
-    public void BeforeTechCast(BaseSpell spell, Tile targetTile){
+    public void BeforeTechCast(CastEvent castEvent){
         if (BeforeCast != null){
-            BeforeCast(spell, targetTile);
+            BeforeCast(castEvent);
         }
     }
 

@@ -7,9 +7,6 @@ public class CoeurVorace : BaseSpell
 {
     int healCount = 0;
     void Awake(){
-        SetRatio(1, 0.2f);
-        SetRatio(2, 0.05f);
-
         EventManager.AfterHeal += IncrementHeal;
     }
 
@@ -18,7 +15,7 @@ public class CoeurVorace : BaseSpell
     }
 
     private void _CoeurVorace(Tile targetTile){   
-        SpellManager.Instance.InflictDamage(GetOwner(), GetFinalDamages(GetRatio()[0]), targetTile.GetUnit(), new List<Properties>(){Properties.Vampirisme});
+        SpellManager.Instance.UseSpell(GetOwner(), GetFinalDamages(GetRatio()[0]), targetTile.GetUnit(), new List<Properties>(){Properties.Vampirisme}, SpellType.Damage);
     }
 
     override public int GetFinalDamages(float _ratio){

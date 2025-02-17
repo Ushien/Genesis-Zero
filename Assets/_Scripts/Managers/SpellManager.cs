@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Assertions;
+using Unity.VisualScripting;
+using System;
 
 
 /// <summary>
@@ -29,7 +32,7 @@ public class SpellManager : MonoBehaviour
     }
     
     public ScriptableSpell GetRandomSpell(){
-        return _spells.OrderBy(o=> Random.value).First();
+        return _spells.OrderBy(o=> UnityEngine.Random.value).First();
     }
 
     private List<ScriptableSpell> LoadSpells(){
@@ -55,23 +58,57 @@ public class SpellManager : MonoBehaviour
         Debug.Log("J'inflige des dégats avec mon attaque");
     }
 
-    public void InflictDamage(BaseUnit originUnit, float amount, BaseUnit target, List<Properties> property = null){
+    public void UseSpell(BaseUnit originUnit, float amount, BaseUnit target, List<Properties> property = null, SpellType spellType = SpellType.Damage){
+        switch (spellType)
+        {
+            case SpellType.Damage:
+                Debug.Log("Piou");
+                if((property.Contains(Properties.Curatif) || originUnit.GetCuratifCount() > 0) && originUnit.GetTeam() == target.GetTeam()){
+                    Debug.Log("Piou2");
+                    if(originUnit.GetCuratifCount() > 0){
+                        Debug.Log("Piou3");
+                        originUnit.ModifyCuratifCount(-1);
+                    }
+                    HealDamage(originUnit, amount, target, property);
+                }
+                else{
+                    InflictDamage(originUnit, amount, target, property);
+                }
+                break;
+            case SpellType.Heal:
+                HealDamage(originUnit, amount, target, property);
+                break;
+            default:
+                // TODO Throw exception
+                break;
+        }
+    }
+
+    public DamageEvent InflictDamage(BaseUnit originUnit, float amount, BaseUnit target, List<Properties> properties = null){
 
         int finalDamages = Tools.Ceiling(amount);
         DamageEvent damageEvent = target.Damage(finalDamages);
         damageEvent.SetOriginUnit(originUnit);
         BattleEventManager.Instance.ApplyDamageEvent(damageEvent);
         
-        if(property != null){
-            if(property.Contains(Properties.Vampirisme)){
-                HealEvent healEvent = originUnit.Heal(damageEvent.GetHealthAmount());
-                healEvent.SetOriginUnit(originUnit);
-                BattleEventManager.Instance.ApplyHealEvent(healEvent);
+        if(properties != null){
+            if(properties.Contains(Properties.Vampirisme)){
+                // On supprime le vampirisme des propriétés du heal pour éviter les boucles
+                List<Properties> propertiesWithoutVampirisme = new List<Properties>();
+                foreach (Properties property in properties)
+                {
+                    if(property != Properties.Vampirisme){
+                        propertiesWithoutVampirisme.Add(property);
+                    }
+                }
+                HealDamage(originUnit, damageEvent.GetHealthAmount(), originUnit, propertiesWithoutVampirisme);
             }
-        }        
+        }
+
+        return damageEvent;   
     }
 
-    public void InflictDamage(BaseUnit originUnit, float amount, List<BaseUnit> targets, List<Properties> property = null){
+    public void InflictDamage(BaseUnit originUnit, float amount, List<BaseUnit> targets, List<Properties> properties = null){
         
         int totalHealthDamages = 0;
     
@@ -86,20 +123,26 @@ public class SpellManager : MonoBehaviour
             totalHealthDamages += damageEvent.GetHealthAmount();
         }
 
-        HealEvent healEvent = null;
-        if(property != null){
-            if(property.Contains(Properties.Vampirisme)){
-                healEvent = originUnit.Heal(totalHealthDamages);
-                BattleEventManager.Instance.ApplyHealEvent(healEvent);
+        if(properties != null){
+            // On supprime le vampirisme des propriétés du heal pour éviter les boucles
+            List<Properties> propertiesWithoutVampirisme = new List<Properties>();
+            foreach (Properties property in properties)
+            {
+                if(property != Properties.Vampirisme){
+                    propertiesWithoutVampirisme.Add(property);
+                }
             }
+            HealDamage(originUnit, totalHealthDamages, originUnit, propertiesWithoutVampirisme);
         }
     }
 
-    public void HealDamage(BaseUnit originUnit, float amount, BaseUnit target, Properties property = Properties.Empty){
+    public HealEvent HealDamage(BaseUnit originUnit, float amount, BaseUnit target, List<Properties> property = null){
         int finalAmount = Tools.Ceiling(amount);
         HealEvent healEvent = target.Heal(finalAmount);
         healEvent.SetOriginUnit(originUnit);
         BattleEventManager.Instance.ApplyHealEvent(healEvent);
+
+        return healEvent;
     }
 
     public void ModifyRange(BaseSpell spell, bool definitive, Ranges new_range){
@@ -151,6 +194,11 @@ public enum Status {
     Kill = 1,
     Stun = 2,
     Poison = 3
+}
+
+public enum SpellType {
+    Damage = 0,
+    Heal = 1
 }
 
 /// <summary>

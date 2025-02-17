@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class FuséesdeSignal : BaseSpell
 {
-    void Awake(){
-
-    }
-
     override public void Cast(Tile targetTile = null){
         base.CastSpell(targetTile, _FuséesSignal);
     }

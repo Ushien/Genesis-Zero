@@ -14,9 +14,9 @@ public class Inspiration : Passive
     {
         EventManager.BeforeCast -= _Inspiration;
     }
-    void _Inspiration(BaseSpell spell, Tile targetTile){
-        if(spell.GetOwner() == GetOwner() && targetTile != GetOwner().GetTile() && targetTile.GetUnit().GetTeam() == GetOwner().GetTeam()){
-            targetTile.GetUnit().Cleanse();
+    void _Inspiration(CastEvent castEvent){
+        if(castEvent.GetCastedSpell().GetOwner() == GetOwner() && castEvent.GetTargetTile() != GetOwner().GetTile() && castEvent.GetTargetTile().GetUnit().GetTeam() == GetOwner().GetTeam()){
+            castEvent.GetTargetTile().GetUnit().Cleanse();
         }
     }
 }

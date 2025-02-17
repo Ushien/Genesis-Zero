@@ -9,11 +9,23 @@ public class BattleEventManager : MonoBehaviour
     void Awake(){
         Instance = this;
     }
-    public void CreateCastEvent(BaseUnit sourceUnit, BaseSpell castedSpell, Tile targetTile, bool animation = true){
-        CastEvent newCastEvent = new CastEvent(sourceUnit, castedSpell, targetTile);
-        BattleManager.Instance.AddEvent(newCastEvent);
+    public CastEvent CreateCastEvent(BaseUnit sourceUnit, BaseSpell castedSpell, Tile targetTile, bool animation = true){
+        return new CastEvent(sourceUnit, castedSpell, targetTile);
+    }
+
+    public void ApplyBeforeCastEvent(CastEvent castEvent, bool animation = true){
+        EventManager.Instance.BeforeTechCast(castEvent);
+        BattleManager.Instance.AddEvent(castEvent);
         if(animation){
-            AnimationManager.Instance.addAnimation(newCastEvent);
+            AnimationManager.Instance.addAnimation(castEvent);
+        }
+    }
+
+    public void ApplyAfterCastEvent(CastEvent castEvent, bool animation = true){
+        EventManager.Instance.AfterTechCast(castEvent);
+        BattleManager.Instance.AddEvent(castEvent);
+        if(animation){
+            //AnimationManager.Instance.addAnimation(castEvent);
         }
     }
 

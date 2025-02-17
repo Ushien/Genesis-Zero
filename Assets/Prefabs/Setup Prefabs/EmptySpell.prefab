@@ -45,16 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scriptableSpell: {fileID: 11400000, guid: ba88d43c576a56243baedc22e3d6239d, type: 2}
-  owner: {fileID: 0}
-  modifier: {fileID: 3725732595186329557, guid: 9649bcacdc3281c47b9a5985c44e62d8, type: 3}
-  spell_name: Name
-  lore_description: Lore Description
-  fight_description: Fight Description
-  cooldown: 0
-  base_cooldown: 0
-  artwork: {fileID: 0}
-  range: 0
-  team_restriction: 0
-  ratio1: 1
-  ratio2: 1
-  ratio3: 1
+  baseModifier: {fileID: 3725732595186329557, guid: 9649bcacdc3281c47b9a5985c44e62d8, type: 3}

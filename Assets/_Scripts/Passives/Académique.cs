@@ -14,8 +14,8 @@ public class Académique : Passive
     {
         EventManager.AfterCast -= RisingPower;
     }
-    void RisingPower(BaseSpell spell, Tile targetTile){
-        if(spell.GetOwner() == holder){
+    void RisingPower(CastEvent castEvent){
+        if(castEvent.GetSourceUnit() == holder){
             holder.ModifyPower(ratio1);
         }
     }

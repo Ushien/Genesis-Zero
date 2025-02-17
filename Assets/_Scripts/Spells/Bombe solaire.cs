@@ -4,11 +4,7 @@ using UnityEngine;
 
 public class Bombesolaire : BaseSpell
 {
-    void Awake(){
-
-    }
-    
-    override public void Cast(Tile targetTile = null){
+     override public void Cast(Tile targetTile = null){
         base.CastSpell(targetTile, _BombeSolaire);
     }
 

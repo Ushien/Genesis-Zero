@@ -52,6 +52,7 @@ public class BaseUnit : MonoBehaviour
     // Est-ce que l'unité est hors-combat ?
     private bool dead = false;
     private int armor = 0;
+    private int curatifCount = 0;
 
     private Vector2 position;
         #endregion
@@ -60,6 +61,7 @@ public class BaseUnit : MonoBehaviour
 
     // Liste des modificateurs associés à l'unité
     private Dictionary<Func<int, BattleEvent>, List<Modifier>> modifiers = new Dictionary<Func<int, BattleEvent>, List<Modifier>>();
+    private List<Modifier> globalModifiers = new List<Modifier>();
     // Liste des actions enregistrées. Le tuple est composé de 3 éléments: La méthode qui doit être appelée, le paramètre avec lequel elle doit être appelée, le nombre de tours dans lequel l'action doit être effectuée.
     private List<Tuple<Func<int, BattleEvent>, int, int>> actionQueue = new List<Tuple<Func<int, BattleEvent>, int, int>>();
     // L'unité a-t-elle déjà reçu une instruction ?
@@ -137,10 +139,10 @@ public class BaseUnit : MonoBehaviour
     public void Update(){
         // Rend l'unité grisée si elle a déjà reçu une instruction
         if(HasGivenInstruction()){
-            this.gameObject.GetComponent<SpriteRenderer>().color = new Color32( 173, 173, 173, 200);
+            gameObject.GetComponent<SpriteRenderer>().color = new Color32( 173, 173, 173, 200);
         }
         else{
-            this.gameObject.GetComponent<SpriteRenderer>().color = new Color32( 255, 255, 255, 255);
+            gameObject.GetComponent<SpriteRenderer>().color = new Color32( 255, 255, 255, 255);
         }
     }
 
@@ -168,7 +170,7 @@ public class BaseUnit : MonoBehaviour
         }
         GetAttack().ApplyEndTurnEffects();
         // Modifiers
-        ModifierEndTurn();
+        ModifiersEndTurn();
         // ActionQueue
         ReduceQueueTurns();
         ApplyQueueActions();
@@ -352,6 +354,14 @@ public class BaseUnit : MonoBehaviour
 
         #region Gestion des modificateurs
 
+    public void AddGlobalModifier(Modifier modifier){
+        globalModifiers.Add(modifier);
+    }
+
+    public void DeleteModifier(Modifier modifier){
+        globalModifiers.Remove(modifier);
+    }
+
     /// <summary>
     /// Ajoute un modificateur sur une méthode
     /// </summary>
@@ -373,12 +383,34 @@ public class BaseUnit : MonoBehaviour
     /// <summary>
     /// Diminue la durée restante des modificateurs de 1 et les supprime si celle-ci vaut 0
     /// </summary>
-    private void ModifierEndTurn(){
+    private void ModifiersEndTurn(){
+        foreach (Modifier modifier in globalModifiers){
+            modifier.ModifyTurns(-1);
+        }
         foreach (var action in modifiers)
         {
             foreach (Modifier _modifier in action.Value)
             {
                 _modifier.ModifyTurns(-1);
+            }
+        }
+        CheckModifiers();
+    }
+
+    private void CheckModifiers(){
+        foreach (Modifier modifier in globalModifiers){
+            if(modifier.IsEnded()){
+                //FIXME this les listes aiment pas beaucoup ça
+                globalModifiers.Remove(modifier);
+            }
+            else{
+                //
+            }
+        }
+        foreach (var action in modifiers)
+        {
+            foreach (Modifier _modifier in action.Value)
+            {
                 if(_modifier.IsEnded()){
                     //FIXME this les listes aiment pas beaucoup ça
                     action.Value.Remove(_modifier);
@@ -386,6 +418,7 @@ public class BaseUnit : MonoBehaviour
             }
         }
     }
+
     #endregion
         #endregion
 
@@ -881,6 +914,14 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     public void Cleanse(){
         Cleanse(SpellManager.Instance.GetCleansableStatus());
+    }
+
+    public void ModifyCuratifCount(int amount){
+        curatifCount += amount;
+    }
+
+    public int GetCuratifCount(){
+        return curatifCount;
     }
 
     /// <summary>

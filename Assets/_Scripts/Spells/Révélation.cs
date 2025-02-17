@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class Révélation : BaseSpell
 {
-    void Awake(){
-        SetRatio(1, 0.5f);
-    }
-
     override public void Cast(Tile targetTile = null){
         base.CastSpell(targetTile, _Revelation);
     }

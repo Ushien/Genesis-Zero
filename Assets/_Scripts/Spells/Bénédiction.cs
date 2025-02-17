@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class Benediction : BaseSpell
 {
-    void Awake(){
-        SetRatio(1, 0.15f);
-        SetRatio(1, 0.5f, true);
-    }
-
     override public void Cast(Tile targetTile = null){
         base.CastSpell(targetTile, _Benediction);
     }

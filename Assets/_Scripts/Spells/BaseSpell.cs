@@ -51,6 +51,8 @@ public class BaseSpell : MonoBehaviour
 
         #region Fields relatifs au moteur de jeu
 
+    [SerializeField]
+    public Modifier baseModifier;
     private List<Modifier> modifiers = new List<Modifier>();
         #endregion
         #endregion
@@ -136,7 +138,8 @@ public class BaseSpell : MonoBehaviour
         if(targetUnit != null && IsAvailable() && GetOwner().IsAvailable()){
 
             if (IsATechnique()){
-                EventManager.Instance.BeforeTechCast(this, targetTile);
+                CastEvent castEvent = BattleEventManager.Instance.CreateCastEvent(owner, this, targetTile);
+                EventManager.Instance.BeforeTechCast(castEvent);
             }
 
             if(targetTile.GetUnit() != null){
@@ -152,7 +155,8 @@ public class BaseSpell : MonoBehaviour
             spellFunction(targetTile);
 
             if (IsATechnique()){
-                EventManager.Instance.AfterTechCast(this, targetTile);
+                CastEvent castEvent = BattleEventManager.Instance.CreateCastEvent(owner, this, targetTile);
+                EventManager.Instance.AfterTechCast(castEvent);
             }
 
             if (hyper){
