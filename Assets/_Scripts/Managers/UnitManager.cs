@@ -188,7 +188,13 @@ public class UnitManager : MonoBehaviour
             unit.EndBattle();
         }
         Reset();
-        
+    }
+
+    public void StartBattle(){
+        foreach (BaseUnit unit in GetUnits())
+        {
+            unit.StartBattle();
+        }
     }
 
     public void RemoveUnits(Team team){

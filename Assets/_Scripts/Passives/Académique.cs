@@ -16,7 +16,9 @@ public class Académique : Passive
     }
     void RisingPower(CastEvent castEvent){
         if(castEvent.GetSourceUnit() == holder){
-            holder.ModifyPower(ratio1);
+            Modifier newModifier = Instantiate(modifier);
+            newModifier.Setup(ratio1, _permanent : true);
+            holder.AddGlobalModifier(newModifier);
         }
     }
 }

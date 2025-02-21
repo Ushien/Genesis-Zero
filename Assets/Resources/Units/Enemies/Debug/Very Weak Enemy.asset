@@ -10,15 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74e90ef35834eb84dbcc3899f95ea8e4, type: 3}
-  m_Name: TestAlly
+  m_Name: Very Weak Enemy
   m_EditorClassIdentifier: 
-  unit_name: Anasta
-  sprite: {fileID: 21300000, guid: 5b2f00b3fc239ca48ab321f3d815827e, type: 3}
-  original_power: 500
-  original_health: 8000
+  unit_name: Robomage
+  sprite: {fileID: 21300000, guid: 469db11e2f178c340a2ce8d7e9cd0098, type: 3}
+  original_power: 300
+  original_health: 560
   lore_description: 
   fight_description: 
-  passives:
-  - {fileID: 11400000, guid: 460ffed8b83fc1d459be46614f03232a, type: 2}
+  passives: []
   spells:
   - {fileID: 6708877276925215642, guid: 2712a1912af1cd346850b35190ee8e8e, type: 3}

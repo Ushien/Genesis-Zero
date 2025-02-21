@@ -62,11 +62,8 @@ public class SpellManager : MonoBehaviour
         switch (spellType)
         {
             case SpellType.Damage:
-                Debug.Log("Piou");
                 if((property.Contains(Properties.Curatif) || originUnit.GetCuratifCount() > 0) && originUnit.GetTeam() == target.GetTeam()){
-                    Debug.Log("Piou2");
                     if(originUnit.GetCuratifCount() > 0){
-                        Debug.Log("Piou3");
                         originUnit.ModifyCuratifCount(-1);
                     }
                     HealDamage(originUnit, amount, target, property);

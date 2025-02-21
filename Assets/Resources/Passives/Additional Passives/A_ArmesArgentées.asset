@@ -14,6 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   passive_name: "A Armes Argent\xE9es"
   fight_description: 
+  ratios:
+  - 1
+  - 1
+  - 1
   artwork: {fileID: 0}
   passivePrefab: {fileID: 5213626427440704530, guid: 275b8fa10c9b2034ab04975f4a921176, type: 3}
+  minor: 1
   lootable: 0

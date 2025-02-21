@@ -55,7 +55,7 @@ public class PickPhaseManager : MonoBehaviour
         rewardSelector = Instantiate(rewardSelectorPrefab);
         rewardSelector.gameObject.SetActive(false);
 
-        currentUnitIndex = 1;
+        currentUnitIndex = 0;
         unitSelector = Instantiate(rewardSelectorPrefab);
         unitSelector.gameObject.SetActive(false);
 

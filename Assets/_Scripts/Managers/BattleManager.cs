@@ -81,6 +81,7 @@ public class BattleManager : MonoBehaviour
         UnitManager.Instance.SpawnAllies(ally_composition);
         UnitManager.Instance.SpawnEnemies(enemy_composition);
         UnitManager.Instance.MakeUnitsVisible(Team.Both, true);
+        UnitManager.Instance.StartBattle();
 
         StartBattle();
     }

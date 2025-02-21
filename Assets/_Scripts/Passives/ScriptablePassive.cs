@@ -11,6 +11,7 @@ public class ScriptablePassive : ScriptableObject
     public float[] ratios = {1f, 1f, 1f};
     public Sprite artwork;
     public Passive passivePrefab;
+    public bool minor = false;
     public bool lootable;
 
     public void SetupPassive(BaseUnit unit){

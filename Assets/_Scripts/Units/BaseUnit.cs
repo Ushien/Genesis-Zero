@@ -33,6 +33,7 @@ public class BaseUnit : MonoBehaviour
 
     private string unit_name = "Name";
     // Puissance de l'unité
+    private int basePower = 1;
     private int finalPower = 1;
     // Points de vie maximaux
     private int totalHealth = 1;
@@ -98,6 +99,7 @@ public class BaseUnit : MonoBehaviour
         level = setup_level;
 
         finalPower = GetStatFromLevel(scriptableUnit.original_power, level);
+        basePower = finalPower;
         totalHealth = GetStatFromLevel(scriptableUnit.original_health, level);
         finalHealth = totalHealth;
 
@@ -153,6 +155,37 @@ public class BaseUnit : MonoBehaviour
     public void EndBattle(){
         GiveInstruction(false);
         Cleanse();
+        modifiers[Heal] = new List<Modifier>();
+        modifiers[Damage] = new List<Modifier>();
+        globalModifiers = new List<Modifier>();
+        CheckModifiers();
+        actionQueue = new List<Tuple<Func<int, BattleEvent>, int, int>>();
+        
+        List<Passive> newPassives = new List<Passive>();
+        foreach (Passive passive in GetPassives())
+        {
+            passive.Activate(false);
+            if(!passive.IsMinor()){
+                newPassives.Add(passive);
+            }
+        }
+        passives = newPassives;
+
+        foreach (BaseSpell spell in availableSpells)
+        {
+            if(spell != null){
+                spell.EndBattle();
+            }
+        }
+    }
+
+    public void StartBattle(){
+        foreach (Passive passive in GetPassives())
+        {
+            if(!passive.IsActivated()){
+                passive.Activate();
+            }
+        }
     }
 
     /// <summary>
@@ -356,10 +389,12 @@ public class BaseUnit : MonoBehaviour
 
     public void AddGlobalModifier(Modifier modifier){
         globalModifiers.Add(modifier);
+        CheckModifiers();
     }
 
-    public void DeleteModifier(Modifier modifier){
+    public void DeleteGlobalModifier(Modifier modifier){
         globalModifiers.Remove(modifier);
+        CheckModifiers();
     }
 
     /// <summary>
@@ -369,6 +404,7 @@ public class BaseUnit : MonoBehaviour
     /// <param name="function"></param>
     public void AddModifier(Modifier modifier, Func<int, BattleEvent> function){
         modifiers[function].Add(modifier);
+        CheckModifiers();
     }
 
     /// <summary>
@@ -378,6 +414,7 @@ public class BaseUnit : MonoBehaviour
     /// <param name="function"></param>
     public void DeleteModifier(Modifier modifier, Func<int, BattleEvent> function){
         modifiers[function].Remove(modifier);
+        CheckModifiers();
     }
 
     /// <summary>
@@ -398,15 +435,22 @@ public class BaseUnit : MonoBehaviour
     }
 
     private void CheckModifiers(){
+        int newPower = basePower;
         foreach (Modifier modifier in globalModifiers){
             if(modifier.IsEnded()){
                 //FIXME this les listes aiment pas beaucoup ça
                 globalModifiers.Remove(modifier);
             }
             else{
-                //
+                if(modifier.powerBonus != 0){
+                    newPower = Tools.Ceiling(modifier.powerBonus * newPower + newPower);
+                }
             }
         }
+
+        finalPower = newPower;
+        CheckFinalPower();
+
         foreach (var action in modifiers)
         {
             foreach (Modifier _modifier in action.Value)

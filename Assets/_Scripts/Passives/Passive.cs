@@ -18,6 +18,8 @@ public class Passive : MonoBehaviour
     public ScriptablePassive scriptablePassive;
 
     public Modifier modifier;
+    private bool minor = false;
+    private bool activated = false;
 
     virtual public void AttachToUnit(BaseUnit unit){
         holder = unit;
@@ -31,12 +33,15 @@ public class Passive : MonoBehaviour
         ratio2 = _scriptablePassive.ratios[1];
         ratio3 = _scriptablePassive.ratios[2];
         scriptablePassive = _scriptablePassive;
+        minor = _scriptablePassive.minor;
+        modifier = unit.emptyModifier;
 
         AttachToUnit(unit);
         unit.AddPassive(this);
         transform.parent = unit.transform;
 
         Activate();
+        activated = true;
     }
 
     virtual public void Activate(){
@@ -84,11 +89,24 @@ public class Passive : MonoBehaviour
         return scriptablePassive;
     }
 
+    public bool IsMinor(){
+        return minor;
+    }
+
     public string DisplayPercents(float percentRatio){
         return (percentRatio * 100).ToString();
     }
 
     public int GetFinalDamages(float _ratio){
         return Tools.Ceiling(_ratio * GetOwner().GetFinalPower());
+    }
+
+
+    public bool IsActivated(){
+        return activated;
+    }
+
+    public void Activate(bool activation){
+        activated = activation;
     }
 }

@@ -89,6 +89,11 @@ public class BaseSpell : MonoBehaviour
         h_ratio2 = scriptableSpell.hyper_ratios[1];
         h_ratio3 = scriptableSpell.hyper_ratios[2];
     }
+
+    virtual public void EndBattle(){
+        SetCooldown(GetBaseCooldown());
+    }
+
         #endregion
         #region Actions du sort
     /// <summary>
