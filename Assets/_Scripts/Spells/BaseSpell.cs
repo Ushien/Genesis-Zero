@@ -23,6 +23,7 @@ public class BaseSpell : MonoBehaviour
 
         #region Caractérstiques
     private string spell_name = "Name";
+    private bool isAAttack = false;
     private bool isATechnique = true;
     [TextArea(5,10)]
     private string fight_description = "Fight Description";
@@ -65,7 +66,7 @@ public class BaseSpell : MonoBehaviour
     /// Initialise le sort
     /// </summary>
     /// <param name="ownerUnit">Unité possédant le sort</param>
-    public void Setup(BaseUnit ownerUnit, int spellListIndex = -1){
+    public void Setup(ScriptableSpell scriptableSpell, BaseUnit ownerUnit, int spellListIndex = -1, bool attack = false){
         owner = ownerUnit;
         
         name = scriptableSpell.spell_name;
@@ -77,6 +78,12 @@ public class BaseSpell : MonoBehaviour
         artwork = scriptableSpell.artwork;
         range = scriptableSpell.range;
         team_restriction = scriptableSpell.team_restriction;
+        if(attack){
+            ownerUnit.attack = this;
+            base_cooldown = 0;
+            isAAttack = true;
+            isATechnique = false;
+        }
         if(spellListIndex != -1){
             ownerUnit.GetSpells()[spellListIndex] = this;
         }
@@ -356,6 +363,10 @@ public class BaseSpell : MonoBehaviour
     /// <param name="value"></param>
     public void SetIsATechnique(bool value){
         isATechnique = value;
+    }
+
+    public bool IsAAttack(){
+        return isAAttack;
     }
 
     /// <summary>

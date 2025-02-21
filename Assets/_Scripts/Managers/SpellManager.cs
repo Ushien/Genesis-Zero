@@ -14,8 +14,7 @@ using System;
 public class SpellManager : MonoBehaviour
 {
     public static SpellManager Instance;
-    public BaseSpell EmptySpell;
-    public BaseSpell baseAttack;
+    public ScriptableSpell basicAttack;
     [SerializeField]
     private Modifier baseModifier;
     private List<ScriptableSpell> _spells;
@@ -40,17 +39,23 @@ public class SpellManager : MonoBehaviour
         return spellList;
     }
 
-    public BaseSpell SetupAttack(BaseUnit unit){
-        BaseSpell new_spell = Instantiate(baseAttack);
+    public BaseSpell SetupAttack(ScriptableSpell attack, BaseUnit unit){
+        ScriptableSpell _attack = attack;
+        if(_attack == null){
+            _attack = basicAttack;
+        }
+
+        BaseSpell new_spell = Instantiate(_attack.spellScriptPrefab);
         new_spell.transform.parent = unit.transform;
-        new_spell.Setup(unit);
+        new_spell.Setup(_attack, unit, attack : true);
+
         return new_spell;
     }
 
-    public BaseSpell SetupSpell(BaseSpell spell, BaseUnit unit, int availableSpellsIndex){
-        BaseSpell new_spell = Instantiate(spell);
+    public BaseSpell SetupSpell(ScriptableSpell spell, BaseUnit unit, int availableSpellsIndex){
+        BaseSpell new_spell = Instantiate(spell.spellScriptPrefab);
         new_spell.transform.parent = unit.transform;
-        new_spell.Setup(unit, availableSpellsIndex);
+        new_spell.Setup(spell, unit, availableSpellsIndex);
         return new_spell;
     }
 

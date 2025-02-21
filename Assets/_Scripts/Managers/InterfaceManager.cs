@@ -666,7 +666,12 @@ public class InterfaceManager : MonoBehaviour
             spellPanel.SetActive(true);
             spellNamePanel.text = spell.GetName();
             spellDescriptionPanel.text = spell.GetFightDescription(hyper);
-            spellCooldownPanel.text = spell.GetCooldown().ToString() + " / " + spell.GetBaseCooldown().ToString();  
+            if(spell.IsAAttack()){
+                spellCooldownPanel.text = ""; 
+            }
+            else{
+                spellCooldownPanel.text = spell.GetCooldown().ToString() + " / " + spell.GetBaseCooldown().ToString();  
+            }
             spellPanelIcon.sprite = spell.GetArtwork();
         }
         else{

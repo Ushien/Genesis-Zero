@@ -23,6 +23,6 @@ public class SpellReward : Reward
     }
 
     public override void Pick(BaseUnit unit){
-        SpellManager.Instance.SetupSpell(spell.spellScriptPrefab, unit, unit.GetAvailableSpellIndex());
+        SpellManager.Instance.SetupSpell(spell, unit, unit.GetAvailableSpellIndex());
     }
 }

@@ -117,13 +117,15 @@ public class BaseUnit : MonoBehaviour
             _passive.SetupPassive(this);
         }
 
-        attack = SpellManager.Instance.SetupAttack(this);
+        SpellManager.Instance.SetupAttack(originUnit.attack, this);
 
         availableSpells = new BaseSpell[4];
         int i = 0;
-        foreach (BaseSpell spell in scriptableUnit.spells)
+        foreach (ScriptableSpell spell in scriptableUnit.spells)
         { 
-            SpellManager.Instance.SetupSpell(spell, this, i);
+            if(spell != null){
+                SpellManager.Instance.SetupSpell(spell, this, i);
+            }
             i++;
         }
 
