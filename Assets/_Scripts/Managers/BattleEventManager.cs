@@ -9,11 +9,11 @@ public class BattleEventManager : MonoBehaviour
     void Awake(){
         Instance = this;
     }
-    public CastEvent CreateCastEvent(BaseUnit sourceUnit, BaseSpell castedSpell, Tile targetTile, bool animation = true){
-        return new CastEvent(sourceUnit, castedSpell, targetTile);
+    public BeforeCastEvent CreateBeforeCastEvent(BaseUnit sourceUnit, BaseSpell castedSpell, Tile targetTile, bool animation = true){
+        return new BeforeCastEvent(sourceUnit, castedSpell, targetTile);
     }
 
-    public void ApplyBeforeCastEvent(CastEvent castEvent, bool animation = true){
+    public void ApplyBeforeCastEvent(BeforeCastEvent castEvent, bool animation = true){
         EventManager.Instance.BeforeTechCast(castEvent);
         BattleManager.Instance.AddEvent(castEvent);
         if(animation){
@@ -21,11 +21,15 @@ public class BattleEventManager : MonoBehaviour
         }
     }
 
-    public void ApplyAfterCastEvent(CastEvent castEvent, bool animation = true){
+    public AfterCastEvent CreateAfterCastEvent(BaseUnit sourceUnit, BaseSpell castedSpell, Tile targetTile, bool animation = true){
+        return new AfterCastEvent(sourceUnit, castedSpell, targetTile);
+    }
+
+    public void ApplyAfterCastEvent(AfterCastEvent castEvent, bool animation = true){
         EventManager.Instance.AfterTechCast(castEvent);
         BattleManager.Instance.AddEvent(castEvent);
         if(animation){
-            //AnimationManager.Instance.addAnimation(castEvent);
+            AnimationManager.Instance.addAnimation(castEvent);
         }
     }
 

@@ -5,16 +5,16 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 
 /// <summary>
-/// Un CastEvent est créé lorsqu'une technique est lancée, peu importe le contexte.
+/// Un BeforeCastEvent est créé avant qu'une technique est lancée, peu importe le contexte.
 /// </summary>
 
-public class CastEvent : BattleEvent
+public class BeforeCastEvent : BattleEvent
 {
     private BaseUnit sourceUnit;
     private BaseSpell castedSpell;
     private Tile targetTile;
 
-    public CastEvent(BaseUnit _sourceUnit, BaseSpell _castedSpell, Tile _targetTile){
+    public BeforeCastEvent(BaseUnit _sourceUnit, BaseSpell _castedSpell, Tile _targetTile){
         sourceUnit = _sourceUnit;
         castedSpell = _castedSpell;
         targetTile = _targetTile;

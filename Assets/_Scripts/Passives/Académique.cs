@@ -14,8 +14,8 @@ public class Académique : Passive
     {
         EventManager.AfterCast -= RisingPower;
     }
-    void RisingPower(CastEvent castEvent){
-        if(castEvent.GetSourceUnit() == holder){
+    void RisingPower(AfterCastEvent castEvent){
+        if(castEvent.GetSourceUnit() == holder && castEvent.GetCastedSpell().IsATechnique()){
             Modifier newModifier = Instantiate(modifier);
             newModifier.Setup(ratio1, _permanent : true);
             holder.AddGlobalModifier(newModifier);

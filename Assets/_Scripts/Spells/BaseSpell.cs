@@ -142,27 +142,15 @@ public class BaseSpell : MonoBehaviour
 
         if(targetUnit != null && IsAvailable() && GetOwner().IsAvailable()){
 
-            if (IsATechnique()){
-                CastEvent castEvent = BattleEventManager.Instance.CreateCastEvent(owner, this, targetTile);
-                EventManager.Instance.BeforeTechCast(castEvent);
-            }
-
-            if(targetTile.GetUnit() != null){
-                //Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.GetUnit().GetName());
-            }
-            else{
-                //Debug.Log(GetOwner().GetName() + " lance " + GetName() + " sur " + targetTile.name);
-            }
-            BattleEventManager.Instance.CreateCastEvent(GetOwner(), this, targetTile);
+            BeforeCastEvent beforeCastEvent = BattleEventManager.Instance.CreateBeforeCastEvent(owner, this, targetTile);
+            BattleEventManager.Instance.ApplyBeforeCastEvent(beforeCastEvent);
 
             SetCooldown(0);
 
             spellFunction(targetTile);
 
-            if (IsATechnique()){
-                CastEvent castEvent = BattleEventManager.Instance.CreateCastEvent(owner, this, targetTile);
-                EventManager.Instance.AfterTechCast(castEvent);
-            }
+            AfterCastEvent afterCastEvent = BattleEventManager.Instance.CreateAfterCastEvent(owner, this, targetTile);
+            BattleEventManager.Instance.ApplyAfterCastEvent(afterCastEvent, true);
 
             if (hyper){
                 // Détacher la technique de son propriétaire (comme si elle était supprimée)
@@ -450,18 +438,4 @@ public class BaseSpell : MonoBehaviour
         }
     }
         #endregion
-    
-    private void AnimateCast(CastEvent castEvent){
-        /*AnimationManager.Instance.addAnimation(castEvent);
-
-        BattleManager.Instance.SetInAnimation(true);
-        List<BattleEvent> listWrapper = new()
-        {
-            castEvent
-        };
-
-        var task = AnimationManager.Instance.Animate(listWrapper);
-        */
-
-    }
 }
