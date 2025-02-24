@@ -107,21 +107,21 @@ public class BaseSpell : MonoBehaviour
     /// Lance le sort. Méthode à overrider pour intégrer l'effet du sort que l'on souhaite implémenter.
     /// </summary>
     /// 
-    virtual public void Cast(){
+    virtual public void Cast(List<Properties> properties){
         Debug.Log("Méthode overridée");
     }
 
     /// <summary>
     /// Lance un sort en version surchargée. Méthode à overrider pour intégrer l'effet du sort que l'on souhaite implémenter.
     /// </summary>
-    virtual public void HyperCast(){
+    virtual public void HyperCast(List<Properties> properties){
         Debug.Log("Méthode overridée");
     }
 
     /// <summary>
     /// Lance le sort. Méthode à overrider pour intégrer l'effet du sort que l'on souhaite implémenter.
     /// </summary>
-    virtual public void Cast(Tile targetTile){
+    virtual public void Cast(Tile targetTile, List<Properties> properties){
         Debug.Log("Méthode overridée");
     }
 
@@ -129,11 +129,11 @@ public class BaseSpell : MonoBehaviour
     /// /// Lance un sort en version surchargée. Méthode à overrider pour intégrer l'effet du sort que l'on souhaite implémenter.
     /// </summary>
     /// <param name="targetTile"></param>
-    virtual public void HyperCast(Tile targetTile){
+    virtual public void HyperCast(Tile targetTile, List<Properties> properties){
         // Méthode overridée
 
         // Si le sort ne propose pas d'implémentation de la surcharge, lance juste la version de base.
-        Cast(targetTile);
+        Cast(targetTile, properties);
     }
 
     /// <summary>
@@ -141,7 +141,7 @@ public class BaseSpell : MonoBehaviour
     /// </summary>
     /// <param name="targetTile"></param>
     /// <param name="spellFunction"></param>
-    virtual public void CastSpell(Tile targetTile, Action<Tile> spellFunction, bool hyper = false){
+    virtual public void CastSpell(Tile targetTile, List<Properties> properties, Action<Tile, List<Properties>> spellFunction, bool hyper = false){
         BaseUnit targetUnit = null;
         if (targetTile != null){
             targetUnit = targetTile.GetUnit();
@@ -154,7 +154,7 @@ public class BaseSpell : MonoBehaviour
 
             SetCooldown(0);
 
-            spellFunction(targetTile);
+            spellFunction(targetTile, properties);
 
             AfterCastEvent afterCastEvent = BattleEventManager.Instance.CreateAfterCastEvent(owner, this, targetTile);
             BattleEventManager.Instance.ApplyAfterCastEvent(afterCastEvent, true);

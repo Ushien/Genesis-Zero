@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Renforcement : BaseSpell
 {
-    override public void Cast(Tile targetTile = null){
-        base.CastSpell(targetTile, _Renforcement);
+    override public void Cast(Tile targetTile = null, List<Properties> properties = null){
+        base.CastSpell(targetTile, properties, _Renforcement);
     }
 
-    private void _Renforcement(Tile targetTile){
+    private void _Renforcement(Tile targetTile, List<Properties> properties = null){
         // Do something
     }
 }

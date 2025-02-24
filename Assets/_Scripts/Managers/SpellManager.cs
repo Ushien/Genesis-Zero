@@ -64,13 +64,14 @@ public class SpellManager : MonoBehaviour
     }
 
     public void UseSpell(BaseUnit originUnit, float amount, BaseUnit target, List<Properties> property = null, SpellType spellType = SpellType.Damage){
+        if(property == null){
+            property = new List<Properties>();
+        }
+        
         switch (spellType)
         {
             case SpellType.Damage:
-                if((property.Contains(Properties.Curatif) || originUnit.GetCuratifCount() > 0) && originUnit.GetTeam() == target.GetTeam()){
-                    if(originUnit.GetCuratifCount() > 0){
-                        originUnit.ModifyCuratifCount(-1);
-                    }
+                if(property.Contains(Properties.Curatif) && originUnit.GetTeam() == target.GetTeam()){
                     HealDamage(originUnit, amount, target, property);
                 }
                 else{
@@ -140,10 +141,8 @@ public class SpellManager : MonoBehaviour
 
     public HealEvent HealDamage(BaseUnit originUnit, float amount, BaseUnit target, List<Properties> property = null){
         int finalAmount = Tools.Ceiling(amount);
-        Debug.Log("Try to heal " + finalAmount + " HP");
         HealEvent healEvent = target.Heal(finalAmount);
-        Debug.Log("HealEvent amount " + healEvent.GetAmount());
-        
+
         if(healEvent.GetAmount() != 0){
             healEvent.SetOriginUnit(originUnit);
             BattleEventManager.Instance.ApplyHealEvent(healEvent);

@@ -438,10 +438,10 @@ public class BattleManager : MonoBehaviour
 
     private void ApplyInstruction(Instruction instruction){
         if(instruction.IsOverloaded()){
-            instruction.GetSpell().HyperCast(instruction.GetTargetTile());
+            instruction.GetSourceUnit().CastSpell(instruction.GetSpell(), instruction.GetTargetTile(), true);
         }
         else{
-            instruction.GetSpell().Cast(instruction.GetTargetTile());
+            instruction.GetSourceUnit().CastSpell(instruction.GetSpell(), instruction.GetTargetTile(), false);
         }
 
     }

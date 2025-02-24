@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class Benediction : BaseSpell
 {
-    override public void Cast(Tile targetTile = null){
-        base.CastSpell(targetTile, _Benediction);
+    override public void Cast(Tile targetTile = null, List<Properties> properties = null){
+        base.CastSpell(targetTile, properties, _Benediction);
     }
 
-    override public void HyperCast(Tile targetTile = null){
-        base.CastSpell(targetTile, _Benediction_H);
+    override public void HyperCast(Tile targetTile = null, List<Properties> properties = null){
+        base.CastSpell(targetTile, properties, _Benediction_H);
     }
 
-    private void _Benediction(Tile targetTile){
+    private void _Benediction(Tile targetTile, List<Properties> properties = null){
 
-        Modifier _modifier = Instantiate(SpellManager.Instance.GetModifier());
+        Modifier _modifier = Instantiate(baseModifier);
         _modifier.Setup(_powerBonus : GetRatio()[0], _turns : 3, _permanent : false);
 
         targetTile.GetUnit().GetAttack().AddModifier(_modifier);
     }
 
-    private void _Benediction_H(Tile targetTile){
+    private void _Benediction_H(Tile targetTile, List<Properties> properties = null){
 
         Modifier _modifier = Instantiate(SpellManager.Instance.GetModifier());
         _modifier.Setup(_powerBonus : GetRatio(hyper:true)[0], _turns : 3, _permanent : false);

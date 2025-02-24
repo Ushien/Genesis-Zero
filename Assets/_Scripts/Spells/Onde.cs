@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Onde : BaseSpell
 {
-    override public void Cast(Tile targetTile = null){
-        base.CastSpell(targetTile, _Onde);
+    override public void Cast(Tile targetTile = null, List<Properties> properties = null){
+        base.CastSpell(targetTile, properties, _Onde);
     }
 
-    private void _Onde(Tile targetTile){   
-        SpellManager.Instance.UseSpell(GetOwner(), GetFinalDamages(GetRatio()[0]), targetTile.GetUnit(), spellType : SpellType.Heal);
+    private void _Onde(Tile targetTile, List<Properties> properties = null){   
+        SpellManager.Instance.UseSpell(GetOwner(), GetFinalDamages(GetRatio()[0]), targetTile.GetUnit(), properties, spellType : SpellType.Heal);
         SpellManager.Instance.ModifyPower(GetRatio()[1], targetTile.GetUnit());
     }
 }

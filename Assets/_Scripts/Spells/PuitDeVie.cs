@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PuitDeVie : BaseSpell
 {
-    override public void Cast(Tile targetTile = null){
-        base.CastSpell(targetTile, _PuitDeVie);
+    override public void Cast(Tile targetTile = null, List<Properties> properties = null){
+        base.CastSpell(targetTile, properties, _PuitDeVie);
     }
 
-    private void _PuitDeVie(Tile targetTile){   
-        SpellManager.Instance.UseSpell(GetOwner(), GetFinalDamages(GetRatio()[0]), targetTile.GetUnit(), spellType : SpellType.Heal);
+    private void _PuitDeVie(Tile targetTile, List<Properties> properties = null){   
+        SpellManager.Instance.UseSpell(GetOwner(), GetFinalDamages(GetRatio()[0]), targetTile.GetUnit(), properties, spellType : SpellType.Heal);
     }
 }

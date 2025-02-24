@@ -8,11 +8,11 @@ public class AAttack : BaseSpell
         SetIsATechnique(false);
     }
 
-    override public void Cast(Tile targetTile = null){
-        base.CastSpell(targetTile, _Attaque);
+    override public void Cast(Tile targetTile = null, List<Properties> properties = null){
+        base.CastSpell(targetTile, properties, _Attaque);
     }
 
-    private void _Attaque(Tile targetTile){
-        SpellManager.Instance.InflictDamage(GetOwner(), GetFinalDamages(GetRatio()[0]), targetTile.GetUnit());
+    private void _Attaque(Tile targetTile, List<Properties> properties = null){
+        SpellManager.Instance.UseSpell(GetOwner(), GetFinalDamages(GetRatio()[0]), targetTile.GetUnit());
     }
 }

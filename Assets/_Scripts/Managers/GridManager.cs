@@ -336,4 +336,23 @@ public static class Tools
     public static Vector2 XYToIso(Vector2 v){
         return new Vector2(v.x + v.y,  0.5f * (v.y - v.x));
     }
+
+    public static List<Properties> CombineProperties(List<Properties> props1, List<Properties> props2){
+        if(props1 == null){
+            props1 = new List<Properties>();
+        }
+        if(props2 == null){
+            props2 =  new List<Properties>();
+        }
+
+        return props1.Union(props2).ToList();
+    }
+
+    public static List<Properties> CombineProperties(List<Properties> props1, Properties props2){
+        if(props1 == null){
+            props1 = new List<Properties>();
+        }
+        
+        return props1.Union(new List<Properties>(){props2}).ToList();
+    }
 }

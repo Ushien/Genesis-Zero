@@ -10,12 +10,12 @@ public class CoeurVorace : BaseSpell
         EventManager.AfterHeal += IncrementHeal;
     }
 
-    override public void Cast(Tile targetTile = null){
-        base.CastSpell(targetTile, _CoeurVorace);
+    override public void Cast(Tile targetTile = null, List<Properties> properties = null){
+        base.CastSpell(targetTile, properties,_CoeurVorace);
     }
 
-    private void _CoeurVorace(Tile targetTile){   
-        SpellManager.Instance.UseSpell(GetOwner(), GetFinalDamages(GetRatio()[0]), targetTile.GetUnit(), new List<Properties>(){Properties.Vampirisme}, SpellType.Damage);
+    private void _CoeurVorace(Tile targetTile, List<Properties> properties = null){   
+        SpellManager.Instance.UseSpell(GetOwner(), GetFinalDamages(GetRatio()[0]), targetTile.GetUnit(), Tools.CombineProperties(properties, Properties.Vampirisme), SpellType.Damage);
     }
 
     override public int GetFinalDamages(float _ratio){

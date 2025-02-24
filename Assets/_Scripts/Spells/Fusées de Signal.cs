@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class FuséesdeSignal : BaseSpell
 {
-    override public void Cast(Tile targetTile = null){
-        base.CastSpell(targetTile, _FuséesSignal);
+    override public void Cast(Tile targetTile = null, List<Properties> properties = null){
+        base.CastSpell(targetTile, properties, _FuséesSignal);
     }
 
-    private void _FuséesSignal(Tile targetTile){
+    private void _FuséesSignal(Tile targetTile, List<Properties> properties = null){
         // Do stuff        
     }
 }

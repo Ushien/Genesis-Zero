@@ -54,7 +54,7 @@ public class BaseUnit : MonoBehaviour
     private bool dead = false;
     private int armor = 0;
     private int curatifCount = 0;
-
+    private List<Properties> properties = new List<Properties>();
     private Vector2 position;
         #endregion
 
@@ -215,8 +215,8 @@ public class BaseUnit : MonoBehaviour
     /// Utilise l'attaque de l'unité
     /// </summary>
     /// <param name="targetTile"></param>
-    public void Attack(Tile targetTile){
-        attack.Cast(targetTile);
+    public void Attack(Tile targetTile, List<Properties> propertiesToApply){
+        attack.Cast(targetTile, propertiesToApply);
     }
 
     /// <summary>
@@ -249,12 +249,24 @@ public class BaseUnit : MonoBehaviour
         return real_level_stat;
     }
 
-    /// <summary>
-    /// Active une technique de l'unité
-    /// </summary>
-    /// <param name="index"></param>
-    public void CastSpell(int index){
-        availableSpells[index].Cast();
+    public void CastSpell(BaseSpell spell, bool hyper){
+        Assert.IsTrue(GetSpells(true).Contains(spell));
+        if(hyper){
+            spell.HyperCast(GetProperties());
+        }
+        else{
+            spell.Cast(GetProperties());
+        }
+    }
+
+    public void CastSpell(BaseSpell spell, Tile targetTile, bool hyper){
+        Assert.IsTrue(GetSpells(true).Contains(spell));
+        if(hyper){
+            spell.HyperCast(targetTile, GetProperties());
+        }
+        else{
+            spell.Cast(targetTile, GetProperties());
+        }
     }
 
     /// <summary>
@@ -437,7 +449,9 @@ public class BaseUnit : MonoBehaviour
     }
 
     private void CheckModifiers(){
+        properties = new List<Properties>();
         int newPower = basePower;
+
         foreach (Modifier modifier in globalModifiers){
             if(modifier.IsEnded()){
                 //FIXME this les listes aiment pas beaucoup ça
@@ -447,9 +461,12 @@ public class BaseUnit : MonoBehaviour
                 if(modifier.powerBonus != 0){
                     newPower = Tools.Ceiling(modifier.powerBonus * newPower + newPower);
                 }
+                if(modifier.properties.Contains(Properties.Curatif)){
+                    properties.Add(Properties.Curatif);
+                }
             }
         }
-
+        
         finalPower = newPower;
         CheckFinalPower();
 
@@ -463,6 +480,21 @@ public class BaseUnit : MonoBehaviour
                 }
             }
         }
+    }
+
+    private List<Properties> GetProperties(){
+
+        // TODO add toutes les propriétés ici
+
+        List<Properties> newList = properties;
+        if(curatifCount > 0){
+            curatifCount -= 1;
+            if(!newList.Contains(Properties.Curatif)){
+                newList.Add(Properties.Curatif);
+            };
+        }
+
+        return newList;
     }
 
     #endregion
@@ -891,7 +923,6 @@ public class BaseUnit : MonoBehaviour
         {
             finalAmount = Tools.Ceiling(_modifier.GetNewAmount(finalAmount));
         }
-        Debug.Log(finalAmount);
         int result = ModifyHP(+finalAmount);
         return BattleEventManager.Instance.CreateHealEvent(null, this, finalAmount + result, true);
     }

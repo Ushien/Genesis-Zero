@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb5537ca8029f6d4082df846b5a8501c, type: 3}
+  m_Name: Elysium
+  m_EditorClassIdentifier: 
+  passive_name: Elysium
+  fight_description: "Conf\xE8re Curatif \xE0 l'unit\xE9"
+  ratios:
+  - 1
+  - 1
+  - 1
+  artwork: {fileID: 21300000, guid: 82192654cf6a7e14ca2258a2859cf2b7, type: 3}
+  passivePrefab: {fileID: 3355131546637199007, guid: 00d1781ce7fa80446b053c6109b4fec1, type: 3}
+  minor: 0
+  lootable: 1
