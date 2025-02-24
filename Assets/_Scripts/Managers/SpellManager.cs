@@ -140,9 +140,14 @@ public class SpellManager : MonoBehaviour
 
     public HealEvent HealDamage(BaseUnit originUnit, float amount, BaseUnit target, List<Properties> property = null){
         int finalAmount = Tools.Ceiling(amount);
+        Debug.Log("Try to heal " + finalAmount + " HP");
         HealEvent healEvent = target.Heal(finalAmount);
-        healEvent.SetOriginUnit(originUnit);
-        BattleEventManager.Instance.ApplyHealEvent(healEvent);
+        Debug.Log("HealEvent amount " + healEvent.GetAmount());
+        
+        if(healEvent.GetAmount() != 0){
+            healEvent.SetOriginUnit(originUnit);
+            BattleEventManager.Instance.ApplyHealEvent(healEvent);
+        }
 
         return healEvent;
     }

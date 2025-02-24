@@ -740,7 +740,7 @@ public class BaseUnit : MonoBehaviour
     public int CheckHP(){
         int difference = 0;
         if(AreHPBeyondMax()){
-            difference = -(GetTotalHealth()-GetFinalHealth());
+            difference = GetTotalHealth()-GetFinalHealth();
             SetHP(GetTotalHealth(), false);
         }
         if(AreHPBelowZero()){
@@ -891,8 +891,9 @@ public class BaseUnit : MonoBehaviour
         {
             finalAmount = Tools.Ceiling(_modifier.GetNewAmount(finalAmount));
         }
-        int difference = ModifyHP(+finalAmount);
-        return BattleEventManager.Instance.CreateHealEvent(null, this, amount - difference, true);
+        Debug.Log(finalAmount);
+        int result = ModifyHP(+finalAmount);
+        return BattleEventManager.Instance.CreateHealEvent(null, this, finalAmount + result, true);
     }
 
         #region Gestion des états

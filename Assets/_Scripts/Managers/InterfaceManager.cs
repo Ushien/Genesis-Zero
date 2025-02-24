@@ -527,7 +527,7 @@ public class InterfaceManager : MonoBehaviour
         switch(spellChoice){
             case SpellChoice.CHARACTER:
                 DisplayUnit(sourceUnit);
-                DisplaySpell(null, hyper : overloaded);
+                DisplaySpell(sourceUnit.GetAttack(), hyper : overloaded);
                 break;
             case SpellChoice.LEFT:
                 DisplaySpell(currentSpells[0], hyper : overloaded);
