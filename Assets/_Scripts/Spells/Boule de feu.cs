@@ -15,7 +15,6 @@ public class Bouledefeu : BaseSpell
     }
 
     private void _Bouledefeu(Tile targetTile, List<Properties> properties = null){
-        Debug.Log(properties);
         SpellManager.Instance.UseSpell(GetOwner(), GetFinalDamages(GetRatio()[0]), targetTile.GetUnit(), Tools.CombineProperties(properties, Properties.Pyro), SpellType.Damage);
     }
 

@@ -44,6 +44,10 @@ public class LifeBar : MonoBehaviour
         CheckNewScale();
     }
 
+    public void UpdateTotalHP(int totalHPChange){
+        totalHP += totalHPChange;
+    }
+
     public void UpdateArmor(int ArmorChange){
         Armor += ArmorChange;
         ARtext.text = Armor.ToString() + " AR";

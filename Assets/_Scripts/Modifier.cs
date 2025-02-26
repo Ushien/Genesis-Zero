@@ -8,13 +8,15 @@ using UnityEngine;
 public class Modifier : MonoBehaviour
 {
     public float powerBonus = 0f;
+    public float healthBonus = 0f;
     private int turns = 0;
     private bool permanent = true;
     public List<Properties> properties = new List<Properties>();
     private int howManyActivations = 0;
 
-    public void Setup(float _powerBonus = 0f, List<Properties> _properties = null, bool _permanent = true, int _turns = 0, int _howManyActivations = 0){
+    public void Setup(float _powerBonus = 0f, float _healthBonus = 0f, List<Properties> _properties = null, bool _permanent = true, int _turns = 0, int _howManyActivations = 0){
         powerBonus = _powerBonus;
+        healthBonus = _healthBonus;
         if(_properties != null){
             properties = _properties;
         }

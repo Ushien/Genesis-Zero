@@ -242,7 +242,7 @@ public class BattleManager : MonoBehaviour
             case TurnState.APPLY_ACTIONS:
                 foreach (Instruction instruc in currentTurn.GetInstructions())
                 {
-                    Debug.Log(instruc.GetSummary());
+                    //Debug.Log(instruc.GetSummary());
                 }
                 ApplyInstructions();
 

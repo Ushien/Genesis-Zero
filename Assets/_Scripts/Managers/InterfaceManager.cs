@@ -247,7 +247,7 @@ public class InterfaceManager : MonoBehaviour
     void SpellSelectionDisplay(){
         // TODO Ne pas afficher les 4 cases si le personnage n'a pas 4 spells
         BaseUnit sourceUnit = sourceTile.GetUnit();
-        BaseSpell[] currentSpells = sourceUnit.GetSpells();
+        BaseSpell[] currentSpells = sourceUnit.GetFourSpells();
 
         if(!activated_states[BattleManager.PlayerActionChoiceState.SPELL_SELECTION]){
             // Just changed from another state
@@ -783,9 +783,10 @@ public class InterfaceManager : MonoBehaviour
     }
     
     // Update la barre de vie d'un perso
-    public void UpdateLifebar(BaseUnit unit, int HPChange, int armorChange){
+    public void UpdateLifebar(BaseUnit unit, int finalHPChange, int totalHPChange, int armorChange){
         // Child components access and modification, very ugly
-        unit.lifeBar.GetComponent<LifeBar>().UpdateHP(HPChange);
+        unit.lifeBar.GetComponent<LifeBar>().UpdateHP(finalHPChange);
+        unit.lifeBar.GetComponent<LifeBar>().UpdateTotalHP(totalHPChange);
         unit.lifeBar.GetComponent<LifeBar>().UpdateArmor(armorChange);
     }
 

@@ -67,7 +67,7 @@ public class SpellManager : MonoBehaviour
         if(property == null){
             property = new List<Properties>();
         }
-        
+
         switch (spellType)
         {
             case SpellType.Damage:
@@ -159,9 +159,11 @@ public class SpellManager : MonoBehaviour
         target.ModifyPower(amount);
     }
 
+    /*
     public void MultiplyHP(float amount, BaseUnit target){
         target.MultiplyBothHP((int)amount);
     }
+    */
 
     public void Stun(int amount, BaseUnit target){
         target.SetStunTime(amount);

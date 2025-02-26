@@ -9,7 +9,7 @@ public class PoudreEtourdissante : BaseSpell
     }
 
     private void _PoudreEtourdissante(Tile targetTile, List<Properties> properties = null){
-        SpellManager.Instance.Stun(1, targetTile.GetUnit());
-        SpellManager.Instance.MultiplyHP(2f, targetTile.GetUnit());
+        //SpellManager.Instance.Stun(1, targetTile.GetUnit());
+        //SpellManager.Instance.MultiplyHP(2f, targetTile.GetUnit());
     }
 }

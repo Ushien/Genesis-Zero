@@ -101,7 +101,6 @@ public class Passive : MonoBehaviour
         return Tools.Ceiling(_ratio * GetOwner().GetFinalPower());
     }
 
-
     public bool IsActivated(){
         return activated;
     }

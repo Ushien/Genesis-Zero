@@ -9,8 +9,10 @@ public class Révélation : BaseSpell
     }
 
     private void _Revelation(Tile targetTile, List<Properties> properties = null){   
+        /*
         float amount = GetFinalDamages(GetRatio()[0]);
         targetTile.GetUnit().ModifyArmor(GetFinalDamages(GetRatio()[0]));
         targetTile.GetUnit().QueueAction(targetTile.GetUnit().ConvertArmorIntoHP, GetFinalDamages(GetRatio()[0]), 2);
+        */
     }
 }

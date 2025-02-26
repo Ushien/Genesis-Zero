@@ -6,7 +6,7 @@ using UnityEngine;
 public class CoeurVorace : BaseSpell
 {
     int healCount = 0;
-    void Awake(){
+    override public void Activate(){
         EventManager.AfterHeal += IncrementHeal;
     }
 

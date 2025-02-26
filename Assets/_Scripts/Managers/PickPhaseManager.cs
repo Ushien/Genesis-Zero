@@ -281,6 +281,7 @@ public class PickPhaseManager : MonoBehaviour
         }
         else{
             reward.Pick(unit);
+            AnimationManager.Instance.ForceAnimation();
         }
     }
 

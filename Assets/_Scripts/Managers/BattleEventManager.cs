@@ -80,4 +80,13 @@ public class BattleEventManager : MonoBehaviour
             AnimationManager.Instance.addAnimation(deathEvent);
         }
     }
+
+    public HPModificationEvent CreateHPModificationEvent(BaseUnit targetUnit, int oldAmount, int newAmount, bool total){
+        return new HPModificationEvent(targetUnit, oldAmount, newAmount, total);
+    }
+
+    public void ApplyHPModificationEvent(HPModificationEvent hpModificationEvent){
+        BattleManager.Instance.AddEvent(hpModificationEvent);
+        AnimationManager.Instance.addAnimation(hpModificationEvent);
+    }
 }

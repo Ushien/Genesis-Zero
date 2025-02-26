@@ -52,6 +52,19 @@ public class AnimationManager : MonoBehaviour
         }
     }
 
+    public void ForceAnimation(){
+        while(animationQueue.Count != 0){
+            //Si la file n'est pas vide, animer le premier évènement, en mode fifo
+            BattleManager.Instance.SetInAnimation(true);
+            List<BattleEvent> listWrapper = new()
+            {
+                animationQueue[0]
+            };
+            animationQueue.RemoveAt(0);
+            var task = Animate(listWrapper);
+        }
+    }
+
     public async Task Animate(List<BattleEvent> battleEvents){
         for (var i = 0; i < battleEvents.Count; i++)
         {
@@ -85,7 +98,7 @@ public class AnimationManager : MonoBehaviour
             damageDisplay.transform.position = damageEvent.GetTargetUnit().transform.position;
             damageDisplay.transform.localScale = new Vector3(1, 1, 1);
             damageDisplay.gameObject.SetActive(true);
-            InterfaceManager.Instance.UpdateLifebar(damageEvent.GetTargetUnit(), 0, -damage);
+            InterfaceManager.Instance.UpdateLifebar(damageEvent.GetTargetUnit(), 0, 0, -damage);
             for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f * accelerator)
             {
                 damageDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));
@@ -104,7 +117,7 @@ public class AnimationManager : MonoBehaviour
             damageDisplay.transform.position = damageEvent.GetTargetUnit().transform.position;
             damageDisplay.transform.localScale = new Vector3(1, 1, 1);
             damageDisplay.gameObject.SetActive(true);
-            InterfaceManager.Instance.UpdateLifebar(damageEvent.GetTargetUnit(), -damage, 0);
+            InterfaceManager.Instance.UpdateLifebar(damageEvent.GetTargetUnit(), -damage, 0, 0);
             for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f * accelerator)
             {
                 damageDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));
@@ -113,8 +126,6 @@ public class AnimationManager : MonoBehaviour
             damageDisplay.gameObject.SetActive(false);
             Destroy(damageDisplay.gameObject);
         }
-
-    
 
     }
 
@@ -125,7 +136,7 @@ public class AnimationManager : MonoBehaviour
         armorGainDisplay.transform.position = armorGainEvent.GetTargetUnit().transform.position;
         armorGainDisplay.transform.localScale = new Vector3(1, 1, 1);
         armorGainDisplay.gameObject.SetActive(true);
-        InterfaceManager.Instance.UpdateLifebar(armorGainEvent.GetTargetUnit(), 0, armorGainEvent.GetAmount());
+        InterfaceManager.Instance.UpdateLifebar(armorGainEvent.GetTargetUnit(), 0, 0, armorGainEvent.GetAmount());
         for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f * accelerator)
         {
             armorGainDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));
@@ -142,7 +153,7 @@ public class AnimationManager : MonoBehaviour
         armorGainDisplay.transform.position = healEvent.GetTargetUnit().transform.position;
         armorGainDisplay.transform.localScale = new Vector3(1, 1, 1);
         armorGainDisplay.gameObject.SetActive(true);
-        InterfaceManager.Instance.UpdateLifebar(healEvent.GetTargetUnit(), healEvent.GetAmount(), 0);
+        InterfaceManager.Instance.UpdateLifebar(healEvent.GetTargetUnit(), healEvent.GetAmount(), 0, 0);
         for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f * accelerator)
         {
             armorGainDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));
@@ -158,8 +169,19 @@ public class AnimationManager : MonoBehaviour
         await Task.Yield();
     }
 
+    private async Task Animate(HPModificationEvent hpModificationEvent){
+        if(hpModificationEvent.AreTotalHP()){
+            InterfaceManager.Instance.UpdateLifebar(hpModificationEvent.GetTargetUnit(), 0, hpModificationEvent.GetNewAmount()-hpModificationEvent.GetOldAmount(), 0);
+        }
+        else{
+            InterfaceManager.Instance.UpdateLifebar(hpModificationEvent.GetTargetUnit(), hpModificationEvent.GetNewAmount()-hpModificationEvent.GetOldAmount(), 0, 0);
+        }
+        await Task.Yield();
+    }
+
 
     private async Task Animate(BattleEvent battleEvent){
+        //Debug.Log(battleEvent.GetSummary());
         if (battleEvent is BeforeCastEvent){
             await Animate((BeforeCastEvent)battleEvent);
         }
@@ -174,6 +196,9 @@ public class AnimationManager : MonoBehaviour
         }
         if (battleEvent is DeathEvent){
             await Animate((DeathEvent)battleEvent);
+        }
+        if (battleEvent is HPModificationEvent){
+            await Animate((HPModificationEvent)battleEvent);
         }
     }
 

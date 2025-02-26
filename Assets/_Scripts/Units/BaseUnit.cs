@@ -35,7 +35,9 @@ public class BaseUnit : MonoBehaviour
     // Puissance de l'unité
     private int basePower = 1;
     private int finalPower = 1;
-    // Points de vie maximaux
+    // Points de vie maximaux initiaux
+    private int baseTotalHealth = 1;
+    // Points de vie maximaux réels
     private int totalHealth = 1;
     // Points de vie actuels
     private int finalHealth = 1;
@@ -100,8 +102,9 @@ public class BaseUnit : MonoBehaviour
 
         finalPower = GetStatFromLevel(scriptableUnit.original_power, level);
         basePower = finalPower;
-        totalHealth = GetStatFromLevel(scriptableUnit.original_health, level);
-        finalHealth = totalHealth;
+        baseTotalHealth = GetStatFromLevel(scriptableUnit.original_health, level);
+        totalHealth = baseTotalHealth;
+        finalHealth = baseTotalHealth;
 
         lore_description = scriptableUnit.lore_description;
         fight_description = scriptableUnit.fight_description;
@@ -160,7 +163,6 @@ public class BaseUnit : MonoBehaviour
         modifiers[Heal] = new List<Modifier>();
         modifiers[Damage] = new List<Modifier>();
         globalModifiers = new List<Modifier>();
-        CheckModifiers();
         actionQueue = new List<Tuple<Func<int, BattleEvent>, int, int>>();
         
         List<Passive> newPassives = new List<Passive>();
@@ -173,8 +175,9 @@ public class BaseUnit : MonoBehaviour
         }
         passives = newPassives;
 
-        foreach (BaseSpell spell in availableSpells)
+        foreach (BaseSpell spell in GetSpells(true))
         {
+            spell.Activate(false);
             if(spell != null){
                 spell.EndBattle();
             }
@@ -185,7 +188,15 @@ public class BaseUnit : MonoBehaviour
         foreach (Passive passive in GetPassives())
         {
             if(!passive.IsActivated()){
+                passive.Activate(true);
                 passive.Activate();
+            }
+        }
+
+        foreach (BaseSpell spell in GetSpells(true)){
+            if(!spell.IsActivated()){
+                spell.Activate(true);
+                spell.Activate();
             }
         }
     }
@@ -451,6 +462,11 @@ public class BaseUnit : MonoBehaviour
     private void CheckModifiers(){
         properties = new List<Properties>();
         int newPower = basePower;
+        int newTotalHealth = baseTotalHealth;
+        float currentHPRAtio = (float)finalHealth / (float)totalHealth;
+        if(name == "Anasta"){
+            Debug.Log("HP ratio : " + currentHPRAtio);
+        }
 
         foreach (Modifier modifier in globalModifiers){
             if(modifier.IsEnded()){
@@ -458,8 +474,11 @@ public class BaseUnit : MonoBehaviour
                 globalModifiers.Remove(modifier);
             }
             else{
-                if(modifier.powerBonus != 0){
+                if(modifier.powerBonus != 0f){
                     newPower = Tools.Ceiling(modifier.powerBonus * newPower + newPower);
+                }
+                if(modifier.healthBonus != 0f){
+                    newTotalHealth = Tools.Ceiling(modifier.healthBonus * newTotalHealth + newTotalHealth);
                 }
                 if(modifier.properties.Contains(Properties.Curatif)){
                     properties.Add(Properties.Curatif);
@@ -467,8 +486,26 @@ public class BaseUnit : MonoBehaviour
             }
         }
         
+        int previousTotalHealth = totalHealth;
+        int previousFinalHealth = finalHealth;
+        int newFinalHealth = Tools.Ceiling(totalHealth * currentHPRAtio);
+
+        totalHealth = newTotalHealth;
+        if(totalHealth != previousTotalHealth){
+            BattleEventManager.Instance.ApplyHPModificationEvent(BattleEventManager.Instance.CreateHPModificationEvent(this, previousTotalHealth, totalHealth, true));
+        }
+        
+        finalHealth = newFinalHealth;
+        if(finalHealth != previousFinalHealth){
+            Debug.Log("Je passe ici");
+            Debug.Log(previousFinalHealth);
+            Debug.Log(newFinalHealth);
+            BattleEventManager.Instance.ApplyHPModificationEvent(BattleEventManager.Instance.CreateHPModificationEvent(this, previousFinalHealth, newFinalHealth, false));
+        }
+
         finalPower = newPower;
         CheckFinalPower();
+        
 
         foreach (var action in modifiers)
         {
@@ -555,7 +592,24 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     /// <param name="includingAttack">Si fixé à True, intègre l'attaque de l'unité à la liste, à l'index 4</param>
     /// <returns></returns>
-    public BaseSpell[] GetSpells(bool includingAttack = false){
+    public List<BaseSpell> GetSpells(bool includingAttack = false){
+
+        List<BaseSpell> completeAvailableSpells = new List<BaseSpell>();
+
+        foreach(BaseSpell spell in availableSpells){
+            if(spell != null){
+                completeAvailableSpells.Add(spell);
+            }
+        }
+
+        if(includingAttack){
+            completeAvailableSpells.Add(GetAttack());
+        }
+
+        return completeAvailableSpells;
+    }
+
+    public BaseSpell[] GetFourSpells(bool includingAttack = false){
 
         if(includingAttack){
             
@@ -675,6 +729,10 @@ public class BaseUnit : MonoBehaviour
         return totalHealth;
     }
 
+    public int GetBaseTotalHealth(){
+        return baseTotalHealth;
+    }
+
     /// <summary>
     /// Renvoie les HP actuels
     /// </summary>
@@ -685,6 +743,8 @@ public class BaseUnit : MonoBehaviour
         return finalHealth;
     }
 
+    /*
+
     /// <summary>
     /// Ajoute une quantité de HP aux HP actuels et totaux
     /// </summary>
@@ -693,6 +753,7 @@ public class BaseUnit : MonoBehaviour
         ModifyTotalHP(amount);
         ModifyHP(amount);
     }
+    */
 
     /// <summary>
     /// Ajoute une quantité de HP au nombre de HP actuels
@@ -703,6 +764,7 @@ public class BaseUnit : MonoBehaviour
         return CheckHP();
     }
 
+    /*
     /// <summary>
     /// Ajoute une quantité de HP au nombre de HP totaux
     /// </summary>
@@ -710,7 +772,7 @@ public class BaseUnit : MonoBehaviour
     /// Nombre de HP à ajouter
     /// </param>
     public void ModifyTotalHP(int amount){
-        totalHealth += amount;
+        baseTotalHealth += amount;
         CheckTotalHP();
     }
 
@@ -737,10 +799,11 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     /// <param name="amount"></param>
     public void MultiplyTotalHP(int amount){
-        totalHealth *= amount;
+        baseTotalHealth *= amount;
         CheckTotalHP();
         ModifyTotalHP(amount);
     }
+    */
 
     /// <summary>
     /// Fixe les HP actuels de l'unité à une valeur donnée
@@ -788,10 +851,10 @@ public class BaseUnit : MonoBehaviour
     /// Vérifie que les HP totaux de l'unité sont légaux et les fixe au besoin
     /// </summary>
     public void CheckTotalHP(){
+        int totalHP = GetTotalHealth();
         if(AreTotalHPBelowZero()){
             SetTotalHP(0, false);
         }
-        CheckHP();
     }
 
     /// <summary>
@@ -873,6 +936,7 @@ public class BaseUnit : MonoBehaviour
         return armor > 0;
     }
 
+    /*
     /// <summary>
     /// Convertit une quantité donnée d'armure de l'unité en points de vie
     /// Si l'unité ne possède pas assez d'armure, la méthode ne fait rien
@@ -885,6 +949,7 @@ public class BaseUnit : MonoBehaviour
         }
         return null;
     }
+    */
     #endregion
 
     /// <summary>

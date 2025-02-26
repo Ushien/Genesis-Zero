@@ -28,6 +28,7 @@ public class DeathEvent : BattleEvent
 
     public override string GetSummary()
     {
-        return "Death Event: " + GetDeadUnit().GetName() + " - " + GetDeathTile().name + " - " + origin.name;
+        //return "Death Event: " + GetDeadUnit().GetName() + " - " + GetDeathTile().name + " - " + origin.name;
+        return "Unit died";
     }
 }

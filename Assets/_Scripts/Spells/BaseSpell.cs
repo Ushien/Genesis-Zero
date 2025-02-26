@@ -33,6 +33,8 @@ public class BaseSpell : MonoBehaviour
     private int base_cooldown = 0;
     // Cooldown actuel du sort. Lorsque celui-ci est égal au cooldown total, le sort peut être lancé. Quand le sort est lancé, celui-ci passe à zéro. Il augmente ensuite de 1 par tour.
     private int cooldown = 0;
+
+    private bool activated = false;
     private Sprite artwork = null;
     // Indique la portée du sort (horizontale, verticale, toutes les unités, etc...)
     private GridManager.Selection_mode range;
@@ -85,7 +87,7 @@ public class BaseSpell : MonoBehaviour
             isATechnique = false;
         }
         if(spellListIndex != -1){
-            ownerUnit.GetSpells()[spellListIndex] = this;
+            ownerUnit.GetFourSpells()[spellListIndex] = this;
         }
 
         ratio1 = scriptableSpell.ratios[0];
@@ -95,12 +97,26 @@ public class BaseSpell : MonoBehaviour
         h_ratio1 = scriptableSpell.hyper_ratios[0];
         h_ratio2 = scriptableSpell.hyper_ratios[1];
         h_ratio3 = scriptableSpell.hyper_ratios[2];
+
+        Activate();
+        activated = true;
     }
 
     virtual public void EndBattle(){
         SetCooldown(GetBaseCooldown());
     }
 
+    virtual public void Activate(){
+        //
+    }
+
+    public bool IsActivated(){
+        return activated;
+    }
+
+    public void Activate(bool activation){
+        activated = activation;
+    }
         #endregion
         #region Actions du sort
     /// <summary>
