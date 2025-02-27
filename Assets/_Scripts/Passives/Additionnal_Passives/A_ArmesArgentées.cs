@@ -10,6 +10,11 @@ public class A_ArmesArgentées : Passive
     public void SetOriginUnit(BaseUnit _originUnit){
         originUnit = _originUnit;
     }
+
+    override public void Desactivate()
+    {
+        //
+    }
     
     override public void Trigger1(){
         int finalDamages = 0;

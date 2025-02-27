@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 /// <summary>
@@ -10,19 +11,22 @@ public class Modifier : MonoBehaviour
     public float powerBonus = 0f;
     public float healthBonus = 0f;
     private int turns = 0;
-    private bool permanent = true;
     public List<Properties> properties = new List<Properties>();
     private int howManyActivations = 0;
+    public enum Duration {Battle,Permanent, Finished};
+    private Duration duration = Duration.Battle;
 
-    public void Setup(float _powerBonus = 0f, float _healthBonus = 0f, List<Properties> _properties = null, bool _permanent = true, int _turns = 0, int _howManyActivations = 0){
+    public void Setup(GameObject origin, float _powerBonus = 0f, float _healthBonus = 0f, List<Properties> _properties = null, Duration _duration = Duration.Battle, int _turns = -1, int _howManyActivations = -1){
         powerBonus = _powerBonus;
         healthBonus = _healthBonus;
         if(_properties != null){
             properties = _properties;
         }
         turns = _turns;
-        permanent = _permanent;
+        duration = _duration;
         howManyActivations = _howManyActivations;
+
+        name = "Origin: " + origin.name;
     }
 
     public float GetNewAmount(float amount){
@@ -33,33 +37,47 @@ public class Modifier : MonoBehaviour
         return properties;
     }
 
-    public void ModifyTurns(int amount = -1){
-        if(!IsPermanent()){
-            turns += amount;
+    public void ReduceTurns(){
+        if(turns != -1){
+            turns -= 1;
+        }
+        if(turns == 0){
+            duration = Duration.Finished;
         }
     }
 
-    public bool IsPermanent(){
-        return permanent;
+    public void ReduceActivations(){
+        if(howManyActivations != -1){
+            howManyActivations -= 1;
+        }
+        if(howManyActivations == 0){
+            duration = Duration.Finished;
+        }
     }
 
     public bool IsEnded(){
-        if (IsPermanent()){
+        if(duration == Duration.Finished){
+            return true;
+        }
+        else{
             return false;
         }
-        if (turns != 0){
-            return false;
-        }
-        if (IsPermanent() && howManyActivations >= 0){
-            return false;
-        }
-        return true;
     }
 
-    public void ReduceActivations(int howManyReductions = 1){
-        howManyActivations -= howManyReductions;
-        if(howManyActivations < 0){
-            howManyActivations = 0;
+    public void EndBattle(){
+        if(duration == Duration.Battle){
+            duration = Duration.Finished;
         }
+    }
+
+    public string GetSummary(){
+
+        string propertiesToDisplay = " - ";
+        foreach (Properties prop in properties)
+        {
+            propertiesToDisplay = propertiesToDisplay + prop + " - ";
+        }
+
+        return "Modifier : \nPower bonus: " + powerBonus + "\nHealth bonus: " + healthBonus + "\nTurns: " + turns + "\nDuration: " + duration + "\nProperties: " + propertiesToDisplay + "\nHowManyActivations: " + howManyActivations;
     }
 }

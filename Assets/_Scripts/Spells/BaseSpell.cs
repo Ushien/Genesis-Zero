@@ -457,7 +457,7 @@ public class BaseSpell : MonoBehaviour
         }
         foreach (Modifier modifier in modifiers)
         {
-            modifier.ModifyTurns(-1);
+            modifier.ReduceTurns();
             if(modifier.IsEnded()){
                 //FIXME les listes aiment pas beaucoup ça
                 DeleteModifier(modifier);

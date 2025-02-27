@@ -108,4 +108,8 @@ public class Passive : MonoBehaviour
     public void Activate(bool activation){
         activated = activation;
     }
+    
+    virtual public void Desactivate(){
+        //
+    }
 }

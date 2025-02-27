@@ -14,9 +14,10 @@ public class ScriptablePassive : ScriptableObject
     public bool minor = false;
     public bool lootable;
 
-    public void SetupPassive(BaseUnit unit){
+    public Passive SetupPassive(BaseUnit unit){
         Passive passive = Instantiate(passivePrefab);
         passive.Setup(unit, this);
+        return passive;
     }
     
     public string GetFightDescription(BaseUnit unit){

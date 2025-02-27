@@ -11,7 +11,6 @@ public class CoeurLumineux : BaseSpell
     }
 
     private void _CoeurLumineux(Tile targetTile, List<Properties> properties = null){
-        BaseUnit targetUnit = targetTile.GetUnit();
         SpellManager.Instance.UseSpell(GetOwner(), GetFinalDamages(GetRatio()[0]), targetTile.GetUnit(), properties, spellType : SpellType.Heal);
         GetOwner().ModifyCuratifCount(1);
     }

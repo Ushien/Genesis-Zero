@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class Foi : Passive
 {
+    Modifier newModifier;
     // Lorsque le passif est setup, l'active
     override public void Activate()
     {
-        modifier = Instantiate(modifier);
-        modifier.Setup(_powerBonus : ratio1);
-        holder.AddModifier(modifier, holder.Heal);
+        newModifier = Instantiate(modifier);
+        newModifier.Setup(gameObject, _powerBonus : ratio1, _duration : Modifier.Duration.Permanent);
+        holder.AddModifier(newModifier, holder.Heal);
     }
     // Lorsque le passif disparaît, le désactive
-    void OnDisable()
+    override public void Desactivate()
     {
-        holder.DeleteModifier(modifier, holder.Heal);
+        holder.DeleteModifier(newModifier, holder.Heal);
         // Retire le modificateur du personnage
     }
 }

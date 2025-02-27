@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class Goliath : Passive
 {
+    Modifier newModifier;
     // Lorsque le passif est setup, l'active
     override public void Activate()
     {
-        modifier = Instantiate(modifier);
-        modifier.Setup(_healthBonus : ratio1);
-        holder.AddGlobalModifier(modifier);
+        newModifier = Instantiate(modifier);
+        newModifier.Setup(gameObject, _healthBonus : ratio1, _duration : Modifier.Duration.Permanent);
+        holder.AddGlobalModifier(newModifier);
     }
     // Lorsque le passif disparaît, le désactive
-    void OnDisable()
+    override public void Desactivate()
     {
-        holder.DeleteGlobalModifier(modifier);
+        holder.DeleteGlobalModifier(newModifier);
     }
 }

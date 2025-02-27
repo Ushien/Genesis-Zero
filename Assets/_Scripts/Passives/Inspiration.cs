@@ -10,7 +10,7 @@ public class Inspiration : Passive
         EventManager.BeforeCast+= _Inspiration;
     }
     // Lorsque le passif disparaît, le désactive
-    void OnDisable()
+    override public void Desactivate()
     {
         EventManager.BeforeCast -= _Inspiration;
     }

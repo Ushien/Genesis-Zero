@@ -30,6 +30,7 @@ public class CoeurVorace : BaseSpell
 
     void OnDisable()
     {
+        // TODO doit être modifié pour respecter le même système que les passifs
         EventManager.AfterHeal -= IncrementHeal;
     }
 }

@@ -10,11 +10,11 @@ public class NewBehaviourScript : Passive
         EventManager.OnDeath += Detonation;
     }
     // Lorsque le passif disparaît, le désactive
-    void OnDisable()
-    {
+    override public void Desactivate(){
         EventManager.OnDeath -= Detonation;
     }
-    void Detonation(DeathEvent deathEvent){
+    void Detonation(DeathEvent deathEvent)
+    {
         if(deathEvent.GetDeadUnit().GetTeam() != holder.GetTeam()){
             foreach (BaseUnit adjUnit in UnitManager.Instance.GetAdjacentUnits(deathEvent.GetDeadUnit()))
             {

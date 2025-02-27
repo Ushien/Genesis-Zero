@@ -162,18 +162,9 @@ public class BaseUnit : MonoBehaviour
         Cleanse();
         modifiers[Heal] = new List<Modifier>();
         modifiers[Damage] = new List<Modifier>();
-        globalModifiers = new List<Modifier>();
         actionQueue = new List<Tuple<Func<int, BattleEvent>, int, int>>();
-        
-        List<Passive> newPassives = new List<Passive>();
-        foreach (Passive passive in GetPassives())
-        {
-            passive.Activate(false);
-            if(!passive.IsMinor()){
-                newPassives.Add(passive);
-            }
-        }
-        passives = newPassives;
+        ModifiersEndBattle();
+        DeleteMinorPassives();
 
         foreach (BaseSpell spell in GetSpells(true))
         {
@@ -396,7 +387,7 @@ public class BaseUnit : MonoBehaviour
         return false; 
     }
 
-    public  bool HasPassive(Passive _passive){
+    public bool HasPassive(Passive _passive){
         foreach (Passive passive in GetPassives())
         {
             if(passive != null){
@@ -408,18 +399,35 @@ public class BaseUnit : MonoBehaviour
         return false; 
     }
 
+    public void DeleteMinorPassives(){
+        foreach (Passive passive in GetPassives())
+        {
+            if(passive.IsMinor()){
+                DeletePassive(passive);
+            }
+        }
+    }
+
     #endregion
 
         #region Gestion des modificateurs
 
     public void AddGlobalModifier(Modifier modifier){
         globalModifiers.Add(modifier);
+        modifier.transform.SetParent(transform);
         CheckModifiers();
     }
 
     public void DeleteGlobalModifier(Modifier modifier){
         globalModifiers.Remove(modifier);
         CheckModifiers();
+    }
+
+    public void DeleteGlobalModifier(List<Modifier> modifiers){
+        foreach (Modifier _modifier in modifiers)
+        {
+            DeleteGlobalModifier(_modifier);
+        }
     }
 
     /// <summary>
@@ -429,6 +437,7 @@ public class BaseUnit : MonoBehaviour
     /// <param name="function"></param>
     public void AddModifier(Modifier modifier, Func<int, BattleEvent> function){
         modifiers[function].Add(modifier);
+        modifier.transform.SetParent(transform);
         CheckModifiers();
     }
 
@@ -447,13 +456,27 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     private void ModifiersEndTurn(){
         foreach (Modifier modifier in globalModifiers){
-            modifier.ModifyTurns(-1);
+            modifier.ReduceTurns();
         }
-        foreach (var action in modifiers)
+        foreach (KeyValuePair<Func<int, BattleEvent>, List<Modifier>> action in modifiers)
         {
             foreach (Modifier _modifier in action.Value)
             {
-                _modifier.ModifyTurns(-1);
+                _modifier.ReduceTurns();
+            }
+        }
+        CheckModifiers();
+    }
+
+    public void ModifiersEndBattle(){
+        foreach (Modifier modifier in globalModifiers){
+            modifier.EndBattle();
+        }
+        foreach (KeyValuePair<Func<int, BattleEvent>, List<Modifier>> action in modifiers)
+        {
+            foreach (Modifier _modifier in action.Value)
+            {
+                _modifier.EndBattle();
             }
         }
         CheckModifiers();
@@ -464,9 +487,6 @@ public class BaseUnit : MonoBehaviour
         int newPower = basePower;
         int newTotalHealth = baseTotalHealth;
         float currentHPRAtio = (float)finalHealth / (float)totalHealth;
-        if(name == "Anasta"){
-            Debug.Log("HP ratio : " + currentHPRAtio);
-        }
 
         foreach (Modifier modifier in globalModifiers){
             if(modifier.IsEnded()){
@@ -497,7 +517,6 @@ public class BaseUnit : MonoBehaviour
         
         finalHealth = newFinalHealth;
         if(finalHealth != previousFinalHealth){
-            Debug.Log("Je passe ici");
             Debug.Log(previousFinalHealth);
             Debug.Log(newFinalHealth);
             BattleEventManager.Instance.ApplyHPModificationEvent(BattleEventManager.Instance.CreateHPModificationEvent(this, previousFinalHealth, newFinalHealth, false));
@@ -506,7 +525,6 @@ public class BaseUnit : MonoBehaviour
         finalPower = newPower;
         CheckFinalPower();
         
-
         foreach (var action in modifiers)
         {
             foreach (Modifier _modifier in action.Value)
@@ -517,6 +535,8 @@ public class BaseUnit : MonoBehaviour
                 }
             }
         }
+
+        AnimationManager.Instance.ForceAnimation();
     }
 
     private List<Properties> GetProperties(){
@@ -585,6 +605,13 @@ public class BaseUnit : MonoBehaviour
 
     public void AddPassive(Passive newPassive){
         passives.Add(newPassive);
+        CheckModifiers();
+    }
+
+    public void DeletePassive(Passive passiveToDelete){
+        passiveToDelete.Desactivate();
+        passives.Remove(passiveToDelete);
+        CheckModifiers();
     }
 
     /// <summary>
