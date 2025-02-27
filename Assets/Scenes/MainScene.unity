@@ -155,11 +155,7 @@ MonoBehaviour:
   enemy_composition: {fileID: 11400000, guid: ba6da0ad3ecd31d4ea3459ca85243800, type: 2}
   ally_composition: {fileID: 11400000, guid: 600e2b1bfbd13f64b95130b49b50a979, type: 2}
   rewardsToSpawn:
-  - {fileID: 11400000, guid: b587a4d339b2d264fb83cd02d811e9e5, type: 2}
-  - {fileID: 11400000, guid: b587a4d339b2d264fb83cd02d811e9e5, type: 2}
-  - {fileID: 11400000, guid: b587a4d339b2d264fb83cd02d811e9e5, type: 2}
-  - {fileID: 11400000, guid: dc8f61f82a6c83d45b5ab440a460e57a, type: 2}
-  - {fileID: 11400000, guid: b587a4d339b2d264fb83cd02d811e9e5, type: 2}
+  - {fileID: 11400000, guid: 460ffed8b83fc1d459be46614f03232a, type: 2}
 --- !u!4 &454166814
 Transform:
   m_ObjectHideFlags: 0

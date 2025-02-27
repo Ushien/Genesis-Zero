@@ -488,10 +488,13 @@ public class BaseUnit : MonoBehaviour
         int newTotalHealth = baseTotalHealth;
         float currentHPRAtio = (float)finalHealth / (float)totalHealth;
 
-        foreach (Modifier modifier in globalModifiers){
+        // Check the global modifiers
+
+        for (int i = 0; i < globalModifiers.Count; i++){
+            Modifier modifier = globalModifiers[i];
             if(modifier.IsEnded()){
-                //FIXME this les listes aiment pas beaucoup ça
-                globalModifiers.Remove(modifier);
+                globalModifiers[i] = null;
+                Destroy(modifier.gameObject);
             }
             else{
                 if(modifier.powerBonus != 0f){
@@ -505,6 +508,8 @@ public class BaseUnit : MonoBehaviour
                 }
             }
         }
+
+        // Update the power and HP
         
         int previousTotalHealth = totalHealth;
         int previousFinalHealth = finalHealth;
@@ -522,16 +527,28 @@ public class BaseUnit : MonoBehaviour
 
         finalPower = newPower;
         CheckFinalPower();
+
+        // Check the effect modifiers
         
         foreach (var action in modifiers)
         {
-            foreach (Modifier _modifier in action.Value)
+            for (int i = 0; i < action.Value.Count; i++)
             {
-                if(_modifier.IsEnded()){
-                    //FIXME this les listes aiment pas beaucoup ça
-                    action.Value.Remove(_modifier);
+                Modifier modifier = action.Value[i];
+                if(modifier.IsEnded()){
+                    action.Value[i] = null;
+                    Destroy(modifier.gameObject);
                 }
             }
+        }
+        
+
+        // Remove the holes from the lists
+
+        globalModifiers.RemoveAll(item => item == null);
+        foreach (var action in modifiers)
+        {
+            action.Value.RemoveAll(item => item == null);
         }
     }
 
