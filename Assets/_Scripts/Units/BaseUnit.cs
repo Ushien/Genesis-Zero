@@ -508,7 +508,7 @@ public class BaseUnit : MonoBehaviour
         
         int previousTotalHealth = totalHealth;
         int previousFinalHealth = finalHealth;
-        int newFinalHealth = Tools.Ceiling(totalHealth * currentHPRAtio);
+        int newFinalHealth = Tools.Ceiling(newTotalHealth * currentHPRAtio);
 
         totalHealth = newTotalHealth;
         if(totalHealth != previousTotalHealth){
@@ -516,9 +516,7 @@ public class BaseUnit : MonoBehaviour
         }
         
         finalHealth = newFinalHealth;
-        if(finalHealth != previousFinalHealth){
-            Debug.Log(previousFinalHealth);
-            Debug.Log(newFinalHealth);
+        if(newFinalHealth != previousFinalHealth){
             BattleEventManager.Instance.ApplyHPModificationEvent(BattleEventManager.Instance.CreateHPModificationEvent(this, previousFinalHealth, newFinalHealth, false));
         }
 
@@ -535,8 +533,6 @@ public class BaseUnit : MonoBehaviour
                 }
             }
         }
-
-        AnimationManager.Instance.ForceAnimation();
     }
 
     private List<Properties> GetProperties(){
@@ -1107,6 +1103,12 @@ public class BaseUnit : MonoBehaviour
     public void CheckAssertions(){
         Assert.AreEqual(GetFinalHealth().ToString() + " HP", lifeBar.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text);
         Assert.AreEqual(GetArmor().ToString() + " AR", lifeBar.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text);
+        // Check que l'unité n'a aucun passif en doublon
+        Assert.AreEqual(GetPassives()
+            .Where(i => !i.IsMinor())
+            .GroupBy(i => i.GetScriptablePassive())
+            .Where(g => g.Count() > 1)
+            .Select(g => g.Key).Count(), 0);
     }
 
     #endregion

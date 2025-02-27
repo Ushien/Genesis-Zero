@@ -74,6 +74,8 @@ public class GlobalManager : MonoBehaviour
         interfaceManager.transform.SetParent(transform.parent);
         spellManager = Instantiate(spellManagerPrefab);
         spellManager.transform.SetParent(transform.parent);
+        animationManager = Instantiate(animationManagerPrefab);
+        animationManager.transform.SetParent(transform.parent);
 
         ChangeState(RunPhase.STARTPHASE);
     }
@@ -92,8 +94,6 @@ public class GlobalManager : MonoBehaviour
         battleManager = Instantiate(battleManagerPrefab);
         battleManager.transform.SetParent(transform.parent);
         
-        animationManager = Instantiate(animationManagerPrefab);
-        animationManager.transform.SetParent(transform.parent);
         AIManager = Instantiate(AIManagerPrefab);
         AIManager.transform.SetParent(transform.parent);
         battleEventManager = Instantiate(battleEventManagerPrefab);
@@ -133,7 +133,6 @@ public class GlobalManager : MonoBehaviour
         BattleManager.Instance.Out();
 
         Destroy(battleManager.gameObject);
-        Destroy(animationManager.gameObject);
         Destroy(AIManager.gameObject);
         Destroy(battleEventManager.gameObject);
         Destroy(eventManager.gameObject);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -204,5 +205,10 @@ public class AnimationManager : MonoBehaviour
 
     public void addAnimation(BattleEvent battleEvent){
         animationQueue.Add(battleEvent);
+    }
+
+    [ContextMenu("Display queue count")]
+    public void DisplayAnimationQueueCount(){
+        Debug.Log(animationQueue.Count);
     }
 }
