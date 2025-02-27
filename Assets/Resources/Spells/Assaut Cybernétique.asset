@@ -24,6 +24,7 @@ MonoBehaviour:
   - 1
   overloaded_fight_description: 
   cooldown: 4
+  isAnAttack: 1
   properties: 
   range: 0
   team_restriction: 0

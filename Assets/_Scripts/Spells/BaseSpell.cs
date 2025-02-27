@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Unity.VisualScripting;
+using UnityEngine.Assertions;
 
 /// <summary>
 /// Représente une attaque ou une technique
@@ -24,6 +25,7 @@ public class BaseSpell : MonoBehaviour
         #region Caractérstiques
     private string spell_name = "Name";
     private bool isAAttack = false;
+    private bool isAnAttack = false;
     private bool isATechnique = true;
     [TextArea(5,10)]
     private string fight_description = "Fight Description";
@@ -33,7 +35,6 @@ public class BaseSpell : MonoBehaviour
     private int base_cooldown = 0;
     // Cooldown actuel du sort. Lorsque celui-ci est égal au cooldown total, le sort peut être lancé. Quand le sort est lancé, celui-ci passe à zéro. Il augmente ensuite de 1 par tour.
     private int cooldown = 0;
-
     private bool activated = false;
     private Sprite artwork = null;
     // Indique la portée du sort (horizontale, verticale, toutes les unités, etc...)
@@ -68,7 +69,7 @@ public class BaseSpell : MonoBehaviour
     /// Initialise le sort
     /// </summary>
     /// <param name="ownerUnit">Unité possédant le sort</param>
-    public void Setup(ScriptableSpell scriptableSpell, BaseUnit ownerUnit, int spellListIndex = -1, bool attack = false){
+    public void Setup(ScriptableSpell scriptableSpell, BaseUnit ownerUnit, int spellListIndex = -1, bool aAttack = false){
         owner = ownerUnit;
         
         name = scriptableSpell.spell_name;
@@ -80,12 +81,18 @@ public class BaseSpell : MonoBehaviour
         artwork = scriptableSpell.artwork;
         range = scriptableSpell.range;
         team_restriction = scriptableSpell.team_restriction;
-        if(attack){
+        isAnAttack = scriptableSpell.isAnAttack;
+        if(aAttack){
             ownerUnit.attack = this;
             base_cooldown = 0;
             isAAttack = true;
             isATechnique = false;
         }
+        else{
+            isAAttack = false;
+            isATechnique = true;
+        }
+
         if(spellListIndex != -1){
             ownerUnit.GetFourSpells()[spellListIndex] = this;
         }
@@ -379,6 +386,10 @@ public class BaseSpell : MonoBehaviour
     /// <param name="value"></param>
     public void SetIsATechnique(bool value){
         isATechnique = value;
+    }
+
+    public bool IsAnAttack(){
+        return isAnAttack;
     }
 
     public bool IsAAttack(){

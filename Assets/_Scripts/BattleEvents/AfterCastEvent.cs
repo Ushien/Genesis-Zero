@@ -34,6 +34,6 @@ public class AfterCastEvent : BattleEvent
 
     public override string GetSummary()
     {
-        return "Cast Event: " + GetSourceUnit().GetName() + " - " + GetCastedSpell().GetName() + " - " + targetTile.name;
+        return "After Cast Event: " + GetSourceUnit().GetName() + " - " + GetCastedSpell().GetName() + " - " + targetTile.name;
     }
 }

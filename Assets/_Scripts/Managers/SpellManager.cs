@@ -47,12 +47,13 @@ public class SpellManager : MonoBehaviour
 
         BaseSpell new_spell = Instantiate(_attack.spellScriptPrefab);
         new_spell.transform.parent = unit.transform;
-        new_spell.Setup(_attack, unit, attack : true);
+        new_spell.Setup(_attack, unit, aAttack : true);
 
         return new_spell;
     }
 
     public BaseSpell SetupSpell(ScriptableSpell spell, BaseUnit unit, int availableSpellsIndex){
+        Assert.AreNotEqual(spell.spellScriptPrefab , null, "Le sort ne peut pas être setup si son prefab n'est pas accroché au ScriptableSpell");
         BaseSpell new_spell = Instantiate(spell.spellScriptPrefab);
         new_spell.transform.parent = unit.transform;
         new_spell.Setup(spell, unit, availableSpellsIndex);

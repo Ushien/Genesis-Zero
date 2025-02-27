@@ -15,10 +15,10 @@ public class ScriptableSpell : ScriptableObject
     public float[] hyper_ratios = {1f, 1f, 1f};
     public string overloaded_fight_description;
     public int cooldown;
+    public bool isAnAttack = false;
     public List<Properties> properties;
     public GridManager.Selection_mode range;
     public GridManager.Team_restriction team_restriction;
-
     public Sprite artwork;
 
     public BaseSpell spellScriptPrefab;

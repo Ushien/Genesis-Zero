@@ -252,7 +252,7 @@ public class BaseUnit : MonoBehaviour
     }
 
     public void CastSpell(BaseSpell spell, bool hyper){
-        Assert.IsTrue(GetSpells(true).Contains(spell));
+        Assert.IsTrue(GetSpells(true).Contains(spell), "L'unité ne peut pas lancer un sort sans le posséder");
         if(hyper){
             spell.HyperCast(GetProperties());
         }
@@ -1118,14 +1118,19 @@ public class BaseUnit : MonoBehaviour
         #endregion
 
     public void CheckAssertions(){
-        Assert.AreEqual(GetFinalHealth().ToString() + " HP", lifeBar.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text);
-        Assert.AreEqual(GetArmor().ToString() + " AR", lifeBar.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text);
+        Assert.AreEqual(GetFinalHealth().ToString() + " HP", lifeBar.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text, "La barre de HP et les valeurs réelles sont désynchronisées (HP finaux)");
+        Assert.AreEqual(GetArmor().ToString() + " AR", lifeBar.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text, "La barre d'armure et les valeurs réelles sont désynchronisées");
         // Check que l'unité n'a aucun passif en doublon
         Assert.AreEqual(GetPassives()
             .Where(i => !i.IsMinor())
             .GroupBy(i => i.GetScriptablePassive())
             .Where(g => g.Count() > 1)
-            .Select(g => g.Key).Count(), 0);
+            .Select(g => g.Key).Count(), 0, "Il est interdit de posséder plusieurs fois le même passif");
+        // Check que l'unité n'a aucun spell en doublon
+        Assert.AreEqual(GetSpells(true)
+            .GroupBy(i => i.GetScriptableSpell())
+            .Where(g => g.Count() > 1)
+            .Select(g => g.Key).Count(), 0, "Il est interdit de posséder plusieurs fois le même sort");
     }
 
     #endregion
