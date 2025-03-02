@@ -77,6 +77,8 @@ public class InterfaceManager : MonoBehaviour
 
     private Dictionary<BattleManager.PlayerActionChoiceState, bool> activated_states;
 
+    private int selectedPassiveIndex = 0;
+
     #endregion
 
     void Awake(){
@@ -695,7 +697,7 @@ public class InterfaceManager : MonoBehaviour
         unitLevelPanel.text = "Niveau : " + unit.GetLevel().ToString();
         // TODO Il faut changer ça, là on n'affiche que le premier passif de la liste
         if(unit.GetPassives().Count >= 1){
-            unitPassiveNamePanel.text = unit.GetPassives()[0].GetName();
+            unitPassiveNamePanel.text = unit.GetPassives()[selectedPassiveIndex].GetName();
             unitPassiveDescriptionPanel.text = unit.GetPassives()[0].GetFightDescription();
         }
         else{
