@@ -22,8 +22,9 @@ public class InterfaceManager : MonoBehaviour
     private Canvas UIPrefab;
     private Canvas UI;
 
-    private GameObject infosPanel;
-    private GameObject spellPanel;
+    private Transform unitPanel;
+    private Transform spellPanel;
+    private Transform passivePanel;
     private TextMeshProUGUI unitNamePanel;
     private TextMeshProUGUI unitPowerPanel;
     private TextMeshProUGUI unitHealthPanel;
@@ -37,8 +38,8 @@ public class InterfaceManager : MonoBehaviour
     public RectTransform spellPanelLine;
     public RectTransform spellSelectorLine;
     private Image spellPanelIcon;
-    private GameObject spellSelector;
-    public GameObject shade;
+    private Transform spellSelector;
+    public Transform shade;
     public Canvas UIWorldSpace;
     private Canvas lifeBarsUI;
     public GameObject lifeBarPrefab;
@@ -46,7 +47,7 @@ public class InterfaceManager : MonoBehaviour
     public Sprite emptySpellSelectorSquare;
    
 
-    private GameObject tileSelector;
+    private Transform tileSelector;
     private Vector3 tileSelector_targetPos;
     private Vector3 tileSelector_currentPos;
 
@@ -90,27 +91,28 @@ public class InterfaceManager : MonoBehaviour
         lifeBarsUI = GlobalManager.Instance.GetUIWorldSpace();
         UI.worldCamera = GlobalManager.Instance.GetCam();
 
-        infosPanel = UI.transform.Find("InfosPanel").gameObject;
-        spellPanel = UI.transform.Find("SpellPanel").gameObject;
-        spellSelector = UI.transform.Find("SpellSelector").gameObject;
-        shade = UI.transform.Find("Shade").gameObject;
+        unitPanel = UI.transform.Find("UnitPanel");
+        spellPanel = UI.transform.Find("SpellPanel");
+        passivePanel = UI.transform.Find("PassivePanel");
+        spellSelector = UI.transform.Find("SpellSelector");
+        shade = UI.transform.Find("Shade");
 
-        unitNamePanel = infosPanel.transform.Find("InformationPanel").transform.Find("UnitName").GetComponent<TextMeshProUGUI>();
-        unitPowerPanel = infosPanel.transform.Find("InformationPanel").transform.Find("UnitPower").GetComponent<TextMeshProUGUI>();
-        unitHealthPanel = infosPanel.transform.Find("InformationPanel").transform.Find("UnitHealth").GetComponent<TextMeshProUGUI>();
-        unitArmorPanel = infosPanel.transform.Find("InformationPanel").transform.Find("UnitArmor").GetComponent<TextMeshProUGUI>();
-        unitLevelPanel = infosPanel.transform.Find("InformationPanel").transform.Find("UnitLevel").GetComponent<TextMeshProUGUI>();
+        unitNamePanel = unitPanel.Find("UnitName").GetComponent<TextMeshProUGUI>();
+        unitPowerPanel = unitPanel.Find("UnitPower").GetComponent<TextMeshProUGUI>();
+        unitHealthPanel = unitPanel.Find("UnitHealth").GetComponent<TextMeshProUGUI>();
+        unitArmorPanel = unitPanel.Find("UnitArmor").GetComponent<TextMeshProUGUI>();
+        unitLevelPanel = unitPanel.Find("UnitLevel").GetComponent<TextMeshProUGUI>();
 
-        unitPassiveNamePanel = infosPanel.transform.Find("PassivePanel").transform.Find("Name").GetComponent<TextMeshProUGUI>();
-        unitPassiveDescriptionPanel = infosPanel.transform.Find("PassivePanel").transform.Find("Description").GetComponent<TextMeshProUGUI>();
+        unitPassiveNamePanel = passivePanel.Find("Name").GetComponent<TextMeshProUGUI>();
+        unitPassiveDescriptionPanel = passivePanel.Find("Description").GetComponent<TextMeshProUGUI>();
 
         spellNamePanel = spellPanel.transform.Find("Name").GetComponent<TextMeshProUGUI>();
         spellCooldownPanel = spellPanel.transform.Find("Cooldown").GetComponent<TextMeshProUGUI>();
         spellDescriptionPanel = spellPanel.transform.Find("Description").GetComponent<TextMeshProUGUI>();
-        spellPanelLine = spellPanel.transform.Find("SpellPanelLine").GetComponent<RectTransform>();
-        spellPanelIcon = spellPanel.transform.Find("SpellPanelIcon").GetComponent<Image>();
+        spellPanelLine = spellPanel.transform.Find("Line").GetComponent<RectTransform>();
+        spellPanelIcon = spellPanel.transform.Find("Sprite").GetComponent<Image>();
 
-        spellSelectorLine = spellSelector.transform.Find("SpellSelectorLine").GetComponent<RectTransform>();
+        spellSelectorLine = spellSelector.transform.Find("Line").GetComponent<RectTransform>();
 
         mainCamera = GlobalManager.Instance.GetCam();
 
@@ -125,7 +127,7 @@ public class InterfaceManager : MonoBehaviour
 
         // On crée le tileSelector qui va naviguer pour la sélection des cases
 
-        tileSelector = Instantiate(GridManager.Instance.GetTilePrefab()).gameObject;
+        tileSelector = Instantiate(GridManager.Instance.GetTilePrefab()).transform;
         Material material = Instantiate(tileOutliner);
 
         tileSelector.transform.GetComponent<UnityEngine.SpriteRenderer>().material = material;
@@ -172,8 +174,9 @@ public class InterfaceManager : MonoBehaviour
             ResetDisplay();
 
             // Activate the needed interface
-            infosPanel.SetActive(true);
-            tileSelector.SetActive(true);
+            unitPanel.gameObject.SetActive(true);
+            passivePanel.gameObject.SetActive(true);
+            tileSelector.gameObject.SetActive(true);
 
             if(UnitManager.Instance.GetUnits(Team.Ally).Count > 0){
                 sourceTile = UnitManager.Instance.GetUnits(Team.Ally).Where(_unit => !_unit.HasGivenInstruction()).First().GetTile();
@@ -238,10 +241,10 @@ public class InterfaceManager : MonoBehaviour
             ResetDisplay();
 
             // Activate the needed interface
-            spellSelector.SetActive(true);
-            shade.SetActive(true);
-            infosPanel.SetActive(true);
-            spellPanel.SetActive(true);
+            spellSelector.gameObject.SetActive(true);
+            shade.gameObject.SetActive(true);
+            unitPanel.gameObject.SetActive(true);
+            spellPanel.gameObject.SetActive(true);
             spellPanelLine.gameObject.SetActive(false);
 
             //spellSelector.transform.position = sourceTile.transform.position;
@@ -511,7 +514,6 @@ public class InterfaceManager : MonoBehaviour
         // Affichage du spell dans l'information panel
         switch(spellChoice){
             case SpellChoice.CHARACTER:
-                DisplayUnit(sourceUnit);
                 DisplaySpell(sourceUnit.GetAttack(), hyper : overloaded);
                 break;
             case SpellChoice.LEFT:
@@ -544,11 +546,11 @@ public class InterfaceManager : MonoBehaviour
             ResetDisplay();
 
             // Activate the needed interface
-            infosPanel.SetActive(true);
-            tileSelector.SetActive(true);
-            spellSelector.SetActive(true);
-            shade.SetActive(true);
-            spellPanel.SetActive(true);
+            unitPanel.gameObject.SetActive(true);
+            tileSelector.gameObject.SetActive(true);
+            spellSelector.gameObject.SetActive(true);
+            shade.gameObject.SetActive(true);
+            spellPanel.gameObject.SetActive(true);
             spellPanelLine.gameObject.SetActive(true);
 
             // TODO Définir un emplacement par défaut plus intelligent
@@ -631,7 +633,7 @@ public class InterfaceManager : MonoBehaviour
 
     private void DisplaySpell(BaseSpell spell, bool hyper = false){
         if(spell != null){
-            spellPanel.SetActive(true);
+            spellPanel.gameObject.SetActive(true);
             spellNamePanel.text = spell.GetName();
             spellDescriptionPanel.text = spell.GetFightDescription(hyper);
             if(spell.IsAAttack()){
@@ -643,7 +645,7 @@ public class InterfaceManager : MonoBehaviour
             spellPanelIcon.sprite = spell.GetArtwork();
         }
         else{
-            spellPanel.SetActive(false);
+            spellPanel.gameObject.SetActive(false);
             spellNamePanel.text="";
             spellDescriptionPanel.text = "";
             spellCooldownPanel.text = "";
@@ -661,24 +663,27 @@ public class InterfaceManager : MonoBehaviour
             unitArmorPanel.text = "";
         }
         unitLevelPanel.text = "Niveau : " + unit.GetLevel().ToString();
-        // TODO Il faut changer ça, là on n'affiche que le premier passif de la liste
+    }
+
+    private void DisplayPassives(BaseUnit unit){
         if(unit.GetPassives().Count >= 1){
             unitPassiveNamePanel.text = unit.GetPassives()[selectedPassiveIndex].GetName();
             unitPassiveDescriptionPanel.text = unit.GetPassives()[selectedPassiveIndex].GetFightDescription();
+            passivePanel.Find("Sprite").GetComponent<Image>().sprite = unit.GetPassives()[selectedPassiveIndex].GetScriptablePassive().artwork;
         }
         else{
             unitPassiveNamePanel.text = "";
             unitPassiveDescriptionPanel.text = "";
         }
-        spellCooldownPanel.text = "";
     }
     
     void ResetDisplay(){
-            spellSelector.SetActive(false);
-            shade.SetActive(false);
-            infosPanel.SetActive(false);
-            tileSelector.SetActive(false);
-            spellPanel.SetActive(false);
+            spellSelector.gameObject.SetActive(false);
+            shade.gameObject.SetActive(false);
+            unitPanel.gameObject.SetActive(false);
+            passivePanel.gameObject.SetActive(false);
+            tileSelector.gameObject.SetActive(false);
+            spellPanel.gameObject.SetActive(false);
     }
 
     void ActivateState(BattleManager.PlayerActionChoiceState stateToActivate){
@@ -705,12 +710,15 @@ public class InterfaceManager : MonoBehaviour
 
         BaseUnit currentUnit = sourceTile.GetUnit();
         if(currentUnit != null){
-            infosPanel.SetActive(true);
+            unitPanel.gameObject.SetActive(true);
+            passivePanel.gameObject.SetActive(true);
             DisplayUnit(currentUnit);
+            DisplayPassives(currentUnit);
             //DrawPanelLine(infosPanelLine, sourceTile);
         }
         else{
-            infosPanel.SetActive(false);
+            unitPanel.gameObject.SetActive(false);
+            passivePanel.gameObject.SetActive(false);
         }
     }
 
@@ -745,7 +753,7 @@ public class InterfaceManager : MonoBehaviour
                     }
                 }
             }
-            DisplayUnit(currentUnit);
+            DisplayPassives(currentUnit);
         }
         if(GlobalManager.Instance.debug){
             Assert.IsTrue(selectedPassiveIndex >= 0);
