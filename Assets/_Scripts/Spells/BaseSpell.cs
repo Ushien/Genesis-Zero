@@ -83,7 +83,7 @@ public class BaseSpell : MonoBehaviour
         team_restriction = scriptableSpell.team_restriction;
         isAnAttack = scriptableSpell.isAnAttack;
         if(aAttack){
-            ownerUnit.attack = this;
+            ownerUnit.aAttack = this;
             base_cooldown = 0;
             isAAttack = true;
             isATechnique = false;
@@ -245,6 +245,11 @@ public class BaseSpell : MonoBehaviour
         _fight_description = _fight_description.Replace("__1", DisplayPercents(GetRatio(hyper:hyper)[0]));
         _fight_description = _fight_description.Replace("__2", DisplayPercents(GetRatio(hyper:hyper)[1]));
         _fight_description = _fight_description.Replace("__3", DisplayPercents(GetRatio(hyper:hyper)[2]));
+
+        _fight_description = _fight_description.Replace("**1", GetRatio(hyper:hyper)[0].ToString());
+        _fight_description = _fight_description.Replace("**2", GetRatio(hyper:hyper)[1].ToString());
+        _fight_description = _fight_description.Replace("**3", GetRatio(hyper:hyper)[2].ToString());
+
         return _fight_description;
     }
     

@@ -89,4 +89,13 @@ public class BattleEventManager : MonoBehaviour
         BattleManager.Instance.AddEvent(hpModificationEvent);
         AnimationManager.Instance.addAnimation(hpModificationEvent);
     }
+
+    public AttackEvent CreateAttackEvent(BaseUnit originUnit){
+        return new AttackEvent(originUnit);
+    }
+
+    public void ApplyAttackEvent(AttackEvent attackEvent){
+        BattleManager.Instance.AddEvent(attackEvent);
+        AnimationManager.Instance.addAnimation(attackEvent);
+    }
 }

@@ -76,15 +76,31 @@ public class AnimationManager : MonoBehaviour
     }
 
     public async Task Animate(BeforeCastEvent beforecastEvent){
-        for (float distance = 0.0f; distance <= 0.4f; distance += 0.02f * accelerator)
-        {
-            beforecastEvent.GetSourceUnit().gameObject.transform.Translate(new Vector3(0, 0.02f, 0));
-            await Task.Yield();
+        if(beforecastEvent.GetCastedSpell().IsAnAttack()){
+            float distanceValue = beforecastEvent.GetSourceUnit().GetTeam() == Team.Ally ? 0.02f : -0.02f;
+
+            for (float distance = 0.0f; distance <= 0.4f; distance += 0.02f * accelerator)
+            {
+                beforecastEvent.GetSourceUnit().gameObject.transform.Translate(new Vector3(distanceValue, 0, 0));
+                await Task.Yield();
+            }
+            for (float distance = 0.4f; distance >= 0.0f; distance -= 0.02f * accelerator)
+            {
+                beforecastEvent.GetSourceUnit().gameObject.transform.Translate(new Vector3(-distanceValue, 0, 0));
+                await Task.Yield();
+            }
         }
-        for (float distance = 0.4f; distance >= 0.0f; distance -= 0.02f * accelerator)
-        {
-            beforecastEvent.GetSourceUnit().gameObject.transform.Translate(new Vector3(0, -0.02f, 0));
-            await Task.Yield();
+        else{
+            for (float distance = 0.0f; distance <= 0.4f; distance += 0.02f * accelerator)
+            {
+                beforecastEvent.GetSourceUnit().gameObject.transform.Translate(new Vector3(0, 0.02f, 0));
+                await Task.Yield();
+            }
+            for (float distance = 0.4f; distance >= 0.0f; distance -= 0.02f * accelerator)
+            {
+                beforecastEvent.GetSourceUnit().gameObject.transform.Translate(new Vector3(0, -0.02f, 0));
+                await Task.Yield();
+            }
         }
     }
 

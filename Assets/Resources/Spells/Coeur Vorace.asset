@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spell_name: Coeur Vorace
   fight_description: "Inflige %%1 d\xE9gats \xE0 une cible. Les d\xE9gats augmentent
-    d\xE9finitivement pour chaque soin re\xE7u par le personnage. Vampirisme. (P)"
+    d\xE9finitivement pour chaque soin re\xE7u par le personnage. Vampirisme."
   ratios:
   - 0.2
   - 0.05
@@ -27,6 +27,7 @@ MonoBehaviour:
     les PV du lanceur du m\xEAme montant. Les d\xE9gats augmentent d\xE9finitivement
     pour chaque soin re\xE7u par le personnage."
   cooldown: 3
+  isAnAttack: 0
   properties: 04000000
   range: 0
   team_restriction: 0

@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dcb93cad8514e946b9119230c473bac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy_composition: {fileID: 11400000, guid: 2c84b9165749c4c448068f7a2a1d7e81, type: 2}
+  enemy_composition: {fileID: 11400000, guid: 1dabbce815530c24e88765a190c8dece, type: 2}
   ally_composition: {fileID: 11400000, guid: 600e2b1bfbd13f64b95130b49b50a979, type: 2}
   rewardsToSpawn:
   - {fileID: 11400000, guid: d82b8e743a2889c4f83af0148b21409f, type: 2}

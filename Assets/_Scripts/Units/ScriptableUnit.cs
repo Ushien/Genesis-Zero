@@ -18,6 +18,6 @@ public class ScriptableUnit : ScriptableObject
     [TextArea(5,10)]
     public string fight_description;
     public List<ScriptablePassive> passives;
-    public ScriptableSpell attack;
+    public ScriptableSpell aAttack;
     public List<ScriptableSpell> spells;
 }

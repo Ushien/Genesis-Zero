@@ -24,7 +24,7 @@ public class BaseUnit : MonoBehaviour
     public Tile OccupiedTile;
     public GameObject lifeBar;
     private List<Passive> passives;
-    public BaseSpell attack;
+    public BaseSpell aAttack;
     public BaseSpell[] availableSpells = new BaseSpell[4];
 
         #endregion
@@ -120,7 +120,7 @@ public class BaseUnit : MonoBehaviour
             _passive.SetupPassive(this);
         }
 
-        SpellManager.Instance.SetupAttack(originUnit.attack, this);
+        SpellManager.Instance.SetupAttack(originUnit.aAttack, this);
 
         availableSpells = new BaseSpell[4];
         int i = 0;
@@ -218,7 +218,7 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     /// <param name="targetTile"></param>
     public void Attack(Tile targetTile, List<Properties> propertiesToApply){
-        attack.Cast(targetTile, propertiesToApply);
+        aAttack.Cast(targetTile, propertiesToApply);
     }
 
     /// <summary>
@@ -709,7 +709,7 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public BaseSpell GetAttack(){
-        return attack;
+        return aAttack;
     }
 
     /// <summary>
