@@ -6,6 +6,7 @@ using TMPro;
 using Unity.VisualScripting;
 using System.Linq;
 using UnityEngine.Assertions;
+using System.Data.Common;
 
 /// <summary>
 /// Gestion de l'interface de jeu
@@ -156,7 +157,12 @@ public class InterfaceManager : MonoBehaviour
             }   
         }
 
-        
+        if(Input.GetKeyDown(KeyCode.C)){
+            NavigatePassives(Directions.LEFT);
+        }
+        if(Input.GetKeyDown(KeyCode.V)){
+            NavigatePassives(Directions.RIGHT);
+        }
     }
 
     void SourceSelectionDisplay(){
@@ -203,42 +209,16 @@ public class InterfaceManager : MonoBehaviour
             SourceSelectionTrigger(BattleManager.Trigger.CANCEL);
         }
         if (Input.GetKeyDown(KeyCode.UpArrow)){
-            if(sourceTile.GetNextTile(Directions.UP) != null){
-                sourceTile.GetNextTile(Directions.UP).Select();
-                sourceTile.Unselect();
-                sourceTile = sourceTile.GetNextTile(Directions.UP);
-            }
+            NavigateSource(Directions.UP);
         }
         if (Input.GetKeyDown(KeyCode.DownArrow)){
-            if(sourceTile.GetNextTile(Directions.DOWN) != null){
-                sourceTile.GetNextTile(Directions.DOWN).Select();
-                sourceTile.Unselect();
-                sourceTile = sourceTile.GetNextTile(Directions.DOWN);
-            }
+            NavigateSource(Directions.DOWN);
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow)){
-            if(sourceTile.GetNextTile(Directions.LEFT) != null){
-                sourceTile.GetNextTile(Directions.LEFT).Select();
-                sourceTile.Unselect();
-                sourceTile = sourceTile.GetNextTile(Directions.LEFT);
-            }
+            NavigateSource(Directions.LEFT);
         }
         if (Input.GetKeyDown(KeyCode.RightArrow)){
-            if(sourceTile.GetNextTile(Directions.RIGHT) != null){
-                sourceTile.GetNextTile(Directions.RIGHT).Select();
-                sourceTile.Unselect();
-                sourceTile = sourceTile.GetNextTile(Directions.RIGHT);
-            }
-        }
-
-        BaseUnit currentUnit = sourceTile.GetUnit();
-        if(currentUnit != null){
-            infosPanel.SetActive(true);
-            DisplayUnit(currentUnit);
-            //DrawPanelLine(infosPanelLine, sourceTile);
-        }
-        else{
-            infosPanel.SetActive(false);
+            NavigateSource(Directions.RIGHT);
         }
     }
     void SourceSelectionTrigger(BattleManager.Trigger trigger){
@@ -268,24 +248,27 @@ public class InterfaceManager : MonoBehaviour
             DrawPanelLine(spellSelectorLine, sourceTile);
 
             int currentSpellIndex = 0;
-
             foreach (BaseSpell spell in currentSpells)
             {
+                Image spellImage = spellSelector.transform.GetChild(currentSpellIndex).GetComponent<Image>();
                 if(spell != null){
-                    spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().sprite = spell.GetArtwork();
-                    spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().material = null;
+                    spellImage.sprite = spell.GetArtwork();
+                    spellImage.material = null;
                     if(!spell.IsAvailable()){
                         Material material = Instantiate(grayscaleShader);
-                        spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().material = material;
+                        spellImage.material = material;
                         //Grey
                     }              
                 }
                 else{
-                    spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().sprite = emptySpellSelectorSquare;
-                    spellSelector.transform.GetChild(currentSpellIndex).GetComponent<UnityEngine.UI.Image>().material = null;
+                    spellImage.sprite = emptySpellSelectorSquare;
+                    spellImage.material = null;
                 }
                 currentSpellIndex += 1;
             }
+
+            // Change aAttack image
+            spellSelector.transform.GetChild(currentSpellIndex).GetComponent<Image>().sprite = sourceUnit.GetAttack().GetArtwork();
 
             GridManager.Instance.SetSelectionMode(GridManager.Selection_mode.Single_selection);
             
@@ -592,46 +575,29 @@ public class InterfaceManager : MonoBehaviour
                 TargetSelectionTrigger(BattleManager.Trigger.VALIDATE);
             }
         }
-
         if (Input.GetKeyDown(KeyCode.N)){
             targetTile.Unselect();
             sourceTile.Select();
             TargetSelectionTrigger(BattleManager.Trigger.CANCEL);
         }
         if (Input.GetKeyDown(KeyCode.UpArrow)){
-            if(targetTile.GetNextTile(Directions.UP) != null){
-                targetTile.Unselect();
-                targetTile = targetTile.GetNextTile(Directions.UP);
-                targetTile.Select();
-            }
+            NavigateTarget(Directions.UP);
         }
         if (Input.GetKeyDown(KeyCode.DownArrow)){
-            if(targetTile.GetNextTile(Directions.DOWN) != null){
-                targetTile.Unselect();
-                targetTile = targetTile.GetNextTile(Directions.DOWN);
-                targetTile.Select();
-            }
+            NavigateTarget(Directions.DOWN);
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow)){
-            if(targetTile.GetNextTile(Directions.LEFT) != null){
-                targetTile.Unselect();
-                targetTile = targetTile.GetNextTile(Directions.LEFT);
-                targetTile.Select();
-            }
+            NavigateTarget(Directions.LEFT);
         }
         if (Input.GetKeyDown(KeyCode.RightArrow)){
-            if(targetTile.GetNextTile(Directions.RIGHT) != null){
-                targetTile.Unselect();
-                targetTile = targetTile.GetNextTile(Directions.RIGHT);
-                targetTile.Select();
-            }
+            NavigateTarget(Directions.RIGHT);
         }
 
         DrawPanelLine(spellPanelLine, targetTile);
         GridManager.Instance.SetSelectionMode(selectedSpell.GetRange());
 
         //Abstraire ce code
-        BaseUnit currentUnit = targetTile.GetUnit();
+        //BaseUnit currentUnit = targetTile.GetUnit();
 
         // N'aidait pas à la lisibilité d'après moi
         // (en gros, le personnage ennemi était toujours sélectionné, je préfère qu'on ait toujours les infos sur le lanceur)
@@ -698,7 +664,7 @@ public class InterfaceManager : MonoBehaviour
         // TODO Il faut changer ça, là on n'affiche que le premier passif de la liste
         if(unit.GetPassives().Count >= 1){
             unitPassiveNamePanel.text = unit.GetPassives()[selectedPassiveIndex].GetName();
-            unitPassiveDescriptionPanel.text = unit.GetPassives()[0].GetFightDescription();
+            unitPassiveDescriptionPanel.text = unit.GetPassives()[selectedPassiveIndex].GetFightDescription();
         }
         else{
             unitPassiveNamePanel.text = "";
@@ -729,8 +695,61 @@ public class InterfaceManager : MonoBehaviour
         activated_states = new_states;
     }
 
-    void Navigate(Directions direction){
-        //
+    void NavigateSource(Directions direction){
+        if(sourceTile.GetNextTile(direction) != null){
+            sourceTile.GetNextTile(direction).Select();
+            sourceTile.Unselect();
+            sourceTile = sourceTile.GetNextTile(direction);
+        }
+        selectedPassiveIndex = 0;
+
+        BaseUnit currentUnit = sourceTile.GetUnit();
+        if(currentUnit != null){
+            infosPanel.SetActive(true);
+            DisplayUnit(currentUnit);
+            //DrawPanelLine(infosPanelLine, sourceTile);
+        }
+        else{
+            infosPanel.SetActive(false);
+        }
+    }
+
+    void NavigateTarget(Directions direction){
+        if(targetTile.GetNextTile(direction) != null){
+            targetTile.Unselect();
+            targetTile = targetTile.GetNextTile(direction);
+            targetTile.Select();
+        }
+        selectedPassiveIndex = 0;
+    }
+
+    void NavigatePassives(Directions direction){
+        BaseUnit currentUnit = sourceTile.GetUnit();
+        if(currentUnit != null){
+            List<Passive> passives = currentUnit.GetPassives();
+            if(passives.Count > 0){
+                if(direction == Directions.LEFT){
+                    if(selectedPassiveIndex > 0){
+                        selectedPassiveIndex -= 1;
+                    }
+                    else{
+                        selectedPassiveIndex = passives.Count -1;
+                    }
+                }
+                if(direction == Directions.RIGHT){
+                    if(selectedPassiveIndex < passives.Count - 1){
+                        selectedPassiveIndex += 1;
+                    }
+                    else{
+                        selectedPassiveIndex = 0;
+                    }
+                }
+            }
+            DisplayUnit(currentUnit);
+        }
+        if(GlobalManager.Instance.debug){
+            Assert.IsTrue(selectedPassiveIndex >= 0);
+        }
     }
 
     public Tile GetMainSelection(){
