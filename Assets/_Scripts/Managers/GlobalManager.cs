@@ -121,7 +121,7 @@ public class GlobalManager : MonoBehaviour
         //BattleManager.Instance.DebugSetState();
         BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, BattleManager.Trigger.FORWARD);
 
-        if(debug){
+        if(debug && battleID == 1){
             testScript.LaunchDebug();
         }
     }
@@ -132,12 +132,14 @@ public class GlobalManager : MonoBehaviour
         battleManager.GetArchive().name = "Battle " + battleID;
         battleManager.GetArchive().transform.SetParent(battleArchive.transform);
 
-        allies = UnitManager.Instance.GetUnits(Team.Ally);
+        allies = UnitManager.Instance.GetUnits(Team.Ally, includingDead : true);
+        UnitManager.Instance.ReviveAllyUnits(1);
+        AnimationManager.Instance.ForceAnimation();
+        
         BattleManager.Instance.Out();
 
         Destroy(AIManager.gameObject);
         Destroy(eventManager.gameObject);
-
         
         GameObject[] rootGameObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
         foreach (GameObject _gameobject in rootGameObjects)

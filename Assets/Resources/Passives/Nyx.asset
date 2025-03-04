@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   passive_name: Nyx
   fight_description: "Lorsque l'unit\xE9 attaque, charge ses autres techniques de
-    1"
+    1."
   ratios:
   - 1
   - 1

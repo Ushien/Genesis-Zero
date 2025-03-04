@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Elysium
   m_EditorClassIdentifier: 
   passive_name: Elysium
-  fight_description: "Conf\xE8re Curatif \xE0 l'unit\xE9"
+  fight_description: "Conf\xE8re Curatif aux techniques de l'unit\xE9."
   ratios:
   - 1
   - 1

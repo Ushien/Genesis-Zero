@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   passive_name: "Acad\xE9mique"
   fight_description: "Apr\xE8s avoir lanc\xE9 une technique, le lanceur gagne __1%
-    de puissance"
+    de puissance."
   ratios:
   - 0.1
   - 1

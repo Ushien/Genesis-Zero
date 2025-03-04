@@ -271,6 +271,15 @@ public class BattleManager : MonoBehaviour
             case BattleState.OUT:
                 break;
             case BattleState.START:
+                switch (trigger){
+                    case Trigger.FORWARD:
+                        break;
+                    default:
+                        // Do stuff de début de bataille
+                        battleState = BattleState.TURN;
+                        ChangeTurnState(Trigger.FORWARD);
+                        break;
+                }
                 break;
             case BattleState.TURN:
                 switch (trigger)
@@ -339,7 +348,6 @@ public class BattleManager : MonoBehaviour
 
     public void DebugSetState(){
         teamTurn = TeamTurn.ALLY;
-
         battleState = BattleState.TURN;
         turnState = TurnState.START;
         playerActionChoiceState = PlayerActionChoiceState.OUT;
@@ -365,10 +373,18 @@ public class BattleManager : MonoBehaviour
         return playerActionChoiceState;
     }
     private void StartBattle(){
+        
         teamTurn = TeamTurn.ALLY;
         battleState = BattleState.START;
         turnState = TurnState.OUT;
         playerActionChoiceState = PlayerActionChoiceState.OUT;
+
+        /*
+        teamTurn = TeamTurn.ALLY;
+        battleState = BattleState.TURN;
+        turnState = TurnState.START;
+        playerActionChoiceState = PlayerActionChoiceState.OUT;
+        */
     }
 
     public void EndTurnEffects(){

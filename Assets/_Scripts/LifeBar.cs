@@ -44,8 +44,20 @@ public class LifeBar : MonoBehaviour
         CheckNewScale();
     }
 
+    public void SetHP(int newHP){
+        HP = newHP;
+        HPtext.text = HP.ToString() + " HP";
+        CheckNewScale(); 
+    }
+
     public void UpdateTotalHP(int totalHPChange){
         totalHP += totalHPChange;
+        CheckNewScale();
+    }
+
+    public void SetTotalHP(int newTotalHP){
+        totalHP = newTotalHP;
+        CheckNewScale();
     }
 
     public void UpdateArmor(int ArmorChange){
@@ -54,8 +66,19 @@ public class LifeBar : MonoBehaviour
         CheckNewScale();
     }
 
+    public void SetArmor(int newArmor){
+        Armor = newArmor;
+        ARtext.text = Armor.ToString() + " AR";
+        CheckNewScale();
+    }
+
     public void CheckNewScale(){
-        targetLifeBarScale = new Vector3((float)HP/totalHP, 1, 1);
+        if(HP != 0){
+            targetLifeBarScale = new Vector3((float)HP/totalHP, 1, 1);
+        }
+        else{
+            targetLifeBarScale = new Vector3(0f, 1, 1);
+        }
         targetArmorBarScale = new Vector3((float)Armor/totalHP, 1, 1);
     }
 }

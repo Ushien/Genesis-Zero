@@ -23,13 +23,11 @@ public class TestScript : MonoBehaviour
 
     public void LaunchDebug()
     {
-        BattleManager.Instance.DebugSetState();
-        BaseUnit randomUnit = UnitManager.Instance.GetRandomUnit(Team.Enemy);
-        //randomUnit.ModifyArmor(+10, false);
+        BaseUnit randomEnemy = UnitManager.Instance.GetRandomUnit(Team.Enemy);
+
         BaseUnit randomAlly = UnitManager.Instance.GetRandomUnit(Team.Ally);
-        // randomAlly.SetHP(300, false);
-        // InterfaceManager.Instance.UpdateLifebar(randomUnit, 0, 10);
-        // InterfaceManager.Instance.UpdateLifebar(randomAlly, -(randomAlly.GetTotalHealth()-300), 0);
+
+        AnimationManager.Instance.ForceAnimation();
     }
 
     public void TestAssertions(){

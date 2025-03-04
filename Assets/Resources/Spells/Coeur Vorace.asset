@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Coeur Vorace
   m_EditorClassIdentifier: 
   spell_name: Coeur Vorace
-  fight_description: "Inflige %%1 d\xE9gats \xE0 une cible. Les d\xE9gats augmentent
-    d\xE9finitivement pour chaque soin re\xE7u par le personnage. Vampirisme."
+  fight_description: "Inflige %%1 d\xE9gats \xE0 une unit\xE9. Les d\xE9gats augmentent
+    d\xE9finitivement chaque fois que le lanceur est soign\xE9 - Vampirisme"
   ratios:
   - 0.2
   - 0.05

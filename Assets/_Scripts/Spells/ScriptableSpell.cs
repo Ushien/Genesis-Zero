@@ -35,6 +35,11 @@ public class ScriptableSpell : ScriptableObject
         _fight_description = _fight_description.Replace("__1", DisplayPercents(ratios[0]));
         _fight_description = _fight_description.Replace("__2", DisplayPercents(ratios[1]));
         _fight_description = _fight_description.Replace("__3", DisplayPercents(ratios[2]));
+
+        _fight_description = _fight_description.Replace("**1", ratios[0].ToString());
+        _fight_description = _fight_description.Replace("**2", ratios[1].ToString());
+        _fight_description = _fight_description.Replace("**3", ratios[2].ToString());
+
         return _fight_description;
     }
 

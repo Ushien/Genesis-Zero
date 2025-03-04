@@ -13,14 +13,24 @@ MonoBehaviour:
   m_Name: "Fus\xE9es de Signal"
   m_EditorClassIdentifier: 
   spell_name: "Fus\xE9es de Signal (N)"
-  lore_description: 
-  fight_description: "Inflige %%1 d\xE9gats \xE0 l'adversaire avec le plus de vie
-    et augmente l'attaque de l'alli\xE9 en r\xE9serve de %%2 % (N)"
+  fight_description: "Inflige %%1 d\xE9gats \xE0 l'unit\xE9 adverse avec le plus
+    de vie et augmente l'attaque de l'unit\xE9 alli\xE9e en r\xE9serve de %%2 % (N)"
+  ratios:
+  - 1
+  - 1
+  - 1
+  hyper_ratios:
+  - 1
+  - 1
+  - 1
   overloaded_fight_description: 
   cooldown: 0
+  isAnAttack: 0
   properties: 00000000
   range: 0
   team_restriction: 2
   artwork: {fileID: 0}
   spellScriptPrefab: {fileID: 0}
   lootable: 0
+  rarity: 0
+  tags: 

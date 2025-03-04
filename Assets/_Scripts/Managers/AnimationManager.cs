@@ -54,6 +54,7 @@ public class AnimationManager : MonoBehaviour
     }
 
     public void ForceAnimation(){
+        //Debug.Log("Queue count: " + animationQueue.Count);
         while(animationQueue.Count != 0){
             //Si la file n'est pas vide, animer le premier évènement, en mode fifo
             BattleManager.Instance.SetInAnimation(true);
@@ -182,17 +183,23 @@ public class AnimationManager : MonoBehaviour
 
     private async Task Animate(DeathEvent deathEvent){
         deathEvent.GetDeadUnit().gameObject.SetActive(false);
+        deathEvent.GetDeadUnit().lifeBar.SetHP(0);
         deathEvent.GetDeadUnit().lifeBar.gameObject.SetActive(false);
         await Task.Yield();
     }
 
     private async Task Animate(HPModificationEvent hpModificationEvent){
         if(hpModificationEvent.AreTotalHP()){
-            InterfaceManager.Instance.UpdateLifebar(hpModificationEvent.GetTargetUnit(), 0, hpModificationEvent.GetNewAmount()-hpModificationEvent.GetOldAmount(), 0);
+            hpModificationEvent.GetTargetUnit().lifeBar.SetTotalHP(hpModificationEvent.GetNewAmount());
         }
         else{
-            InterfaceManager.Instance.UpdateLifebar(hpModificationEvent.GetTargetUnit(), hpModificationEvent.GetNewAmount()-hpModificationEvent.GetOldAmount(), 0, 0);
+            hpModificationEvent.GetTargetUnit().lifeBar.SetHP(hpModificationEvent.GetNewAmount());
         }
+        await Task.Yield();
+    }
+
+    private async Task Animate(ReviveEvent reviveEvent){
+        reviveEvent.GetRevivedUnit().lifeBar.SetHP(reviveEvent.GetHPAmount());
         await Task.Yield();
     }
 
@@ -217,9 +224,13 @@ public class AnimationManager : MonoBehaviour
         if (battleEvent is HPModificationEvent){
             await Animate((HPModificationEvent)battleEvent);
         }
+        if (battleEvent is ReviveEvent){
+            await Animate((ReviveEvent)battleEvent);
+        }
     }
 
     public void addAnimation(BattleEvent battleEvent){
+        //Debug.Log(battleEvent.GetSummary());
         animationQueue.Add(battleEvent);
     }
 

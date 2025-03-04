@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Coeur Lumineux
   m_EditorClassIdentifier: 
   spell_name: Coeur Lumineux
-  fight_description: "Soigne une unit\xE9 de %%1. Conf\xE8re curatif \xE0 votre prochaine
-    technique."
+  fight_description: "Soigne une unit\xE9 de %%1. Conf\xE8re curatif \xE0 la prochaine
+    technique du lanceur."
   ratios:
   - 1
   - 1
@@ -26,6 +26,7 @@ MonoBehaviour:
   overloaded_fight_description: "Soigne une unit\xE9 de %%1. Conf\xE8re curatif \xE0
     vos 3 prochaines techniques."
   cooldown: 2
+  isAnAttack: 0
   properties: 
   range: 0
   team_restriction: 0

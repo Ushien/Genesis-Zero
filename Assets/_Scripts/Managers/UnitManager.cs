@@ -36,25 +36,6 @@ public class UnitManager : MonoBehaviour
         units = new List<BaseUnit>();
     }
 
-    /*
-    public void SpawnUnit(Vector2 position, ScriptableUnit unit_to_spawn, int level, Team team){
-
-        var new_unit = Instantiate(EmptyUnit);
-        if(team == Team.Ally){
-            new_unit.transform.parent = all_allies.transform;
-        }
-        else{
-            new_unit.transform.parent = all_enemies.transform;
-        }
-        
-        new_unit.Setup(unit_to_spawn, level, team, position);
-        units.Add(new_unit);
-
-        Tile spawnTile = GridManager.Instance.GetTileAtPosition(team, position);
-        spawnTile.SetUnit(new_unit);
-    }
-    */
-
     public void SpawnUnit(BaseUnit unit_to_spawn, Team team){
 
         if(team == Team.Ally){
@@ -71,20 +52,6 @@ public class UnitManager : MonoBehaviour
         Tile spawnTile = GridManager.Instance.GetTileAtPosition(team, unit_to_spawn.GetPosition());
         spawnTile.SetUnit(unit_to_spawn); 
     }
-
-    /*
-    public void SpawnEnemies(List<Tuple<Vector2, ScriptableUnit, int>> units_to_spawn){
-        foreach(Tuple<Vector2, ScriptableUnit, int> unit in units_to_spawn){
-            SpawnUnit(unit.Item1, unit.Item2, unit.Item3, Team.Enemy);
-        }
-    }
-
-    public void SpawnAllies(List<Tuple<Vector2, ScriptableUnit, int>> units_to_spawn){
-        foreach(Tuple<Vector2, ScriptableUnit, int> unit in units_to_spawn){
-            SpawnUnit(unit.Item1, unit.Item2, unit.Item3, Team.Ally);
-        }
-    }
-    */
 
     public void SpawnAllies(List<BaseUnit> units_to_spawn){
         foreach(BaseUnit unit in units_to_spawn){
@@ -114,20 +81,15 @@ public class UnitManager : MonoBehaviour
     }
 
     public BaseUnit GetRandomUnit(Team team = Team.Both){
-        if(team == Team.Both){
-            return units.OrderBy(o=> UnityEngine.Random.value).First();
-        }
-        else{
-            return units.Where(unit => unit.GetTeam() == team).OrderBy(o=> UnityEngine.Random.value).First();
-        }
+        return GetUnits(team).OrderBy(o=> UnityEngine.Random.value).First();
     }
 
-    public List<BaseUnit> GetUnits(Team team = Team.Both){
+    public List<BaseUnit> GetUnits(Team team = Team.Both, bool includingDead = false){
         if(team == Team.Both){
-            return units.ToList();
+            return units.Where(unit => unit.IsDead() == includingDead).ToList();
         }
         else{
-            return units.Where(unit => unit.GetTeam() == team).ToList();
+            return units.Where(unit => unit.GetTeam() == team && (unit.IsDead() == includingDead || !unit.IsDead())).ToList();
         }
     }
 
@@ -164,13 +126,6 @@ public class UnitManager : MonoBehaviour
         {
             unit.GiveInstruction(false);
         }
-    }
-
-    public void Kill(BaseUnit unit){
-        units.Remove(unit);
-        unit.OccupiedTile.SetUnit(null);
-        unit.OccupiedTile = null;
-        //unit.gameObject.SetActive(false);
     }
 
     public void ApplyEndTurnEffects(){
@@ -216,14 +171,25 @@ public class UnitManager : MonoBehaviour
         if(team == Team.Ally || team == Team.Both){
             foreach (Transform unit in all_allies.transform)
             {
-                unit.gameObject.SetActive(visibility);
+                if(!unit.GetComponent<BaseUnit>().IsDead() || !visibility){
+                    unit.gameObject.SetActive(visibility);
+                    unit.GetComponent<BaseUnit>().lifeBar.gameObject.SetActive(visibility);
+                }
             }
         }
         if(team == Team.Enemy || team == Team.Both){
             foreach (Transform unit in all_enemies.transform)
-            {
+            if(!unit.GetComponent<BaseUnit>().IsDead() || !visibility){
                 unit.gameObject.SetActive(visibility);
+                unit.GetComponent<BaseUnit>().lifeBar.gameObject.SetActive(visibility);
             }
+        }
+    }
+
+    public void ReviveAllyUnits(int hpAmount = 1){
+        foreach (BaseUnit unit in GetUnits(Team.Ally, includingDead : true))
+        {
+            unit.Revive(hpAmount);
         }
     }
 }

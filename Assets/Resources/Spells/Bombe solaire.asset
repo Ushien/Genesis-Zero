@@ -13,11 +13,20 @@ MonoBehaviour:
   m_Name: Bombe solaire
   m_EditorClassIdentifier: 
   spell_name: Bombe Solaire (N)
-  lore_description: 
-  fight_description: "Inflige %%1 d\xE9gats \xE0 tous les adversaires et soigne les
-    alli\xE9s de 50% des d\xE9gats totaux, r\xE9partis \xE9quitablement (N)"
+  fight_description: "Inflige %%1 d\xE9gats \xE0 toutes les unit\xE9s adverses et
+    soigne les alli\xE9s de 50% des d\xE9gats totaux, r\xE9partis \xE9quitablement.
+    (N)"
+  ratios:
+  - 1
+  - 1
+  - 1
+  hyper_ratios:
+  - 1
+  - 1
+  - 1
   overloaded_fight_description: 
   cooldown: 5
+  isAnAttack: 0
   properties: 
   range: 3
   team_restriction: 3

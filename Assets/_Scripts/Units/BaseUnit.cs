@@ -22,7 +22,7 @@ public class BaseUnit : MonoBehaviour
         #region Références à d'autres objets
 
     public Tile OccupiedTile;
-    public GameObject lifeBar;
+    public LifeBar lifeBar;
     private List<Passive> passives;
     public BaseSpell aAttack;
     public BaseSpell[] availableSpells = new BaseSpell[4];
@@ -234,6 +234,21 @@ public class BaseUnit : MonoBehaviour
             available = false;
         }
         return available;
+    }
+
+    public bool IsDead(){
+        return dead;
+    }
+
+    public void Revive(int hpAmount = 1){
+        Assert.AreNotEqual(hpAmount, 0, "On ne peut pas revive une unité à zéro HP");
+        if(dead){
+            SetHP(hpAmount);
+            // Comment gérer lorsqu'une unité est déjà présente sur la case ?
+            OccupiedTile.SetUnit(this);
+            dead = false;
+            BattleEventManager.Instance.ApplyReviveEvent(BattleEventManager.Instance.CreateReviveEvent(this, hpAmount));
+        }
     }
 
     /// <summary>
@@ -1112,9 +1127,12 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     public void Kill(){
         dead = true;
+        SetHP(0, false);
         BattleEventManager.Instance.ApplyDeathEvent(BattleEventManager.Instance.CreateDeathEvent(this, GetTile()));
-        UnitManager.Instance.Kill(this);
+        OccupiedTile.SetUnit(null);
+        EndBattle();
     }
+
         #endregion
 
     public void CheckAssertions(){

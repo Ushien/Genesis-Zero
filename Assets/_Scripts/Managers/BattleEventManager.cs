@@ -99,4 +99,13 @@ public class BattleEventManager : MonoBehaviour
         BattleManager.Instance.AddEvent(attackEvent);
         AnimationManager.Instance.addAnimation(attackEvent);
     }
+
+    public ReviveEvent CreateReviveEvent(BaseUnit revivedUnit, int hpAmount){
+        return new ReviveEvent(revivedUnit, hpAmount);
+    }
+
+    public void ApplyReviveEvent(ReviveEvent reviveEvent){
+        BattleManager.Instance.AddEvent(reviveEvent);
+        AnimationManager.Instance.addAnimation(reviveEvent);
+    }
 }

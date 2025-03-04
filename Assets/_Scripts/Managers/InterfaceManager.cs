@@ -814,17 +814,17 @@ public class InterfaceManager : MonoBehaviour
     } 
 
     // Setup la barre de vie d'un perso
-    public GameObject SetupLifebar(BaseUnit unit){
+    public LifeBar SetupLifebar(BaseUnit unit){
         
         // GameObject instanciation
-        GameObject lifeBarPanel = Instantiate(lifeBarPrefab);
+        LifeBar lifeBarPanel = Instantiate(lifeBarPrefab).GetComponent<LifeBar>();
 
         lifeBarPanel.transform.SetParent((unit.GetTeam() == Team.Ally) ? lifeBarsUI.transform.Find("Allies").transform : lifeBarsUI.transform.Find("Ennemies").transform);
         lifeBarPanel.transform.localScale = Vector3.one;
         lifeBarPanel.transform.position = unit.transform.position + lifeBarOffset;
         lifeBarPanel.name = $"{unit.GetName()}_LifeBar";
 
-        lifeBarPanel.GetComponent<LifeBar>().Setup(unit);
+        lifeBarPanel.Setup(unit);
 
         return lifeBarPanel;
     }
@@ -836,6 +836,15 @@ public class InterfaceManager : MonoBehaviour
         unit.lifeBar.GetComponent<LifeBar>().UpdateTotalHP(totalHPChange);
         unit.lifeBar.GetComponent<LifeBar>().UpdateArmor(armorChange);
     }
+
+    /*
+    public void SetLifebar(BaseUnit unit, int finalHP, int totalHP, int armor){
+        // Child components access and modification, very ugly
+        unit.lifeBar.GetComponent<LifeBar>().SetHP(finalHP);
+        unit.lifeBar.GetComponent<LifeBar>().SetTotalHP(totalHP);
+        unit.lifeBar.GetComponent<LifeBar>().SetArmor(armor); 
+    }
+    */
 
     public void UpdateLifeBarPosition(BaseUnit unit){
         unit.lifeBar.transform.position = unit.transform.position + lifeBarOffset;
