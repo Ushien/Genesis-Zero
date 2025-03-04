@@ -352,6 +352,18 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    public Team InvertTeam(Team team){
+        if(team == Team.Ally){
+            return Team.Enemy;
+        }
+        else if(team == Team.Enemy){
+            return Team.Ally;
+        }
+        else{
+            return Team.Both;
+        }
+    }
+
     public string GetCurrentStatesSummary(){
         string currentStates = "";
         currentStates = currentStates + "BattleState: " + battleState + "\n";
@@ -377,13 +389,6 @@ public class BattleManager : MonoBehaviour
         battleState = BattleState.START;
         turnState = TurnState.OUT;
         playerActionChoiceState = PlayerActionChoiceState.OUT;
-
-        /*
-        teamTurn = TeamTurn.ALLY;
-        battleState = BattleState.TURN;
-        turnState = TurnState.START;
-        playerActionChoiceState = PlayerActionChoiceState.OUT;
-        */
     }
 
     public void EndTurnEffects(){

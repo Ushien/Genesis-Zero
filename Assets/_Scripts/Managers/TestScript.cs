@@ -16,7 +16,7 @@ public class TestScript : MonoBehaviour
     public ScriptableComposition ally_composition;
     public List<ScriptableObject> rewardsToSpawn;
     public static TestScript Instance;
-    private List<string> scriptedInstructions = new List<string>(){"A00-0-E02/A10-0-E12/A20-0-E22"};
+    private List<string> scriptedInstructions = new List<string>(){"A00-0-E02/A10-0-E12/A20-0-E22/","A00-0-E02/A10-0-E12/A20-0-E22/", "A00-0-E02/A10-0-E12/A20-0-E22/", "A00-0-E02/A10-0-E12/A20-0-E22/"};
 
     public void Awake(){
         Instance = this;
@@ -32,6 +32,8 @@ public class TestScript : MonoBehaviour
     }
 
     public List<Instruction> GetScriptedInstructions(){
+
+        //return AIManager.Instance.GetAIOrders(Team.Ally);
 
         if(AreThereScriptedInstructions()){
 
@@ -61,7 +63,13 @@ public class TestScript : MonoBehaviour
                     team = Team.Ally;
                 }
                 Tile targetTile = GridManager.Instance.GetTileAtPosition(team, new Vector2(Int32.Parse(subInstructions[2][1].ToString()), Int32.Parse(subInstructions[2][2].ToString())));
-                newInstruction.Setup(sourceUnit,spellToCast, targetTile);
+                
+                bool _hyper = false;
+                if(subInstructions[3][0] == 'H'){
+                    _hyper = true;
+                }
+                
+                newInstruction.Setup(sourceUnit,spellToCast, targetTile, hyper : _hyper);
                 instructions.Add(newInstruction);
             }
 

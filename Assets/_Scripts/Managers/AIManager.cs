@@ -21,8 +21,8 @@ public class AIManager : MonoBehaviour
     private List<Instruction> GetDummyAIOrders(Team team){
         List<Instruction> instructions = new List<Instruction>();
 
-        foreach (BaseUnit unit in UnitManager.Instance.GetUnits(Team.Enemy)){
-            Instruction newInstruction = BattleManager.Instance.CreateInstruction(unit, unit.GetRandomSpell(includingAttack : true), UnitManager.Instance.GetRandomUnit(Team.Ally).GetTile());
+        foreach (BaseUnit unit in UnitManager.Instance.GetUnits(team)){
+            Instruction newInstruction = BattleManager.Instance.CreateInstruction(unit, unit.GetRandomSpell(includingAttack : true, availableOnly : true), UnitManager.Instance.GetRandomUnit(BattleManager.Instance.InvertTeam(team)).GetTile());
             instructions.Add(newInstruction);
         }
 

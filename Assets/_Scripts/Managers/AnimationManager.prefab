@@ -46,5 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageText: {fileID: 0}
   DamageSection: {fileID: 0}
-  delayTime: 300
-  accelerator: 4
+  delayTime: 100
+  accelerator: 12

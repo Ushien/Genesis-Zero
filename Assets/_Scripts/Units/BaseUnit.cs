@@ -647,13 +647,15 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     /// <param name="includingAttack">Si fixé à True, intègre l'attaque de l'unité à la liste, à l'index 4</param>
     /// <returns></returns>
-    public List<BaseSpell> GetSpells(bool includingAttack = false){
+    public List<BaseSpell> GetSpells(bool includingAttack = false, bool availableOnly = false){
 
         List<BaseSpell> completeAvailableSpells = new List<BaseSpell>();
 
         foreach(BaseSpell spell in availableSpells){
             if(spell != null){
-                completeAvailableSpells.Add(spell);
+                if(!(availableOnly && !spell.IsAvailable())){
+                    completeAvailableSpells.Add(spell);
+                }
             }
         }
 
@@ -715,8 +717,8 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     /// <param name="includingAttack">Si fixé à True, intègre l'attaque de l'unité à la liste</param>
     /// <returns></returns>
-    public BaseSpell GetRandomSpell(bool includingAttack){
-        return GetSpells(includingAttack).Where(t => t != null).OrderBy(t => UnityEngine.Random.value).First();
+    public BaseSpell GetRandomSpell(bool includingAttack = true, bool availableOnly = false){
+        return GetSpells(includingAttack, availableOnly).Where(t => t != null).OrderBy(t => UnityEngine.Random.value).First();
     }
 
     /// <summary>
