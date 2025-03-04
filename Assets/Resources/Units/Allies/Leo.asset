@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74e90ef35834eb84dbcc3899f95ea8e4, type: 3}
   m_Name: Leo
   m_EditorClassIdentifier: 
-  unit_name: Jacob
+  unit_name: Leo
   sprite: {fileID: 21300000, guid: f2e0bdcade495074db1b9f32f14d41f0, type: 3}
   original_power: 200
   original_health: 1000
@@ -20,5 +20,5 @@ MonoBehaviour:
   fight_description: 
   passives:
   - {fileID: 11400000, guid: b587a4d339b2d264fb83cd02d811e9e5, type: 2}
-  attack: {fileID: 0}
+  aAttack: {fileID: 0}
   spells: []

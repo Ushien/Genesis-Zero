@@ -32,6 +32,10 @@ public class TestScript : MonoBehaviour
         // InterfaceManager.Instance.UpdateLifebar(randomAlly, -(randomAlly.GetTotalHealth()-300), 0);
     }
 
+    public void TestAssertions(){
+        //
+    }
+
     void Update(){
         //if(UnitManager.Instance.GetUnits(Team.Enemy).Count == 0){
             //UnitManager.Instance.SpawnEnemies(enemy_composition.GetTuples());

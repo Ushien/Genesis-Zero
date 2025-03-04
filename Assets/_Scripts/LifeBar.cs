@@ -27,7 +27,7 @@ public class LifeBar : MonoBehaviour
 
     public void Setup(BaseUnit _owner){
         owner = _owner;
-        HP = owner.GetFinalHealth();
+        HP = owner.GetBaseTotalHealth();
         HPtext.text = HP.ToString() + " HP";
         Armor = owner.GetArmor();
         ARtext.text = Armor.ToString() + " AR";
@@ -36,6 +36,7 @@ public class LifeBar : MonoBehaviour
         CheckNewScale();
         transform.GetChild(3).localScale = targetLifeBarScale;
         transform.GetChild(4).localScale = targetArmorBarScale;
+        Debug.Log(HPtext.text);
     }
 
     public void UpdateHP(int HPChange){

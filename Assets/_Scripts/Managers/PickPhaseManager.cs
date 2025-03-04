@@ -159,13 +159,20 @@ public class PickPhaseManager : MonoBehaviour
         //ADD Reward here
         if(rewardType == RewardType.SPELL){
             List<ScriptableSpell> spellList = resourceManager.GetSpells(lootable:true);
-            spellList = spellList.Where(_spell => !(allies[currentUnitIndex].HasSpell(_spell))).OrderBy(_ => rng.Next()).ToList();
+            foreach (BaseUnit ally in allies)
+            {
+                spellList = spellList.Where(_spell => !(ally.HasSpell(_spell))).OrderBy(_ => rng.Next()).ToList();      
+            }
             ScriptableSpell spell = spellList[0];
             return new SpellReward(spell);
         }
         if(rewardType == RewardType.PASSIVE){
             List<ScriptablePassive> passiveList = resourceManager.GetPassives(lootable:true);
-            passiveList = passiveList.Where(_passive => !(allies[currentUnitIndex].HasPassive(_passive))).OrderBy(_ => rng.Next()).ToList();
+            // Filtre les passifs déjà possédés par une unité
+            foreach (BaseUnit ally in allies)
+            {
+                passiveList = passiveList.Where(_passive => !(ally.HasPassive(_passive))).OrderBy(_ => rng.Next()).ToList();
+            }
             ScriptablePassive passive = passiveList[0];
             return new PassiveReward(passive);
         }

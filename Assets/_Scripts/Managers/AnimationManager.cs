@@ -64,6 +64,7 @@ public class AnimationManager : MonoBehaviour
             animationQueue.RemoveAt(0);
             var task = Animate(listWrapper);
         }
+        Debug.Log("1");
     }
 
     public async Task Animate(List<BattleEvent> battleEvents){

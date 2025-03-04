@@ -182,7 +182,7 @@ public class GlobalManager : MonoBehaviour
     }
 
     public void StartPhaseOut(){
-        //
+        AnimationManager.Instance.ForceAnimation();
     }
 
     public void EndPhaseIn(){

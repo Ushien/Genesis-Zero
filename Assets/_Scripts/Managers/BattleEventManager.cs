@@ -9,6 +9,7 @@ public class BattleEventManager : MonoBehaviour
     void Awake(){
         Instance = this;
     }
+
     public BeforeCastEvent CreateBeforeCastEvent(BaseUnit sourceUnit, BaseSpell castedSpell, Tile targetTile, bool animation = true){
         return new BeforeCastEvent(sourceUnit, castedSpell, targetTile);
     }
