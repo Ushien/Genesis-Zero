@@ -230,9 +230,15 @@ public class BattleManager : MonoBehaviour
                         break;
                     
                     default:
+                        if(teamTurn == TeamTurn.ALLY && GlobalManager.Instance.debug && TestScript.Instance.AreThereScriptedInstructions()){
+                            currentTurn.SetInstructions(TestScript.Instance.GetScriptedInstructions());
+                            turnState = TurnState.APPLY_ACTIONS;
+                            playerActionChoiceState = PlayerActionChoiceState.OUT;
+                        }
                         if(teamTurn == TeamTurn.ENEMY){
                             currentTurn.SetInstructions(AIManager.Instance.GetAIOrders(ConvertTeamTurn(teamTurn)));
                             turnState = TurnState.APPLY_ACTIONS;
+                            playerActionChoiceState = PlayerActionChoiceState.OUT;
                         }
                         break;
                 }
@@ -344,13 +350,6 @@ public class BattleManager : MonoBehaviour
         else{
             teamTurn = TeamTurn.ALLY;
         }
-    }
-
-    public void DebugSetState(){
-        teamTurn = TeamTurn.ALLY;
-        battleState = BattleState.TURN;
-        turnState = TurnState.START;
-        playerActionChoiceState = PlayerActionChoiceState.OUT;
     }
 
     public string GetCurrentStatesSummary(){
