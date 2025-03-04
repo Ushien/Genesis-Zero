@@ -18,5 +18,7 @@ MonoBehaviour:
   original_health: 1000
   lore_description: 
   fight_description: 
-  passives: []
+  passives:
+  - {fileID: 11400000, guid: ea6f5339ffc14a5419decf94d27b801b, type: 2}
+  aAttack: {fileID: 0}
   spells: []

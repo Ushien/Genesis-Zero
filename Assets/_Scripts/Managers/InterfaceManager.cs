@@ -689,6 +689,7 @@ public class InterfaceManager : MonoBehaviour
             }
         }
         else{
+            passivePanel.gameObject.SetActive(false);
             unitPassiveNamePanel.text = "";
             unitPassiveDescriptionPanel.text = "";
         }

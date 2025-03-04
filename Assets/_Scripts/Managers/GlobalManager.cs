@@ -77,6 +77,10 @@ public class GlobalManager : MonoBehaviour
         spellManager.transform.SetParent(transform.parent);
         animationManager = Instantiate(animationManagerPrefab);
         animationManager.transform.SetParent(transform.parent);
+        battleEventManager = Instantiate(battleEventManagerPrefab);
+        battleEventManager.transform.SetParent(transform.parent);
+        battleManager = Instantiate(battleManagerPrefab);
+        battleManager.transform.SetParent(transform.parent);
 
         ChangeState(RunPhase.STARTPHASE);
     }
@@ -92,13 +96,9 @@ public class GlobalManager : MonoBehaviour
         gridManager = Instantiate(gridManagerPrefab);
         GridManager.Instance.SetCam(cam.transform);
         gridManager.transform.SetParent(transform.parent);
-        battleManager = Instantiate(battleManagerPrefab);
-        battleManager.transform.SetParent(transform.parent);
         
         AIManager = Instantiate(AIManagerPrefab);
         AIManager.transform.SetParent(transform.parent);
-        battleEventManager = Instantiate(battleEventManagerPrefab);
-        battleEventManager.transform.SetParent(transform.parent);
         eventManager = Instantiate(eventManagerPrefab);
         eventManager.transform.SetParent(transform.parent);
 
@@ -116,7 +116,7 @@ public class GlobalManager : MonoBehaviour
         
         BattleManager.Instance.LaunchBattle(allies, enemies);
 
-        BattleManager.Instance.DebugSetState();
+        //BattleManager.Instance.DebugSetState();
         BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, BattleManager.Trigger.FORWARD);
 
         if(debug){
@@ -133,9 +133,7 @@ public class GlobalManager : MonoBehaviour
         allies = UnitManager.Instance.GetUnits(Team.Ally);
         BattleManager.Instance.Out();
 
-        Destroy(battleManager.gameObject);
         Destroy(AIManager.gameObject);
-        Destroy(battleEventManager.gameObject);
         Destroy(eventManager.gameObject);
 
         

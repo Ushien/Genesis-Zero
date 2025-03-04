@@ -302,18 +302,18 @@ public class PickPhaseManager : MonoBehaviour
                 spellPanel.Find("Name").GetComponent<TextMeshProUGUI>().text = spell.name;
                 spellPanel.Find("Description").GetComponent<TextMeshProUGUI>().text = spell.GetFightDescription(allies[currentUnitIndex]);
                 spellPanel.Find("Cooldown").GetComponent<TextMeshProUGUI>().text = spell.cooldown.ToString();
-                spellPanel.Find("SpellPanelIcon").GetComponent<Image>().sprite = spell.artwork;
+                spellPanel.Find("Sprite").GetComponent<Image>().sprite = spell.artwork;
             }
             else if(currentRewards[currentSelectionIndex] is PassiveReward){
                 // Devrait idéalement fonctionner avec un Passive et non un ScriptablePassive
                 ScriptablePassive passive = ((PassiveReward)currentRewards[currentSelectionIndex]).GetPassive();
                 informationPanel.gameObject.SetActive(true);
-                Transform spellPanel = informationPanel.transform.Find("SpellPanel");
-                spellPanel.gameObject.SetActive(true);
-                spellPanel.Find("Name").GetComponent<TextMeshProUGUI>().text = passive.name;
-                spellPanel.Find("Description").GetComponent<TextMeshProUGUI>().text = passive.GetFightDescription(allies[currentUnitIndex]);
-                spellPanel.Find("Cooldown").GetComponent<TextMeshProUGUI>().text = "";
-                spellPanel.Find("SpellPanelIcon").GetComponent<Image>().sprite = passive.artwork;
+                Transform passivePanel = informationPanel.transform.Find("PassivePanel");
+                passivePanel.gameObject.SetActive(true);
+                passivePanel.Find("NextSprite").gameObject.SetActive(false);
+                passivePanel.Find("Name").GetComponent<TextMeshProUGUI>().text = passive.name;
+                passivePanel.Find("Description").GetComponent<TextMeshProUGUI>().text = passive.GetFightDescription(allies[currentUnitIndex]);
+                passivePanel.Find("Sprite").GetComponent<Image>().sprite = passive.artwork;
             }
             else{
                 informationPanel.gameObject.SetActive(false);
@@ -325,7 +325,8 @@ public class PickPhaseManager : MonoBehaviour
     }
 
     private void ResetDisplay(){
-            informationPanel.transform.Find("InfosPanel").gameObject.SetActive(false);
+            informationPanel.transform.Find("UnitPanel").gameObject.SetActive(false);
+            informationPanel.transform.Find("PassivePanel").gameObject.SetActive(false);
             informationPanel.transform.Find("SpellPanel").gameObject.SetActive(false);
             informationPanel.transform.Find("SpellSelector").gameObject.SetActive(false);
     }
