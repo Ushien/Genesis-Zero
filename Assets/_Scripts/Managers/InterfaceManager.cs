@@ -160,7 +160,7 @@ public class InterfaceManager : MonoBehaviour
         }
 
         if(Input.GetKeyDown(KeyCode.C)){
-            NavigatePassives(Directions.LEFT);
+            //NavigatePassives(Directions.LEFT);
         }
         if(Input.GetKeyDown(KeyCode.V)){
             NavigatePassives(Directions.RIGHT);
@@ -184,6 +184,11 @@ public class InterfaceManager : MonoBehaviour
             else{
                 // On prend une case au hasard je ne comprends pas pourquoi il crash si je ne lui en donne pas
                 sourceTile = GridManager.Instance.GetRandomTile(Team.Both);
+            }
+
+            if(sourceTile.GetUnit() != null){
+                DisplayUnit(sourceTile.GetUnit());
+                DisplayPassives(sourceTile.GetUnit());
             }
 
             sourceTile.Select();
@@ -670,6 +675,18 @@ public class InterfaceManager : MonoBehaviour
             unitPassiveNamePanel.text = unit.GetPassives()[selectedPassiveIndex].GetName();
             unitPassiveDescriptionPanel.text = unit.GetPassives()[selectedPassiveIndex].GetFightDescription();
             passivePanel.Find("Sprite").GetComponent<Image>().sprite = unit.GetPassives()[selectedPassiveIndex].GetScriptablePassive().artwork;
+            if(unit.GetPassives().Count >= 2){
+                passivePanel.Find("NextSprite").gameObject.SetActive(true);
+                if(selectedPassiveIndex == unit.GetPassives().Count - 1){
+                    passivePanel.Find("NextSprite").GetComponent<Image>().sprite = unit.GetPassives()[0].GetScriptablePassive().artwork;
+                }
+                else{
+                    passivePanel.Find("NextSprite").GetComponent<Image>().sprite = unit.GetPassives()[selectedPassiveIndex+1].GetScriptablePassive().artwork;
+                }
+            }
+            else{
+                passivePanel.Find("NextSprite").gameObject.SetActive(false);
+            }
         }
         else{
             unitPassiveNamePanel.text = "";
