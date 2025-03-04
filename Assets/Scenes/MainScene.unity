@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dcb93cad8514e946b9119230c473bac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy_composition: {fileID: 11400000, guid: ba6da0ad3ecd31d4ea3459ca85243800, type: 2}
+  enemy_composition: {fileID: 11400000, guid: 4f33863df0557614da3f9d27bad534f7, type: 2}
   ally_composition: {fileID: 11400000, guid: 5067e1b8e3f427046b75d57a07f368c7, type: 2}
   rewardsToSpawn: []
 --- !u!4 &454166814
@@ -331,6 +331,7 @@ MonoBehaviour:
   testScript: {fileID: 454166813}
   allies: []
   debug: 1
+  startLevel: 1
 --- !u!4 &1797857822
 Transform:
   m_ObjectHideFlags: 0

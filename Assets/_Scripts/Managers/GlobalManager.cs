@@ -55,6 +55,8 @@ public class GlobalManager : MonoBehaviour
 
     public bool debug;
     private int battleID = 0;
+    [SerializeField]
+    private int startLevel = 1;
 
     void Awake(){
         Instance = this;
@@ -112,7 +114,7 @@ public class GlobalManager : MonoBehaviour
 
 
         // Générer un nouveau groupe d'ennemis
-        enemies = UnitManager.Instance.CreateUnits(testScript.enemy_composition.GetTuples(), Team.Enemy);
+        enemies = UnitManager.Instance.CreateUnits(testScript.enemy_composition.GetTuples(battleID), Team.Enemy);
         
         BattleManager.Instance.LaunchBattle(allies, enemies);
 
@@ -176,7 +178,7 @@ public class GlobalManager : MonoBehaviour
 
     public void StartPhaseIn(){
         // Spawn allies units
-        allies = UnitManager.Instance.CreateUnits(testScript.ally_composition.GetTuples(), Team.Ally);
+        allies = UnitManager.Instance.CreateUnits(testScript.ally_composition.GetTuples(startLevel), Team.Ally);
 
         ChangeState(RunPhase.BATTLEPHASE);
     }
@@ -304,20 +306,18 @@ public class GlobalManager : MonoBehaviour
                             runPhase = RunPhase.BATTLEPHASE;
                             BattlePhaseIn();
                             break;
-                        /*
+                        
                         case RunPhase.LOSESCREEN:
                             StartPhaseOut();
                             runPhase = RunPhase.LOSESCREEN;
                             LoseScreenIn();
                             break;
-                        */
-                        /*
                         case RunPhase.PICKPHASE:
                             StartPhaseOut();
                             runPhase = RunPhase.PICKPHASE;
                             PickPhaseIn();
                             break;
-                        */
+                        
                         default:
                             break;
                     }

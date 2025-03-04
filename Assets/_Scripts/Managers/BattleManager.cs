@@ -87,7 +87,6 @@ public class BattleManager : MonoBehaviour
     }
 
     public void ChangeState(Machine machine, Trigger trigger){
-
         switch (machine)
         {
             case Machine.PLAYERACTIONCHOICESTATE:
@@ -240,10 +239,6 @@ public class BattleManager : MonoBehaviour
                 break;
 
             case TurnState.APPLY_ACTIONS:
-                foreach (Instruction instruc in currentTurn.GetInstructions())
-                {
-                    //Debug.Log(instruc.GetSummary());
-                }
                 ApplyInstructions();
 
                 turnState = TurnState.ANIMATION;

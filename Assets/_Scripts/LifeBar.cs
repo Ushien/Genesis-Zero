@@ -36,7 +36,6 @@ public class LifeBar : MonoBehaviour
         CheckNewScale();
         transform.GetChild(3).localScale = targetLifeBarScale;
         transform.GetChild(4).localScale = targetArmorBarScale;
-        Debug.Log(HPtext.text);
     }
 
     public void UpdateHP(int HPChange){
