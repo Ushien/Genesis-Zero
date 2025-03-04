@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,8 +37,6 @@ public class PickPhaseManager : MonoBehaviour
     private Vector3 currentUnitSelectorPosition;
     private Vector3 targetUnitPosition;
 
-    private static System.Random rng;
-
     [SerializeField]
     int howManyRewards = 3;
 
@@ -73,11 +70,11 @@ public class PickPhaseManager : MonoBehaviour
                     TestScript.Instance.rewardsToSpawn.RemoveAt(0);
                 }
                 else{
-                    rewardsToSpawn.Add(GenerateReward(new List<RewardType>{RewardType.SPELL, RewardType.PASSIVE}[rng.Next(2)]));
+                    rewardsToSpawn.Add(GenerateReward(new List<RewardType>{RewardType.SPELL, RewardType.PASSIVE}[Random.Range(0, 2)]));
                 }
             }
             else{
-                rewardsToSpawn.Add(GenerateReward(new List<RewardType>{RewardType.SPELL, RewardType.PASSIVE}[rng.Next(2)]));
+                rewardsToSpawn.Add(GenerateReward(new List<RewardType>{RewardType.SPELL, RewardType.PASSIVE}[Random.Range(0, 2)]));
             }
         }
         SetCurrentRewards(rewardsToSpawn);
@@ -117,7 +114,6 @@ public class PickPhaseManager : MonoBehaviour
 
     void Awake(){
         Instance = this;
-        rng = new System.Random();
     }
 
     // Update is called once per frame
@@ -161,7 +157,7 @@ public class PickPhaseManager : MonoBehaviour
             List<ScriptableSpell> spellList = resourceManager.GetSpells(lootable:true);
             foreach (BaseUnit ally in allies)
             {
-                spellList = spellList.Where(_spell => !(ally.HasSpell(_spell))).OrderBy(_ => rng.Next()).ToList();      
+                spellList = spellList.Where(_spell => !(ally.HasSpell(_spell))).OrderBy(_ => Random.value).ToList();      
             }
             ScriptableSpell spell = spellList[0];
             return new SpellReward(spell);
@@ -171,7 +167,7 @@ public class PickPhaseManager : MonoBehaviour
             // Filtre les passifs déjà possédés par une unité
             foreach (BaseUnit ally in allies)
             {
-                passiveList = passiveList.Where(_passive => !(ally.HasPassive(_passive))).OrderBy(_ => rng.Next()).ToList();
+                passiveList = passiveList.Where(_passive => !(ally.HasPassive(_passive))).OrderBy(_ => Random.value).ToList();
             }
             ScriptablePassive passive = passiveList[0];
             return new PassiveReward(passive);

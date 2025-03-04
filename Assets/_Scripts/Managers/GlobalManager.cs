@@ -57,9 +57,13 @@ public class GlobalManager : MonoBehaviour
     private int battleID = 0;
     [SerializeField]
     private int startLevel = 1;
+    public int runSeed = 0;
 
     void Awake(){
         Instance = this;
+        if(runSeed != 0){
+            UnityEngine.Random.InitState(runSeed);
+        }
     }
 
     // Start is called before the first frame update
@@ -135,7 +139,7 @@ public class GlobalManager : MonoBehaviour
         allies = UnitManager.Instance.GetUnits(Team.Ally, includingDead : true);
         UnitManager.Instance.ReviveAllyUnits(1);
         AnimationManager.Instance.ForceAnimation();
-        
+
         BattleManager.Instance.Out();
 
         Destroy(AIManager.gameObject);

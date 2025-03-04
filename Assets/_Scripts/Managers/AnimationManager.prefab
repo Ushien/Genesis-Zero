@@ -47,4 +47,4 @@ MonoBehaviour:
   damageText: {fileID: 0}
   DamageSection: {fileID: 0}
   delayTime: 100
-  accelerator: 12
+  accelerator: 6
