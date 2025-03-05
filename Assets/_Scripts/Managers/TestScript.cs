@@ -21,23 +21,17 @@ public class TestScript : MonoBehaviour
 
     public void Awake(){
         Instance = this;
-        int i = 1;
-        while(File.Exists(Application.dataPath + "/logs/log" + i + ".txt"))
-        {
-            i++;
-        }
-        logFile = Application.dataPath + "/logs/log" + i + ".txt";
     }
 
     public void Log(string text){
-        if (!File.Exists(logFile)){
-            File.WriteAllText(logFile, text);
-        }
-        else{
+        if(GlobalManager.Instance.debug){
+            if (!File.Exists(logFile)){
+                File.WriteAllText(logFile, string.Empty);
+            }
             using (var writer = new StreamWriter(logFile, true)){
                 writer.WriteLine(text);
             }
-        }
+            }
     }
 
     [ContextMenu("Clear log directory")]
@@ -108,6 +102,17 @@ public class TestScript : MonoBehaviour
 
     public bool AreThereScriptedInstructions(){
         return scriptedInstructions.Count > 0;
+    }
+
+    public void Start(){
+        if(GlobalManager.Instance.debug){
+            int i = 1;
+            while(File.Exists(Application.dataPath + "/logs/log" + i + ".txt"))
+            {
+                i++;
+            }
+            logFile = Application.dataPath + "/logs/log" + i + ".txt";
+        }
     }
 
     public void TestAssertions(){

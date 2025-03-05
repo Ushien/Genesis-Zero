@@ -361,6 +361,17 @@ public class BaseUnit : MonoBehaviour
         return -1;
     }
 
+    public int GetSpellIndex(BaseSpell spellToFind){
+        List<BaseSpell> spellList = GetSpells(includingAttack : true);
+        for (int i = 0; i < spellList.Count ; i++)
+        {
+            if(spellList[i].GetScriptableSpell() == spellToFind.GetScriptableSpell()){
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public bool HasSpell(ScriptableSpell _spell){
         foreach (BaseSpell spell in availableSpells)
         {

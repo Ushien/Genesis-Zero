@@ -35,11 +35,41 @@ public class Instruction : MonoBehaviour
         return overloaded;
     }
 
+    public string GetLog(){
+        string log = "";
+
+        log += ConvertTeam(GetSourceUnit().GetTeam());
+        log += GetSourceUnit().GetTile().x_position;
+        log += GetSourceUnit().GetTile().y_position;
+        log += "-";
+        log += GetSourceUnit().GetSpellIndex(GetSpell());
+        log += "-";
+        log += ConvertTeam(GetSourceUnit().GetTeam());
+        log += GetTargetTile().x_position;
+        log += GetTargetTile().y_position;
+        log += "-";
+        log += IsOverloaded() ? "H" : "_";
+        
+        return log;
+    }
+
+    private string ConvertTeam(Team team){
+        if(team == Team.Ally){
+            return "A";
+        }
+        if(team == Team.Enemy){
+            return "E";
+        }
+        else{
+            return "_";
+        }
+    }
+
     public string GetSummary()
     {
         string _sourceName = GetSourceUnit().GetName();
         string _spellName = GetSpell().GetName();
-        string _targetName = "  Dead unit";
+        string _targetName = "Dead unit";
         if(GetTargetTile().GetUnit() != null){
             _targetName = GetTargetTile().GetUnit().GetName();
         }
