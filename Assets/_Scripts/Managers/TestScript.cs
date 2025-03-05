@@ -16,10 +16,33 @@ public class TestScript : MonoBehaviour
     public ScriptableComposition ally_composition;
     public List<ScriptableObject> rewardsToSpawn;
     public static TestScript Instance;
+    private string logFile;
     private List<string> scriptedInstructions = new List<string>(){"A00-0-E02-_/A10-0-E12-_/A20-0-E22-_","A00-0-E02-_/A10-0-E12-_/A20-0-E22-_", "A00-0-E02-_/A10-0-E12-_/A20-0-E22-_", "A00-0-E02-_/A10-0-E12-_/A20-0-E22-_","A00-0-E02-_/A10-0-E12-_/A20-0-E22-_","A00-0-E02-_/A10-0-E12-_/A20-0-E22-_"};
 
     public void Awake(){
         Instance = this;
+        int i = 1;
+        while(File.Exists(Application.dataPath + "/logs/log" + i + ".txt"))
+        {
+            i++;
+        }
+        logFile = Application.dataPath + "/logs/log" + i + ".txt";
+    }
+
+    public void Log(string text){
+        if (!File.Exists(logFile)){
+            File.WriteAllText(logFile, text);
+        }
+        else{
+            using (var writer = new StreamWriter(logFile, true)){
+                writer.WriteLine(text);
+            }
+        }
+    }
+
+    [ContextMenu("Clear log directory")]
+    public void ClearLogs(){
+        Array.ForEach(Directory.GetFiles(Application.dataPath + "/logs"), File.Delete);
     }
 
     public void LaunchDebug()

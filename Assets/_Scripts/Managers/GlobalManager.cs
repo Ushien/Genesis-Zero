@@ -61,9 +61,6 @@ public class GlobalManager : MonoBehaviour
 
     void Awake(){
         Instance = this;
-        if(runSeed != 0){
-            UnityEngine.Random.InitState(runSeed);
-        }
     }
 
     // Start is called before the first frame update
@@ -183,6 +180,13 @@ public class GlobalManager : MonoBehaviour
     }
 
     public void StartPhaseIn(){
+
+        if(runSeed == 0){
+            runSeed = UnityEngine.Random.Range(0, int.MaxValue);
+        }
+        UnityEngine.Random.InitState(runSeed);
+        TestScript.Instance.Log(runSeed.ToString());
+        
         // Spawn allies units
         allies = UnitManager.Instance.CreateUnits(testScript.ally_composition.GetTuples(startLevel), Team.Ally);
 
