@@ -123,7 +123,7 @@ public class BaseUnit : MonoBehaviour
         SpellManager.Instance.SetupAttack(originUnit.aAttack, this);
 
         availableSpells = new BaseSpell[4];
-        int i = 0;
+        int i = 1;
         foreach (ScriptableSpell spell in scriptableUnit.spells)
         { 
             if(spell != null){
@@ -352,7 +352,7 @@ public class BaseUnit : MonoBehaviour
     }
 
     public int GetAvailableSpellIndex(){
-        for (int index = 1; index <= 3; index++)
+        for (int index = 0; index <= 3; index++)
         {
             if(availableSpells[index] == null){
                 return index;
@@ -363,11 +363,11 @@ public class BaseUnit : MonoBehaviour
 
     public int GetSpellIndex(BaseSpell spellToFind){
         List<BaseSpell> spellList = GetSpells(includingAttack : true);
-        for (int i = 0; i < spellList.Count ; i++)
-        {
-            if(spellList[i].GetScriptableSpell() == spellToFind.GetScriptableSpell()){
-                return i;
-            }
+        foreach (BaseSpell spell in spellList)
+        {    
+            if(spell.GetScriptableSpell() == spellToFind.GetScriptableSpell()){
+                return spell.GetIndex();
+            }    
         }
         return -1;
     }
@@ -426,11 +426,10 @@ public class BaseUnit : MonoBehaviour
     }
 
     public void DeleteMinorPassives(){
-        foreach (Passive passive in GetPassives())
+        List<Passive> passivesToDelete = GetPassives().Where(_passive => _passive.IsMinor()).ToList();
+        foreach (Passive passive in passivesToDelete)
         {
-            if(passive.IsMinor()){
-                DeletePassive(passive);
-            }
+            DeletePassive(passive);
         }
     }
 

@@ -45,7 +45,7 @@ public class Passive : MonoBehaviour
     }
 
     virtual public void Activate(){
-        Debug.Log("Must be overriden");
+        //
     }
 
     virtual public void Trigger1(){

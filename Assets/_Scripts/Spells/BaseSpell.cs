@@ -51,6 +51,8 @@ public class BaseSpell : MonoBehaviour
     private float h_ratio2 = 1f;
     private float h_ratio3 = 1f;
 
+    private int index = 0;
+
         #endregion
 
         #region Fields relatifs au moteur de jeu
@@ -69,7 +71,9 @@ public class BaseSpell : MonoBehaviour
     /// Initialise le sort
     /// </summary>
     /// <param name="ownerUnit">Unité possédant le sort</param>
-    public void Setup(ScriptableSpell scriptableSpell, BaseUnit ownerUnit, int spellListIndex = -1, bool aAttack = false){
+    public void Setup(ScriptableSpell scriptableSpell, BaseUnit ownerUnit, int spellListIndex){
+        Assert.IsTrue(spellListIndex >= 0 || spellListIndex <= 4);
+
         owner = ownerUnit;
         
         name = scriptableSpell.spell_name;
@@ -82,19 +86,20 @@ public class BaseSpell : MonoBehaviour
         range = scriptableSpell.range;
         team_restriction = scriptableSpell.team_restriction;
         isAnAttack = scriptableSpell.isAnAttack;
-        if(aAttack){
+        // Si c'est une attaque de base
+        if(spellListIndex == 0){
             ownerUnit.aAttack = this;
             base_cooldown = 0;
             isAAttack = true;
             isATechnique = false;
+            index = 0;
         }
+        // Si c'est une technique
         else{
             isAAttack = false;
             isATechnique = true;
-        }
-
-        if(spellListIndex != -1){
-            ownerUnit.GetFourSpells()[spellListIndex] = this;
+            ownerUnit.GetFourSpells()[spellListIndex-1] = this;
+            index = spellListIndex;
         }
 
         ratio1 = scriptableSpell.ratios[0];
@@ -123,6 +128,10 @@ public class BaseSpell : MonoBehaviour
 
     public void Activate(bool activation){
         activated = activation;
+    }
+
+    public int GetIndex(){
+        return index;
     }
         #endregion
         #region Actions du sort

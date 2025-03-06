@@ -445,7 +445,7 @@ public class BattleManager : MonoBehaviour
     }
 
     private void ApplyInstructions(){
-        
+
         List<string> logLine = new List<string>();
         foreach (Instruction instruction in currentTurn.GetInstructions())
         {

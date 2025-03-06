@@ -17,15 +17,19 @@ public class TestScript : MonoBehaviour
     public List<ScriptableObject> rewardsToSpawn;
     public static TestScript Instance;
     private string logFile;
-    private List<string> scriptedInstructions = new List<string>(){"A00-0-E02-_/A10-0-E12-_/A20-0-E22-_","A00-0-E02-_/A10-0-E12-_/A20-0-E22-_", "A00-0-E02-_/A10-0-E12-_/A20-0-E22-_", "A00-0-E02-_/A10-0-E12-_/A20-0-E22-_","A00-0-E02-_/A10-0-E12-_/A20-0-E22-_","A00-0-E02-_/A10-0-E12-_/A20-0-E22-_"};
+    private List<string> scriptedInstructions = new List<string>();
 
     public void Awake(){
         Instance = this;
+        //scriptedInstructions.Add("A00-0-E02-_/A10-0-E12-_/A20-0-E22-_");
     }
 
     public void Log(string text){
         if(GlobalManager.Instance.debug){
-            if (!File.Exists(logFile)){
+            if(!Directory.Exists(Application.dataPath + "/logs")){
+                Directory.CreateDirectory(Application.dataPath + "/logs");
+            }
+            if(!File.Exists(logFile)){
                 File.WriteAllText(logFile, string.Empty);
             }
             using (var writer = new StreamWriter(logFile, true)){

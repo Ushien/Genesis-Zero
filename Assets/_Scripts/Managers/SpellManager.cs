@@ -47,7 +47,7 @@ public class SpellManager : MonoBehaviour
 
         BaseSpell new_spell = Instantiate(_attack.spellScriptPrefab);
         new_spell.transform.parent = unit.transform;
-        new_spell.Setup(_attack, unit, aAttack : true);
+        new_spell.Setup(_attack, unit, 0);
 
         return new_spell;
     }

@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using System.IO;
 using TMPro;
 using System.Linq;
-using UnityEditor.Experimental.GraphView;
 using Unity.VisualScripting;
 
 public class PickPhaseManager : MonoBehaviour
@@ -140,6 +139,7 @@ public class PickPhaseManager : MonoBehaviour
             }
             if(Input.GetKeyDown(KeyCode.B)){
                 if(currentRewards.Count > 0){
+                    TestScript.Instance.Log("P:"+currentSelectionIndex+"-"+currentUnitIndex);
                     PickReward(currentRewards[currentSelectionIndex], allies[currentUnitIndex]);
                     GlobalManager.Instance.ChangeState(GlobalManager.RunPhase.BATTLEPHASE);
                 }

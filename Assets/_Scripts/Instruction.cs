@@ -44,7 +44,7 @@ public class Instruction : MonoBehaviour
         log += "-";
         log += GetSourceUnit().GetSpellIndex(GetSpell());
         log += "-";
-        log += ConvertTeam(GetSourceUnit().GetTeam());
+        log += ConvertTeam(GetTargetTile().team);
         log += GetTargetTile().x_position;
         log += GetTargetTile().y_position;
         log += "-";
