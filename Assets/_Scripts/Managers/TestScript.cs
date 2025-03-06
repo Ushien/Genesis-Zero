@@ -18,10 +18,10 @@ public class TestScript : MonoBehaviour
     public static TestScript Instance;
     private string logFile;
     private List<string> scriptedInstructions = new List<string>();
+    private List<string> scriptedPicks = new List<string>();
 
     public void Awake(){
         Instance = this;
-        //scriptedInstructions.Add("A00-0-E02-_/A10-0-E12-_/A20-0-E22-_");
     }
 
     public void Log(string text){
@@ -58,7 +58,8 @@ public class TestScript : MonoBehaviour
 
         if(AreThereScriptedInstructions()){
 
-            string[] stringInstructions = scriptedInstructions[0].Split("/");
+            string[] stringInstructions = scriptedInstructions[0].Substring(2).Split("/");
+
             scriptedInstructions.RemoveAt(0);
             List<Instruction> instructions = new List<Instruction>();
             foreach (string stringInstruction in stringInstructions)
@@ -104,12 +105,40 @@ public class TestScript : MonoBehaviour
         
     }
 
+    public Vector2 GetScriptedPicks(){
+        if(AreThereScriptedPicks()){
+            string[] stringPicks = scriptedPicks[0].Split(":")[1].Split("-");
+            scriptedPicks.RemoveAt(0);
+            return new Vector2(Int32.Parse(stringPicks[0]), Int32.Parse(stringPicks[1]));
+        }
+        else{
+            return new Vector2(-1, -1);
+        }
+    }
+
     public bool AreThereScriptedInstructions(){
         return scriptedInstructions.Count > 0;
     }
 
+    public bool AreThereScriptedPicks(){
+        return scriptedPicks.Count > 0;
+    }
+
     public void Start(){
         if(GlobalManager.Instance.debug){
+
+            // Vérifie si un log d'instructions scriptées est présent dans le dossier
+            if(Directory.Exists(Application.dataPath + "/logs/debug")){
+                if(Directory.GetFiles(Application.dataPath + "/logs/debug").Count() > 0){
+                    Assert.IsTrue(Directory.GetFiles(Application.dataPath + "/logs/debug").Count() == 2, "Il ne peut y avoir qu'un seul fichier d'instructions dans le dossier logs/debug (et ses métadonnées)");
+                    string[] allLines = File.ReadAllLines(Directory.GetFiles(Application.dataPath + "/logs/debug")[0]);
+                    GlobalManager.Instance.runSeed = Int32.Parse(allLines.Where(line => line[0] == 'S').First().Substring(2));
+                    scriptedInstructions = allLines.Where(line => line[0] == 'I').ToList();
+                    scriptedPicks = allLines.Where(line => line[0] == 'P').ToList();
+                    File.Delete(Directory.GetFiles(Application.dataPath + "/logs/debug")[0] + ".txt.meta");
+                }
+            }
+
             int i = 1;
             while(File.Exists(Application.dataPath + "/logs/log" + i + ".txt"))
             {

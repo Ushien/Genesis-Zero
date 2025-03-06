@@ -451,7 +451,7 @@ public class BattleManager : MonoBehaviour
         {
             logLine.Add(instruction.GetLog());
         }
-        TestScript.Instance.Log(string.Join("/", logLine));
+        TestScript.Instance.Log("I:" + string.Join("/", logLine));
 
         foreach (Instruction instruction in currentTurn.GetInstructions())
         {

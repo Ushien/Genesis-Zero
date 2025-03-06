@@ -156,7 +156,7 @@ public class InterfaceManager : MonoBehaviour
                     break;
                 default:
                     break;
-            }   
+            }
         }
 
         if(Input.GetKeyDown(KeyCode.C)){

@@ -96,6 +96,14 @@ public class PickPhaseManager : MonoBehaviour
         targetUnitPosition = currentUnitSelectorPosition;
 
         DisplayRewards();
+
+        if(GlobalManager.Instance.debug && TestScript.Instance.AreThereScriptedPicks()){
+            Vector2 pick = TestScript.Instance.GetScriptedPicks();
+            if(pick != new Vector2(-1, -1)){
+                PickReward((int) pick[0], (int) pick[1]);
+                GlobalManager.Instance.ChangeState(GlobalManager.RunPhase.BATTLEPHASE);
+            }
+        }
     }
 
     public void End(){
@@ -284,6 +292,16 @@ public class PickPhaseManager : MonoBehaviour
         }
         else{
             reward.Pick(unit);
+            AnimationManager.Instance.ForceAnimation();
+        }
+    }
+
+    public void PickReward(int rewardIndex, int unitIndex){
+        if(allies[currentUnitIndex].GetAvailableSpellIndex() == -1){
+            // 
+        }
+        else{
+            currentRewards[rewardIndex].Pick(allies[unitIndex]);
             AnimationManager.Instance.ForceAnimation();
         }
     }

@@ -185,8 +185,8 @@ public class GlobalManager : MonoBehaviour
             runSeed = UnityEngine.Random.Range(0, int.MaxValue);
         }
         UnityEngine.Random.InitState(runSeed);
-        TestScript.Instance.Log(runSeed.ToString());
-        
+        TestScript.Instance.Log("S:" + runSeed.ToString());
+
         // Spawn allies units
         allies = UnitManager.Instance.CreateUnits(testScript.ally_composition.GetTuples(startLevel), Team.Ally);
 
