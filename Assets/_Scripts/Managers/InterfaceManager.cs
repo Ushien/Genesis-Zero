@@ -129,6 +129,7 @@ public class InterfaceManager : MonoBehaviour
 
         tileSelector = Instantiate(GridManager.Instance.GetTilePrefab()).transform;
         Material material = Instantiate(tileOutliner);
+        tileSelector.gameObject.SetActive(false);
 
         tileSelector.transform.GetComponent<UnityEngine.SpriteRenderer>().material = material;
         tileSelector.transform.GetComponent<UnityEngine.SpriteRenderer>().sortingOrder = 2;
@@ -146,6 +147,7 @@ public class InterfaceManager : MonoBehaviour
             switch (BattleManager.Instance.GetPlayerActionChoiceState())
             {
                 case BattleManager.PlayerActionChoiceState.CHARACTER_SELECTION:
+                    //Debug.Log("Je ne dois pas arriver ici");
                     SourceSelectionDisplay();
                     break;
                 case BattleManager.PlayerActionChoiceState.SPELL_SELECTION:
@@ -193,6 +195,9 @@ public class InterfaceManager : MonoBehaviour
 
             sourceTile.Select();
             GridManager.Instance.SetSelectionMode(GridManager.Selection_mode.Single_selection);
+            
+            tileSelector.transform.position= sourceTile.transform.position;
+            tileSelector_currentPos = sourceTile.transform.position;
 
             ActivateState(BattleManager.PlayerActionChoiceState.CHARACTER_SELECTION);
 

@@ -111,7 +111,9 @@ public class BattleManager : MonoBehaviour
                 {
                     case Trigger.FORWARD:
                         // Do stuff if needed
-                        playerActionChoiceState = PlayerActionChoiceState.CHARACTER_SELECTION;
+                        if(!(GlobalManager.Instance.debug && TestScript.Instance.AreThereScriptedInstructions())){
+                            playerActionChoiceState = PlayerActionChoiceState.CHARACTER_SELECTION;
+                        }
                         break;
                     default:
                         break;
@@ -217,7 +219,7 @@ public class BattleManager : MonoBehaviour
                 };
 
                 NextTurn();
-                if(teamTurn == TeamTurn.ALLY){
+                if(teamTurn == TeamTurn.ALLY && !(GlobalManager.Instance.debug && TestScript.Instance.AreThereScriptedInstructions())){
                     ChangeState(Machine.PLAYERACTIONCHOICESTATE, Trigger.FORWARD);
                 }
                 break;
@@ -230,12 +232,13 @@ public class BattleManager : MonoBehaviour
                         break;
                     
                     default:
-                        if(teamTurn == TeamTurn.ALLY && GlobalManager.Instance.debug && TestScript.Instance.AreThereScriptedInstructions()){
+                        if(GlobalManager.Instance.debug && TestScript.Instance.AreThereScriptedInstructions()){
                             currentTurn.SetInstructions(TestScript.Instance.GetScriptedInstructions());
                             turnState = TurnState.APPLY_ACTIONS;
                             playerActionChoiceState = PlayerActionChoiceState.OUT;
                         }
-                        if(teamTurn == TeamTurn.ENEMY){
+                        
+                        else if(teamTurn == TeamTurn.ENEMY){
                             currentTurn.SetInstructions(AIManager.Instance.GetAIOrders(ConvertTeamTurn(teamTurn)));
                             turnState = TurnState.APPLY_ACTIONS;
                             playerActionChoiceState = PlayerActionChoiceState.OUT;

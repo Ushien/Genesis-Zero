@@ -12,8 +12,9 @@ public class ScriptableSpell : ScriptableObject
     [TextArea(5,10)]
     public string fight_description;
     public float[] ratios = {1f, 1f, 1f};
-    public float[] hyper_ratios = {1f, 1f, 1f};
+    [TextArea(5,10)]
     public string overloaded_fight_description;
+    public float[] hyper_ratios = {1f, 1f, 1f};
     public int cooldown;
     public bool isAnAttack = false;
     public List<Properties> properties;

@@ -10,26 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
-  m_Name: "Assaut Cybern\xE9tique"
+  m_Name: "Ombre C\xE9leste"
   m_EditorClassIdentifier: 
-  spell_name: "Assaut cybern\xE9tique"
-  fight_description: "Attaque **1 fois une unit\xE9."
+  spell_name: "Ombre C\xE9leste"
+  fight_description: "Ex\xE9cute (nombre de HP) toutes les unit\xE9s ayant \xE9t\xE9
+    soign\xE9es lors du tour pr\xE9c\xE9dent"
   ratios:
-  - 3
+  - 1
+  - 1
+  - 1
+  hyper_ratios:
+  - 1
   - 1
   - 1
   overloaded_fight_description: 
-  hyper_ratios:
-  - 5
-  - 1
-  - 1
-  cooldown: 5
+  cooldown: 0
   isAnAttack: 0
   properties: 
   range: 0
   team_restriction: 0
-  artwork: {fileID: 21300000, guid: 97209abe28f63394e9637856187a3a04, type: 3}
-  spellScriptPrefab: {fileID: 7058872799340551991, guid: 6e0faa84ce1d71648bf70804b0f9efa5, type: 3}
-  lootable: 1
-  rarity: 1
-  tags: 0100000005000000
+  artwork: {fileID: 0}
+  spellScriptPrefab: {fileID: 0}
+  lootable: 0
+  rarity: 0
+  tags: 
