@@ -232,17 +232,24 @@ public class BattleManager : MonoBehaviour
                         break;
                     
                     default:
-                        if(GlobalManager.Instance.debug && TestScript.Instance.AreThereScriptedInstructions()){
+                        if(teamTurn == TeamTurn.ENEMY){
+                            List<Instruction> EnemyOrders = AIManager.Instance.GetAIOrders(ConvertTeamTurn(teamTurn));
+                            // S'il y a des instructions scriptées elles écrasent les ordres IA
+                            // C'est important que les ordres IA soient calculés quand même pour préserver le même état d'aléatoire
+                            if(GlobalManager.Instance.debug && TestScript.Instance.AreThereScriptedInstructions()){
+                                EnemyOrders = TestScript.Instance.GetScriptedInstructions();
+                            }
+                            currentTurn.SetInstructions(EnemyOrders);
+                            turnState = TurnState.APPLY_ACTIONS;
+                            playerActionChoiceState = PlayerActionChoiceState.OUT;
+                        }
+                        else if(GlobalManager.Instance.debug && TestScript.Instance.AreThereScriptedInstructions()){
                             currentTurn.SetInstructions(TestScript.Instance.GetScriptedInstructions());
                             turnState = TurnState.APPLY_ACTIONS;
                             playerActionChoiceState = PlayerActionChoiceState.OUT;
                         }
                         
-                        else if(teamTurn == TeamTurn.ENEMY){
-                            currentTurn.SetInstructions(AIManager.Instance.GetAIOrders(ConvertTeamTurn(teamTurn)));
-                            turnState = TurnState.APPLY_ACTIONS;
-                            playerActionChoiceState = PlayerActionChoiceState.OUT;
-                        }
+
                         break;
                 }
                 break;

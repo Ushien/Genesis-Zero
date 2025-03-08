@@ -66,25 +66,6 @@ public class GlobalManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cam = Instantiate(camPrefab);
-        resourceManager = Instantiate(resourceManagerPrefab);
-        resourceManager.transform.SetParent(transform.parent);
-        resourceManager.LoadResources();
-        unitManager = Instantiate(unitManagerPrefab);
-        unitManager.transform.SetParent(transform.parent);
-        battleArchive = new GameObject("Battle Archive");
-        lifeBarUI = Instantiate(UIWorldSpacePrefab);
-        interfaceManager = Instantiate(interfaceManagerPrefab);
-        interfaceManager.transform.SetParent(transform.parent);
-        spellManager = Instantiate(spellManagerPrefab);
-        spellManager.transform.SetParent(transform.parent);
-        animationManager = Instantiate(animationManagerPrefab);
-        animationManager.transform.SetParent(transform.parent);
-        battleEventManager = Instantiate(battleEventManagerPrefab);
-        battleEventManager.transform.SetParent(transform.parent);
-        battleManager = Instantiate(battleManagerPrefab);
-        battleManager.transform.SetParent(transform.parent);
-
         ChangeState(RunPhase.STARTPHASE);
     }
 
@@ -185,6 +166,26 @@ public class GlobalManager : MonoBehaviour
             runSeed = UnityEngine.Random.Range(0, int.MaxValue);
         }
         UnityEngine.Random.InitState(runSeed);
+
+        cam = Instantiate(camPrefab);
+        resourceManager = Instantiate(resourceManagerPrefab);
+        resourceManager.transform.SetParent(transform.parent);
+        resourceManager.LoadResources();
+        unitManager = Instantiate(unitManagerPrefab);
+        unitManager.transform.SetParent(transform.parent);
+        battleArchive = new GameObject("Battle Archive");
+        lifeBarUI = Instantiate(UIWorldSpacePrefab);
+        interfaceManager = Instantiate(interfaceManagerPrefab);
+        interfaceManager.transform.SetParent(transform.parent);
+        spellManager = Instantiate(spellManagerPrefab);
+        spellManager.transform.SetParent(transform.parent);
+        animationManager = Instantiate(animationManagerPrefab);
+        animationManager.transform.SetParent(transform.parent);
+        battleEventManager = Instantiate(battleEventManagerPrefab);
+        battleEventManager.transform.SetParent(transform.parent);
+        battleManager = Instantiate(battleManagerPrefab);
+        battleManager.transform.SetParent(transform.parent);
+
         TestScript.Instance.Log("S:" + runSeed.ToString());
 
         // Spawn allies units

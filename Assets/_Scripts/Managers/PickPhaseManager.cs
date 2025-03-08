@@ -60,21 +60,25 @@ public class PickPhaseManager : MonoBehaviour
         ResetDisplay();
 
         List<Reward> rewardsToSpawn = new List<Reward>();
+        Reward rewardToAdd;
         //TODO Génération de Rewards
         for (int i = 0; i < howManyRewards; i++)
         {
             if(GlobalManager.Instance.debug){
                 if(TestScript.Instance.rewardsToSpawn.Count > 0){
-                    rewardsToSpawn.Add(GenerateReward(TestScript.Instance.rewardsToSpawn[0]));
+                    rewardToAdd = GenerateReward(TestScript.Instance.rewardsToSpawn[0]);
                     TestScript.Instance.rewardsToSpawn.RemoveAt(0);
                 }
                 else{
-                    rewardsToSpawn.Add(GenerateReward(new List<RewardType>{RewardType.SPELL, RewardType.PASSIVE}[Random.Range(0, 2)]));
+                    rewardToAdd = GenerateReward(new List<RewardType>{RewardType.SPELL, RewardType.PASSIVE}[UnityEngine.Random.Range(0, 2)]);
                 }
             }
             else{
-                rewardsToSpawn.Add(GenerateReward(new List<RewardType>{RewardType.SPELL, RewardType.PASSIVE}[Random.Range(0, 2)]));
+                rewardToAdd = GenerateReward(new List<RewardType>{RewardType.SPELL, RewardType.PASSIVE}[UnityEngine.Random.Range(0, 2)]);
             }
+            rewardsToSpawn.Add(rewardToAdd);
+            Debug.Log(rewardToAdd.GetTitle());
+            
         }
         SetCurrentRewards(rewardsToSpawn);
 
@@ -165,7 +169,7 @@ public class PickPhaseManager : MonoBehaviour
             List<ScriptableSpell> spellList = resourceManager.GetSpells(lootable:true);
             foreach (BaseUnit ally in allies)
             {
-                spellList = spellList.Where(_spell => !(ally.HasSpell(_spell))).OrderBy(_ => Random.value).ToList();      
+                spellList = spellList.Where(_spell => !(ally.HasSpell(_spell))).OrderBy(_ => UnityEngine.Random.value).ToList();      
             }
             ScriptableSpell spell = spellList[0];
             return new SpellReward(spell);
@@ -175,7 +179,7 @@ public class PickPhaseManager : MonoBehaviour
             // Filtre les passifs déjà possédés par une unité
             foreach (BaseUnit ally in allies)
             {
-                passiveList = passiveList.Where(_passive => !(ally.HasPassive(_passive))).OrderBy(_ => Random.value).ToList();
+                passiveList = passiveList.Where(_passive => !(ally.HasPassive(_passive))).OrderBy(_ => UnityEngine.Random.value).ToList();
             }
             ScriptablePassive passive = passiveList[0];
             return new PassiveReward(passive);
@@ -195,6 +199,7 @@ public class PickPhaseManager : MonoBehaviour
     }
 
     public void SetCurrentRewards(List<Reward> rewards){
+        Debug.Log("Ici");
         currentRewards = rewards;
     }
 
