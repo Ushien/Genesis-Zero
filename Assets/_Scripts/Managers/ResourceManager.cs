@@ -10,6 +10,7 @@ public class ResourceManager : MonoBehaviour
     private List<ScriptableSpell> spellList;
     private List<ScriptablePassive> passiveList;
     private List<ScriptableUnit> enemyUnitList;
+    private List<ScriptableComposition> enemyCompositionList;
 
     // Start is called before the first frame update
     void Awake()
@@ -21,6 +22,7 @@ public class ResourceManager : MonoBehaviour
         spellList = Resources.LoadAll("Spells", typeof(ScriptableSpell)).Cast<ScriptableSpell>().ToList();
         passiveList = Resources.LoadAll("Passives", typeof(ScriptablePassive)).Cast<ScriptablePassive>().ToList();
         enemyUnitList = Resources.LoadAll<ScriptableUnit>("Units/Enemies").ToList();
+        enemyCompositionList = Resources.LoadAll<ScriptableComposition>("Teams/Enemies").ToList();
     }
 
     public List<ScriptableSpell> GetSpells(bool lootable = true){
@@ -39,6 +41,10 @@ public class ResourceManager : MonoBehaviour
 
     public List<ScriptableUnit> GetEnemyUnit(){
         return enemyUnitList;
+    }
+
+    public List<ScriptableComposition> GetEnemyCompositions(bool lootable = true){
+        return enemyCompositionList;
     }
 
     // Update is called once per frame

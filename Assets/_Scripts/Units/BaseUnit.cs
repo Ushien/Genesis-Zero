@@ -978,7 +978,7 @@ public class BaseUnit : MonoBehaviour
     public int ModifyArmor(int amount, bool animation = true){
         armor += amount;
         if(amount > 0){
-            BattleEventManager.Instance.CreateArmorGainEvent(this, amount, animation);
+            BattleEventManager.Instance.ApplyArmorGainEvent(BattleEventManager.Instance.CreateArmorGainEvent(this, amount, animation));
         }
         return CheckArmor();
     }

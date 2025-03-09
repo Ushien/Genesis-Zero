@@ -10,5 +10,6 @@ public class Renforcement : BaseSpell
 
     private void _Renforcement(Tile targetTile, List<Properties> properties = null){
         // Do something
+        GetOwner().ModifyArmor(GetFinalDamages(GetRatio()[0]));
     }
 }

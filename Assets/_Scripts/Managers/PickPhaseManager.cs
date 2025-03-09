@@ -43,6 +43,7 @@ public class PickPhaseManager : MonoBehaviour
     void Start()
     {
         cam = GlobalManager.Instance.GetCam();
+        cam.transform.GetChild(0).gameObject.SetActive(true);
         rewardParent = new GameObject("Rewards");
         allies = GlobalManager.Instance.GetAllies();
         alliesCells = new List<GameObject>();
@@ -76,9 +77,7 @@ public class PickPhaseManager : MonoBehaviour
             else{
                 rewardToAdd = GenerateReward(new List<RewardType>{RewardType.SPELL, RewardType.PASSIVE}[UnityEngine.Random.Range(0, 2)]);
             }
-            rewardsToSpawn.Add(rewardToAdd);
-            Debug.Log(rewardToAdd.GetTitle());
-            
+            rewardsToSpawn.Add(rewardToAdd);            
         }
         SetCurrentRewards(rewardsToSpawn);
 
@@ -121,6 +120,7 @@ public class PickPhaseManager : MonoBehaviour
         {
             Destroy(unitCell);
         }
+        cam.transform.GetChild(0).gameObject.SetActive(false);
     }
 
     void Awake(){
@@ -199,7 +199,6 @@ public class PickPhaseManager : MonoBehaviour
     }
 
     public void SetCurrentRewards(List<Reward> rewards){
-        Debug.Log("Ici");
         currentRewards = rewards;
     }
 

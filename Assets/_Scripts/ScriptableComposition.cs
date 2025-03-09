@@ -9,6 +9,7 @@ public class ScriptableComposition : ScriptableObject
     [SerializeField] public List<ScriptableUnit> units;
     [SerializeField] public List<Vector2> positions;
     [SerializeField] public List<int> levels;
+    public bool lootable;
 
     public List<Tuple<Vector2, ScriptableUnit, int>> GetTuples(int level){
         //TODO vérification de la forme

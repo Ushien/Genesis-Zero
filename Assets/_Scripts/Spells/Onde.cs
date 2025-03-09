@@ -10,6 +10,9 @@ public class Onde : BaseSpell
 
     private void _Onde(Tile targetTile, List<Properties> properties = null){   
         SpellManager.Instance.UseSpell(GetOwner(), GetFinalDamages(GetRatio()[0]), targetTile.GetUnit(), properties, spellType : SpellType.Heal);
-        SpellManager.Instance.ModifyPower(GetRatio()[1], targetTile.GetUnit());
+        
+        Modifier newModifier = Instantiate(baseModifier);
+        newModifier.Setup(gameObject, _powerBonus : GetRatio()[1], _duration : Modifier.Duration.Battle);
+        targetTile.GetUnit().AddGlobalModifier(newModifier);
     }
 }

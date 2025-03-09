@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
+using System.Linq;
 
 public class GlobalManager : MonoBehaviour
 {
@@ -96,7 +97,12 @@ public class GlobalManager : MonoBehaviour
 
 
         // Générer un nouveau groupe d'ennemis
-        enemies = UnitManager.Instance.CreateUnits(testScript.enemy_composition.GetTuples(battleID), Team.Enemy);
+        List<ScriptableComposition> enemiesCompositions = resourceManager.GetEnemyCompositions(lootable:true);
+        ScriptableComposition enemyComposition = enemiesCompositions.Where(_ => true).OrderBy(_ => UnityEngine.Random.value).First();
+        if(debug && testScript.enemy_composition != null){
+            enemyComposition = testScript.enemy_composition;
+        }
+        enemies = UnitManager.Instance.CreateUnits(enemyComposition.GetTuples(battleID), Team.Enemy);
         
         BattleManager.Instance.LaunchBattle(allies, enemies);
 

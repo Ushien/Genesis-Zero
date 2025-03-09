@@ -50,13 +50,18 @@ public class BattleEventManager : MonoBehaviour
         }
     }
 
-    public void CreateArmorGainEvent(BaseUnit targetUnit, int amount, bool animation = true){
-        ArmorGainEvent newArmorGainEvent = new ArmorGainEvent(targetUnit, amount);
-        BattleManager.Instance.AddEvent(newArmorGainEvent);
+    public ArmorGainEvent CreateArmorGainEvent(BaseUnit targetUnit, int amount, bool animation = true){
+        return new ArmorGainEvent(targetUnit, amount);
+    }
+
+    public void ApplyArmorGainEvent(ArmorGainEvent armorGainEvent, bool animation = true){
+        EventManager.Instance.UnitGainedArmor(armorGainEvent);
+        BattleManager.Instance.AddEvent(armorGainEvent);
         if(animation){
-            AnimationManager.Instance.addAnimation(newArmorGainEvent);
+            AnimationManager.Instance.addAnimation(armorGainEvent);
         }
     }
+
 
     public HealEvent CreateHealEvent(BaseUnit originUnit, BaseUnit targetUnit, int amount, bool animation = true){
         return new HealEvent(originUnit, targetUnit, amount);
