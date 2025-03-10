@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
+  m_Name: Multi-Ailes
+  m_EditorClassIdentifier: 
+  spell_name: Multi-Ailes
+  fight_description: "Inflige %%1 d\xE9gats \xE0 tous les ennemis et augmente la
+    puissance du lanceur de __2%."
+  ratios:
+  - 0.7
+  - 0.05
+  - 1
+  overloaded_fight_description: 
+  hyper_ratios:
+  - 1.5
+  - 0.1
+  - 1
+  cooldown: 5
+  isAnAttack: 0
+  properties: 
+  range: 0
+  team_restriction: 0
+  artwork: {fileID: 21300000, guid: 5bc03205b1f2e284e87fc72ca400add0, type: 3}
+  spellScriptPrefab: {fileID: 662790461716405769, guid: d49798ea073abdb408e6bab6ebe22d87, type: 3}
+  lootable: 1
+  rarity: 1
+  tags: 06000000

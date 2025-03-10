@@ -23,8 +23,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 460ffed8b83fc1d459be46614f03232a, type: 2}
   - {fileID: 11400000, guid: da6f866b5d6b105449228f563adb463c, type: 2}
   - {fileID: 11400000, guid: b587a4d339b2d264fb83cd02d811e9e5, type: 2}
-  aAttack: {fileID: 11400000, guid: 9ea0cae7de350c14fa339cd2a76c9a28, type: 2}
+  aAttack: {fileID: 0}
   spells:
   - {fileID: 11400000, guid: d82b8e743a2889c4f83af0148b21409f, type: 2}
-  - {fileID: 11400000, guid: 90e536e266c7d964bbe12d6d4b9163cb, type: 2}
-  - {fileID: 11400000, guid: c209bfb34a3dec245b7c626eb0d1cbbc, type: 2}
+  - {fileID: 11400000, guid: 38afe61d8cf6c7a4788937bff5bc0e01, type: 2}

@@ -55,6 +55,9 @@ public class SpellManager : MonoBehaviour
     public BaseSpell SetupSpell(ScriptableSpell spell, BaseUnit unit, int availableSpellsIndex){
         Assert.AreNotEqual(spell.spellScriptPrefab , null, "Le sort ne peut pas être setup si son prefab n'est pas accroché au ScriptableSpell");
         BaseSpell new_spell = Instantiate(spell.spellScriptPrefab);
+        if(new_spell.baseModifier == null){
+
+        }
         new_spell.transform.parent = unit.transform;
         new_spell.Setup(spell, unit, availableSpellsIndex);
         return new_spell;
@@ -85,6 +88,13 @@ public class SpellManager : MonoBehaviour
             default:
                 // TODO Throw exception
                 break;
+        }
+    }
+
+    public void UseSpell(BaseUnit originUnit, float amount, List<BaseUnit> targets, List<Properties> property = null, SpellType spellType = SpellType.Damage){
+        foreach (BaseUnit target in targets)
+        {
+            UseSpell(originUnit, amount, target, property, spellType);
         }
     }
 
