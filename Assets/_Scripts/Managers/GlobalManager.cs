@@ -125,6 +125,7 @@ public class GlobalManager : MonoBehaviour
         AnimationManager.Instance.ForceAnimation();
 
         BattleManager.Instance.Out();
+        AnimationManager.Instance.BattleOut();
 
         Destroy(AIManager.gameObject);
         Destroy(eventManager.gameObject);

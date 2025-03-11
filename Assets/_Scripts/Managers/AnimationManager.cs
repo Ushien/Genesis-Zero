@@ -29,7 +29,12 @@ public class AnimationManager : MonoBehaviour
 
     void Start(){
         DamageSection = InterfaceManager.Instance.GetUI().transform.Find("Damages").transform;
+        DamageSection.gameObject.SetActive(true);
         damageText = DamageSection.Find("DamagesText").GetComponent<TextMeshProUGUI>();
+    }
+
+    public void BattleOut(){
+        DamageSection.gameObject.SetActive(false);
     }
 
     void Update(){

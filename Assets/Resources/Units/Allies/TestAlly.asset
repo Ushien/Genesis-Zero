@@ -20,10 +20,8 @@ MonoBehaviour:
   fight_description: 
   passives:
   - {fileID: 11400000, guid: ea6f5339ffc14a5419decf94d27b801b, type: 2}
-  - {fileID: 11400000, guid: 460ffed8b83fc1d459be46614f03232a, type: 2}
-  - {fileID: 11400000, guid: da6f866b5d6b105449228f563adb463c, type: 2}
-  - {fileID: 11400000, guid: b587a4d339b2d264fb83cd02d811e9e5, type: 2}
   aAttack: {fileID: 0}
   spells:
   - {fileID: 11400000, guid: d82b8e743a2889c4f83af0148b21409f, type: 2}
   - {fileID: 11400000, guid: 38afe61d8cf6c7a4788937bff5bc0e01, type: 2}
+  - {fileID: 11400000, guid: dab7c35dde9c50c47b33c0d59dd9de4d, type: 2}
