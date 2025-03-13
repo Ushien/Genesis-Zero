@@ -53,6 +53,9 @@ public class InterfaceManager : MonoBehaviour
 
     public Vector3 lifeBarOffset;
 
+
+    public AudioSource overloadSound;
+
     [SerializeField]
     private float selectorSpeed;
 
@@ -413,6 +416,7 @@ public class InterfaceManager : MonoBehaviour
                     if (overloaded){
                         spellSelector.transform.GetChild(0).transform.Find("overloaded").gameObject.SetActive(true);
                         CameraEffects.Instance.TriggerShake(0.05f,0.2f);
+                        overloadSound.Play();
                     }
                     else
                         spellSelector.transform.GetChild(0).transform.Find("overloaded").gameObject.SetActive(false);
@@ -463,6 +467,7 @@ public class InterfaceManager : MonoBehaviour
                     if (overloaded){
                         spellSelector.transform.GetChild(1).transform.Find("overloaded").gameObject.SetActive(true);
                         CameraEffects.Instance.TriggerShake(0.05f,0.2f);
+                        overloadSound.Play();
                     }
                     else
                         spellSelector.transform.GetChild(1).transform.Find("overloaded").gameObject.SetActive(false);
@@ -513,6 +518,7 @@ public class InterfaceManager : MonoBehaviour
                     if (overloaded){
                         spellSelector.transform.GetChild(2).transform.Find("overloaded").gameObject.SetActive(true);
                         CameraEffects.Instance.TriggerShake(0.05f,0.2f);
+                        overloadSound.Play();
                     }
                     else
                         spellSelector.transform.GetChild(2).transform.Find("overloaded").gameObject.SetActive(false);
@@ -563,6 +569,7 @@ public class InterfaceManager : MonoBehaviour
                     if (overloaded){
                         spellSelector.transform.GetChild(3).transform.Find("overloaded").gameObject.SetActive(true);
                         CameraEffects.Instance.TriggerShake(0.05f,0.2f);
+                        overloadSound.Play();
                     }
                     else
                         spellSelector.transform.GetChild(3).transform.Find("overloaded").gameObject.SetActive(false);
@@ -927,8 +934,12 @@ public class InterfaceManager : MonoBehaviour
 
             // S'il était précédemment sélectionné, on le déselctionne
             var stateInfo = spellChoiceAnimator.GetCurrentAnimatorStateInfo(0);
-            if (!stateInfo.IsName($"Not{spellChoiceAnims[i]}") && !stateInfo.IsName("Nothing"))
+            if (!stateInfo.IsName($"Not{spellChoiceAnims[i]}") && !stateInfo.IsName("Nothing")){
                 spellChoiceAnimator.Play($"Not{spellChoiceAnims[i]}");
+                Debug.Log($"playing Not{spellChoiceAnims[i]}");
+                // enlever le overload
+                spellSelector.transform.GetChild(i).Find("overloaded").gameObject.SetActive(false);
+            }
             // + déselectionner le overload
         }
     }
