@@ -19,11 +19,11 @@ MonoBehaviour:
   - 1.1
   - 1.4
   - 1
+  overloaded_fight_description: 
   hyper_ratios:
   - 1
   - 1
   - 1
-  overloaded_fight_description: 
   cooldown: 3
   isAnAttack: 0
   properties: 

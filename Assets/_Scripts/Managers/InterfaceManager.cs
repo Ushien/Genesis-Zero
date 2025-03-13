@@ -255,7 +255,7 @@ public class InterfaceManager : MonoBehaviour
             // Just changed from another state
 
             // Reset view
-            ResetDisplay();
+            ResetDisplay(true);
 
             // Activate the needed interface
             spellSelector.gameObject.SetActive(true);
@@ -643,11 +643,8 @@ public class InterfaceManager : MonoBehaviour
             // Just changed from another state
 
             // Reset view
-            ResetDisplay();
+            ResetDisplay(true);
 
-            for (int i = 1; i <4; i ++){
-                AnimateSpellChoice(i);
-            }
 
             // Activate the needed interface
             unitPanel.gameObject.SetActive(true);
@@ -795,15 +792,15 @@ public class InterfaceManager : MonoBehaviour
         }
     }
     
-    void ResetDisplay(){
-            spellSelector.gameObject.SetActive(false);
+    void ResetDisplay(bool flag = false){
+            if(!flag)
+                spellSelector.gameObject.SetActive(false);
             shade.gameObject.SetActive(false);
             unitPanel.gameObject.SetActive(false);
             passivePanel.gameObject.SetActive(false);
             tileSelector.gameObject.SetActive(false);
             spellPanel.gameObject.SetActive(false);
     }
-
     void ActivateState(BattleManager.PlayerActionChoiceState stateToActivate){
         Dictionary<BattleManager.PlayerActionChoiceState, bool> new_states = new Dictionary<BattleManager.PlayerActionChoiceState, bool>(activated_states);
         foreach (var state in activated_states)
@@ -969,11 +966,13 @@ public class InterfaceManager : MonoBehaviour
 
             // S'il était précédemment sélectionné, on le déselctionne
             var stateInfo = spellChoiceAnimator.GetCurrentAnimatorStateInfo(0);
-            if (!stateInfo.IsName($"Not{spellChoiceAnims[i]}") && !stateInfo.IsName("Nothing")){
+            if (!stateInfo.IsName($"Not{spellChoiceAnims[i]}")){
                 spellChoiceAnimator.Play($"Not{spellChoiceAnims[i]}");
                 Debug.Log($"playing Not{spellChoiceAnims[i]}");
+                
                 // enlever le overload
-                spellSelector.transform.GetChild(i).Find("overloaded").gameObject.SetActive(false);
+                if(i != 4)
+                    spellSelector.transform.GetChild(i).Find("overloaded").gameObject.SetActive(false);
             }
             // + déselectionner le overload
         }
