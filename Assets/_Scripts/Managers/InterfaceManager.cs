@@ -67,6 +67,7 @@ public class InterfaceManager : MonoBehaviour
 
     private enum SpellChoice{CHARACTER, LEFT, RIGHT, UP, DOWN}
     private SpellChoice spellChoice;
+    private SpellChoice currentSpellChoice =SpellChoice.CHARACTER;
 
     [SerializeField]
     private bool overloaded = false;
@@ -289,35 +290,43 @@ public class InterfaceManager : MonoBehaviour
         }
 
         //Display highlight
-        spellSelector.transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(false);
-        spellSelector.transform.GetChild(1).transform.GetChild(0).gameObject.SetActive(false);
-        spellSelector.transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(false);
-        spellSelector.transform.GetChild(3).transform.GetChild(0).gameObject.SetActive(false);
-        spellSelector.transform.GetChild(4).transform.GetChild(0).gameObject.SetActive(false);
+        if(spellChoice != currentSpellChoice){
+            spellSelector.transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(false);
+            spellSelector.transform.GetChild(1).transform.GetChild(0).gameObject.SetActive(false);
+            spellSelector.transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(false);
+            spellSelector.transform.GetChild(3).transform.GetChild(0).gameObject.SetActive(false);
+            spellSelector.transform.GetChild(4).transform.GetChild(0).gameObject.SetActive(false);
+        }
 
-        switch(spellChoice){
-            case SpellChoice.CHARACTER:
-                spellSelector.transform.GetChild(4).transform.GetChild(0).gameObject.SetActive(true);
-                AnimateSpellChoice(4);
-                break;
-            case SpellChoice.LEFT:
-                spellSelector.transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(true);
-                AnimateSpellChoice(0);
-                break;
-            case SpellChoice.RIGHT:
-                spellSelector.transform.GetChild(1).transform.GetChild(0).gameObject.SetActive(true);
-                AnimateSpellChoice(1);
-                break;
-            case SpellChoice.UP:
-                spellSelector.transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(true);
-                AnimateSpellChoice(2);
-                break;
-            case SpellChoice.DOWN:
-                spellSelector.transform.GetChild(3).transform.GetChild(0).gameObject.SetActive(true);
-                AnimateSpellChoice(3);
-                break;
-            default:
-                break;
+        // Si le spellChoice n'a pas changé, on joue pas l'anim
+        if(spellChoice != currentSpellChoice){
+            switch(spellChoice){ 
+
+
+                case SpellChoice.CHARACTER:
+                    spellSelector.transform.GetChild(4).transform.GetChild(0).gameObject.SetActive(true);
+                    AnimateSpellChoice(4);
+                    break;
+                case SpellChoice.LEFT:
+                    spellSelector.transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(true);
+                    AnimateSpellChoice(0);
+                    break;
+                case SpellChoice.RIGHT:
+                    spellSelector.transform.GetChild(1).transform.GetChild(0).gameObject.SetActive(true);
+                    AnimateSpellChoice(1);
+                    break;
+                case SpellChoice.UP:
+                    spellSelector.transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(true);
+                    AnimateSpellChoice(2);
+                    break;
+                case SpellChoice.DOWN:
+                    spellSelector.transform.GetChild(3).transform.GetChild(0).gameObject.SetActive(true);
+                    AnimateSpellChoice(3);
+                    break;
+                default:
+                    break;
+            }
+            currentSpellChoice = spellChoice;
         }
 
         // Navigation au sein de la sélection
@@ -396,6 +405,17 @@ public class InterfaceManager : MonoBehaviour
                     // Passer en mode surcharge / Revenir au mode non surchargé
                     spellChoice = SpellChoice.LEFT;
                     overloaded = !overloaded;
+                    // On joue le FX d'overload
+                    if(spellSelector.transform.GetChild(0).transform.Find("SpecialFX").gameObject.activeSelf)
+                        spellSelector.transform.GetChild(0).transform.Find("SpecialFX").gameObject.SetActive(false);
+                    spellSelector.transform.GetChild(0).transform.Find("SpecialFX").gameObject.SetActive(true);
+                    spellSelector.transform.GetChild(0).GetComponent<Animator>().Play("left overloaded");
+                    if (overloaded){
+                        spellSelector.transform.GetChild(0).transform.Find("overloaded").gameObject.SetActive(true);
+                        CameraEffects.Instance.TriggerShake(0.05f,0.2f);
+                    }
+                    else
+                        spellSelector.transform.GetChild(0).transform.Find("overloaded").gameObject.SetActive(false);
                     break;
                 }
                 break;
@@ -435,6 +455,17 @@ public class InterfaceManager : MonoBehaviour
                     // Passer en mode surcharge / Revenir au mode non surchargé
                     spellChoice = SpellChoice.RIGHT;
                     overloaded = !overloaded;
+                    // On joue le FX d'overload
+                    if(spellSelector.transform.GetChild(1).transform.Find("SpecialFX").gameObject.activeSelf)
+                        spellSelector.transform.GetChild(1).transform.Find("SpecialFX").gameObject.SetActive(false);
+                    spellSelector.transform.GetChild(1).transform.Find("SpecialFX").gameObject.SetActive(true);
+                    spellSelector.transform.GetChild(1).GetComponent<Animator>().Play("right overloaded");
+                    if (overloaded){
+                        spellSelector.transform.GetChild(1).transform.Find("overloaded").gameObject.SetActive(true);
+                        CameraEffects.Instance.TriggerShake(0.05f,0.2f);
+                    }
+                    else
+                        spellSelector.transform.GetChild(1).transform.Find("overloaded").gameObject.SetActive(false);
                     break;
                 }
                 break;
@@ -474,6 +505,17 @@ public class InterfaceManager : MonoBehaviour
                     // Passer en mode surcharge / Revenir au mode non surchargé
                     spellChoice = SpellChoice.UP;
                     overloaded = !overloaded;
+                    // On joue le FX d'overload
+                    if(spellSelector.transform.GetChild(2).transform.Find("SpecialFX").gameObject.activeSelf)
+                        spellSelector.transform.GetChild(2).transform.Find("SpecialFX").gameObject.SetActive(false);
+                    spellSelector.transform.GetChild(2).transform.Find("SpecialFX").gameObject.SetActive(true);
+                    spellSelector.transform.GetChild(2).GetComponent<Animator>().Play("up overloaded");
+                    if (overloaded){
+                        spellSelector.transform.GetChild(2).transform.Find("overloaded").gameObject.SetActive(true);
+                        CameraEffects.Instance.TriggerShake(0.05f,0.2f);
+                    }
+                    else
+                        spellSelector.transform.GetChild(2).transform.Find("overloaded").gameObject.SetActive(false);
                     break;
                 }
                 break;
@@ -513,6 +555,17 @@ public class InterfaceManager : MonoBehaviour
                     // Passer en mode surcharge / Revenir au mode non surchargé
                     spellChoice = SpellChoice.DOWN;
                     overloaded = !overloaded;
+                    // On joue le FX d'overload
+                    if(spellSelector.transform.GetChild(3).transform.Find("SpecialFX").gameObject.activeSelf)
+                        spellSelector.transform.GetChild(3).transform.Find("SpecialFX").gameObject.SetActive(false);
+                    spellSelector.transform.GetChild(3).transform.Find("SpecialFX").gameObject.SetActive(true);
+                    spellSelector.transform.GetChild(3).GetComponent<Animator>().Play("down overloaded");
+                    if (overloaded){
+                        spellSelector.transform.GetChild(3).transform.Find("overloaded").gameObject.SetActive(true);
+                        CameraEffects.Instance.TriggerShake(0.05f,0.2f);
+                    }
+                    else
+                        spellSelector.transform.GetChild(3).transform.Find("overloaded").gameObject.SetActive(false);
                     break;
                 }
                 break;
@@ -870,19 +923,37 @@ public class InterfaceManager : MonoBehaviour
             // Si c'est le spell sélectionné
             if (i == index){
                 spellChoiceAnimator.Play(spellChoiceAnims[i]);
-                continue;
             }
 
             // S'il était précédemment sélectionné, on le déselctionne
-            if (spellChoiceAnimator.GetCurrentAnimatorStateInfo(0).IsName(spellChoiceAnims[i]))
+            var stateInfo = spellChoiceAnimator.GetCurrentAnimatorStateInfo(0);
+            if (!stateInfo.IsName($"Not{spellChoiceAnims[i]}") && !stateInfo.IsName("Nothing"))
                 spellChoiceAnimator.Play($"Not{spellChoiceAnims[i]}");
+            // + déselectionner le overload
         }
     }
 
     public Canvas GetUI(){
         return UI;
     }
-}
 
+    public void ShakeElement(RectTransform uiElement, float intensity, float shakeTime){
+        Vector3 originalPosition = uiElement.anchoredPosition;
+        Debug.Log("shake called");
+        void UpdateShake(){
+            if(shakeTime > 0f){
+                Vector2 randomOffset = Random.insideUnitCircle * intensity;
+                uiElement.anchoredPosition = originalPosition + (Vector3)randomOffset;
+                shakeTime -= Time.deltaTime;
+            }
+            else{
+                uiElement.anchoredPosition = originalPosition;
+            }
+            if(shakeTime > 0)
+                UpdateShake();
+        }
+
+    }
+}
 
 public enum Directions {RIGHT, LEFT, UP, DOWN}
