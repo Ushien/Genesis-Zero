@@ -73,7 +73,7 @@ public class InterfaceManager : MonoBehaviour
     private SpellChoice currentSpellChoice =SpellChoice.CHARACTER;
 
     [SerializeField]
-    private bool overloaded = false;
+    public bool overloaded = false;
 
     // Le spell pour lequel on va sélectionner une cible
     private BaseSpell selectedSpell;
@@ -147,6 +147,9 @@ public class InterfaceManager : MonoBehaviour
 
     void Update()
     {   
+        // Super moche mais flemme de débug plus finement maintenant
+        if(!overloaded && spellPanel.transform.Find("overloaded").gameObject.activeSelf)
+            spellPanel.transform.Find("overloaded").gameObject.SetActive(false);
         if(BattleManager.Instance != null){
             switch (BattleManager.Instance.GetPlayerActionChoiceState())
             {
@@ -370,20 +373,26 @@ public class InterfaceManager : MonoBehaviour
                     break;
                 }
                 break;
+                
             case SpellChoice.LEFT:
                 selectedSpell = currentSpells[0];
                 //TODO Ce code se répète 4 fois, il y a moyen de refactor
                 if (Input.GetKeyDown(KeyCode.B) && selectedSpell != null){
+                    // juste au cas ou c'est overloaded
+                    // spellSelector.transform.GetChild(0).transform.Find("overloaded").gameObject.SetActive(false);
+                    // spellPanel.transform.Find("overloaded").gameObject.SetActive(false);
                     if(selectedSpell.IsAvailable()){
                         sourceTile.Unselect();
                         SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
                     }
+
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.N)){
                     // Retour au centre
                     spellChoice = SpellChoice.CHARACTER;
                     overloaded = false;
+                    DisableSpellOverload();
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.UpArrow)){
@@ -404,7 +413,7 @@ public class InterfaceManager : MonoBehaviour
                     overloaded = false;
                     break;
                 }
-                if (Input.GetKeyDown(KeyCode.LeftArrow)){
+                if (Input.GetKeyDown(KeyCode.LeftArrow) && selectedSpell != null){
                     // Passer en mode surcharge / Revenir au mode non surchargé
                     spellChoice = SpellChoice.LEFT;
                     overloaded = !overloaded;
@@ -417,15 +426,23 @@ public class InterfaceManager : MonoBehaviour
                         spellSelector.transform.GetChild(0).transform.Find("overloaded").gameObject.SetActive(true);
                         CameraEffects.Instance.TriggerShake(0.05f,0.2f);
                         overloadSound.Play();
+                        spellPanel.transform.Find("overloaded").gameObject.SetActive(true);
                     }
-                    else
+                    else{
                         spellSelector.transform.GetChild(0).transform.Find("overloaded").gameObject.SetActive(false);
+                        spellPanel.transform.Find("overloaded").gameObject.SetActive(false);
+                    }
                     break;
                 }
                 break;
             case SpellChoice.RIGHT:
                 selectedSpell = currentSpells[1];
                 if (Input.GetKeyDown(KeyCode.B) && selectedSpell != null){
+                    // juste au cas ou c'est overloaded
+                    //overloaded = false;
+                    Debug.Log(selectedSpell);
+                    // spellSelector.transform.GetChild(1).transform.Find("overloaded").gameObject.SetActive(false);
+                    // spellPanel.transform.Find("overloaded").gameObject.SetActive(false);
                     if(selectedSpell.IsAvailable()){
                         sourceTile.Unselect();
                         SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
@@ -455,7 +472,7 @@ public class InterfaceManager : MonoBehaviour
                     overloaded = false;
                     break;
                 }
-                if (Input.GetKeyDown(KeyCode.RightArrow)){
+                if (Input.GetKeyDown(KeyCode.RightArrow) && selectedSpell != null){
                     // Passer en mode surcharge / Revenir au mode non surchargé
                     spellChoice = SpellChoice.RIGHT;
                     overloaded = !overloaded;
@@ -468,15 +485,20 @@ public class InterfaceManager : MonoBehaviour
                         spellSelector.transform.GetChild(1).transform.Find("overloaded").gameObject.SetActive(true);
                         CameraEffects.Instance.TriggerShake(0.05f,0.2f);
                         overloadSound.Play();
+                        spellPanel.transform.Find("overloaded").gameObject.SetActive(true);
                     }
-                    else
+                    else{
                         spellSelector.transform.GetChild(1).transform.Find("overloaded").gameObject.SetActive(false);
+                        spellPanel.transform.Find("overloaded").gameObject.SetActive(false);
+                    }
                     break;
                 }
                 break;
             case SpellChoice.UP:
                 selectedSpell = currentSpells[2];
                 if (Input.GetKeyDown(KeyCode.B) && selectedSpell != null){
+                    // spellSelector.transform.GetChild(2).transform.Find("overloaded").gameObject.SetActive(false);
+                    // spellPanel.transform.Find("overloaded").gameObject.SetActive(false);
                     if(selectedSpell.IsAvailable()){
                         sourceTile.Unselect();
                         SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
@@ -506,7 +528,7 @@ public class InterfaceManager : MonoBehaviour
                     overloaded = false;
                     break;
                 }
-                if (Input.GetKeyDown(KeyCode.UpArrow)){
+                if (Input.GetKeyDown(KeyCode.UpArrow) && selectedSpell != null){
                     // Passer en mode surcharge / Revenir au mode non surchargé
                     spellChoice = SpellChoice.UP;
                     overloaded = !overloaded;
@@ -519,15 +541,20 @@ public class InterfaceManager : MonoBehaviour
                         spellSelector.transform.GetChild(2).transform.Find("overloaded").gameObject.SetActive(true);
                         CameraEffects.Instance.TriggerShake(0.05f,0.2f);
                         overloadSound.Play();
+                        spellPanel.transform.Find("overloaded").gameObject.SetActive(true);
                     }
-                    else
+                    else{
                         spellSelector.transform.GetChild(2).transform.Find("overloaded").gameObject.SetActive(false);
+                        spellPanel.transform.Find("overloaded").gameObject.SetActive(false);
+                    }
                     break;
                 }
                 break;
             case SpellChoice.DOWN:
                 selectedSpell = currentSpells[3];
                 if (Input.GetKeyDown(KeyCode.B) && selectedSpell != null){
+                    // spellSelector.transform.GetChild(3).transform.Find("overloaded").gameObject.SetActive(false);
+                    // spellPanel.transform.Find("overloaded").gameObject.SetActive(false);
                     if(selectedSpell.IsAvailable()){
                         sourceTile.Unselect();
                         SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
@@ -557,7 +584,7 @@ public class InterfaceManager : MonoBehaviour
                     overloaded = false;
                     break;
                 }
-                if (Input.GetKeyDown(KeyCode.DownArrow)){
+                if (Input.GetKeyDown(KeyCode.DownArrow) && selectedSpell != null){
                     // Passer en mode surcharge / Revenir au mode non surchargé
                     spellChoice = SpellChoice.DOWN;
                     overloaded = !overloaded;
@@ -570,9 +597,12 @@ public class InterfaceManager : MonoBehaviour
                         spellSelector.transform.GetChild(3).transform.Find("overloaded").gameObject.SetActive(true);
                         CameraEffects.Instance.TriggerShake(0.05f,0.2f);
                         overloadSound.Play();
+                        spellPanel.transform.Find("overloaded").gameObject.SetActive(true);
                     }
-                    else
+                    else{
                         spellSelector.transform.GetChild(3).transform.Find("overloaded").gameObject.SetActive(false);
+                        spellPanel.transform.Find("overloaded").gameObject.SetActive(false);
+                    }
                     break;
                 }
                 break;
@@ -615,6 +645,10 @@ public class InterfaceManager : MonoBehaviour
             // Reset view
             ResetDisplay();
 
+            for (int i = 1; i <4; i ++){
+                AnimateSpellChoice(i);
+            }
+
             // Activate the needed interface
             unitPanel.gameObject.SetActive(true);
             tileSelector.gameObject.SetActive(true);
@@ -643,6 +677,7 @@ public class InterfaceManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.B)){
             if(targetTile.GetUnit()!= null){
+                DisableSpellOverload();
                 targetTile.Unselect();
                 TargetSelectionTrigger(BattleManager.Trigger.VALIDATE);
             }
@@ -965,6 +1000,20 @@ public class InterfaceManager : MonoBehaviour
         }
 
     }
+
+    public void DisableSpellOverload(){
+        for (int i = 0; i < 4; i++)
+            spellSelector.transform.GetChild(i).transform.Find("overloaded").gameObject.SetActive(false);
+        spellPanel.transform.Find("overloaded").gameObject.SetActive(false);
+        
+        // tant qu'on y est on reset le spell sélectionné       
+        spellChoice = SpellChoice.CHARACTER;
+        overloaded = false;
+        
+
+
+    }
+
 }
 
 public enum Directions {RIGHT, LEFT, UP, DOWN}
