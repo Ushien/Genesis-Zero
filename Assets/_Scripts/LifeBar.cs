@@ -14,6 +14,9 @@ public class LifeBar : MonoBehaviour
     public TextMeshProUGUI ARtext;
     public Vector3 targetLifeBarScale;
     public Vector3 targetArmorBarScale;
+    private Vector2 currentTiling;
+    private Vector2 targetTiling;
+    private Vector2 lerpedTiling;
     private Material lifeBarMaterial;
     private Material armorBarMaterial;
     
@@ -26,8 +29,31 @@ public class LifeBar : MonoBehaviour
     public void Update(){
         // Mise à jour des barres
         transform.Find("LifeBar").localScale = Vector3.Lerp(transform.Find("LifeBar").localScale, targetLifeBarScale, Time.deltaTime*8);
-        transform.Find("LifeBar").GetComponent<Image>().material.SetVector("_Tiling", new Vector2(targetLifeBarScale.x, 1f));
+        
+        // Get the material and current tiling value
+        lifeBarMaterial = transform.Find("LifeBar").GetComponent<Image>().material;
+        currentTiling = lifeBarMaterial.GetVector("_Tiling");
+
+        // Lerp the tiling value
+        targetTiling = new Vector2(targetLifeBarScale.x, 1f);
+        lerpedTiling = Vector2.Lerp(currentTiling, targetTiling, Time.deltaTime * 8);
+
+        // Apply the interpolated tiling
+        lifeBarMaterial.SetVector("_Tiling", lerpedTiling);
+
+
         transform.Find("ArmorBar").localScale = Vector3.Lerp(transform.Find("ArmorBar").localScale, targetArmorBarScale, Time.deltaTime*8);
+
+        // Get the material and current tiling value
+        armorBarMaterial = transform.Find("ArmorBar").GetComponent<Image>().material;
+        currentTiling = armorBarMaterial.GetVector("_Tiling");
+
+        // Lerp the tiling value
+        targetTiling = new Vector2(targetArmorBarScale.x, 1f);
+        lerpedTiling = Vector2.Lerp(currentTiling, targetTiling, Time.deltaTime * 8);
+
+        // Apply the interpolated tiling
+        armorBarMaterial.SetVector("_Tiling", lerpedTiling);
     }
 
     public void Setup(BaseUnit _owner){
