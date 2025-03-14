@@ -26,6 +26,7 @@ public class BaseUnit : MonoBehaviour
     private List<Passive> passives;
     public BaseSpell aAttack;
     public BaseSpell[] availableSpells = new BaseSpell[4];
+    public Animator animator;
 
         #endregion
 
@@ -94,6 +95,8 @@ public class BaseUnit : MonoBehaviour
         
         GetComponent<SpriteRenderer>().sprite = scriptableUnit.sprite;
         unit_name = scriptableUnit.unit_name;
+        animator.runtimeAnimatorController = scriptableUnit.animator;
+
 
         Team = team;
         position = _position;
@@ -145,11 +148,15 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     public void Update(){
         // Rend l'unité grisée si elle a déjà reçu une instruction
-        if(HasGivenInstruction()){
+        if(HasGivenInstruction() && animator.GetCurrentAnimatorStateInfo(0).IsName("idle")){
             gameObject.GetComponent<SpriteRenderer>().color = new Color32( 173, 173, 173, 200);
+            animator.Play("prepared");
         }
-        else{
+        //else
+        //  gameObject.GetComponent<SpriteRenderer>().color = new Color32( 255, 255, 255, 255);
+        if(!HasGivenInstruction() && !animator.GetCurrentAnimatorStateInfo(0).IsName("idle")){
             gameObject.GetComponent<SpriteRenderer>().color = new Color32( 255, 255, 255, 255);
+            animator.Play("idle");
         }
     }
 

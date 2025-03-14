@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1839995432893160833}
   - component: {fileID: -3797582428666811392}
   - component: {fileID: 5443671735944601899}
+  - component: {fileID: -5641537627198802756}
   m_Layer: 0
   m_Name: EmptyUnit
   m_TagString: Untagged
@@ -98,11 +99,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scriptableUnit: {fileID: 0}
-  scriptableJob: {fileID: 0}
-  emptyPassive: {fileID: 3810670229972875663, guid: 6217b02478aa69f4d89ff893ae28e53e, type: 3}
   emptyModifier: {fileID: 3725732595186329557, guid: 9649bcacdc3281c47b9a5985c44e62d8, type: 3}
   OccupiedTile: {fileID: 0}
   lifeBar: {fileID: 0}
-  passive: {fileID: 0}
-  attack: {fileID: 0}
+  aAttack: {fileID: 0}
   availableSpells: []
+  animator: {fileID: -5641537627198802756}
+--- !u!95 &-5641537627198802756
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765464178505004865}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
