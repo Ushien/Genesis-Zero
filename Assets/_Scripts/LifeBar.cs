@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LifeBar : MonoBehaviour
 {
@@ -13,16 +14,20 @@ public class LifeBar : MonoBehaviour
     public TextMeshProUGUI ARtext;
     public Vector3 targetLifeBarScale;
     public Vector3 targetArmorBarScale;
+    private Material lifeBarMaterial;
+    private Material armorBarMaterial;
     
     public void Awake(){
         HPtext = transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
         ARtext = transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
+
     }
 
     public void Update(){
         // Mise à jour des barres
-        transform.GetChild(3).localScale = Vector3.Lerp(transform.GetChild(3).localScale, targetLifeBarScale, Time.deltaTime*8);
-        transform.GetChild(4).localScale = Vector3.Lerp(transform.GetChild(4).localScale, targetArmorBarScale, Time.deltaTime*8);
+        transform.Find("LifeBar").localScale = Vector3.Lerp(transform.Find("LifeBar").localScale, targetLifeBarScale, Time.deltaTime*8);
+        transform.Find("LifeBar").GetComponent<Image>().material.SetVector("_Tiling", new Vector2(targetLifeBarScale.x, 1f));
+        transform.Find("ArmorBar").localScale = Vector3.Lerp(transform.Find("ArmorBar").localScale, targetArmorBarScale, Time.deltaTime*8);
     }
 
     public void Setup(BaseUnit _owner){
@@ -34,8 +39,15 @@ public class LifeBar : MonoBehaviour
         totalHP = owner.GetTotalHealth();
 
         CheckNewScale();
-        transform.GetChild(3).localScale = targetLifeBarScale;
-        transform.GetChild(4).localScale = targetArmorBarScale;
+        transform.Find("LifeBar").localScale = targetLifeBarScale;
+        transform.Find("ArmorBar").localScale = targetArmorBarScale;
+
+        //Instantiate the material
+        lifeBarMaterial = transform.Find("LifeBar").GetComponent<Image>().material;
+        armorBarMaterial = transform.Find("ArmorBar").GetComponent<Image>().material;
+        transform.Find("LifeBar").GetComponent<Image>().material = new Material(lifeBarMaterial);
+        armorBarMaterial = transform.Find("ArmorBar").GetComponent<Image>().material = new Material(armorBarMaterial);
+
     }
 
     public void UpdateHP(int HPChange){

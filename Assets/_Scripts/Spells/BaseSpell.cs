@@ -32,9 +32,9 @@ public class BaseSpell : MonoBehaviour
     // Cooldown total du sort.
     [TextArea(5,10)]
     private string fight_description_h = "Overloaded Fight Description";
-    private int base_cooldown = 0;
+    public int base_cooldown = 0;
     // Cooldown actuel du sort. Lorsque celui-ci est égal au cooldown total, le sort peut être lancé. Quand le sort est lancé, celui-ci passe à zéro. Il augmente ensuite de 1 par tour.
-    private int cooldown = 0;
+    public int cooldown = 0;
     private bool activated = false;
     private Sprite artwork = null;
     // Indique la portée du sort (horizontale, verticale, toutes les unités, etc...)

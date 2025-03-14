@@ -44,17 +44,22 @@ public class InterfaceManager : MonoBehaviour
     private Canvas lifeBarsUI;
     public GameObject lifeBarPrefab;
     public Material grayscaleShader;
+    public Color blueColor;
     public Sprite emptySpellSelectorSquare;
+    
    
 
     private Transform tileSelector;
     private Vector3 tileSelector_targetPos;
     private Vector3 tileSelector_currentPos;
+    public float errorShakeIntensity;
+    public float errorShakeDuration;
 
     public Vector3 lifeBarOffset;
 
 
     public AudioSource overloadSound;
+    public AudioSource errorSound;
 
     [SerializeField]
     private float selectorSpeed;
@@ -134,6 +139,7 @@ public class InterfaceManager : MonoBehaviour
         tileSelector = Instantiate(GridManager.Instance.GetTilePrefab()).transform;
         Material material = Instantiate(tileOutliner);
         tileSelector.gameObject.SetActive(false);
+        tileSelector.GetComponent<SpriteRenderer>().enabled = false;
 
         tileSelector.transform.GetComponent<UnityEngine.SpriteRenderer>().material = material;
         tileSelector.transform.GetComponent<UnityEngine.SpriteRenderer>().sortingOrder = 2;
@@ -270,19 +276,41 @@ public class InterfaceManager : MonoBehaviour
             int currentSpellIndex = 0;
             foreach (BaseSpell spell in currentSpells)
             {
+                // On instancie le material des cooldown pour les modifier indépendamment
+                Material cooldownUnit = spellSelector.transform.GetChild(currentSpellIndex).Find("CoolDownUnit").GetComponent<Image>().material; 
+                RectTransform cooldownProgress = spellSelector.transform.GetChild(currentSpellIndex).Find("CoolDownProgress").GetComponent<RectTransform>();
+                GameObject unavailable = spellSelector.transform.GetChild(currentSpellIndex).Find("unavailable").gameObject;
+                spellSelector.transform.GetChild(currentSpellIndex).Find("CoolDownUnit").GetComponent<Image>().material = new Material(cooldownUnit);
+                cooldownUnit = spellSelector.transform.GetChild(currentSpellIndex).Find("CoolDownUnit").GetComponent<Image>().material;
+                
+                // mettre la bonne image dans le spell selector
                 Image spellImage = spellSelector.transform.GetChild(currentSpellIndex).GetComponent<Image>();
+                
                 if(spell != null){
                     spellImage.sprite = spell.GetArtwork();
                     spellImage.material = null;
+                    cooldownUnit.SetVector("_Tiling", new Vector2(spell.base_cooldown, 1f)); 
                     if(!spell.IsAvailable()){
                         Material material = Instantiate(grayscaleShader);
                         spellImage.material = material;
+                        cooldownUnit.SetColor("_Color", new Color(1, 0, 0, 1));
+                        unavailable.SetActive(true);
                         //Grey
-                    }              
+                    }
+                    else{
+                        cooldownUnit.SetColor("_Color", blueColor);
+                        unavailable.SetActive(false);
+                    }
+                    cooldownProgress.localScale =new Vector3( 1f-((float)spell.cooldown/(float)spell.base_cooldown), 1f, 1f);
                 }
+
                 else{
+                    cooldownUnit.SetColor("_Color", blueColor);
                     spellImage.sprite = emptySpellSelectorSquare;
                     spellImage.material = null;
+                    cooldownUnit.SetVector("_Tiling", new Vector2(0f, 1f));
+                    cooldownProgress.localScale =new Vector3( 0f, 1f, 1f);    
+                    unavailable.SetActive(false);
                 }
                 currentSpellIndex += 1;
             }
@@ -377,13 +405,23 @@ public class InterfaceManager : MonoBehaviour
             case SpellChoice.LEFT:
                 selectedSpell = currentSpells[0];
                 //TODO Ce code se répète 4 fois, il y a moyen de refactor
-                if (Input.GetKeyDown(KeyCode.B) && selectedSpell != null){
+                if (Input.GetKeyDown(KeyCode.B)){
+                    if(selectedSpell == null){
+                        errorSound.Play();
+                        CameraEffects.Instance.TriggerShake(errorShakeIntensity,errorShakeDuration);
+                        break;
+                    }
+
                     // juste au cas ou c'est overloaded
                     // spellSelector.transform.GetChild(0).transform.Find("overloaded").gameObject.SetActive(false);
                     // spellPanel.transform.Find("overloaded").gameObject.SetActive(false);
                     if(selectedSpell.IsAvailable()){
                         sourceTile.Unselect();
                         SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
+                    }
+                    else{
+                        errorSound.Play();
+                        CameraEffects.Instance.TriggerShake(errorShakeIntensity,errorShakeDuration);
                     }
 
                     break;
@@ -416,6 +454,8 @@ public class InterfaceManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.LeftArrow) && selectedSpell != null){
                     // Passer en mode surcharge / Revenir au mode non surchargé
                     spellChoice = SpellChoice.LEFT;
+                    if(!selectedSpell.IsAvailable())
+                        break;
                     overloaded = !overloaded;
                     // On joue le FX d'overload
                     if(spellSelector.transform.GetChild(0).transform.Find("SpecialFX").gameObject.activeSelf)
@@ -437,10 +477,12 @@ public class InterfaceManager : MonoBehaviour
                 break;
             case SpellChoice.RIGHT:
                 selectedSpell = currentSpells[1];
-                if (Input.GetKeyDown(KeyCode.B) && selectedSpell != null){
-                    // juste au cas ou c'est overloaded
-                    //overloaded = false;
-                    Debug.Log(selectedSpell);
+                if (Input.GetKeyDown(KeyCode.B)){
+                    if(selectedSpell == null){
+                        errorSound.Play();
+                        CameraEffects.Instance.TriggerShake(errorShakeIntensity,errorShakeDuration);
+                        break;
+                    }
                     // spellSelector.transform.GetChild(1).transform.Find("overloaded").gameObject.SetActive(false);
                     // spellPanel.transform.Find("overloaded").gameObject.SetActive(false);
                     if(selectedSpell.IsAvailable()){
@@ -475,6 +517,8 @@ public class InterfaceManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.RightArrow) && selectedSpell != null){
                     // Passer en mode surcharge / Revenir au mode non surchargé
                     spellChoice = SpellChoice.RIGHT;
+                    if(!selectedSpell.IsAvailable())
+                        break;
                     overloaded = !overloaded;
                     // On joue le FX d'overload
                     if(spellSelector.transform.GetChild(1).transform.Find("SpecialFX").gameObject.activeSelf)
@@ -496,9 +540,14 @@ public class InterfaceManager : MonoBehaviour
                 break;
             case SpellChoice.UP:
                 selectedSpell = currentSpells[2];
-                if (Input.GetKeyDown(KeyCode.B) && selectedSpell != null){
-                    // spellSelector.transform.GetChild(2).transform.Find("overloaded").gameObject.SetActive(false);
-                    // spellPanel.transform.Find("overloaded").gameObject.SetActive(false);
+                if (Input.GetKeyDown(KeyCode.B)){
+
+                    if(selectedSpell == null){
+                        errorSound.Play();
+                        CameraEffects.Instance.TriggerShake(errorShakeIntensity,errorShakeDuration);
+                        break;
+                    }
+
                     if(selectedSpell.IsAvailable()){
                         sourceTile.Unselect();
                         SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
@@ -531,6 +580,8 @@ public class InterfaceManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.UpArrow) && selectedSpell != null){
                     // Passer en mode surcharge / Revenir au mode non surchargé
                     spellChoice = SpellChoice.UP;
+                    if(!selectedSpell.IsAvailable())
+                        break;
                     overloaded = !overloaded;
                     // On joue le FX d'overload
                     if(spellSelector.transform.GetChild(2).transform.Find("SpecialFX").gameObject.activeSelf)
@@ -552,9 +603,13 @@ public class InterfaceManager : MonoBehaviour
                 break;
             case SpellChoice.DOWN:
                 selectedSpell = currentSpells[3];
-                if (Input.GetKeyDown(KeyCode.B) && selectedSpell != null){
-                    // spellSelector.transform.GetChild(3).transform.Find("overloaded").gameObject.SetActive(false);
-                    // spellPanel.transform.Find("overloaded").gameObject.SetActive(false);
+                if (Input.GetKeyDown(KeyCode.B)){
+
+                    if(selectedSpell == null){
+                        errorSound.Play();
+                        CameraEffects.Instance.TriggerShake(errorShakeIntensity,errorShakeDuration);
+                        break;
+                    }
                     if(selectedSpell.IsAvailable()){
                         sourceTile.Unselect();
                         SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
@@ -587,6 +642,8 @@ public class InterfaceManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.DownArrow) && selectedSpell != null){
                     // Passer en mode surcharge / Revenir au mode non surchargé
                     spellChoice = SpellChoice.DOWN;
+                    if(!selectedSpell.IsAvailable())
+                        break;
                     overloaded = !overloaded;
                     // On joue le FX d'overload
                     if(spellSelector.transform.GetChild(3).transform.Find("SpecialFX").gameObject.activeSelf)
@@ -968,7 +1025,6 @@ public class InterfaceManager : MonoBehaviour
             var stateInfo = spellChoiceAnimator.GetCurrentAnimatorStateInfo(0);
             if (!stateInfo.IsName($"Not{spellChoiceAnims[i]}")){
                 spellChoiceAnimator.Play($"Not{spellChoiceAnims[i]}");
-                Debug.Log($"playing Not{spellChoiceAnims[i]}");
                 
                 // enlever le overload
                 if(i != 4)
@@ -984,7 +1040,6 @@ public class InterfaceManager : MonoBehaviour
 
     public void ShakeElement(RectTransform uiElement, float intensity, float shakeTime){
         Vector3 originalPosition = uiElement.anchoredPosition;
-        Debug.Log("shake called");
         void UpdateShake(){
             if(shakeTime > 0f){
                 Vector2 randomOffset = Random.insideUnitCircle * intensity;
