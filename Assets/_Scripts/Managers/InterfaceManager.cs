@@ -54,6 +54,9 @@ public class InterfaceManager : MonoBehaviour
     private Vector3 tileSelector_currentPos;
     public float errorShakeIntensity;
     public float errorShakeDuration;
+    public float driftAmount = 0f;
+    public float driftIntensity = 0f;
+    public float driftSmoothing = 0f;
 
     public Vector3 lifeBarOffset;
 
@@ -236,15 +239,19 @@ public class InterfaceManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.UpArrow)){
             NavigateSource(Directions.UP);
+            CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(driftAmount,driftAmount,0f));
         }
         if (Input.GetKeyDown(KeyCode.DownArrow)){
             NavigateSource(Directions.DOWN);
+            CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(-driftAmount,-driftAmount,0f));
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow)){
             NavigateSource(Directions.LEFT);
+            CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(-driftAmount,driftAmount,0f));
         }
         if (Input.GetKeyDown(KeyCode.RightArrow)){
             NavigateSource(Directions.RIGHT);
+            CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(driftAmount,-driftAmount,0f));
         }
     }
     void SourceSelectionTrigger(BattleManager.Trigger trigger){

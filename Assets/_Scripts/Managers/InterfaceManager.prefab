@@ -57,6 +57,9 @@ MonoBehaviour:
   emptySpellSelectorSquare: {fileID: 21300000, guid: c641a66c14526b74d8f4a4e7449f7601, type: 3}
   errorShakeIntensity: 0.01
   errorShakeDuration: 0.2
+  driftAmount: 0.12
+  driftIntensity: 1
+  driftSmoothing: 0.8
   lifeBarOffset: {x: 0, y: 1, z: 0}
   overloadSound: {fileID: 23602464211240430}
   errorSound: {fileID: 9071862113362736104}
