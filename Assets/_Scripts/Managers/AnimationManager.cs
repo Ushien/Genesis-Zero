@@ -25,12 +25,16 @@ public class AnimationManager : MonoBehaviour
     void Awake(){
         animationQueue = new List<BattleEvent>();
         Instance = this;
+        DamageSection = InterfaceManager.Instance.GetUI().transform.Find("Damages").transform;
+        damageText = DamageSection.Find("DamagesText").GetComponent<TextMeshProUGUI>();
     }
 
     void Start(){
-        DamageSection = InterfaceManager.Instance.GetUI().transform.Find("Damages").transform;
+        
+    }
+
+    public void BattleIn(){
         DamageSection.gameObject.SetActive(true);
-        damageText = DamageSection.Find("DamagesText").GetComponent<TextMeshProUGUI>();
     }
 
     public void BattleOut(){
