@@ -439,7 +439,6 @@ public class BattleManager : MonoBehaviour
 
 
     public Instruction CreateInstruction(BaseUnit source_unit, BaseSpell spell_to_cast, Tile target_tile, bool hyper = false){
-        Debug.Log(source_unit.name);
         Instruction new_instruction = Instantiate(emptyInstruction);
         new_instruction.transform.SetParent(currentTurn.transform);
         new_instruction.Setup(source_unit, spell_to_cast, target_tile, hyper : hyper);
