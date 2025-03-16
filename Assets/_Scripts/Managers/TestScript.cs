@@ -65,7 +65,6 @@ public class TestScript : MonoBehaviour
             foreach (string stringInstruction in stringInstructions)
             {
                 string[] subInstructions = stringInstruction.Split("-");
-                Instruction newInstruction = Instantiate(AIManager.Instance.emptyInstruction);
 
                 Team team = Team.Enemy;
                 if(subInstructions[0][0] == 'E'){
@@ -93,7 +92,7 @@ public class TestScript : MonoBehaviour
                     _hyper = true;
                 }
                 
-                newInstruction.Setup(sourceUnit,spellToCast, targetTile, hyper : _hyper);
+                Instruction newInstruction = BattleManager.Instance.CreateInstruction(sourceUnit,spellToCast, targetTile, hyper : _hyper);
                 instructions.Add(newInstruction);
             }
 

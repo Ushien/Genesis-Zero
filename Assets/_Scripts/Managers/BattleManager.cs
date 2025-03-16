@@ -41,8 +41,6 @@ public class BattleManager : MonoBehaviour
 
     void Awake(){
         Instance = this;
-
-        battleArchive = new GameObject("Current Battle Archive");
     }
 
     void Update(){
@@ -82,6 +80,9 @@ public class BattleManager : MonoBehaviour
         UnitManager.Instance.SpawnEnemies(enemy_composition);
         UnitManager.Instance.MakeUnitsVisible(Team.Both, true);
         UnitManager.Instance.StartBattle();
+
+        nTurn = 1;
+        battleArchive = new GameObject("Current Battle Archive");
 
         StartBattle();
     }
@@ -237,6 +238,10 @@ public class BattleManager : MonoBehaviour
                             // S'il y a des instructions scriptées elles écrasent les ordres IA
                             // C'est important que les ordres IA soient calculés quand même pour préserver le même état d'aléatoire
                             if(GlobalManager.Instance.debug && TestScript.Instance.AreThereScriptedInstructions()){
+                                foreach (Instruction AI_Instruc in EnemyOrders)
+                                {
+                                    Destroy(AI_Instruc.gameObject);
+                                }
                                 EnemyOrders = TestScript.Instance.GetScriptedInstructions();
                             }
                             currentTurn.SetInstructions(EnemyOrders);
@@ -434,6 +439,7 @@ public class BattleManager : MonoBehaviour
 
 
     public Instruction CreateInstruction(BaseUnit source_unit, BaseSpell spell_to_cast, Tile target_tile, bool hyper = false){
+        Debug.Log(source_unit.name);
         Instruction new_instruction = Instantiate(emptyInstruction);
         new_instruction.transform.SetParent(currentTurn.transform);
         new_instruction.Setup(source_unit, spell_to_cast, target_tile, hyper : hyper);
