@@ -59,10 +59,15 @@ public class EndScreenManager : MonoBehaviour
         }
     }
 
+    public void In(){
+        GlobalManager.Instance.GetCam().transform.GetChild(0).gameObject.SetActive(true);
+    }
+
     public void Out(){
         foreach (TextBox _textbox in textboxs)
         {
             Destroy(_textbox.gameObject);
         }
+        GlobalManager.Instance.GetCam().transform.GetChild(0).gameObject.SetActive(false);
     }
 }

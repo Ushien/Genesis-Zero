@@ -55,7 +55,7 @@ public class GlobalManager : MonoBehaviour
     [SerializeField]
 
     public bool debug;
-    private int battleID = 0;
+    private int battleID;
     [SerializeField]
     private int startLevel = 1;
     public int runSeed = 0;
@@ -66,7 +66,9 @@ public class GlobalManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
+    { 
+        cam = Instantiate(camPrefab);
+        ResetRun();
         ChangeState(RunPhase.STARTPHASE);
     }
 
@@ -74,6 +76,11 @@ public class GlobalManager : MonoBehaviour
     void Update()
     {
 
+    }
+
+    void ResetRun()
+    {
+        battleID = 0;
     }
 
     public void BattlePhaseIn(){
@@ -86,6 +93,8 @@ public class GlobalManager : MonoBehaviour
         AIManager.transform.SetParent(transform.parent);
         eventManager = Instantiate(eventManagerPrefab);
         eventManager.transform.SetParent(transform.parent);
+
+        lifeBarUI.gameObject.SetActive(true);
 
         GameObject[] rootGameObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
         foreach (GameObject _gameobject in rootGameObjects)
@@ -105,6 +114,7 @@ public class GlobalManager : MonoBehaviour
         enemies = UnitManager.Instance.CreateUnits(enemyComposition.GetTuples(battleID), Team.Enemy);
         
         BattleManager.Instance.LaunchBattle(allies, enemies);
+        AnimationManager.Instance.BattleIn();
 
         //BattleManager.Instance.DebugSetState();
         BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, BattleManager.Trigger.FORWARD);
@@ -115,7 +125,6 @@ public class GlobalManager : MonoBehaviour
     }
 
     public void BattlePhaseOut(){
-        //Deleting all the managers
         Destroy(gridManager.gameObject);
         battleManager.GetArchive().name = "Battle " + battleID;
         battleManager.GetArchive().transform.SetParent(battleArchive.transform);
@@ -129,6 +138,7 @@ public class GlobalManager : MonoBehaviour
 
         Destroy(AIManager.gameObject);
         Destroy(eventManager.gameObject);
+        lifeBarUI.gameObject.SetActive(false);
         
         GameObject[] rootGameObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
         foreach (GameObject _gameobject in rootGameObjects)
@@ -159,7 +169,10 @@ public class GlobalManager : MonoBehaviour
 
     public void LoseScreenIn(){
         endScreenManager = Instantiate(endScreenManagerPrefab);
+        endScreenManager.transform.SetParent(transform.parent);
+        endScreenManager.name = "EndScreenManager";
         endScreenManager.Setup(false);
+        endScreenManager.In();
     }
 
     public void LoseScreenOut(){
@@ -174,7 +187,6 @@ public class GlobalManager : MonoBehaviour
         }
         UnityEngine.Random.InitState(runSeed);
 
-        cam = Instantiate(camPrefab);
         resourceManager = Instantiate(resourceManagerPrefab);
         resourceManager.transform.SetParent(transform.parent);
         resourceManager.LoadResources();
@@ -213,7 +225,24 @@ public class GlobalManager : MonoBehaviour
     }
 
     public void EndPhaseOut(){
-        //
+        Destroy(resourceManager.gameObject);
+        Destroy(unitManager.gameObject);
+        Destroy(lifeBarUI.gameObject);
+        Destroy(interfaceManager.gameObject);
+        Destroy(spellManager.gameObject);
+        Destroy(animationManager.gameObject);
+        Destroy(battleEventManager.gameObject);
+        Destroy(battleManager.gameObject);
+
+        GameObject[] rootGameObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
+        foreach (GameObject _gameobject in rootGameObjects)
+        {
+            if(_gameobject.name.Contains("UI Screen Space") || _gameobject.name.Contains("Units") || _gameobject.name.Contains("Battle Archive")){
+                Destroy(_gameobject);
+            }
+        }
+
+        ResetRun();
     }
 
     public void ChangeState(RunPhase trigger){

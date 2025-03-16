@@ -383,6 +383,16 @@ public class BaseUnit : MonoBehaviour
         return -1;
     }
 
+    public BaseSpell GetSpellByIndex(int index){
+        foreach (BaseSpell spell in GetSpells(includingAttack:true))
+        {
+            if(spell.GetIndex() == index){
+                return spell;
+            }
+        }
+        return null;
+    }
+
     public bool HasSpell(ScriptableSpell _spell){
         foreach (BaseSpell spell in availableSpells)
         {
