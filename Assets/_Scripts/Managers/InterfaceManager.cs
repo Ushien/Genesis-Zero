@@ -22,6 +22,11 @@ public class InterfaceManager : MonoBehaviour
     private Canvas UIPrefab;
     private Canvas UI;
 
+
+    public GameObject UILine;
+    public GameObject UILinePrefab;
+    public Transform UILineVertical;
+    public Transform UILineHorizontal;
     private Transform unitPanel;
     private Transform spellPanel;
     private Transform passivePanel;
@@ -36,9 +41,8 @@ public class InterfaceManager : MonoBehaviour
     private TextMeshProUGUI spellCooldownPanel;
     private TextMeshProUGUI spellDescriptionPanel;
     public RectTransform spellPanelLine;
-    public RectTransform spellSelectorLine;
     private Image spellPanelIcon;
-    private Transform spellSelector;
+    public Transform spellSelector;
     public Transform shade;
     public Canvas UIWorldSpace;
     private Canvas lifeBarsUI;
@@ -57,6 +61,8 @@ public class InterfaceManager : MonoBehaviour
     public float driftAmount = 0f;
     public float driftIntensity = 0f;
     public float driftSmoothing = 0f;
+    public float xLineOffset = 0f;
+    public float yLineOffset = 0f;
 
     public Vector3 lifeBarOffset;
 
@@ -124,8 +130,6 @@ public class InterfaceManager : MonoBehaviour
         spellPanelLine = spellPanel.transform.Find("Line").GetComponent<RectTransform>();
         spellPanelIcon = spellPanel.transform.Find("Sprite").GetComponent<Image>();
 
-        spellSelectorLine = spellSelector.transform.Find("Line").GetComponent<RectTransform>();
-
         mainCamera = GlobalManager.Instance.GetCam();
 
         activated_states = new Dictionary<BattleManager.PlayerActionChoiceState, bool>();
@@ -152,6 +156,12 @@ public class InterfaceManager : MonoBehaviour
 
         tileSelector_targetPos = tileSelector.transform.position;
         tileSelector_currentPos = tileSelector.transform.position;
+    
+        // On initialise la ligne des UI
+        UILine = Instantiate(UILinePrefab);
+        UILineVertical = UILine.transform.Find("vertical");
+        UILineHorizontal = UILine.transform.Find("horizontal");
+    
     }
 
     void Update()
@@ -278,7 +288,7 @@ public class InterfaceManager : MonoBehaviour
             spellPanelLine.gameObject.SetActive(false);
 
             //spellSelector.transform.position = sourceTile.transform.position;
-            DrawPanelLine(spellSelectorLine, sourceTile);
+            DrawUILine(UILine, sourceTile);
 
             int currentSpellIndex = 0;
             foreach (BaseSpell spell in currentSpells)
@@ -857,8 +867,10 @@ public class InterfaceManager : MonoBehaviour
     }
     
     void ResetDisplay(bool flag = false){
-            if(!flag)
+            if(!flag){
                 spellSelector.gameObject.SetActive(false);
+                UILine.SetActive(false);
+            }
             shade.gameObject.SetActive(false);
             unitPanel.gameObject.SetActive(false);
             passivePanel.gameObject.SetActive(false);
@@ -954,21 +966,23 @@ public class InterfaceManager : MonoBehaviour
     }
 
 
+    // Fonction pour gérer la ligne d'UI nouvelle
+    // ------------------------------------------
+    private void DrawUILine(GameObject Line, Tile tile){
+        Line.SetActive(true);
+        Vector3 targetPosition = tile.transform.position;
+        if(Line == UILine){
+            UILine.transform.position = new Vector3 (tile.transform.position.x + xLineOffset, tile.transform.position.y + yLineOffset, 0f);
+            UILineVertical.position = new Vector3 (0f, 0f, 0f);
+        }
+    }
+
     // Fonction pour gérer la ligne d'UI qui pointe sur les objets. assez rigide pour l'instant
     private void DrawPanelLine(RectTransform PanelLine, Tile tile){
 
         // Convertit la position dans le gameworld en position en px sur l'écran.
         Vector3 targetPosition = mainCamera.WorldToScreenPoint(tile.transform.position);
 
-        // Pour l'instant, au cas par cas en fonction de quelle ligne de quel panneau est utilisée.... A voir si on en a beaucoup par la suite
-        if(PanelLine == spellSelectorLine)
-            PanelLine.sizeDelta = new Vector2(targetPosition.x - tileSize*1.6f,  Screen.height - spellSelector.GetComponent<RectTransform>().rect.height - targetPosition.y-tileSize*0.3f); // a bit ugly but still good      
-        
-        /// Ces lignes géraient la ligne de l'info panel, qui n'en a plus dans le layout actuel
-        //if(PanelLine == infosPanelLine)
-        //    PanelLine.sizeDelta = new Vector2(targetPosition.x - tileSize, Screen.height - infosPanel.GetComponent<RectTransform>().rect.height - targetPosition.y); // a bit ugly but still good
-            //PanelLine.sizeDelta = new Vector2(targetPosition.x - tileSize, targetPosition.y - infosPanel.GetComponent<RectTransform>().rect.height); // a bit ugly but still good      
-        
         // Gère la position de la ligne du sort pendant la sélection de target
         if (PanelLine == spellPanelLine)
             PanelLine.sizeDelta = new Vector2(Screen.width-targetPosition.x - tileSize, targetPosition.y - spellPanel.GetComponent<RectTransform>().rect.height); // Hard coded, needs some update

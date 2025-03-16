@@ -14,6 +14,8 @@ public class CameraEffects : MonoBehaviour
     public bool drifting = false;
 
     public Vector3 originalPosition;
+    public Vector3 selectorLinePosition;
+    public Vector3 selectorLineTarget;
     public Vector3 driftedPosition;
     public Vector3 targetPosition;
     private Vector3 velocity = new Vector3(0f,0f,0f);
@@ -77,6 +79,12 @@ public class CameraEffects : MonoBehaviour
         driftVelocity = intensity;
         driftSmoothing = smoothing;
         targetPosition = originalPosition + direction;
+        if(selectorLinePosition != null)
+            selectorLineTarget = selectorLinePosition + direction;
 
+    }
+
+    public void ChangeSelectorLinePosition(Vector3 newPosition){
+        selectorLinePosition = newPosition;
     }
 }

@@ -21,3 +21,4 @@ MonoBehaviour:
   - {x: 1, y: 0}
   - {x: 2, y: 0}
   levels: 410000004100000041000000
+  lootable: 0

@@ -48,6 +48,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIPrefab: {fileID: 2703114003398457339, guid: 78d60f1959b850c43ab69f3bb197ff2c, type: 3}
+  UILine: {fileID: 0}
+  UILinePrefab: {fileID: 363797320139045019, guid: d0ced1c6df09e1149b1053595c927b39, type: 3}
+  UILineVertical: {fileID: 0}
+  UILineHorizontal: {fileID: 0}
   spellPanelLine: {fileID: 0}
   spellSelectorLine: {fileID: 0}
   shade: {fileID: 0}
@@ -61,6 +65,8 @@ MonoBehaviour:
   driftAmount: 0.12
   driftIntensity: 1
   driftSmoothing: 0.8
+  xLineOffset: -0.07
+  yLineOffset: 0.21
   lifeBarOffset: {x: 0, y: 1, z: 0}
   overloadSound: {fileID: 23602464211240430}
   errorSound: {fileID: 9071862113362736104}

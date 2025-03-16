@@ -95,6 +95,7 @@ public class BaseUnit : MonoBehaviour
         
         GetComponent<SpriteRenderer>().sprite = scriptableUnit.sprite;
         unit_name = scriptableUnit.unit_name;
+        if(scriptableUnit.animator != null)
         animator.runtimeAnimatorController = scriptableUnit.animator;
 
 
@@ -147,16 +148,19 @@ public class BaseUnit : MonoBehaviour
     /// Mets à jour visuellement l'unité à chaque frame
     /// </summary>
     public void Update(){
-        // Rend l'unité grisée si elle a déjà reçu une instruction
-        if(HasGivenInstruction() && animator.GetCurrentAnimatorStateInfo(0).IsName("idle")){
-            gameObject.GetComponent<SpriteRenderer>().color = new Color32( 173, 173, 173, 200);
-            animator.Play("prepared");
-        }
-        //else
-        //  gameObject.GetComponent<SpriteRenderer>().color = new Color32( 255, 255, 255, 255);
-        if(!HasGivenInstruction() && !animator.GetCurrentAnimatorStateInfo(0).IsName("idle")){
-            gameObject.GetComponent<SpriteRenderer>().color = new Color32( 255, 255, 255, 255);
-            animator.Play("idle");
+        // Pour l'instant on fait rien si il n'y a pas encore d'animations pour les unit
+        if(scriptableUnit.animator != null){
+            // Rend l'unité grisée si elle a déjà reçu une instruction
+            if(HasGivenInstruction() && animator.GetCurrentAnimatorStateInfo(0).IsName("idle")){
+                gameObject.GetComponent<SpriteRenderer>().color = new Color32( 173, 173, 173, 200);
+                animator.Play("prepared");
+            }
+            //else
+            //  gameObject.GetComponent<SpriteRenderer>().color = new Color32( 255, 255, 255, 255);
+            if(!HasGivenInstruction() && !animator.GetCurrentAnimatorStateInfo(0).IsName("idle")){
+                gameObject.GetComponent<SpriteRenderer>().color = new Color32( 255, 255, 255, 255);
+                animator.Play("idle");
+            }
         }
     }
 
