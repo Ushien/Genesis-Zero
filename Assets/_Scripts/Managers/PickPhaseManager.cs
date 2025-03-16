@@ -120,6 +120,8 @@ public class PickPhaseManager : MonoBehaviour
         {
             Destroy(unitCell);
         }
+        // Active blank background
+        // TODO il faut changer ce fonctionnement
         cam.transform.GetChild(0).gameObject.SetActive(false);
     }
 
@@ -291,7 +293,7 @@ public class PickPhaseManager : MonoBehaviour
     }
 
     public void PickReward(Reward reward, BaseUnit unit){
-        if(allies[currentUnitIndex].GetAvailableSpellIndex() == -1){
+        if(reward is SpellReward && allies[currentUnitIndex].GetAvailableSpellIndex() == -1){
             // 
         }
         else{

@@ -28,6 +28,7 @@ public class TextBox : MonoBehaviour
 
     public void CreateTextBox(string textToDisplay){
         mainText.text = textToDisplay;
+        transform.localPosition = new Vector3(0f, 0f, transform.position.z);
     }
 
     public void CreateTalkBox(string textToDisplay, string displayName){

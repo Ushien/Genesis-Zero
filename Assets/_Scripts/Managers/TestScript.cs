@@ -57,7 +57,6 @@ public class TestScript : MonoBehaviour
         //return AIManager.Instance.GetAIOrders(Team.Ally);
 
         if(AreThereScriptedInstructions()){
-
             string[] stringInstructions = scriptedInstructions[0].Substring(2).Split("/");
 
             scriptedInstructions.RemoveAt(0);
@@ -65,7 +64,6 @@ public class TestScript : MonoBehaviour
             foreach (string stringInstruction in stringInstructions)
             {
                 string[] subInstructions = stringInstruction.Split("-");
-                Instruction newInstruction = Instantiate(AIManager.Instance.emptyInstruction);
 
                 Team team = Team.Enemy;
                 if(subInstructions[0][0] == 'E'){
@@ -77,7 +75,7 @@ public class TestScript : MonoBehaviour
                 Assert.AreEqual(team, BattleManager.Instance.ConvertTeamTurn(BattleManager.Instance.teamTurn));
                 BaseUnit sourceUnit = GridManager.Instance.GetTileAtPosition(team, new Vector2(Int32.Parse(subInstructions[0][1].ToString()), Int32.Parse(subInstructions[0][2].ToString()))).GetUnit();
                 
-                BaseSpell spellToCast = sourceUnit.GetSpells(includingAttack : true)[Int32.Parse(subInstructions[1])];
+                BaseSpell spellToCast = sourceUnit.GetSpellByIndex(Int32.Parse(subInstructions[1]));
                 
                 if(subInstructions[2][0] == 'E'){
                     team = Team.Enemy;
@@ -93,7 +91,7 @@ public class TestScript : MonoBehaviour
                     _hyper = true;
                 }
                 
-                newInstruction.Setup(sourceUnit,spellToCast, targetTile, hyper : _hyper);
+                Instruction newInstruction = BattleManager.Instance.CreateInstruction(sourceUnit,spellToCast, targetTile, hyper : _hyper);
                 instructions.Add(newInstruction);
             }
 
