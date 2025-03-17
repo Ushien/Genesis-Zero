@@ -501,6 +501,7 @@ MonoBehaviour:
   spellManagerPrefab: {fileID: 1155791428929195449, guid: c6109e1202e01834495ec6d183e2e0c6, type: 3}
   interfaceManagerPrefab: {fileID: 3659751685564038869, guid: bbcbd9e26ed4c4a43ae8f3f5e2b79c9c, type: 3}
   animationManagerPrefab: {fileID: 7439604365020406878, guid: ce3466b7633b405478627d03d67c0949, type: 3}
+  audioManagerPrefab: {fileID: 5361071386803681403, guid: 91b939b5677ad38418d4c96cc12ba737, type: 3}
   AIManagerPrefab: {fileID: 3802776597445336118, guid: 22580b0be7b21af41b409edb774395bf, type: 3}
   battleEventManagerPrefab: {fileID: 4870162288617126403, guid: 35cb69db407e7ed4abd2260a0fdd904f, type: 3}
   eventManagerPrefab: {fileID: 6882506551565756176, guid: b7dd4567f953f1f4da20d768c505f26a, type: 3}

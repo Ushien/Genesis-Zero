@@ -67,9 +67,6 @@ public class InterfaceManager : MonoBehaviour
     public Vector3 lifeBarOffset;
 
 
-    public AudioSource overloadSound;
-    public AudioSource errorSound;
-
     [SerializeField]
     private float selectorSpeed;
 
@@ -185,6 +182,18 @@ public class InterfaceManager : MonoBehaviour
                 default:
                     break;
             }
+        }
+
+        if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow)){
+            AudioManager.Instance.UIBip1.Play();
+        }
+
+        if(Input.GetKeyDown(KeyCode.N)){
+            AudioManager.Instance.UIBip2.Play();
+        }
+
+        if(Input.GetKeyDown(KeyCode.B)){
+            AudioManager.Instance.UIBip3.Play();
         }
 
         if(Input.GetKeyDown(KeyCode.C)){
@@ -424,7 +433,7 @@ public class InterfaceManager : MonoBehaviour
                 //TODO Ce code se répète 4 fois, il y a moyen de refactor
                 if (Input.GetKeyDown(KeyCode.B)){
                     if(selectedSpell == null){
-                        errorSound.Play();
+                        AudioManager.Instance.errorSound.Play();
                         CameraEffects.Instance.TriggerShake(errorShakeIntensity,errorShakeDuration);
                         break;
                     }
@@ -437,7 +446,7 @@ public class InterfaceManager : MonoBehaviour
                         SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
                     }
                     else{
-                        errorSound.Play();
+                        AudioManager.Instance.errorSound.Play();
                         CameraEffects.Instance.TriggerShake(errorShakeIntensity,errorShakeDuration);
                     }
 
@@ -482,7 +491,7 @@ public class InterfaceManager : MonoBehaviour
                     if (overloaded){
                         spellSelector.transform.GetChild(0).transform.Find("overloaded").gameObject.SetActive(true);
                         CameraEffects.Instance.TriggerShake(0.05f,0.2f);
-                        overloadSound.Play();
+                        AudioManager.Instance.overloadSound.Play();
                         spellPanel.transform.Find("overloaded").gameObject.SetActive(true);
                     }
                     else{
@@ -496,7 +505,7 @@ public class InterfaceManager : MonoBehaviour
                 selectedSpell = currentSpells[1];
                 if (Input.GetKeyDown(KeyCode.B)){
                     if(selectedSpell == null){
-                        errorSound.Play();
+                        AudioManager.Instance.errorSound.Play();
                         CameraEffects.Instance.TriggerShake(errorShakeIntensity,errorShakeDuration);
                         break;
                     }
@@ -545,7 +554,7 @@ public class InterfaceManager : MonoBehaviour
                     if (overloaded){
                         spellSelector.transform.GetChild(1).transform.Find("overloaded").gameObject.SetActive(true);
                         CameraEffects.Instance.TriggerShake(0.05f,0.2f);
-                        overloadSound.Play();
+                        AudioManager.Instance.overloadSound.Play();
                         spellPanel.transform.Find("overloaded").gameObject.SetActive(true);
                     }
                     else{
@@ -560,7 +569,7 @@ public class InterfaceManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.B)){
 
                     if(selectedSpell == null){
-                        errorSound.Play();
+                        AudioManager.Instance.errorSound.Play();
                         CameraEffects.Instance.TriggerShake(errorShakeIntensity,errorShakeDuration);
                         break;
                     }
@@ -608,7 +617,7 @@ public class InterfaceManager : MonoBehaviour
                     if (overloaded){
                         spellSelector.transform.GetChild(2).transform.Find("overloaded").gameObject.SetActive(true);
                         CameraEffects.Instance.TriggerShake(0.05f,0.2f);
-                        overloadSound.Play();
+                        AudioManager.Instance.overloadSound.Play();
                         spellPanel.transform.Find("overloaded").gameObject.SetActive(true);
                     }
                     else{
@@ -623,7 +632,7 @@ public class InterfaceManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.B)){
 
                     if(selectedSpell == null){
-                        errorSound.Play();
+                        AudioManager.Instance.errorSound.Play();
                         CameraEffects.Instance.TriggerShake(errorShakeIntensity,errorShakeDuration);
                         break;
                     }
@@ -670,7 +679,7 @@ public class InterfaceManager : MonoBehaviour
                     if (overloaded){
                         spellSelector.transform.GetChild(3).transform.Find("overloaded").gameObject.SetActive(true);
                         CameraEffects.Instance.TriggerShake(0.05f,0.2f);
-                        overloadSound.Play();
+                        AudioManager.Instance.overloadSound.Play();
                         spellPanel.transform.Find("overloaded").gameObject.SetActive(true);
                     }
                     else{

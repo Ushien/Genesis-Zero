@@ -16,6 +16,7 @@ public class GlobalManager : MonoBehaviour
     [SerializeField] private SpellManager spellManagerPrefab;
     [SerializeField] private InterfaceManager interfaceManagerPrefab;
     [SerializeField] private AnimationManager animationManagerPrefab;
+    [SerializeField] private AudioManager audioManagerPrefab;
     [SerializeField] private AIManager AIManagerPrefab;
     [SerializeField] private BattleEventManager battleEventManagerPrefab;
     [SerializeField] private EventManager eventManagerPrefab;
@@ -34,6 +35,7 @@ public class GlobalManager : MonoBehaviour
     private BattleManager battleManager;
     private UnitManager unitManager;
     private SpellManager spellManager;
+    private AudioManager audioManager;
     private InterfaceManager interfaceManager;
     private AnimationManager animationManager;
     private AIManager AIManager;
@@ -68,6 +70,8 @@ public class GlobalManager : MonoBehaviour
     void Start()
     { 
         cam = Instantiate(camPrefab);
+        audioManager = Instantiate(audioManagerPrefab); // Pour l'instant ici, je gère pas ou il doit être supprimé/ajouté
+        audioManager.transform.SetParent(transform.parent);
         ResetRun();
         ChangeState(RunPhase.STARTPHASE);
     }
