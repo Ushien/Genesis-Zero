@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Bouledefeu : BaseSpell
 {
-
     override public void Cast(Tile targetTile = null, List<Properties> properties = null){
         base.CastSpell(targetTile, properties, _Bouledefeu);
     }

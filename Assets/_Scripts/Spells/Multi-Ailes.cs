@@ -10,7 +10,7 @@ public class MultiAiles : BaseSpell
     }
 
     override public void HyperCast(Tile targetTile = null, List<Properties> properties = null){
-        base.CastSpell(targetTile, properties, _MultiAiles_H);
+        base.CastSpell(targetTile, properties, _MultiAiles_H, hyper: true);
     }
 
     private void _MultiAiles(Tile targetTile, List<Properties> properties = null){

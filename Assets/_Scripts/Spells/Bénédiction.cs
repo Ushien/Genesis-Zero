@@ -9,7 +9,7 @@ public class Benediction : BaseSpell
     }
 
     override public void HyperCast(Tile targetTile = null, List<Properties> properties = null){
-        base.CastSpell(targetTile, properties, _Benediction_H);
+        base.CastSpell(targetTile, properties, _Benediction_H, hyper: true);
     }
 
     private void _Benediction(Tile targetTile, List<Properties> properties = null){
