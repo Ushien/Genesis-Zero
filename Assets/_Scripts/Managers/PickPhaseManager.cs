@@ -153,7 +153,6 @@ public class PickPhaseManager : MonoBehaviour
             }
             if(Input.GetKeyDown(KeyCode.B)){
                 if(currentRewards.Count > 0){
-                    TestScript.Instance.Log("P:"+currentSelectionIndex+"-"+currentUnitIndex);
                     PickReward(currentRewards[currentSelectionIndex], allies[currentUnitIndex]);
                     GlobalManager.Instance.ChangeState(GlobalManager.RunPhase.BATTLEPHASE);
                 }
@@ -297,6 +296,7 @@ public class PickPhaseManager : MonoBehaviour
             // 
         }
         else{
+            TestScript.Instance.Log("P:"+currentSelectionIndex+"-"+currentUnitIndex);
             reward.Pick(unit);
             AnimationManager.Instance.ForceAnimation();
         }
