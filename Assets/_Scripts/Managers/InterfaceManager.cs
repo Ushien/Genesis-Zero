@@ -22,8 +22,19 @@ public class InterfaceManager : MonoBehaviour
     private Canvas UIPrefab;
     private Canvas UI;
 
+
+    public GameObject UILine;
+    public GameObject UILinePrefab;
+    public Transform UILineVertical;
+    public Transform UILineHorizontal;
+
+    public GameObject UIPanelLine;
+    public GameObject UIPanelLinePrefab;
+    public Transform UIPanelLineVertical;
+    public Transform UIPanelLineHorizontal;
+
     private Transform unitPanel;
-    private Transform spellPanel;
+    public Transform spellPanel;
     private Transform passivePanel;
     private TextMeshProUGUI unitNamePanel;
     private TextMeshProUGUI unitPowerPanel;
@@ -35,23 +46,32 @@ public class InterfaceManager : MonoBehaviour
     private TextMeshProUGUI spellNamePanel;
     private TextMeshProUGUI spellCooldownPanel;
     private TextMeshProUGUI spellDescriptionPanel;
-    public RectTransform spellPanelLine;
-    public RectTransform spellSelectorLine;
     private Image spellPanelIcon;
-    private Transform spellSelector;
+    public Transform spellSelector;
     public Transform shade;
     public Canvas UIWorldSpace;
     private Canvas lifeBarsUI;
     public GameObject lifeBarPrefab;
     public Material grayscaleShader;
+    public Color blueColor;
     public Sprite emptySpellSelectorSquare;
+    
    
 
     private Transform tileSelector;
     private Vector3 tileSelector_targetPos;
     private Vector3 tileSelector_currentPos;
+    public float errorShakeIntensity;
+    public float errorShakeDuration;
+    public float driftAmount = 0f;
+    public float driftIntensity = 0f;
+    public float driftSmoothing = 0f;
+    public float xLineOffset = 0f;
+    public float yLineOffset = 0f;
+    public float yLinePanelOffset = 0f;
 
     public Vector3 lifeBarOffset;
+
 
     [SerializeField]
     private float selectorSpeed;
@@ -67,9 +87,10 @@ public class InterfaceManager : MonoBehaviour
 
     private enum SpellChoice{CHARACTER, LEFT, RIGHT, UP, DOWN}
     private SpellChoice spellChoice;
+    private SpellChoice currentSpellChoice =SpellChoice.CHARACTER;
 
     [SerializeField]
-    private bool overloaded = false;
+    public bool overloaded = false;
 
     // Le spell pour lequel on va sélectionner une cible
     private BaseSpell selectedSpell;
@@ -109,10 +130,7 @@ public class InterfaceManager : MonoBehaviour
         spellNamePanel = spellPanel.transform.Find("Name").GetComponent<TextMeshProUGUI>();
         spellCooldownPanel = spellPanel.transform.Find("Cooldown").GetComponent<TextMeshProUGUI>();
         spellDescriptionPanel = spellPanel.transform.Find("Description").GetComponent<TextMeshProUGUI>();
-        spellPanelLine = spellPanel.transform.Find("Line").GetComponent<RectTransform>();
         spellPanelIcon = spellPanel.transform.Find("Sprite").GetComponent<Image>();
-
-        spellSelectorLine = spellSelector.transform.Find("Line").GetComponent<RectTransform>();
 
         mainCamera = GlobalManager.Instance.GetCam();
 
@@ -130,6 +148,7 @@ public class InterfaceManager : MonoBehaviour
         tileSelector = Instantiate(GridManager.Instance.GetTilePrefab()).transform;
         Material material = Instantiate(tileOutliner);
         tileSelector.gameObject.SetActive(false);
+        tileSelector.GetComponent<SpriteRenderer>().enabled = false;
 
         tileSelector.transform.GetComponent<UnityEngine.SpriteRenderer>().material = material;
         tileSelector.transform.GetComponent<UnityEngine.SpriteRenderer>().sortingOrder = 2;
@@ -139,10 +158,22 @@ public class InterfaceManager : MonoBehaviour
 
         tileSelector_targetPos = tileSelector.transform.position;
         tileSelector_currentPos = tileSelector.transform.position;
+    
+        // On initialise la ligne des UI
+        UILine = Instantiate(UILinePrefab);
+        UIPanelLine = Instantiate(UIPanelLinePrefab);
+        UILineVertical = UILine.transform.Find("vertical");
+        UILineHorizontal = UILine.transform.Find("horizontal");
+        UIPanelLineVertical = UIPanelLine.transform.Find("vertical");
+        UIPanelLineHorizontal = UIPanelLine.transform.Find("horizontal");
+    
     }
 
     void Update()
     {   
+        // Super moche mais flemme de débug plus finement maintenant
+        if(!overloaded && spellPanel.transform.Find("overloaded").gameObject.activeSelf)
+            spellPanel.transform.Find("overloaded").gameObject.SetActive(false);
         if(BattleManager.Instance != null){
             switch (BattleManager.Instance.GetPlayerActionChoiceState())
             {
@@ -159,6 +190,18 @@ public class InterfaceManager : MonoBehaviour
                 default:
                     break;
             }
+        }
+
+        if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow)){
+            AudioManager.Instance.UIBip1.Play();
+        }
+
+        if(Input.GetKeyDown(KeyCode.N)){
+            AudioManager.Instance.UIBip2.Play();
+        }
+
+        if(Input.GetKeyDown(KeyCode.B)){
+            AudioManager.Instance.UIBip3.Play();
         }
 
         if(Input.GetKeyDown(KeyCode.C)){
@@ -223,15 +266,19 @@ public class InterfaceManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.UpArrow)){
             NavigateSource(Directions.UP);
+            CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(driftAmount,driftAmount,0f));
         }
         if (Input.GetKeyDown(KeyCode.DownArrow)){
             NavigateSource(Directions.DOWN);
+            CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(-driftAmount,-driftAmount,0f));
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow)){
             NavigateSource(Directions.LEFT);
+            CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(-driftAmount,driftAmount,0f));
         }
         if (Input.GetKeyDown(KeyCode.RightArrow)){
             NavigateSource(Directions.RIGHT);
+            CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(driftAmount,-driftAmount,0f));
         }
     }
     void SourceSelectionTrigger(BattleManager.Trigger trigger){
@@ -248,34 +295,55 @@ public class InterfaceManager : MonoBehaviour
             // Just changed from another state
 
             // Reset view
-            ResetDisplay();
+            ResetDisplay(true);
 
             // Activate the needed interface
             spellSelector.gameObject.SetActive(true);
             shade.gameObject.SetActive(true);
             unitPanel.gameObject.SetActive(true);
             spellPanel.gameObject.SetActive(true);
-            spellPanelLine.gameObject.SetActive(false);
 
             //spellSelector.transform.position = sourceTile.transform.position;
-            DrawPanelLine(spellSelectorLine, sourceTile);
+            DrawUILine(UILine, sourceTile);
 
             int currentSpellIndex = 0;
             foreach (BaseSpell spell in currentSpells)
             {
+                // On instancie le material des cooldown pour les modifier indépendamment
+                Material cooldownUnit = spellSelector.transform.GetChild(currentSpellIndex).Find("CoolDownUnit").GetComponent<Image>().material; 
+                RectTransform cooldownProgress = spellSelector.transform.GetChild(currentSpellIndex).Find("CoolDownProgress").GetComponent<RectTransform>();
+                GameObject unavailable = spellSelector.transform.GetChild(currentSpellIndex).Find("unavailable").gameObject;
+                spellSelector.transform.GetChild(currentSpellIndex).Find("CoolDownUnit").GetComponent<Image>().material = new Material(cooldownUnit);
+                cooldownUnit = spellSelector.transform.GetChild(currentSpellIndex).Find("CoolDownUnit").GetComponent<Image>().material;
+                
+                // mettre la bonne image dans le spell selector
                 Image spellImage = spellSelector.transform.GetChild(currentSpellIndex).GetComponent<Image>();
+                
                 if(spell != null){
                     spellImage.sprite = spell.GetArtwork();
                     spellImage.material = null;
+                    cooldownUnit.SetVector("_Tiling", new Vector2(spell.base_cooldown, 1f)); 
                     if(!spell.IsAvailable()){
                         Material material = Instantiate(grayscaleShader);
                         spellImage.material = material;
+                        cooldownUnit.SetColor("_Color", new Color(1, 0, 0, 1));
+                        unavailable.SetActive(true);
                         //Grey
-                    }              
+                    }
+                    else{
+                        cooldownUnit.SetColor("_Color", blueColor);
+                        unavailable.SetActive(false);
+                    }
+                    cooldownProgress.localScale =new Vector3( 1f-((float)spell.cooldown/(float)spell.base_cooldown), 1f, 1f);
                 }
+
                 else{
+                    cooldownUnit.SetColor("_Color", blueColor);
                     spellImage.sprite = emptySpellSelectorSquare;
                     spellImage.material = null;
+                    cooldownUnit.SetVector("_Tiling", new Vector2(0f, 1f));
+                    cooldownProgress.localScale =new Vector3( 0f, 1f, 1f);    
+                    unavailable.SetActive(false);
                 }
                 currentSpellIndex += 1;
             }
@@ -289,35 +357,43 @@ public class InterfaceManager : MonoBehaviour
         }
 
         //Display highlight
-        spellSelector.transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(false);
-        spellSelector.transform.GetChild(1).transform.GetChild(0).gameObject.SetActive(false);
-        spellSelector.transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(false);
-        spellSelector.transform.GetChild(3).transform.GetChild(0).gameObject.SetActive(false);
-        spellSelector.transform.GetChild(4).transform.GetChild(0).gameObject.SetActive(false);
+        if(spellChoice != currentSpellChoice){
+            spellSelector.transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(false);
+            spellSelector.transform.GetChild(1).transform.GetChild(0).gameObject.SetActive(false);
+            spellSelector.transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(false);
+            spellSelector.transform.GetChild(3).transform.GetChild(0).gameObject.SetActive(false);
+            spellSelector.transform.GetChild(4).transform.GetChild(0).gameObject.SetActive(false);
+        }
 
-        switch(spellChoice){
-            case SpellChoice.CHARACTER:
-                spellSelector.transform.GetChild(4).transform.GetChild(0).gameObject.SetActive(true);
-                AnimateSpellChoice(4);
-                break;
-            case SpellChoice.LEFT:
-                spellSelector.transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(true);
-                AnimateSpellChoice(0);
-                break;
-            case SpellChoice.RIGHT:
-                spellSelector.transform.GetChild(1).transform.GetChild(0).gameObject.SetActive(true);
-                AnimateSpellChoice(1);
-                break;
-            case SpellChoice.UP:
-                spellSelector.transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(true);
-                AnimateSpellChoice(2);
-                break;
-            case SpellChoice.DOWN:
-                spellSelector.transform.GetChild(3).transform.GetChild(0).gameObject.SetActive(true);
-                AnimateSpellChoice(3);
-                break;
-            default:
-                break;
+        // Si le spellChoice n'a pas changé, on joue pas l'anim
+        if(spellChoice != currentSpellChoice){
+            switch(spellChoice){ 
+
+
+                case SpellChoice.CHARACTER:
+                    spellSelector.transform.GetChild(4).transform.GetChild(0).gameObject.SetActive(true);
+                    AnimateSpellChoice(4);
+                    break;
+                case SpellChoice.LEFT:
+                    spellSelector.transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(true);
+                    AnimateSpellChoice(0);
+                    break;
+                case SpellChoice.RIGHT:
+                    spellSelector.transform.GetChild(1).transform.GetChild(0).gameObject.SetActive(true);
+                    AnimateSpellChoice(1);
+                    break;
+                case SpellChoice.UP:
+                    spellSelector.transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(true);
+                    AnimateSpellChoice(2);
+                    break;
+                case SpellChoice.DOWN:
+                    spellSelector.transform.GetChild(3).transform.GetChild(0).gameObject.SetActive(true);
+                    AnimateSpellChoice(3);
+                    break;
+                default:
+                    break;
+            }
+            currentSpellChoice = spellChoice;
         }
 
         // Navigation au sein de la sélection
@@ -358,20 +434,36 @@ public class InterfaceManager : MonoBehaviour
                     break;
                 }
                 break;
+                
             case SpellChoice.LEFT:
                 selectedSpell = currentSpells[0];
                 //TODO Ce code se répète 4 fois, il y a moyen de refactor
-                if (Input.GetKeyDown(KeyCode.B) && selectedSpell != null){
+                if (Input.GetKeyDown(KeyCode.B)){
+                    if(selectedSpell == null){
+                        AudioManager.Instance.errorSound.Play();
+                        CameraEffects.Instance.TriggerShake(errorShakeIntensity,errorShakeDuration);
+                        break;
+                    }
+
+                    // juste au cas ou c'est overloaded
+                    // spellSelector.transform.GetChild(0).transform.Find("overloaded").gameObject.SetActive(false);
+                    // spellPanel.transform.Find("overloaded").gameObject.SetActive(false);
                     if(selectedSpell.IsAvailable()){
                         sourceTile.Unselect();
                         SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
                     }
+                    else{
+                        AudioManager.Instance.errorSound.Play();
+                        CameraEffects.Instance.TriggerShake(errorShakeIntensity,errorShakeDuration);
+                    }
+
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.N)){
                     // Retour au centre
                     spellChoice = SpellChoice.CHARACTER;
                     overloaded = false;
+                    DisableSpellOverload();
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.UpArrow)){
@@ -392,16 +484,40 @@ public class InterfaceManager : MonoBehaviour
                     overloaded = false;
                     break;
                 }
-                if (Input.GetKeyDown(KeyCode.LeftArrow)){
+                if (Input.GetKeyDown(KeyCode.LeftArrow) && selectedSpell != null){
                     // Passer en mode surcharge / Revenir au mode non surchargé
                     spellChoice = SpellChoice.LEFT;
+                    if(!selectedSpell.IsAvailable())
+                        break;
                     overloaded = !overloaded;
+                    // On joue le FX d'overload
+                    if(spellSelector.transform.GetChild(0).transform.Find("SpecialFX").gameObject.activeSelf)
+                        spellSelector.transform.GetChild(0).transform.Find("SpecialFX").gameObject.SetActive(false);
+                    spellSelector.transform.GetChild(0).transform.Find("SpecialFX").gameObject.SetActive(true);
+                    spellSelector.transform.GetChild(0).GetComponent<Animator>().Play("left overloaded");
+                    if (overloaded){
+                        spellSelector.transform.GetChild(0).transform.Find("overloaded").gameObject.SetActive(true);
+                        CameraEffects.Instance.TriggerShake(0.05f,0.2f);
+                        AudioManager.Instance.overloadSound.Play();
+                        spellPanel.transform.Find("overloaded").gameObject.SetActive(true);
+                    }
+                    else{
+                        spellSelector.transform.GetChild(0).transform.Find("overloaded").gameObject.SetActive(false);
+                        spellPanel.transform.Find("overloaded").gameObject.SetActive(false);
+                    }
                     break;
                 }
                 break;
             case SpellChoice.RIGHT:
                 selectedSpell = currentSpells[1];
-                if (Input.GetKeyDown(KeyCode.B) && selectedSpell != null){
+                if (Input.GetKeyDown(KeyCode.B)){
+                    if(selectedSpell == null){
+                        AudioManager.Instance.errorSound.Play();
+                        CameraEffects.Instance.TriggerShake(errorShakeIntensity,errorShakeDuration);
+                        break;
+                    }
+                    // spellSelector.transform.GetChild(1).transform.Find("overloaded").gameObject.SetActive(false);
+                    // spellPanel.transform.Find("overloaded").gameObject.SetActive(false);
                     if(selectedSpell.IsAvailable()){
                         sourceTile.Unselect();
                         SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
@@ -431,16 +547,40 @@ public class InterfaceManager : MonoBehaviour
                     overloaded = false;
                     break;
                 }
-                if (Input.GetKeyDown(KeyCode.RightArrow)){
+                if (Input.GetKeyDown(KeyCode.RightArrow) && selectedSpell != null){
                     // Passer en mode surcharge / Revenir au mode non surchargé
                     spellChoice = SpellChoice.RIGHT;
+                    if(!selectedSpell.IsAvailable())
+                        break;
                     overloaded = !overloaded;
+                    // On joue le FX d'overload
+                    if(spellSelector.transform.GetChild(1).transform.Find("SpecialFX").gameObject.activeSelf)
+                        spellSelector.transform.GetChild(1).transform.Find("SpecialFX").gameObject.SetActive(false);
+                    spellSelector.transform.GetChild(1).transform.Find("SpecialFX").gameObject.SetActive(true);
+                    spellSelector.transform.GetChild(1).GetComponent<Animator>().Play("right overloaded");
+                    if (overloaded){
+                        spellSelector.transform.GetChild(1).transform.Find("overloaded").gameObject.SetActive(true);
+                        CameraEffects.Instance.TriggerShake(0.05f,0.2f);
+                        AudioManager.Instance.overloadSound.Play();
+                        spellPanel.transform.Find("overloaded").gameObject.SetActive(true);
+                    }
+                    else{
+                        spellSelector.transform.GetChild(1).transform.Find("overloaded").gameObject.SetActive(false);
+                        spellPanel.transform.Find("overloaded").gameObject.SetActive(false);
+                    }
                     break;
                 }
                 break;
             case SpellChoice.UP:
                 selectedSpell = currentSpells[2];
-                if (Input.GetKeyDown(KeyCode.B) && selectedSpell != null){
+                if (Input.GetKeyDown(KeyCode.B)){
+
+                    if(selectedSpell == null){
+                        AudioManager.Instance.errorSound.Play();
+                        CameraEffects.Instance.TriggerShake(errorShakeIntensity,errorShakeDuration);
+                        break;
+                    }
+
                     if(selectedSpell.IsAvailable()){
                         sourceTile.Unselect();
                         SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
@@ -470,16 +610,39 @@ public class InterfaceManager : MonoBehaviour
                     overloaded = false;
                     break;
                 }
-                if (Input.GetKeyDown(KeyCode.UpArrow)){
+                if (Input.GetKeyDown(KeyCode.UpArrow) && selectedSpell != null){
                     // Passer en mode surcharge / Revenir au mode non surchargé
                     spellChoice = SpellChoice.UP;
+                    if(!selectedSpell.IsAvailable())
+                        break;
                     overloaded = !overloaded;
+                    // On joue le FX d'overload
+                    if(spellSelector.transform.GetChild(2).transform.Find("SpecialFX").gameObject.activeSelf)
+                        spellSelector.transform.GetChild(2).transform.Find("SpecialFX").gameObject.SetActive(false);
+                    spellSelector.transform.GetChild(2).transform.Find("SpecialFX").gameObject.SetActive(true);
+                    spellSelector.transform.GetChild(2).GetComponent<Animator>().Play("up overloaded");
+                    if (overloaded){
+                        spellSelector.transform.GetChild(2).transform.Find("overloaded").gameObject.SetActive(true);
+                        CameraEffects.Instance.TriggerShake(0.05f,0.2f);
+                        AudioManager.Instance.overloadSound.Play();
+                        spellPanel.transform.Find("overloaded").gameObject.SetActive(true);
+                    }
+                    else{
+                        spellSelector.transform.GetChild(2).transform.Find("overloaded").gameObject.SetActive(false);
+                        spellPanel.transform.Find("overloaded").gameObject.SetActive(false);
+                    }
                     break;
                 }
                 break;
             case SpellChoice.DOWN:
                 selectedSpell = currentSpells[3];
-                if (Input.GetKeyDown(KeyCode.B) && selectedSpell != null){
+                if (Input.GetKeyDown(KeyCode.B)){
+
+                    if(selectedSpell == null){
+                        AudioManager.Instance.errorSound.Play();
+                        CameraEffects.Instance.TriggerShake(errorShakeIntensity,errorShakeDuration);
+                        break;
+                    }
                     if(selectedSpell.IsAvailable()){
                         sourceTile.Unselect();
                         SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
@@ -509,10 +672,27 @@ public class InterfaceManager : MonoBehaviour
                     overloaded = false;
                     break;
                 }
-                if (Input.GetKeyDown(KeyCode.DownArrow)){
+                if (Input.GetKeyDown(KeyCode.DownArrow) && selectedSpell != null){
                     // Passer en mode surcharge / Revenir au mode non surchargé
                     spellChoice = SpellChoice.DOWN;
+                    if(!selectedSpell.IsAvailable())
+                        break;
                     overloaded = !overloaded;
+                    // On joue le FX d'overload
+                    if(spellSelector.transform.GetChild(3).transform.Find("SpecialFX").gameObject.activeSelf)
+                        spellSelector.transform.GetChild(3).transform.Find("SpecialFX").gameObject.SetActive(false);
+                    spellSelector.transform.GetChild(3).transform.Find("SpecialFX").gameObject.SetActive(true);
+                    spellSelector.transform.GetChild(3).GetComponent<Animator>().Play("down overloaded");
+                    if (overloaded){
+                        spellSelector.transform.GetChild(3).transform.Find("overloaded").gameObject.SetActive(true);
+                        CameraEffects.Instance.TriggerShake(0.05f,0.2f);
+                        AudioManager.Instance.overloadSound.Play();
+                        spellPanel.transform.Find("overloaded").gameObject.SetActive(true);
+                    }
+                    else{
+                        spellSelector.transform.GetChild(3).transform.Find("overloaded").gameObject.SetActive(false);
+                        spellPanel.transform.Find("overloaded").gameObject.SetActive(false);
+                    }
                     break;
                 }
                 break;
@@ -553,7 +733,8 @@ public class InterfaceManager : MonoBehaviour
             // Just changed from another state
 
             // Reset view
-            ResetDisplay();
+            ResetDisplay(true);
+
 
             // Activate the needed interface
             unitPanel.gameObject.SetActive(true);
@@ -561,11 +742,12 @@ public class InterfaceManager : MonoBehaviour
             spellSelector.gameObject.SetActive(true);
             shade.gameObject.SetActive(true);
             spellPanel.gameObject.SetActive(true);
-            spellPanelLine.gameObject.SetActive(true);
 
             // TODO Définir un emplacement par défaut plus intelligent
             targetTile = UnitManager.Instance.GetUnits(Team.Enemy)[0].GetTile();
             targetTile.Select();
+
+            DrawUILine(UIPanelLine, targetTile);
             
             ActivateState(BattleManager.PlayerActionChoiceState.TARGET_SELECTION);
         }
@@ -583,7 +765,10 @@ public class InterfaceManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.B)){
             if(targetTile.GetUnit()!= null){
+                DisableSpellOverload();
                 targetTile.Unselect();
+                UIPanelLine.SetActive(false);
+                Debug.Log("B appuyé");
                 TargetSelectionTrigger(BattleManager.Trigger.VALIDATE);
             }
         }
@@ -605,22 +790,11 @@ public class InterfaceManager : MonoBehaviour
             NavigateTarget(Directions.RIGHT);
         }
 
-        DrawPanelLine(spellPanelLine, targetTile);
+        //DrawUILine(UIPanelLine, targetTile);
         GridManager.Instance.SetSelectionMode(selectedSpell.GetRange());
 
         //Abstraire ce code
         //BaseUnit currentUnit = targetTile.GetUnit();
-
-        // N'aidait pas à la lisibilité d'après moi
-        // (en gros, le personnage ennemi était toujours sélectionné, je préfère qu'on ait toujours les infos sur le lanceur)
-        //if(currentUnit != null){
-            //infosPanel.SetActive(true);
-            //DisplayUnit(currentUnit);
-            //DrawPanelLine(infosPanelLine, targetTile);
-        //}
-        //else{
-            //infosPanel.SetActive(false);
-        //}
 
         // Write into a variable the instruction if validated
 
@@ -700,15 +874,18 @@ public class InterfaceManager : MonoBehaviour
         }
     }
     
-    void ResetDisplay(){
-            spellSelector.gameObject.SetActive(false);
+    void ResetDisplay(bool flag = false){
+            if(!flag){
+                spellSelector.gameObject.SetActive(false);
+                UILine.SetActive(false);
+            }
+            UIPanelLine.SetActive(false);
             shade.gameObject.SetActive(false);
             unitPanel.gameObject.SetActive(false);
             passivePanel.gameObject.SetActive(false);
             tileSelector.gameObject.SetActive(false);
             spellPanel.gameObject.SetActive(false);
     }
-
     void ActivateState(BattleManager.PlayerActionChoiceState stateToActivate){
         Dictionary<BattleManager.PlayerActionChoiceState, bool> new_states = new Dictionary<BattleManager.PlayerActionChoiceState, bool>(activated_states);
         foreach (var state in activated_states)
@@ -737,7 +914,6 @@ public class InterfaceManager : MonoBehaviour
             passivePanel.gameObject.SetActive(true);
             DisplayUnit(currentUnit);
             DisplayPassives(currentUnit);
-            //DrawPanelLine(infosPanelLine, sourceTile);
         }
         else{
             unitPanel.gameObject.SetActive(false);
@@ -798,25 +974,20 @@ public class InterfaceManager : MonoBehaviour
     }
 
 
-    // Fonction pour gérer la ligne d'UI qui pointe sur les objets. assez rigide pour l'instant
-    private void DrawPanelLine(RectTransform PanelLine, Tile tile){
+    // Fonction pour gérer la ligne d'UI nouvelle
+    // ------------------------------------------
+    private void DrawUILine(GameObject Line, Tile tile){
+        Line.SetActive(true);
+        Vector3 targetPosition = tile.transform.position;
+        if(Line == UILine){
+            UILine.transform.position = new Vector3 (tile.transform.position.x + xLineOffset, tile.transform.position.y + yLineOffset, 0f);
+            UILineVertical.position = new Vector3 (0f, 0f, 0f);
+        }
+        if(Line == UIPanelLine){
+            UIPanelLineHorizontal.position = new Vector3 (UIPanelLineHorizontal.position.x, targetPosition.y+yLinePanelOffset, 0f);
+        }
+    }
 
-        // Convertit la position dans le gameworld en position en px sur l'écran.
-        Vector3 targetPosition = mainCamera.WorldToScreenPoint(tile.transform.position);
-
-        // Pour l'instant, au cas par cas en fonction de quelle ligne de quel panneau est utilisée.... A voir si on en a beaucoup par la suite
-        if(PanelLine == spellSelectorLine)
-            PanelLine.sizeDelta = new Vector2(targetPosition.x - tileSize*1.6f,  Screen.height - spellSelector.GetComponent<RectTransform>().rect.height - targetPosition.y-tileSize*0.3f); // a bit ugly but still good      
-        
-        /// Ces lignes géraient la ligne de l'info panel, qui n'en a plus dans le layout actuel
-        //if(PanelLine == infosPanelLine)
-        //    PanelLine.sizeDelta = new Vector2(targetPosition.x - tileSize, Screen.height - infosPanel.GetComponent<RectTransform>().rect.height - targetPosition.y); // a bit ugly but still good
-            //PanelLine.sizeDelta = new Vector2(targetPosition.x - tileSize, targetPosition.y - infosPanel.GetComponent<RectTransform>().rect.height); // a bit ugly but still good      
-        
-        // Gère la position de la ligne du sort pendant la sélection de target
-        if (PanelLine == spellPanelLine)
-            PanelLine.sizeDelta = new Vector2(Screen.width-targetPosition.x - tileSize, targetPosition.y - spellPanel.GetComponent<RectTransform>().rect.height); // Hard coded, needs some update
-    } 
 
     // Setup la barre de vie d'un perso
     public LifeBar SetupLifebar(BaseUnit unit){
@@ -870,19 +1041,55 @@ public class InterfaceManager : MonoBehaviour
             // Si c'est le spell sélectionné
             if (i == index){
                 spellChoiceAnimator.Play(spellChoiceAnims[i]);
-                continue;
             }
 
             // S'il était précédemment sélectionné, on le déselctionne
-            if (spellChoiceAnimator.GetCurrentAnimatorStateInfo(0).IsName(spellChoiceAnims[i]))
+            var stateInfo = spellChoiceAnimator.GetCurrentAnimatorStateInfo(0);
+            if (!stateInfo.IsName($"Not{spellChoiceAnims[i]}")){
                 spellChoiceAnimator.Play($"Not{spellChoiceAnims[i]}");
+                
+                // enlever le overload
+                if(i != 4)
+                    spellSelector.transform.GetChild(i).Find("overloaded").gameObject.SetActive(false);
+            }
+            // + déselectionner le overload
         }
     }
 
     public Canvas GetUI(){
         return UI;
     }
-}
 
+    public void ShakeElement(RectTransform uiElement, float intensity, float shakeTime){
+        Vector3 originalPosition = uiElement.anchoredPosition;
+        void UpdateShake(){
+            if(shakeTime > 0f){
+                Vector2 randomOffset = Random.insideUnitCircle * intensity;
+                uiElement.anchoredPosition = originalPosition + (Vector3)randomOffset;
+                shakeTime -= Time.deltaTime;
+            }
+            else{
+                uiElement.anchoredPosition = originalPosition;
+            }
+            if(shakeTime > 0)
+                UpdateShake();
+        }
+
+    }
+
+    public void DisableSpellOverload(){
+        for (int i = 0; i < 4; i++)
+            spellSelector.transform.GetChild(i).transform.Find("overloaded").gameObject.SetActive(false);
+        spellPanel.transform.Find("overloaded").gameObject.SetActive(false);
+        
+        // tant qu'on y est on reset le spell sélectionné       
+        spellChoice = SpellChoice.CHARACTER;
+        overloaded = false;
+        
+
+
+    }
+
+}
 
 public enum Directions {RIGHT, LEFT, UP, DOWN}

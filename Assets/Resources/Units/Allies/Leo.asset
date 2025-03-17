@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit_name: Leo
   sprite: {fileID: 21300000, guid: f2e0bdcade495074db1b9f32f14d41f0, type: 3}
+  animator: {fileID: 9100000, guid: b794b439ecbe62a4b842dea06864aa48, type: 2}
   original_power: 200
   original_health: 1000
   lore_description: 
@@ -21,4 +22,8 @@ MonoBehaviour:
   passives:
   - {fileID: 11400000, guid: b587a4d339b2d264fb83cd02d811e9e5, type: 2}
   aAttack: {fileID: 0}
-  spells: []
+  spells:
+  - {fileID: 11400000, guid: c209bfb34a3dec245b7c626eb0d1cbbc, type: 2}
+  - {fileID: 11400000, guid: dab7c35dde9c50c47b33c0d59dd9de4d, type: 2}
+  - {fileID: 11400000, guid: 012e6ff4f078a0a469fd55fb67b8d6e1, type: 2}
+  - {fileID: 11400000, guid: 90ed7e611bfda6c40bf4ea7237619e9e, type: 2}

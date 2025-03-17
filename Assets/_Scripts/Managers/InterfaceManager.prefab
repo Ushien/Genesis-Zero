@@ -45,13 +45,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIPrefab: {fileID: 2703114003398457339, guid: 78d60f1959b850c43ab69f3bb197ff2c, type: 3}
-  spellPanelLine: {fileID: 0}
-  spellSelectorLine: {fileID: 0}
+  UILine: {fileID: 0}
+  UILinePrefab: {fileID: 363797320139045019, guid: d0ced1c6df09e1149b1053595c927b39, type: 3}
+  UILineVertical: {fileID: 0}
+  UILineHorizontal: {fileID: 0}
+  UIPanelLine: {fileID: 0}
+  UIPanelLinePrefab: {fileID: 5713248188541711625, guid: ec0bb7f525c135e4d96d6ee772093263, type: 3}
+  UIPanelLineVertical: {fileID: 0}
+  UIPanelLineHorizontal: {fileID: 0}
+  spellSelector: {fileID: 0}
   shade: {fileID: 0}
   UIWorldSpace: {fileID: 3722291128606437924, guid: 7d72b36445a86f446892d74aff8d2150, type: 3}
   lifeBarPrefab: {fileID: 365750388818752724, guid: f6bd6efb9959239418755f94895bf15c, type: 3}
   grayscaleShader: {fileID: 2100000, guid: ca5da941d3d390e49bef51a2d9610fa0, type: 2}
-  emptySpellSelectorSquare: {fileID: 21300000, guid: 9d4d396a0d494f445bfea30e683f1b4c, type: 3}
+  blueColor: {r: 0.23113209, g: 1, b: 0.88442224, a: 0}
+  emptySpellSelectorSquare: {fileID: 21300000, guid: c641a66c14526b74d8f4a4e7449f7601, type: 3}
+  errorShakeIntensity: 0.01
+  errorShakeDuration: 0.2
+  driftAmount: 0.12
+  driftIntensity: 1
+  driftSmoothing: 0.8
+  xLineOffset: -0.07
+  yLineOffset: 0.21
+  yLinePanelOffset: -1.2
   lifeBarOffset: {x: 0, y: 1, z: 0}
   selectorSpeed: 10
   tileOutliner: {fileID: 2100000, guid: 29bac064f9c8bfd4bab1f1bf7e92c24a, type: 2}

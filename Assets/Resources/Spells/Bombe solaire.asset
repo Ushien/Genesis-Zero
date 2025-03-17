@@ -20,17 +20,17 @@ MonoBehaviour:
   - 1
   - 1
   - 1
+  overloaded_fight_description: 
   hyper_ratios:
   - 1
   - 1
   - 1
-  overloaded_fight_description: 
   cooldown: 5
   isAnAttack: 0
   properties: 
   range: 3
   team_restriction: 3
-  artwork: {fileID: 21300000, guid: f46c398996406d640be9f00857f5908c, type: 3}
+  artwork: {fileID: 21300000, guid: eed44235dcbd621438f7c0c4f05e2356, type: 3}
   spellScriptPrefab: {fileID: 2999990872894262757, guid: 5a54959b7a3ec2c4981e9b78fa7c4652, type: 3}
   lootable: 0
   rarity: 2

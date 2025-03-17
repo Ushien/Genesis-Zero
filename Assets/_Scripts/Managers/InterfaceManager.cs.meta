@@ -3,7 +3,24 @@ guid: b72fbeeba5547f3418daea7460dff2b4
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - UIPrefab: {instanceID: 0}
+  - UILine: {instanceID: 0}
+  - UILinePrefab: {instanceID: 0}
+  - UILineVertical: {instanceID: 0}
+  - UILineHorizontal: {instanceID: 0}
+  - spellPanelLine: {instanceID: 0}
+  - spellSelectorLine: {instanceID: 0}
+  - shade: {instanceID: 0}
+  - UIWorldSpace: {instanceID: 0}
+  - lifeBarPrefab: {instanceID: 0}
+  - grayscaleShader: {instanceID: 0}
+  - emptySpellSelectorSquare: {instanceID: 0}
+  - overloadSound: {instanceID: 0}
+  - errorSound: {instanceID: 0}
+  - tileOutliner: {instanceID: 0}
+  - mainCamera: {instanceID: 0}
+  - targetTile: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
