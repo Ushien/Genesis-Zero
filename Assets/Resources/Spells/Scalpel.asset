@@ -18,7 +18,7 @@ MonoBehaviour:
     (N)"
   ratios:
   - 1
-  - 1
+  - 2
   - 1
   overloaded_fight_description: 
   hyper_ratios:

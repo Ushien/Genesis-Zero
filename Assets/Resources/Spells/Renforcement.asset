@@ -30,6 +30,6 @@ MonoBehaviour:
   team_restriction: 1
   artwork: {fileID: 21300000, guid: a2563f2b8dbc4044b9a50537d3a29962, type: 3}
   spellScriptPrefab: {fileID: 4855276535827830897, guid: 660f81acc692dc64fa3c66a4b0c769c4, type: 3}
-  lootable: 0
+  lootable: 1
   rarity: 0
   tags: 08000000

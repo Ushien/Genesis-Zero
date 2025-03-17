@@ -88,7 +88,7 @@ public class PickPhaseManager : MonoBehaviour
             alliesCells.Insert(0, _object);
             
             _object.transform.name = allies[i].GetName();
-            _object.GetComponent<SpriteRenderer>().sprite = allies[i].GetComponent<SpriteRenderer>().sprite;
+            _object.GetComponent<SpriteRenderer>().sprite = allies[i].scriptableUnit.sprite;
 
             y_pos = y_pos + Screen.height/2/(allies.Count+1);
             _object.transform.position = cam.ScreenToWorldPoint(new Vector3(Screen.width/7, y_pos, 1));
