@@ -27,8 +27,14 @@ public class InterfaceManager : MonoBehaviour
     public GameObject UILinePrefab;
     public Transform UILineVertical;
     public Transform UILineHorizontal;
+
+    public GameObject UIPanelLine;
+    public GameObject UIPanelLinePrefab;
+    public Transform UIPanelLineVertical;
+    public Transform UIPanelLineHorizontal;
+
     private Transform unitPanel;
-    private Transform spellPanel;
+    public Transform spellPanel;
     private Transform passivePanel;
     private TextMeshProUGUI unitNamePanel;
     private TextMeshProUGUI unitPowerPanel;
@@ -40,7 +46,6 @@ public class InterfaceManager : MonoBehaviour
     private TextMeshProUGUI spellNamePanel;
     private TextMeshProUGUI spellCooldownPanel;
     private TextMeshProUGUI spellDescriptionPanel;
-    public RectTransform spellPanelLine;
     private Image spellPanelIcon;
     public Transform spellSelector;
     public Transform shade;
@@ -63,6 +68,7 @@ public class InterfaceManager : MonoBehaviour
     public float driftSmoothing = 0f;
     public float xLineOffset = 0f;
     public float yLineOffset = 0f;
+    public float yLinePanelOffset = 0f;
 
     public Vector3 lifeBarOffset;
 
@@ -124,7 +130,6 @@ public class InterfaceManager : MonoBehaviour
         spellNamePanel = spellPanel.transform.Find("Name").GetComponent<TextMeshProUGUI>();
         spellCooldownPanel = spellPanel.transform.Find("Cooldown").GetComponent<TextMeshProUGUI>();
         spellDescriptionPanel = spellPanel.transform.Find("Description").GetComponent<TextMeshProUGUI>();
-        spellPanelLine = spellPanel.transform.Find("Line").GetComponent<RectTransform>();
         spellPanelIcon = spellPanel.transform.Find("Sprite").GetComponent<Image>();
 
         mainCamera = GlobalManager.Instance.GetCam();
@@ -156,8 +161,11 @@ public class InterfaceManager : MonoBehaviour
     
         // On initialise la ligne des UI
         UILine = Instantiate(UILinePrefab);
+        UIPanelLine = Instantiate(UIPanelLinePrefab);
         UILineVertical = UILine.transform.Find("vertical");
         UILineHorizontal = UILine.transform.Find("horizontal");
+        UIPanelLineVertical = UIPanelLine.transform.Find("vertical");
+        UIPanelLineHorizontal = UIPanelLine.transform.Find("horizontal");
     
     }
 
@@ -294,7 +302,6 @@ public class InterfaceManager : MonoBehaviour
             shade.gameObject.SetActive(true);
             unitPanel.gameObject.SetActive(true);
             spellPanel.gameObject.SetActive(true);
-            spellPanelLine.gameObject.SetActive(false);
 
             //spellSelector.transform.position = sourceTile.transform.position;
             DrawUILine(UILine, sourceTile);
@@ -735,11 +742,12 @@ public class InterfaceManager : MonoBehaviour
             spellSelector.gameObject.SetActive(true);
             shade.gameObject.SetActive(true);
             spellPanel.gameObject.SetActive(true);
-            spellPanelLine.gameObject.SetActive(true);
 
             // TODO Définir un emplacement par défaut plus intelligent
             targetTile = UnitManager.Instance.GetUnits(Team.Enemy)[0].GetTile();
             targetTile.Select();
+
+            DrawUILine(UIPanelLine, targetTile);
             
             ActivateState(BattleManager.PlayerActionChoiceState.TARGET_SELECTION);
         }
@@ -759,6 +767,8 @@ public class InterfaceManager : MonoBehaviour
             if(targetTile.GetUnit()!= null){
                 DisableSpellOverload();
                 targetTile.Unselect();
+                UIPanelLine.SetActive(false);
+                Debug.Log("B appuyé");
                 TargetSelectionTrigger(BattleManager.Trigger.VALIDATE);
             }
         }
@@ -780,22 +790,11 @@ public class InterfaceManager : MonoBehaviour
             NavigateTarget(Directions.RIGHT);
         }
 
-        DrawPanelLine(spellPanelLine, targetTile);
+        //DrawUILine(UIPanelLine, targetTile);
         GridManager.Instance.SetSelectionMode(selectedSpell.GetRange());
 
         //Abstraire ce code
         //BaseUnit currentUnit = targetTile.GetUnit();
-
-        // N'aidait pas à la lisibilité d'après moi
-        // (en gros, le personnage ennemi était toujours sélectionné, je préfère qu'on ait toujours les infos sur le lanceur)
-        //if(currentUnit != null){
-            //infosPanel.SetActive(true);
-            //DisplayUnit(currentUnit);
-            //DrawPanelLine(infosPanelLine, targetTile);
-        //}
-        //else{
-            //infosPanel.SetActive(false);
-        //}
 
         // Write into a variable the instruction if validated
 
@@ -880,6 +879,7 @@ public class InterfaceManager : MonoBehaviour
                 spellSelector.gameObject.SetActive(false);
                 UILine.SetActive(false);
             }
+            UIPanelLine.SetActive(false);
             shade.gameObject.SetActive(false);
             unitPanel.gameObject.SetActive(false);
             passivePanel.gameObject.SetActive(false);
@@ -914,7 +914,6 @@ public class InterfaceManager : MonoBehaviour
             passivePanel.gameObject.SetActive(true);
             DisplayUnit(currentUnit);
             DisplayPassives(currentUnit);
-            //DrawPanelLine(infosPanelLine, sourceTile);
         }
         else{
             unitPanel.gameObject.SetActive(false);
@@ -984,18 +983,11 @@ public class InterfaceManager : MonoBehaviour
             UILine.transform.position = new Vector3 (tile.transform.position.x + xLineOffset, tile.transform.position.y + yLineOffset, 0f);
             UILineVertical.position = new Vector3 (0f, 0f, 0f);
         }
+        if(Line == UIPanelLine){
+            UIPanelLineHorizontal.position = new Vector3 (UIPanelLineHorizontal.position.x, targetPosition.y+yLinePanelOffset, 0f);
+        }
     }
 
-    // Fonction pour gérer la ligne d'UI qui pointe sur les objets. assez rigide pour l'instant
-    private void DrawPanelLine(RectTransform PanelLine, Tile tile){
-
-        // Convertit la position dans le gameworld en position en px sur l'écran.
-        Vector3 targetPosition = mainCamera.WorldToScreenPoint(tile.transform.position);
-
-        // Gère la position de la ligne du sort pendant la sélection de target
-        if (PanelLine == spellPanelLine)
-            PanelLine.sizeDelta = new Vector2(Screen.width-targetPosition.x - tileSize, targetPosition.y - spellPanel.GetComponent<RectTransform>().rect.height); // Hard coded, needs some update
-    } 
 
     // Setup la barre de vie d'un perso
     public LifeBar SetupLifebar(BaseUnit unit){
