@@ -19,7 +19,9 @@ MonoBehaviour:
   - 1
   - 1
   - 1
-  overloaded_fight_description: 
+  overloaded_fight_description: "S\xE9lectionne une unit\xE9 et force les alli\xE9s
+    du lanceur \xE0 l'attaquer 2 fois. Les propri\xE9t\xE9s de la technique sont
+    transmises aux attaques."
   hyper_ratios:
   - 1
   - 1

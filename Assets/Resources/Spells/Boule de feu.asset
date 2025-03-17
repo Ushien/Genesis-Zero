@@ -12,17 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
   m_Name: Boule de feu
   m_EditorClassIdentifier: 
-  spell_name: Boule de feu (P)
+  spell_name: Boule de feu
   fight_description: "Inflige %%1 d\xE9gats \xE0 une unit\xE9 - Pyro"
   ratios:
   - 1
   - 1
   - 1
-  overloaded_fight_description: "Inflige %%1 d\xE9gats \xE0 une unit\xE9 - Pyro (P)
-    - Surcharge"
+  overloaded_fight_description: "Inflige %%1 d\xE9gats \xE0 une unit\xE9 - Pyro"
   hyper_ratios:
+  - 3
   - 1
-  - 2
   - 1
   cooldown: 1
   isAnAttack: 0

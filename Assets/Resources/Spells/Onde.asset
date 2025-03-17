@@ -19,10 +19,11 @@ MonoBehaviour:
   - 0.7
   - 0.02
   - 1
-  overloaded_fight_description: 
+  overloaded_fight_description: "Soigne une unit\xE9 de %%1 d\xE9gats et augmente
+    sa puissance de __2 %."
   hyper_ratios:
-  - 1
-  - 1
+  - 2
+  - 0.1
   - 1
   cooldown: 2
   isAnAttack: 0

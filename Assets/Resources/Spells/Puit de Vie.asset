@@ -18,9 +18,9 @@ MonoBehaviour:
   - 4.5
   - 1
   - 1
-  overloaded_fight_description: 
+  overloaded_fight_description: "Soigne une unit\xE9 de %%1 d\xE9gats."
   hyper_ratios:
-  - 1
+  - 7
   - 1
   - 1
   cooldown: 4

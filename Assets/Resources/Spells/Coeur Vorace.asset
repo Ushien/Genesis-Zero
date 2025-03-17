@@ -12,19 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
   m_Name: Coeur Vorace
   m_EditorClassIdentifier: 
-  spell_name: Coeur Vorace
+  spell_name: Coeur Vorace (P)
   fight_description: "Inflige %%1 d\xE9gats \xE0 une unit\xE9. Les d\xE9gats augmentent
     d\xE9finitivement chaque fois que le lanceur est soign\xE9 - Vampirisme"
   ratios:
   - 0.2
   - 0.05
   - 1
-  overloaded_fight_description: "Inflige %%1 d\xE9gats \xE0 une cible et augmente
-    les PV du lanceur du m\xEAme montant. Les d\xE9gats augmentent d\xE9finitivement
-    pour chaque soin re\xE7u par le personnage."
+  overloaded_fight_description: "Inflige %%1 d\xE9gats \xE0 une unit\xE9. Les d\xE9gats
+    augmentent d\xE9finitivement chaque fois que le lanceur est soign\xE9 - Vampirisme"
   hyper_ratios:
-  - 1
-  - 1
+  - 0.3
+  - 0.1
   - 1
   cooldown: 3
   isAnAttack: 0

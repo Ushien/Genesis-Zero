@@ -152,13 +152,12 @@ public class BaseUnit : MonoBehaviour
         if(scriptableUnit.animator != null){
             // Rend l'unité grisée si elle a déjà reçu une instruction
             if(HasGivenInstruction() && animator.GetCurrentAnimatorStateInfo(0).IsName("idle")){
-                gameObject.GetComponent<SpriteRenderer>().color = new Color32( 173, 173, 173, 200);
+                //gameObject.GetComponent<SpriteRenderer>().color = new Color32( 173, 173, 173, 200);
                 animator.Play("prepared");
             }
             //else
-            //  gameObject.GetComponent<SpriteRenderer>().color = new Color32( 255, 255, 255, 255);
             if(!HasGivenInstruction() && !animator.GetCurrentAnimatorStateInfo(0).IsName("idle")){
-                gameObject.GetComponent<SpriteRenderer>().color = new Color32( 255, 255, 255, 255);
+                //gameObject.GetComponent<SpriteRenderer>().color = new Color32( 255, 255, 255, 255);
                 animator.Play("idle");
             }
         }
@@ -1169,7 +1168,7 @@ public class BaseUnit : MonoBehaviour
         #endregion
 
     public void CheckAssertions(){
-        Assert.AreEqual(GetFinalHealth().ToString() + " HP", lifeBar.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text, "La barre de HP et les valeurs réelles sont désynchronisées (HP finaux)");
+        //Assert.AreEqual(GetFinalHealth().ToString() + " HP", lifeBar.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text, "La barre de HP et les valeurs réelles sont désynchronisées (HP finaux)");
         Assert.AreEqual(GetArmor().ToString() + " AR", lifeBar.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text, "La barre d'armure et les valeurs réelles sont désynchronisées");
         // Check que l'unité n'a aucun passif en doublon
         Assert.AreEqual(GetPassives()

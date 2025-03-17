@@ -22,7 +22,7 @@ public class MultiAiles : BaseSpell
     }
 
     private void _MultiAiles_H(Tile targetTile, List<Properties> properties = null){
-        SpellManager.Instance.UseSpell(GetOwner(), GetFinalDamages(GetRatio(hyper : true)[0]), targetTile.GetUnit(), properties, spellType : SpellType.Damage);
+        SpellManager.Instance.UseSpell(GetOwner(), GetFinalDamages(GetRatio(hyper : true)[0]), UnitManager.Instance.GetUnits(team : targetTile.team), properties, spellType : SpellType.Damage);
         
         Modifier newModifier = Instantiate(baseModifier);
         newModifier.Setup(gameObject, _powerBonus : GetRatio(hyper : true)[1], _duration : Modifier.Duration.Battle);

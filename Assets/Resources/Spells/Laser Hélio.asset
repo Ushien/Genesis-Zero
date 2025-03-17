@@ -18,7 +18,7 @@ MonoBehaviour:
   - 0.7
   - 1
   - 1
-  overloaded_fight_description: 
+  overloaded_fight_description: "Inflige %%1 d\xE9gats \xE0 une unit\xE9 - Vampirisme"
   hyper_ratios:
   - 1.5
   - 1

@@ -165,7 +165,7 @@ public class BaseSpell : MonoBehaviour
         // Méthode overridée
 
         // Si le sort ne propose pas d'implémentation de la surcharge, lance juste la version de base.
-        Cast(targetTile, properties);
+        Debug.Log("Méthode overridée");
     }
 
     /// <summary>
@@ -190,8 +190,7 @@ public class BaseSpell : MonoBehaviour
 
             AfterCastEvent afterCastEvent = BattleEventManager.Instance.CreateAfterCastEvent(owner, this, targetTile);
             BattleEventManager.Instance.ApplyAfterCastEvent(afterCastEvent, true);
-
-            if (hyper){
+            if(hyper){
                 // Détacher la technique de son propriétaire (comme si elle était supprimée)
                 owner.RemoveSpell(this);
             }

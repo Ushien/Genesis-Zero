@@ -19,10 +19,11 @@ MonoBehaviour:
   - 0.7
   - 0.05
   - 1
-  overloaded_fight_description: 
+  overloaded_fight_description: "Inflige %%1 d\xE9gats \xE0 tous les ennemis et augmente
+    la puissance du lanceur de __2%."
   hyper_ratios:
   - 1.5
-  - 0.1
+  - 0.2
   - 1
   cooldown: 5
   isAnAttack: 0

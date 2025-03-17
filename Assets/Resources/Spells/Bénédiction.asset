@@ -19,7 +19,8 @@ MonoBehaviour:
   - 0.3
   - 1
   - 1
-  overloaded_fight_description: 
+  overloaded_fight_description: "Renforce l'attaque de base d'une unit\xE9 de __1%
+    pendant 3 tours. (P)"
   hyper_ratios:
   - 1
   - 1

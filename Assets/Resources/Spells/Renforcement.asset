@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
   m_Name: Renforcement
   m_EditorClassIdentifier: 
-  spell_name: Renforcement (N)
-  fight_description: "Conf\xE8re %%1 d'armure au lanceur (N)"
+  spell_name: Renforcement
+  fight_description: "Conf\xE8re %%1 d'armure au lanceur."
   ratios:
   - 1
   - 1
   - 1
-  overloaded_fight_description: 
+  overloaded_fight_description: "Conf\xE8re %%1 d'armure au lanceur."
   hyper_ratios:
-  - 1
+  - 5
   - 1
   - 1
   cooldown: 1

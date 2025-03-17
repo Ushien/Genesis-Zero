@@ -18,6 +18,6 @@ public class LaserHelio : BaseSpell
     }
 
     private void _LaserHelio_H(Tile targetTile, List<Properties> properties = null){
-        SpellManager.Instance.UseSpell(GetOwner(), GetFinalDamages(GetRatio()[0]), targetTile.GetUnit(), Tools.CombineProperties(properties, Properties.Vampirisme), spellType : SpellType.Damage);
+        SpellManager.Instance.UseSpell(GetOwner(), GetFinalDamages(GetRatio(hyper : true)[0]), targetTile.GetUnit(), Tools.CombineProperties(properties, Properties.Vampirisme), spellType : SpellType.Damage);
     }
 }

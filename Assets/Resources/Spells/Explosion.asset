@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
   m_Name: Explosion
   m_EditorClassIdentifier: 
-  spell_name: Explosion
+  spell_name: Explosion (P)
   fight_description: "Inflige %%1 d\xE9gats \xE0 une cible, et %%2 d\xE9gats \xE0
     ses alli\xE9s."
   ratios:
   - 1.2
   - 0.2
   - 1
-  overloaded_fight_description: 
+  overloaded_fight_description: "Inflige %%1 d\xE9gats \xE0 une cible et \xE0 ses
+    alli\xE9s"
   hyper_ratios:
-  - 1
+  - 1.5
   - 1
   - 1
   cooldown: 4

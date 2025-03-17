@@ -368,8 +368,6 @@ public class InterfaceManager : MonoBehaviour
         // Si le spellChoice n'a pas changé, on joue pas l'anim
         if(spellChoice != currentSpellChoice){
             switch(spellChoice){ 
-
-
                 case SpellChoice.CHARACTER:
                     spellSelector.transform.GetChild(4).transform.GetChild(0).gameObject.SetActive(true);
                     AnimateSpellChoice(4);
@@ -765,11 +763,10 @@ public class InterfaceManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.B)){
             if(targetTile.GetUnit()!= null){
-                DisableSpellOverload();
                 targetTile.Unselect();
                 UIPanelLine.SetActive(false);
-                Debug.Log("B appuyé");
                 TargetSelectionTrigger(BattleManager.Trigger.VALIDATE);
+                DisableSpellOverload();
             }
         }
         if (Input.GetKeyDown(KeyCode.N)){

@@ -15,13 +15,11 @@ MonoBehaviour:
   unit_name: Anasta
   sprite: {fileID: 21300000, guid: 5b2f00b3fc239ca48ab321f3d815827e, type: 3}
   animator: {fileID: 9100000, guid: 8d91f6f1c2ddd0d409fa9049d06605bb, type: 2}
-  original_power: 200
-  original_health: 1000
+  original_power: 400
+  original_health: 2000
   lore_description: 
   fight_description: 
   passives:
   - {fileID: 11400000, guid: dc8f61f82a6c83d45b5ab440a460e57a, type: 2}
   aAttack: {fileID: 0}
-  spells:
-  - {fileID: 11400000, guid: 90e536e266c7d964bbe12d6d4b9163cb, type: 2}
-  - {fileID: 11400000, guid: d82b8e743a2889c4f83af0148b21409f, type: 2}
+  spells: []
