@@ -13,8 +13,13 @@ MonoBehaviour:
   m_Name: Inspiration
   m_EditorClassIdentifier: 
   passive_name: Inspiration
-  fight_description: "Avant de lancer une technique sur un alli\xE9, retire ses \xE9tats
-    n\xE9gatifs."
+  fight_description: Avant de lancer une technique sur un allie, retire ses etats
+    negatifs.
+  ratios:
+  - 1
+  - 1
+  - 1
   artwork: {fileID: 21300000, guid: cabd9c0f00276474a8bb097ac09609ab, type: 3}
   passivePrefab: {fileID: 2164661232558001117, guid: 15690a694ebe6a64a8d0f7e0499e68ce, type: 3}
+  minor: 0
   lootable: 1

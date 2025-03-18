@@ -87,7 +87,9 @@ public class InterfaceManager : MonoBehaviour
 
     private enum SpellChoice{CHARACTER, LEFT, RIGHT, UP, DOWN}
     private SpellChoice spellChoice;
-    private SpellChoice currentSpellChoice =SpellChoice.CHARACTER;
+    private SpellChoice currentSpellChoice =SpellChoice.DOWN;
+    private SpellChoice currentSpellChoiceAnim = SpellChoice.DOWN;
+    private SpellChoice currentSpellChoiceHighlight = SpellChoice.DOWN;
 
     [SerializeField]
     public bool overloaded = false;
@@ -214,6 +216,11 @@ public class InterfaceManager : MonoBehaviour
 
     void SourceSelectionDisplay(){
         if(!activated_states[BattleManager.PlayerActionChoiceState.CHARACTER_SELECTION]){
+            // Reset those flags
+            currentSpellChoice = SpellChoice.DOWN;
+            currentSpellChoiceAnim = SpellChoice.DOWN;
+            currentSpellChoiceHighlight = SpellChoice.DOWN;
+            
             // Just changed from another state
             // Reset view
             ResetDisplay();
@@ -357,21 +364,23 @@ public class InterfaceManager : MonoBehaviour
         }
 
         //Display highlight
-        if(spellChoice != currentSpellChoice){
+        if(spellChoice != currentSpellChoiceHighlight){
             spellSelector.transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(false);
             spellSelector.transform.GetChild(1).transform.GetChild(0).gameObject.SetActive(false);
             spellSelector.transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(false);
             spellSelector.transform.GetChild(3).transform.GetChild(0).gameObject.SetActive(false);
             spellSelector.transform.GetChild(4).transform.GetChild(0).gameObject.SetActive(false);
+            currentSpellChoiceHighlight = spellChoice;
         }
 
         // Si le spellChoice n'a pas changé, on joue pas l'anim
-        if(spellChoice != currentSpellChoice){
+        if(spellChoice != currentSpellChoiceAnim){
             switch(spellChoice){ 
 
 
                 case SpellChoice.CHARACTER:
                     spellSelector.transform.GetChild(4).transform.GetChild(0).gameObject.SetActive(true);
+                    Debug.Log("Animating Character");
                     AnimateSpellChoice(4);
                     break;
                 case SpellChoice.LEFT:
@@ -393,7 +402,7 @@ public class InterfaceManager : MonoBehaviour
                 default:
                     break;
             }
-            currentSpellChoice = spellChoice;
+            currentSpellChoiceAnim = spellChoice;
         }
 
         // Navigation au sein de la sélection
@@ -702,25 +711,29 @@ public class InterfaceManager : MonoBehaviour
         }
 
         // Affichage du spell dans l'information panel
-        switch(spellChoice){
-            case SpellChoice.CHARACTER:
-                DisplaySpell(sourceUnit.GetAttack(), hyper : overloaded);
-                break;
-            case SpellChoice.LEFT:
-                DisplaySpell(currentSpells[0], hyper : overloaded);
-                break;
-            case SpellChoice.RIGHT:
-                DisplaySpell(currentSpells[1], hyper : overloaded);
-                break;
-            case SpellChoice.UP:
-                DisplaySpell(currentSpells[2], hyper : overloaded);
-                break;
-            case SpellChoice.DOWN:
-                DisplaySpell(currentSpells[3], hyper : overloaded);
-                break;
-            default:
-                break;
+        if(spellChoice != currentSpellChoice){
+            switch(spellChoice){
+                case SpellChoice.CHARACTER:
+                    DisplaySpell(sourceUnit.GetAttack(), hyper : overloaded);
+                    break;
+                case SpellChoice.LEFT:
+                    DisplaySpell(currentSpells[0], hyper : overloaded);
+                    break;
+                case SpellChoice.RIGHT:
+                    DisplaySpell(currentSpells[1], hyper : overloaded);
+                    break;
+                case SpellChoice.UP:
+                    DisplaySpell(currentSpells[2], hyper : overloaded);
+                    break;
+                case SpellChoice.DOWN:
+                    DisplaySpell(currentSpells[3], hyper : overloaded);
+                    break;
+                default:
+                    break;
+            }
         }
+        
+        currentSpellChoice = spellChoice;
     }
     
     void SpellSelectionTrigger(BattleManager.Trigger trigger){
@@ -768,7 +781,6 @@ public class InterfaceManager : MonoBehaviour
                 DisableSpellOverload();
                 targetTile.Unselect();
                 UIPanelLine.SetActive(false);
-                Debug.Log("B appuyé");
                 TargetSelectionTrigger(BattleManager.Trigger.VALIDATE);
             }
         }
@@ -779,18 +791,21 @@ public class InterfaceManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.UpArrow)){
             NavigateTarget(Directions.UP);
+            DrawUILine(UIPanelLine, targetTile);
         }
         if (Input.GetKeyDown(KeyCode.DownArrow)){
             NavigateTarget(Directions.DOWN);
+            DrawUILine(UIPanelLine, targetTile);
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow)){
             NavigateTarget(Directions.LEFT);
+            DrawUILine(UIPanelLine, targetTile);
         }
         if (Input.GetKeyDown(KeyCode.RightArrow)){
             NavigateTarget(Directions.RIGHT);
+            DrawUILine(UIPanelLine, targetTile);
         }
-
-        //DrawUILine(UIPanelLine, targetTile);
+        
         GridManager.Instance.SetSelectionMode(selectedSpell.GetRange());
 
         //Abstraire ce code
@@ -816,10 +831,13 @@ public class InterfaceManager : MonoBehaviour
     }
 
     private void DisplaySpell(BaseSpell spell, bool hyper = false){
+        // manière cheap de rejouer les anims de texte et d'éviter des bugs
+        ResetPanel(spellPanel);
         if(spell != null){
             spellPanel.gameObject.SetActive(true);
             spellNamePanel.text = spell.GetName();
             spellDescriptionPanel.text = spell.GetFightDescription(hyper);
+
             if(spell.IsAAttack()){
                 spellCooldownPanel.text = ""; 
             }
@@ -837,6 +855,7 @@ public class InterfaceManager : MonoBehaviour
     }
 
     private void DisplayUnit(BaseUnit unit){
+        ResetPanel(unitPanel);
         unitNamePanel.text = unit.GetName();
         unitPowerPanel.text = "Puissance : " + unit.GetFinalPower().ToString();
         unitHealthPanel.text = "PV : " + unit.GetFinalHealth().ToString() + "/" + unit.GetTotalHealth().ToString();
@@ -847,9 +866,11 @@ public class InterfaceManager : MonoBehaviour
             unitArmorPanel.text = "";
         }
         unitLevelPanel.text = "Niveau : " + unit.GetLevel().ToString();
+        
     }
 
     private void DisplayPassives(BaseUnit unit){
+        ResetPanel(passivePanel);
         if(unit.GetPassives().Count >= 1){
             unitPassiveNamePanel.text = unit.GetPassives()[selectedPassiveIndex].GetName();
             unitPassiveDescriptionPanel.text = unit.GetPassives()[selectedPassiveIndex].GetFightDescription();
@@ -886,6 +907,12 @@ public class InterfaceManager : MonoBehaviour
             tileSelector.gameObject.SetActive(false);
             spellPanel.gameObject.SetActive(false);
     }
+
+    void ResetPanel(Transform panel){
+        panel.gameObject.SetActive(false);
+        panel.gameObject.SetActive(true);
+    }
+
     void ActivateState(BattleManager.PlayerActionChoiceState stateToActivate){
         Dictionary<BattleManager.PlayerActionChoiceState, bool> new_states = new Dictionary<BattleManager.PlayerActionChoiceState, bool>(activated_states);
         foreach (var state in activated_states)

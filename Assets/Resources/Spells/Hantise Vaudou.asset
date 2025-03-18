@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Hantise Vaudou
   m_EditorClassIdentifier: 
   spell_name: Hantise Vaudou (N)
-  fight_description: "Inflige un statut \xE0 une unit\xE9. Chaque utilisation successive
-    du sort sur une m\xEAme cible inflige un statut diff\xE9rent.  (Poison -> D\xE9sarm\xE9
-    -> Silence -> Etourdissement -> retour au d\xE9but) (N)"
+  fight_description: "Inflige un statut a une unite. Chaque utilisation successive
+    du sort sur une meme cible inflige un statut diff\xE9rent.  (Poison -> Desarme
+    -> Silence -> Etourdissement -> retour au debut) (N)"
   ratios:
   - 1
   - 1

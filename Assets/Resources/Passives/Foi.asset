@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Foi
   m_EditorClassIdentifier: 
   passive_name: Foi
-  fight_description: "L'unit\xE9 re\xE7oit un bonus de __1% sur tous les soins qu'elle
+  fight_description: "L'unite re\xE7oit un bonus de __1% sur tous les soins qu'elle
     re\xE7oit (P)"
   ratios:
   - 0.15

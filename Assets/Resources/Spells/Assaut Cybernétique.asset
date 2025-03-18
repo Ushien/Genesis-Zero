@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "Assaut Cybern\xE9tique"
   m_EditorClassIdentifier: 
   spell_name: "Assaut cybern\xE9tique"
-  fight_description: "Attaque **1 fois une unit\xE9."
+  fight_description: Attaque **1 fois une unite.
   ratios:
   - 3
   - 1

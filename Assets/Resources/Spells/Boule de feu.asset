@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Boule de feu
   m_EditorClassIdentifier: 
   spell_name: Boule de feu (P)
-  fight_description: "Inflige %%1 d\xE9gats \xE0 une unit\xE9 - Pyro"
+  fight_description: Inflige %%1 degats a une unite - Pyro
   ratios:
   - 1
   - 1

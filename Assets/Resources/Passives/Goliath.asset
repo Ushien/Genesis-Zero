@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Goliath
   m_EditorClassIdentifier: 
   passive_name: Goliath
-  fight_description: "Augmente les PV de l'unit\xE9 de __1%."
+  fight_description: Augmente les PV de l'unite de __1%.
   ratios:
   - 0.2
   - 1
