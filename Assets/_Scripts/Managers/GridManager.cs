@@ -112,6 +112,7 @@ public class GridManager : MonoBehaviour
 
             }
         }
+        Debug.Log("adjusting Cam");
         _cam.transform.position = new Vector3(2.5f, 0.8f, -10);
 
     }

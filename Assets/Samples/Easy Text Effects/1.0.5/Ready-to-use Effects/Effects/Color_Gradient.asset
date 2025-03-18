@@ -17,8 +17,8 @@ MonoBehaviour:
   charLength: 132
   animationType: 2
   fixedDuration: 0
-  durationPerChar: 1
-  timeBetweenChars: 0.1
+  durationPerChar: 0.2
+  timeBetweenChars: 0.02
   noDelayForChars: 1
   reverseCharOrder: 0
   easingCurve:
@@ -51,9 +51,9 @@ MonoBehaviour:
   endColor: {r: 1, g: 0, b: 0, a: 1}
   gradient:
     serializedVersion: 2
-    key0: {r: 1, g: 0.029678369, b: 0, a: 1}
-    key1: {r: 1, g: 0.9404255, b: 0, a: 1}
-    key2: {r: 1, g: 0.9404255, b: 0, a: 0}
+    key0: {r: 1, g: 0.027932957, b: 0, a: 1}
+    key1: {r: 1, g: 0.16651759, b: 0, a: 1}
+    key2: {r: 1, g: 0.71290123, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}

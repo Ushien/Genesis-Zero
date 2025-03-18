@@ -69,6 +69,9 @@ public class InterfaceManager : MonoBehaviour
     public float xLineOffset = 0f;
     public float yLineOffset = 0f;
     public float yLinePanelOffset = 0f;
+    public float xZoomOffset= 0f;
+    public float yZoomOffset = 0f;
+    public float zoomSpeed = 0.1f;
 
     public Vector3 lifeBarOffset;
 
@@ -194,8 +197,29 @@ public class InterfaceManager : MonoBehaviour
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow)){
+        // Gère les bips des touches, et également certains effets de caméra
+        // -----------------------------------------------------------------
+
+        if(Input.GetKeyDown(KeyCode.LeftArrow)){
             AudioManager.Instance.UIBip1.Play();
+            // Caméra bourrée
+            // --------------
+            //CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(-driftAmount,-driftAmount,0f));
+        }
+
+        if(Input.GetKeyDown(KeyCode.RightArrow)){
+            AudioManager.Instance.UIBip1.Play();
+            //CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(driftAmount,-driftAmount,0f));
+        }
+
+        if(Input.GetKeyDown(KeyCode.UpArrow)){
+            AudioManager.Instance.UIBip1.Play();
+            //CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(driftAmount,driftAmount,0f));
+        }
+
+        if(Input.GetKeyDown(KeyCode.DownArrow)){
+            AudioManager.Instance.UIBip1.Play();
+            //CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(-driftAmount,-driftAmount,0f));
         }
 
         if(Input.GetKeyDown(KeyCode.N)){
@@ -264,6 +288,7 @@ public class InterfaceManager : MonoBehaviour
             if(sourceTile.GetUnit()!= null){
                 if(sourceTile.GetUnit().GetTeam() == Team.Ally && !sourceTile.GetUnit().HasGivenInstruction()){
                     SourceSelectionTrigger(BattleManager.Trigger.VALIDATE);
+                    CameraEffects.Instance.TriggerZoom(mainCamera.transform.position, 2.8f, zoomSpeed);
                 }
             }
         }
@@ -420,6 +445,7 @@ public class InterfaceManager : MonoBehaviour
                     // Retour à la sélection de personnages
                     sourceTile.Unselect();
                     SpellSelectionTrigger(BattleManager.Trigger.CANCEL);
+                    CameraEffects.Instance.TriggerZoom(mainCamera.transform.position, 3f, zoomSpeed);
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.UpArrow)){
@@ -782,6 +808,7 @@ public class InterfaceManager : MonoBehaviour
                 targetTile.Unselect();
                 UIPanelLine.SetActive(false);
                 TargetSelectionTrigger(BattleManager.Trigger.VALIDATE);
+                CameraEffects.Instance.TriggerZoom(mainCamera.transform.position, 3f, zoomSpeed);
             }
         }
         if (Input.GetKeyDown(KeyCode.N)){
@@ -805,7 +832,7 @@ public class InterfaceManager : MonoBehaviour
             NavigateTarget(Directions.RIGHT);
             DrawUILine(UIPanelLine, targetTile);
         }
-        
+
         GridManager.Instance.SetSelectionMode(selectedSpell.GetRange());
 
         //Abstraire ce code

@@ -67,7 +67,7 @@ public class LineController : MonoBehaviour
             // drifting de la ligne de UI
             // --------------------------
             Vector3 spellSelectorPos = Camera.main.ScreenToWorldPoint(InterfaceManager.Instance.spellSelector.position);
-            points[0].position = new Vector3 (spellSelectorPos.x + xOffset, spellSelectorPos.y +yOffset, 0f);
+            points[0].position = new Vector3 (spellSelectorPos.x + (xOffset/(3f/Camera.main.orthographicSize)), spellSelectorPos.y + yOffset/(3f/Camera.main.orthographicSize), 0f);
 
 
 

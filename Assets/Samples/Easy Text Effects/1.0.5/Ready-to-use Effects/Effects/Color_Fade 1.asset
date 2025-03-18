@@ -17,8 +17,8 @@ MonoBehaviour:
   charLength: 132
   animationType: 2
   fixedDuration: 0
-  durationPerChar: 0.5
-  timeBetweenChars: 0.05
+  durationPerChar: 0.1
+  timeBetweenChars: 0.01
   noDelayForChars: 1
   reverseCharOrder: 0
   easingCurve:

@@ -17,8 +17,8 @@ MonoBehaviour:
   charLength: 1188
   animationType: 3
   fixedDuration: 0
-  durationPerChar: 0.5
-  timeBetweenChars: 0.05
+  durationPerChar: 0.02
+  timeBetweenChars: 0.01
   noDelayForChars: 0
   reverseCharOrder: 0
   easingCurve:
@@ -46,5 +46,5 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   clampBetween0And1: 0
-  startScale: 1
-  endScale: 2
+  startScale: 0.5
+  endScale: 1
