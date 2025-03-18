@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Explosion
   m_EditorClassIdentifier: 
   spell_name: Explosion
-  fight_description: Inflige %%1 degats a une cible, et %%2 degats a ses allies.
+  fight_description: "Inflige %%1 d\xE9g\xE2ts \xE0 une cible, et %%2 d\xE9g\xE2ts
+    \xE0 ses allies."
   ratios:
   - 1.2
   - 0.2

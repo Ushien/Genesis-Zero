@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Coeur Lumineux
   m_EditorClassIdentifier: 
   spell_name: Coeur Lumineux
-  fight_description: Soigne une unite de %%1. Confere curatif a la prochaine technique
-    du lanceur.
+  fight_description: "Soigne une unit\xE9 de %%1. Conf\xE8re curatif \xE0 la prochaine
+    technique du lanceur."
   ratios:
   - 0.8
   - 1

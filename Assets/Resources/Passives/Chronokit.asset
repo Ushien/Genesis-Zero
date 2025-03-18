@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Chronokit
   m_EditorClassIdentifier: 
   passive_name: Chronokit
-  fight_description: Les effets de debut et de fin de tour s'appliquent deux fois
+  fight_description: "Les effets de d\xE9but et de fin de tour s'appliquent deux
+    fois"
   ratios:
   - 1
   - 1

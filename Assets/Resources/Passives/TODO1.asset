@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: TODO1
   m_EditorClassIdentifier: 
   passive_name: 
-  fight_description: Lorsqu'une des techniques du personnage tue une unite, la puissance
-    surchargee de cette technique augmente definitivement de %%1%.
+  fight_description: "Lorsqu'une des techniques du personnage tue une unit\xE9, la
+    puissance surcharg\xE9e de cette technique augmente d\xE9finitivement de %%1%."
   ratios:
   - 1
   - 1

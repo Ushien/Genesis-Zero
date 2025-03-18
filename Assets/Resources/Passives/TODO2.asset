@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TODO2
   m_EditorClassIdentifier: 
   passive_name: 
-  fight_description: Augmente le nombre de recompenses de fin de combat de 1.
+  fight_description: "Augmente le nombre de r\xE9compenses de fin de combat de 1."
   ratios:
   - 1
   - 1

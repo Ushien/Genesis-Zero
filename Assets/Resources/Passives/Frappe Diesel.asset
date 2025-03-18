@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Frappe Diesel
   m_EditorClassIdentifier: 
   passive_name: 
-  fight_description: Les attaques de base du personnage font des degats supplementaires
-    et appliquent l'element pyro. (N)
+  fight_description: "Les attaques de base du personnage font des d\xE9g\xE2ts suppl\xE9mentaires
+    et appliquent l'\xE9l\xE9ment pyro. (N)"
   ratios:
   - 1
   - 1
