@@ -23,7 +23,7 @@ MonoBehaviour:
   - 1
   - 1
   - 1
-  cooldown: 20
+  cooldown: 4
   isAnAttack: 0
   properties: 
   range: 3

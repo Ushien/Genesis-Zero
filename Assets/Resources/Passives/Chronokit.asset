@@ -18,7 +18,7 @@ MonoBehaviour:
   - 1
   - 1
   - 1
-  artwork: {fileID: 0}
+  artwork: {fileID: 21300000, guid: 37de44bcb59b8174497def1957cc490b, type: 3}
   passivePrefab: {fileID: 0}
   minor: 0
   lootable: 0

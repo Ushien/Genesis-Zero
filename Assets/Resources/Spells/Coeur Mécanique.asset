@@ -29,7 +29,7 @@ MonoBehaviour:
   properties: 
   range: 0
   team_restriction: 1
-  artwork: {fileID: 21300000, guid: d579c6bf2d3157d408503dc098a950aa, type: 3}
+  artwork: {fileID: 21300000, guid: 37de44bcb59b8174497def1957cc490b, type: 3}
   spellScriptPrefab: {fileID: 8555355187402037432, guid: 628f7189031b65e4caa5ca700158b30b, type: 3}
   lootable: 0
   rarity: 2

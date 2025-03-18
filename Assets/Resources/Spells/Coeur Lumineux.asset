@@ -16,7 +16,7 @@ MonoBehaviour:
   fight_description: Soigne une unite de %%1. Confere curatif a la prochaine technique
     du lanceur.
   ratios:
-  - 1
+  - 0.8
   - 1
   - 1
   overloaded_fight_description: "Soigne une unit\xE9 de %%1. Conf\xE8re curatif \xE0
@@ -30,7 +30,7 @@ MonoBehaviour:
   properties: 
   range: 0
   team_restriction: 0
-  artwork: {fileID: 21300000, guid: 1952b606768d64f42a60de295ffa6020, type: 3}
+  artwork: {fileID: 21300000, guid: bb67b03c2969d104caba950c446f8c8d, type: 3}
   spellScriptPrefab: {fileID: 617788342436211795, guid: 8fb0029126e92ae42ba126b878ffe7be, type: 3}
   lootable: 1
   rarity: 2

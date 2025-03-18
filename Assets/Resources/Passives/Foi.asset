@@ -16,10 +16,10 @@ MonoBehaviour:
   fight_description: "L'unite re\xE7oit un bonus de __1% sur tous les soins qu'elle
     re\xE7oit (P)"
   ratios:
-  - 0.15
+  - 0.3
   - 1
   - 1
-  artwork: {fileID: 21300000, guid: 8ee8a55c2e6131442a46f26f97fb2070, type: 3}
+  artwork: {fileID: 21300000, guid: bb67b03c2969d104caba950c446f8c8d, type: 3}
   passivePrefab: {fileID: 798507344205524587, guid: 3689af533764f474481ea144be747b79, type: 3}
   minor: 0
   lootable: 1

@@ -257,8 +257,13 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
   wiggleDirections: []
-  xOffset: 1.78
+  xOffset: 1.36
   yOffset: 3.41
+  xPanelOffset: 0
+  yPanelOffset: 0
+  xPanelOffset2: 0
+  yPanelOffset2: 0
+  isSelector: 1
 --- !u!1 &3043556659673819815
 GameObject:
   m_ObjectHideFlags: 0
