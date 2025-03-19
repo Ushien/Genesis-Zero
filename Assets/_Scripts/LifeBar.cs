@@ -21,6 +21,7 @@ public class LifeBar : MonoBehaviour
     private Material armorBarMaterial;
     
     public void Awake(){
+
         HPtext = transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
         ARtext = transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
 
@@ -74,6 +75,13 @@ public class LifeBar : MonoBehaviour
         transform.Find("LifeBar").GetComponent<Image>().material = new Material(lifeBarMaterial);
         armorBarMaterial = transform.Find("ArmorBar").GetComponent<Image>().material = new Material(armorBarMaterial);
 
+    
+        // Petits bugs d'anim de texte
+        // ---------------------------
+        transform.GetChild(0).gameObject.SetActive(false);
+        transform.GetChild(1).gameObject.SetActive(false);
+        transform.GetChild(0).gameObject.SetActive(true);
+        transform.GetChild(1).gameObject.SetActive(true);
     }
 
     public void UpdateHP(int HPChange){

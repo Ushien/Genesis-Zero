@@ -69,6 +69,7 @@ public class InterfaceManager : MonoBehaviour
     public float xLineOffset = 0f;
     public float yLineOffset = 0f;
     public float yLinePanelOffset = 0f;
+    public float UILinePanelVerticalOffset = 0f;
     public float xZoomOffset= 0f;
     public float yZoomOffset = 0f;
     public float zoomSpeed = 0.1f;
@@ -1035,7 +1036,7 @@ public class InterfaceManager : MonoBehaviour
         Vector3 targetPosition = tile.transform.position;
         if(Line == UILine){
             UILine.transform.position = new Vector3 (tile.transform.position.x + xLineOffset, tile.transform.position.y + yLineOffset, 0f);
-            UILineVertical.position = new Vector3 (0f, 0f, 0f);
+            UILineVertical.position = new Vector3 (-UILinePanelVerticalOffset, 0f, 0f);
         }
         if(Line == UIPanelLine){
             UIPanelLineHorizontal.position = new Vector3 (UIPanelLineHorizontal.position.x, targetPosition.y+yLinePanelOffset, 0f);
