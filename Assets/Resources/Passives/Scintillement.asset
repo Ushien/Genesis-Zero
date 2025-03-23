@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Scintillement
   m_EditorClassIdentifier: 
   passive_name: Scintillement
-  fight_description: "Lorsque l'unit\xE9 utilise une technique, renforce les d\xE9gats
+  fight_description: "Lorsque l'unit\xE9 utilise une technique, renforce les d\xE9g\xE2ts
     de sa prochaine attaque de %%1%."
   ratios:
   - 1

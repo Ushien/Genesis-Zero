@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Multi-Ailes
   m_EditorClassIdentifier: 
   spell_name: Multi-Ailes
-  fight_description: "Inflige %%1 d\xE9gats \xE0 tous les ennemis et augmente la
-    puissance du lanceur de __2%."
+  fight_description: "Inflige %%1 d\xE9g\xE2ts \xE0 tous les ennemis et augmente
+    la puissance du lanceur de __2%."
   ratios:
   - 0.7
   - 0.05

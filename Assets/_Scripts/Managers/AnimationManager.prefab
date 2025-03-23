@@ -46,5 +46,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageText: {fileID: 0}
   DamageSection: {fileID: 0}
+  damageZoomAmount: 2.8
+  damageZoomSpeed: 0.1
+  zoomDamping: 10
+  animShakeStrength: 0.1
+  animShakeTime: 0.2
   delayTime: 100
   accelerator: 6

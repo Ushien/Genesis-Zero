@@ -69,6 +69,10 @@ public class InterfaceManager : MonoBehaviour
     public float xLineOffset = 0f;
     public float yLineOffset = 0f;
     public float yLinePanelOffset = 0f;
+    public float UILinePanelVerticalOffset = 0f;
+    public float xZoomOffset= 0f;
+    public float yZoomOffset = 0f;
+    public float zoomSpeed = 0.1f;
 
     public Vector3 lifeBarOffset;
 
@@ -87,7 +91,9 @@ public class InterfaceManager : MonoBehaviour
 
     private enum SpellChoice{CHARACTER, LEFT, RIGHT, UP, DOWN}
     private SpellChoice spellChoice;
-    private SpellChoice currentSpellChoice =SpellChoice.CHARACTER;
+    private SpellChoice currentSpellChoice =SpellChoice.DOWN;
+    private SpellChoice currentSpellChoiceAnim = SpellChoice.DOWN;
+    private SpellChoice currentSpellChoiceHighlight = SpellChoice.DOWN;
 
     [SerializeField]
     public bool overloaded = false;
@@ -192,8 +198,29 @@ public class InterfaceManager : MonoBehaviour
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow)){
+        // Gère les bips des touches, et également certains effets de caméra
+        // -----------------------------------------------------------------
+
+        if(Input.GetKeyDown(KeyCode.LeftArrow)){
             AudioManager.Instance.UIBip1.Play();
+            // Caméra bourrée
+            // --------------
+            //CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(-driftAmount,-driftAmount,0f));
+        }
+
+        if(Input.GetKeyDown(KeyCode.RightArrow)){
+            AudioManager.Instance.UIBip1.Play();
+            //CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(driftAmount,-driftAmount,0f));
+        }
+
+        if(Input.GetKeyDown(KeyCode.UpArrow)){
+            AudioManager.Instance.UIBip1.Play();
+            //CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(driftAmount,driftAmount,0f));
+        }
+
+        if(Input.GetKeyDown(KeyCode.DownArrow)){
+            AudioManager.Instance.UIBip1.Play();
+            //CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(-driftAmount,-driftAmount,0f));
         }
 
         if(Input.GetKeyDown(KeyCode.N)){
@@ -214,6 +241,11 @@ public class InterfaceManager : MonoBehaviour
 
     void SourceSelectionDisplay(){
         if(!activated_states[BattleManager.PlayerActionChoiceState.CHARACTER_SELECTION]){
+            // Reset those flags
+            currentSpellChoice = SpellChoice.DOWN;
+            currentSpellChoiceAnim = SpellChoice.DOWN;
+            currentSpellChoiceHighlight = SpellChoice.DOWN;
+            
             // Just changed from another state
             // Reset view
             ResetDisplay();
@@ -257,6 +289,7 @@ public class InterfaceManager : MonoBehaviour
             if(sourceTile.GetUnit()!= null){
                 if(sourceTile.GetUnit().GetTeam() == Team.Ally && !sourceTile.GetUnit().HasGivenInstruction()){
                     SourceSelectionTrigger(BattleManager.Trigger.VALIDATE);
+                    CameraEffects.Instance.TriggerZoom(mainCamera.transform.position, 2.8f, zoomSpeed);
                 }
             }
         }
@@ -357,19 +390,21 @@ public class InterfaceManager : MonoBehaviour
         }
 
         //Display highlight
-        if(spellChoice != currentSpellChoice){
+        if(spellChoice != currentSpellChoiceHighlight){
             spellSelector.transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(false);
             spellSelector.transform.GetChild(1).transform.GetChild(0).gameObject.SetActive(false);
             spellSelector.transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(false);
             spellSelector.transform.GetChild(3).transform.GetChild(0).gameObject.SetActive(false);
             spellSelector.transform.GetChild(4).transform.GetChild(0).gameObject.SetActive(false);
+            currentSpellChoiceHighlight = spellChoice;
         }
 
         // Si le spellChoice n'a pas changé, on joue pas l'anim
-        if(spellChoice != currentSpellChoice){
+        if(spellChoice != currentSpellChoiceAnim){
             switch(spellChoice){ 
                 case SpellChoice.CHARACTER:
                     spellSelector.transform.GetChild(4).transform.GetChild(0).gameObject.SetActive(true);
+                    Debug.Log("Animating Character");
                     AnimateSpellChoice(4);
                     break;
                 case SpellChoice.LEFT:
@@ -391,7 +426,7 @@ public class InterfaceManager : MonoBehaviour
                 default:
                     break;
             }
-            currentSpellChoice = spellChoice;
+            currentSpellChoiceAnim = spellChoice;
         }
 
         // Navigation au sein de la sélection
@@ -409,6 +444,7 @@ public class InterfaceManager : MonoBehaviour
                     // Retour à la sélection de personnages
                     sourceTile.Unselect();
                     SpellSelectionTrigger(BattleManager.Trigger.CANCEL);
+                    CameraEffects.Instance.TriggerZoom(mainCamera.transform.position, 3f, zoomSpeed);
                     break;
                 }
                 if (Input.GetKeyDown(KeyCode.UpArrow)){
@@ -700,25 +736,29 @@ public class InterfaceManager : MonoBehaviour
         }
 
         // Affichage du spell dans l'information panel
-        switch(spellChoice){
-            case SpellChoice.CHARACTER:
-                DisplaySpell(sourceUnit.GetAttack(), hyper : overloaded);
-                break;
-            case SpellChoice.LEFT:
-                DisplaySpell(currentSpells[0], hyper : overloaded);
-                break;
-            case SpellChoice.RIGHT:
-                DisplaySpell(currentSpells[1], hyper : overloaded);
-                break;
-            case SpellChoice.UP:
-                DisplaySpell(currentSpells[2], hyper : overloaded);
-                break;
-            case SpellChoice.DOWN:
-                DisplaySpell(currentSpells[3], hyper : overloaded);
-                break;
-            default:
-                break;
+        if(spellChoice != currentSpellChoice){
+            switch(spellChoice){
+                case SpellChoice.CHARACTER:
+                    DisplaySpell(sourceUnit.GetAttack(), hyper : overloaded);
+                    break;
+                case SpellChoice.LEFT:
+                    DisplaySpell(currentSpells[0], hyper : overloaded);
+                    break;
+                case SpellChoice.RIGHT:
+                    DisplaySpell(currentSpells[1], hyper : overloaded);
+                    break;
+                case SpellChoice.UP:
+                    DisplaySpell(currentSpells[2], hyper : overloaded);
+                    break;
+                case SpellChoice.DOWN:
+                    DisplaySpell(currentSpells[3], hyper : overloaded);
+                    break;
+                default:
+                    break;
+            }
         }
+        
+        currentSpellChoice = spellChoice;
     }
     
     void SpellSelectionTrigger(BattleManager.Trigger trigger){
@@ -767,6 +807,7 @@ public class InterfaceManager : MonoBehaviour
                 UIPanelLine.SetActive(false);
                 TargetSelectionTrigger(BattleManager.Trigger.VALIDATE);
                 DisableSpellOverload();
+                CameraEffects.Instance.TriggerZoom(mainCamera.transform.position, 3f, zoomSpeed);
             }
         }
         if (Input.GetKeyDown(KeyCode.N)){
@@ -776,18 +817,21 @@ public class InterfaceManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.UpArrow)){
             NavigateTarget(Directions.UP);
+            DrawUILine(UIPanelLine, targetTile);
         }
         if (Input.GetKeyDown(KeyCode.DownArrow)){
             NavigateTarget(Directions.DOWN);
+            DrawUILine(UIPanelLine, targetTile);
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow)){
             NavigateTarget(Directions.LEFT);
+            DrawUILine(UIPanelLine, targetTile);
         }
         if (Input.GetKeyDown(KeyCode.RightArrow)){
             NavigateTarget(Directions.RIGHT);
+            DrawUILine(UIPanelLine, targetTile);
         }
 
-        //DrawUILine(UIPanelLine, targetTile);
         GridManager.Instance.SetSelectionMode(selectedSpell.GetRange());
 
         //Abstraire ce code
@@ -813,10 +857,13 @@ public class InterfaceManager : MonoBehaviour
     }
 
     private void DisplaySpell(BaseSpell spell, bool hyper = false){
+        // manière cheap de rejouer les anims de texte et d'éviter des bugs
+        ResetPanel(spellPanel);
         if(spell != null){
             spellPanel.gameObject.SetActive(true);
             spellNamePanel.text = spell.GetName();
             spellDescriptionPanel.text = spell.GetFightDescription(hyper);
+
             if(spell.IsAAttack()){
                 spellCooldownPanel.text = ""; 
             }
@@ -834,6 +881,7 @@ public class InterfaceManager : MonoBehaviour
     }
 
     private void DisplayUnit(BaseUnit unit){
+        ResetPanel(unitPanel);
         unitNamePanel.text = unit.GetName();
         unitPowerPanel.text = "Puissance : " + unit.GetFinalPower().ToString();
         unitHealthPanel.text = "PV : " + unit.GetFinalHealth().ToString() + "/" + unit.GetTotalHealth().ToString();
@@ -844,9 +892,11 @@ public class InterfaceManager : MonoBehaviour
             unitArmorPanel.text = "";
         }
         unitLevelPanel.text = "Niveau : " + unit.GetLevel().ToString();
+        
     }
 
     private void DisplayPassives(BaseUnit unit){
+        ResetPanel(passivePanel);
         if(unit.GetPassives().Count >= 1){
             unitPassiveNamePanel.text = unit.GetPassives()[selectedPassiveIndex].GetName();
             unitPassiveDescriptionPanel.text = unit.GetPassives()[selectedPassiveIndex].GetFightDescription();
@@ -883,6 +933,12 @@ public class InterfaceManager : MonoBehaviour
             tileSelector.gameObject.SetActive(false);
             spellPanel.gameObject.SetActive(false);
     }
+
+    void ResetPanel(Transform panel){
+        panel.gameObject.SetActive(false);
+        panel.gameObject.SetActive(true);
+    }
+
     void ActivateState(BattleManager.PlayerActionChoiceState stateToActivate){
         Dictionary<BattleManager.PlayerActionChoiceState, bool> new_states = new Dictionary<BattleManager.PlayerActionChoiceState, bool>(activated_states);
         foreach (var state in activated_states)
@@ -978,7 +1034,7 @@ public class InterfaceManager : MonoBehaviour
         Vector3 targetPosition = tile.transform.position;
         if(Line == UILine){
             UILine.transform.position = new Vector3 (tile.transform.position.x + xLineOffset, tile.transform.position.y + yLineOffset, 0f);
-            UILineVertical.position = new Vector3 (0f, 0f, 0f);
+            UILineVertical.position = new Vector3 (-UILinePanelVerticalOffset, 0f, 0f);
         }
         if(Line == UIPanelLine){
             UIPanelLineHorizontal.position = new Vector3 (UIPanelLineHorizontal.position.x, targetPosition.y+yLinePanelOffset, 0f);

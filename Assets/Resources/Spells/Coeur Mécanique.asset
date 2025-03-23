@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spell_name: "Coeur M\xE9canique"
   fight_description: "Conf\xE8re un bouclier et %%1 armure au lanceur. Si le lanceur
-    poss\xE8de d\xE9j\xE0 un bouclier, inflige %%2 d\xE9gats \xE0 toutes les unit\xE9s
+    poss\xE8de d\xE9j\xE0 un bouclier, inflige %%2 d\xE9g\xE2ts \xE0 toutes les unit\xE9s
     ennemies. (N)"
   ratios:
   - 1

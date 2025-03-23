@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Requiem
   m_EditorClassIdentifier: 
   passive_name: Requiem
-  fight_description: "A la fin du tour, inflige %%1 d\xE9gats \xE0 toutes les unit\xE9s
-    adverses."
+  fight_description: "A la fin du tour, inflige %%1 d\xE9g\xE2ts \xE0 toutes les
+    unites adverses."
   ratios:
   - 1
   - 1

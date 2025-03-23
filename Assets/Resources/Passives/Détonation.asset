@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "D\xE9tonation"
   m_EditorClassIdentifier: 
   passive_name: "D\xE9tonation"
-  fight_description: "Lorsqu'une unit\xE9 adverse meurt, elle inflige %%1 d\xE9gats
+  fight_description: "Lorsqu'une unit\xE9 adverse meurt, elle inflige %%1 d\xE9g\xE2ts
     aux unit\xE9s adjacentes"
   ratios:
   - 0.2

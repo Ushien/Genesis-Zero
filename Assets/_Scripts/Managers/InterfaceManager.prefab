@@ -53,6 +53,7 @@ MonoBehaviour:
   UIPanelLinePrefab: {fileID: 5713248188541711625, guid: ec0bb7f525c135e4d96d6ee772093263, type: 3}
   UIPanelLineVertical: {fileID: 0}
   UIPanelLineHorizontal: {fileID: 0}
+  spellPanel: {fileID: 0}
   spellSelector: {fileID: 0}
   shade: {fileID: 0}
   UIWorldSpace: {fileID: 3722291128606437924, guid: 7d72b36445a86f446892d74aff8d2150, type: 3}
@@ -68,6 +69,10 @@ MonoBehaviour:
   xLineOffset: -0.07
   yLineOffset: 0.21
   yLinePanelOffset: -1.2
+  UILinePanelVerticalOffset: 0.25
+  xZoomOffset: 0
+  yZoomOffset: 0
+  zoomSpeed: 0.1
   lifeBarOffset: {x: 0, y: 1, z: 0}
   selectorSpeed: 10
   tileOutliner: {fileID: 2100000, guid: 29bac064f9c8bfd4bab1f1bf7e92c24a, type: 2}

@@ -14,6 +14,11 @@ public class AnimationManager : MonoBehaviour
     public static AnimationManager Instance;
     public TextMeshProUGUI damageText;
     public Transform DamageSection;
+    public float damageZoomAmount = 2.5f;
+    public float damageZoomSpeed = 0.5f;
+    public float zoomDamping = 2f;
+    public float animShakeStrength = 0.3f;
+    public float animShakeTime = 0.3f;
 
     private List<BattleEvent> animationQueue;
     
@@ -145,6 +150,14 @@ public class AnimationManager : MonoBehaviour
             damageDisplay.transform.localScale = new Vector3(1, 1, 1);
             damageDisplay.gameObject.SetActive(true);
             InterfaceManager.Instance.UpdateLifebar(damageEvent.GetTargetUnit(), -damage, 0, 0);
+
+            // Camera effects
+            // --------------
+            CameraEffects.Instance.TriggerZoom(new Vector3(InterfaceManager.Instance.mainCamera.transform.position.x + (damageEvent.GetTargetUnit().transform.position.x - InterfaceManager.Instance.mainCamera.transform.position.x)/zoomDamping,
+                                                           InterfaceManager.Instance.mainCamera.transform.position.y + (damageEvent.GetTargetUnit().transform.position.y - InterfaceManager.Instance.mainCamera.transform.position.y)/zoomDamping, -10f),
+                                                           damageZoomAmount, damageZoomSpeed, true);
+            CameraEffects.Instance.TriggerShake(animShakeStrength, animShakeTime);
+
             for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f * accelerator)
             {
                 damageDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));

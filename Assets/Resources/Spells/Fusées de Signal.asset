@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "Fus\xE9es de Signal"
   m_EditorClassIdentifier: 
   spell_name: "Fus\xE9es de Signal (N)"
-  fight_description: "Inflige %%1 d\xE9gats \xE0 l'unit\xE9 adverse avec le plus
+  fight_description: "Inflige %%1 d\xE9g\xE2ts \xE0 l'unit\xE9 adverse avec le plus
     de vie et augmente l'attaque de l'unit\xE9 alli\xE9e en r\xE9serve de %%2 % (N)"
   ratios:
   - 1

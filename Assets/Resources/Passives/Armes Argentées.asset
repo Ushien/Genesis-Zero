@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: "Armes Argent\xE9es"
   m_EditorClassIdentifier: 
   passive_name: "Armes Argent\xE9es"
-  fight_description: "Infliger des d\xE9gats \xE0 une unit\xE9 avec 3 attaques ou
-    techniques lui inflige %%1 d\xE9gats suppl\xE9mentaires."
+  fight_description: "Infliger des d\xE9g\xE2ts \xE0 une unit\xE9 avec 3 attaques
+    ou techniques lui inflige %%1 d\xE9g\xE2ts suppl\xE9mentaires."
   ratios:
   - 0.8
   - 1

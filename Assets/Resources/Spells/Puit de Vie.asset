@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Puit de Vie
   m_EditorClassIdentifier: 
   spell_name: Puit de Vie
-  fight_description: "Soigne une unit\xE9 de %%1 d\xE9gats."
+  fight_description: "Soigne une unit\xE9 de %%1 d\xE9g\xE2ts."
   ratios:
   - 4.5
   - 1
