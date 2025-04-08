@@ -131,7 +131,14 @@ public class UnitManager : MonoBehaviour
     public void ApplyEndTurnEffects(){
         foreach (BaseUnit unit in GetUnits())
         {
-            unit.ApplyEndturnEffects();
+            unit.ApplyEndTurnEffects();
+        }
+    }
+
+    public void ApplyStartTurnEffects(){
+        foreach (BaseUnit unit in GetUnits())
+        {
+            unit.ApplyStartTurnEffects();
         }
     }
 

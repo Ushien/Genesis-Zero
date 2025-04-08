@@ -213,6 +213,9 @@ public class BattleManager : MonoBehaviour
             case TurnState.START:
                 // Do stuff
                 // Start turn effects
+                if(teamTurn == TeamTurn.ALLY){
+                    StartTurnEffects();
+                }
                 turnState = TurnState.ACTION_CHOICE;
 
                 if (GlobalManager.Instance.debug){
@@ -408,6 +411,10 @@ public class BattleManager : MonoBehaviour
 
     public void EndTurnEffects(){
         UnitManager.Instance.ApplyEndTurnEffects();
+    }
+
+    public void StartTurnEffects(){
+        UnitManager.Instance.ApplyStartTurnEffects();
     }
 
     private void ArchiveTurn(){

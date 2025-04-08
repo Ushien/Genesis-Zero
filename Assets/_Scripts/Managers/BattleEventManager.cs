@@ -113,4 +113,13 @@ public class BattleEventManager : MonoBehaviour
         BattleManager.Instance.AddEvent(reviveEvent);
         AnimationManager.Instance.addAnimation(reviveEvent);
     }
+
+    public GrowthEvent CreateGrowthEvent(BaseSpell spell){
+        return new GrowthEvent(spell);
+    }
+
+    public void ApplyReviveEvent(GrowthEvent growthEvent){
+        BattleManager.Instance.AddEvent(growthEvent);
+        AnimationManager.Instance.addAnimation(growthEvent);
+    }
 }

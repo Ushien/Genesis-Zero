@@ -71,11 +71,11 @@ public class PickPhaseManager : MonoBehaviour
                     TestScript.Instance.rewardsToSpawn.RemoveAt(0);
                 }
                 else{
-                    rewardToAdd = GenerateReward(new List<RewardType>{RewardType.SPELL, RewardType.PASSIVE}[UnityEngine.Random.Range(0, 2)]);
+                    rewardToAdd = GenerateReward(new List<RewardType>{RewardType.SPELL, RewardType.PASSIVE}[UnityEngine.Random.Range(0, 2)], rewardsToSpawn);
                 }
             }
             else{
-                rewardToAdd = GenerateReward(new List<RewardType>{RewardType.SPELL, RewardType.PASSIVE}[UnityEngine.Random.Range(0, 2)]);
+                rewardToAdd = GenerateReward(new List<RewardType>{RewardType.SPELL, RewardType.PASSIVE}[UnityEngine.Random.Range(0, 2)], rewardsToSpawn);
             }
             rewardsToSpawn.Add(rewardToAdd);            
         }
@@ -164,13 +164,26 @@ public class PickPhaseManager : MonoBehaviour
         resourceManager = _resourceManager;
     }
 
-    public Reward GenerateReward(RewardType rewardType){
+    public Reward GenerateReward(RewardType rewardType, List<Reward> rewardsToSpawn){
+        List<ScriptableSpell> spellsToExclude = new List<ScriptableSpell>();
+        List<ScriptablePassive> passivesToExclude = new List<ScriptablePassive>();
+
+        foreach (Reward rewardToExclude in rewardsToSpawn)
+        {
+            if (rewardToExclude is SpellReward){
+                spellsToExclude.Add(((SpellReward)rewardToExclude).GetSpell());
+            }
+            if (rewardToExclude is PassiveReward){
+                passivesToExclude.Add(((PassiveReward)rewardToExclude).GetPassive());
+            }
+        }
+
         //ADD Reward here
         if(rewardType == RewardType.SPELL){
             List<ScriptableSpell> spellList = resourceManager.GetSpells(lootable:true);
             foreach (BaseUnit ally in allies)
             {
-                spellList = spellList.Where(_spell => !ally.HasSpell(_spell)).OrderBy(_ => UnityEngine.Random.value).ToList();      
+                spellList = spellList.Where(_spell => !ally.HasSpell(_spell)).OrderBy(_ => UnityEngine.Random.value).Except(spellsToExclude).ToList();      
             }
             ScriptableSpell spell = spellList[0];
             return new SpellReward(spell);
@@ -180,7 +193,7 @@ public class PickPhaseManager : MonoBehaviour
             // Filtre les passifs déjà possédés par une unité
             foreach (BaseUnit ally in allies)
             {
-                passiveList = passiveList.Where(_passive => !ally.HasPassive(_passive)).OrderBy(_ => UnityEngine.Random.value).ToList();
+                passiveList = passiveList.Where(_passive => !ally.HasPassive(_passive)).OrderBy(_ => UnityEngine.Random.value).Except(passivesToExclude).ToList();
             }
             ScriptablePassive passive = passiveList[0];
             return new PassiveReward(passive);

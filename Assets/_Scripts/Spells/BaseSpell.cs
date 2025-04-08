@@ -115,7 +115,7 @@ public class BaseSpell : MonoBehaviour
     }
 
     virtual public void EndBattle(){
-        SetCooldown(GetBaseCooldown());
+        //SetCooldown(GetBaseCooldown());
     }
 
     virtual public void Activate(){
@@ -413,8 +413,11 @@ public class BaseSpell : MonoBehaviour
     /// Applique tous les effets de fin de tour liés au sort
     /// </summary>
     public void ApplyEndTurnEffects(){
-        ModifyCooldown(+1);
         ModifierEndTurn();
+    }
+
+    public void ApplyStartTurnEffects(){
+        ModifyCooldown(+1);
     }
         #endregion
 

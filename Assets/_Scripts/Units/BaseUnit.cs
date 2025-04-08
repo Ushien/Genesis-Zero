@@ -170,6 +170,7 @@ public class BaseUnit : MonoBehaviour
     public void EndBattle(){
         GiveInstruction(false);
         Cleanse();
+        SetArmor(0);
         modifiers[Heal] = new List<Modifier>();
         modifiers[Damage] = new List<Modifier>();
         actionQueue = new List<Tuple<Func<int, BattleEvent>, int, int>>();
@@ -205,7 +206,7 @@ public class BaseUnit : MonoBehaviour
     /// <summary>
     /// Applique tous les effets de fin de tour liés à l'unité
     /// </summary>
-    public void ApplyEndturnEffects(){
+    public void ApplyEndTurnEffects(){
         // Diminue le temps d'étourdissement de 1
         ModifyStunTime(-1);
         // Applique les effets de fin de tours de chacun des sorts de l'unité
@@ -221,6 +222,15 @@ public class BaseUnit : MonoBehaviour
         // ActionQueue
         ReduceQueueTurns();
         ApplyQueueActions();
+    }
+
+    public void ApplyStartTurnEffects(){
+        foreach (BaseSpell spell in GetSpells())
+        {
+            if(spell != null){
+                spell.ApplyStartTurnEffects(); 
+            }
+        }
     }
 
     /// <summary>
@@ -986,7 +996,7 @@ public class BaseUnit : MonoBehaviour
     public void SetArmor(int amount){
         if(amount >= 0){
             if(amount != GetArmor()){
-                ModifyArmor(GetArmor()-amount);
+                ModifyArmor(amount - GetArmor());
             }
         }
     }

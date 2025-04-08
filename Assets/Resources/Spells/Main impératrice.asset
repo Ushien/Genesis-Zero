@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: "Main imp\xE9ratrice"
   m_EditorClassIdentifier: 
   spell_name: "Main imp\xE9ratrice"
-  fight_description: "S\xE9lectionne une unit\xE9 et force les alli\xE9s du lanceur
-    \xE0 l'attaquer."
+  fight_description: "S\xE9lectionne une unit\xE9. Chaque alli\xE9 du lanceur lance
+    une attaque sur la cible."
   ratios:
   - 1
   - 1
   - 1
-  overloaded_fight_description: "S\xE9lectionne une unit\xE9 et force les alli\xE9s
-    du lanceur \xE0 l'attaquer 2 fois. Les propri\xE9t\xE9s de la technique sont
+  overloaded_fight_description: "S\xE9lectionne une unit\xE9. Chaque alli\xE9 du
+    lanceur lance 2 attaques sur la cible. Les propri\xE9t\xE9s de la technique sont
     transmises aux attaques."
   hyper_ratios:
   - 1
