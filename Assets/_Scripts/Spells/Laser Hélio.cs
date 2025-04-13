@@ -10,7 +10,7 @@ public class LaserHelio : BaseSpell
     }
 
     override public void HyperCast(Tile targetTile = null, List<Properties> properties = null){
-        base.CastSpell(targetTile, properties, _LaserHelio_H);
+        base.CastSpell(targetTile, properties, _LaserHelio_H, hyper: true);
     }
 
     private void _LaserHelio(Tile targetTile, List<Properties> properties = null){
