@@ -89,7 +89,7 @@ public class BaseUnit : MonoBehaviour
     /// <param name="originUnit">Modèle d'unité</param>
     /// <param name="setup_level">Niveau de l'unité</param>
     /// <param name="team">Equipe de l'unité</param>
-    public void Setup(ScriptableUnit originUnit, int setup_level, Team team, Vector2 _position){
+    public void Setup(ScriptableUnit originUnit, int setup_level, Team team, Vector2 _position, int healthAmount = 0, int powerAmount = 0){
         scriptableUnit = originUnit;
         name = scriptableUnit.unit_name;
         
@@ -103,12 +103,28 @@ public class BaseUnit : MonoBehaviour
         position = _position;
 
         level = setup_level;
+        Debug.Log(name + " " + healthAmount);
 
-        finalPower = GetStatFromLevel(scriptableUnit.original_power, level);
-        basePower = finalPower;
-        baseTotalHealth = GetStatFromLevel(scriptableUnit.original_health, level);
-        totalHealth = baseTotalHealth;
-        finalHealth = baseTotalHealth;
+        if(powerAmount == 0){
+            finalPower = GetStatFromLevel(scriptableUnit.original_power, level);
+            basePower = finalPower;
+            Debug.Log(name + " " + finalPower);
+        }
+        else{
+            finalPower = powerAmount;
+            basePower = powerAmount;
+        }
+
+        if(healthAmount == 0){
+            baseTotalHealth = GetStatFromLevel(scriptableUnit.original_health, level);
+            totalHealth = baseTotalHealth;
+            finalHealth = baseTotalHealth;
+        }
+        else{
+            baseTotalHealth = healthAmount;
+            totalHealth = healthAmount;
+            finalHealth = healthAmount;
+        }
 
         lore_description = scriptableUnit.lore_description;
         fight_description = scriptableUnit.fight_description;
@@ -271,12 +287,14 @@ public class BaseUnit : MonoBehaviour
         }
     }
 
-    public void Summon(ScriptableUnit summon){
-        Tile summonTile = GridManager.Instance.GetRandomTile(GetTeam());
-        BaseUnit summoned = UnitManager.Instance.CreateUnit(summonTile.GetPosition(), summon, GetLevel(), GetTeam());
-        UnitManager.Instance.SpawnUnit(summoned, GetTeam());
-        BattleEventManager.Instance.ApplySummonEvent(BattleEventManager.Instance.CreateSummonEvent(summoned, summonTile, this));
-        summoned.gameObject.SetActive(false);
+    public void Summon(ScriptableUnit summon, int healthAmount =  0, int powerAmount = 0){
+        Tile summonTile = GridManager.Instance.GetRandomTile(GetTeam(), true);
+        if(summonTile != null){
+            BaseUnit summoned = UnitManager.Instance.CreateUnit(summonTile.GetPosition(), summon, GetLevel(), GetTeam(), healthAmount : healthAmount, powerAmount : powerAmount);
+            UnitManager.Instance.SpawnUnit(summoned, GetTeam());
+            BattleEventManager.Instance.ApplySummonEvent(BattleEventManager.Instance.CreateSummonEvent(summoned, summonTile, this));
+            summoned.gameObject.SetActive(false);
+        }
     }
 
     /// <summary>

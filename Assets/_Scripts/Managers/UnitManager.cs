@@ -65,10 +65,9 @@ public class UnitManager : MonoBehaviour
         }  
     }
 
-
-    public BaseUnit CreateUnit(Vector2 position, ScriptableUnit unit_to_create, int level, Team team){
+    public BaseUnit CreateUnit(Vector2 position, ScriptableUnit unit_to_create, int level, Team team, int healthAmount = 0, int powerAmount = 0){
         var new_unit = Instantiate(EmptyUnit);
-        new_unit.Setup(unit_to_create, level, team, position);
+        new_unit.Setup(unit_to_create, level, team, position, healthAmount : healthAmount, powerAmount : powerAmount);
         return new_unit;
     }
 

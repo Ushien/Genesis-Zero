@@ -289,10 +289,17 @@ public class GridManager : MonoBehaviour
     }
 
     public Tile GetRandomTile(Team team, bool emptyOnly = false) {
+
+        var tilesList = ReturnTilesList(team).OrderBy(t => Random.value).ToList();
         if(emptyOnly){
-            return ReturnTilesList(team).Where(t => t.OccupiedUnit == null).OrderBy(t => Random.value).First();
+            tilesList = tilesList.Where(t => t.OccupiedUnit == null).ToList();
         }
-        return ReturnTilesList(team).OrderBy(t => Random.value).First();
+        if(tilesList.Count() > 0){
+            return tilesList.First();
+        }
+        else{
+            return null;
+        }
     }
 
     public Tile GetMiddleTile(Team team){
