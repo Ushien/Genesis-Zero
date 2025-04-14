@@ -97,4 +97,8 @@ public class Tile : MonoBehaviour
         }
         return next_tile;
     }
+
+    public Vector2 GetPosition(){
+        return new Vector2(x_position, y_position);
+    }
 }

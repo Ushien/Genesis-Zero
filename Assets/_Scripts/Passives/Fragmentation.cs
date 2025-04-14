@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Fragmentation : Passive
 {
-    BaseUnit summonedUnit;
+    public ScriptableUnit summonedUnit;
     // Lorsque le passif est setup, l'active
     override public void Activate()
     {
@@ -17,7 +17,7 @@ public class Fragmentation : Passive
     }
     void Fragment(DamageEvent damageEvent){
         if(damageEvent.GetTargetUnit() == holder && damageEvent.GetHealthAmount() != 0){
-            //CreateUnit
+            holder.Summon(summonedUnit);
         }
     }
 }

@@ -25,6 +25,8 @@ public class EventManager : MonoBehaviour
     public static event Action<DamageEvent> OnDamage;
     public delegate void ArmorGainAction();
     public static event Action<ArmorGainEvent> OnArmorGain;
+    public delegate void SummonAction();
+    public static event Action<SummonEvent> OnSummon;
     void Awake(){
         Instance = this;
     }
@@ -62,6 +64,12 @@ public class EventManager : MonoBehaviour
     public void UnitGainedArmor(ArmorGainEvent armorGainEvent){
         if (OnArmorGain != null){
             OnArmorGain(armorGainEvent);
+        }
+    }
+
+    public void UnitSummoned(SummonEvent summonEvent){
+        if (OnSummon != null){
+            OnSummon(summonEvent);
         }
     }
 }

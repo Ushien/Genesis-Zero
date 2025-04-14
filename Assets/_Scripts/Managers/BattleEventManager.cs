@@ -122,4 +122,13 @@ public class BattleEventManager : MonoBehaviour
         BattleManager.Instance.AddEvent(growthEvent);
         AnimationManager.Instance.addAnimation(growthEvent);
     }
+
+    public SummonEvent CreateSummonEvent(BaseUnit summonedUnit, Tile summonTile, BaseUnit summoner){
+        return new SummonEvent(summonedUnit, summonTile, summoner, null);
+    }
+
+    public void ApplySummonEvent(SummonEvent summonEvent){
+        BattleManager.Instance.AddEvent(summonEvent);
+        AnimationManager.Instance.addAnimation(summonEvent);
+    }
 }

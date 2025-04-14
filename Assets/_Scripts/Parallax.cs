@@ -22,7 +22,7 @@ public class Parallax : MonoBehaviour
             float deltaX = layers[i].position.x + parallax * (i-meanIndex) * easing;
             Vector3 newPos = new Vector3(deltaX, layers[i].position.y, layers[i].position.z);
             if(i == 2){
-                Debug.Log(newPos.x);
+                //Debug.Log(newPos.x);
             }
             layers[i].position = Vector3.Lerp(layers[i].position, newPos, 0.1f);
         }

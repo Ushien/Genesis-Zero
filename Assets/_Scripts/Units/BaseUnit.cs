@@ -271,6 +271,14 @@ public class BaseUnit : MonoBehaviour
         }
     }
 
+    public void Summon(ScriptableUnit summon){
+        Tile summonTile = GridManager.Instance.GetRandomTile(GetTeam());
+        BaseUnit summoned = UnitManager.Instance.CreateUnit(summonTile.GetPosition(), summon, GetLevel(), GetTeam());
+        UnitManager.Instance.SpawnUnit(summoned, GetTeam());
+        BattleEventManager.Instance.ApplySummonEvent(BattleEventManager.Instance.CreateSummonEvent(summoned, summonTile, this));
+        summoned.gameObject.SetActive(false);
+    }
+
     /// <summary>
     /// Renvoie la valeur d'une statistique du niveau 100 adaptée à un autre niveau
     /// </summary>

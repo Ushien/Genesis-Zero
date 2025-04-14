@@ -404,7 +404,7 @@ public class InterfaceManager : MonoBehaviour
             switch(spellChoice){ 
                 case SpellChoice.CHARACTER:
                     spellSelector.transform.GetChild(4).transform.GetChild(0).gameObject.SetActive(true);
-                    Debug.Log("Animating Character");
+                    //Debug.Log("Animating Character");
                     AnimateSpellChoice(4);
                     break;
                 case SpellChoice.LEFT:

@@ -13,11 +13,8 @@ MonoBehaviour:
   m_Name: DebugEnemies
   m_EditorClassIdentifier: 
   units:
-  - {fileID: 11400000, guid: 6afde0bbe41525346a2575007ed63835, type: 2}
-  - {fileID: 11400000, guid: 6afde0bbe41525346a2575007ed63835, type: 2}
-  - {fileID: 11400000, guid: 6afde0bbe41525346a2575007ed63835, type: 2}
+  - {fileID: 11400000, guid: c0814b4a90da59b4ca01b678b42667fc, type: 2}
   positions:
   - {x: 0, y: 0}
-  - {x: 1, y: 0}
-  - {x: 2, y: 0}
-  levels: 010000000100000001000000
+  levels: 32000000
+  lootable: 0

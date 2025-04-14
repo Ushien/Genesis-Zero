@@ -225,6 +225,12 @@ public class AnimationManager : MonoBehaviour
         await Task.Yield();
     }
 
+    private async Task Animate(SummonEvent summonEvent){
+        // Afficher l'unité
+        summonEvent.GetSummonedUnit().gameObject.SetActive(true);
+        await Task.Yield();
+    }
+
 
     private async Task Animate(BattleEvent battleEvent){
         //Debug.Log(battleEvent.GetSummary());
@@ -248,6 +254,9 @@ public class AnimationManager : MonoBehaviour
         }
         if (battleEvent is ReviveEvent){
             await Animate((ReviveEvent)battleEvent);
+        }
+        if (battleEvent is SummonEvent){
+            await Animate((SummonEvent)battleEvent);
         }
     }
 

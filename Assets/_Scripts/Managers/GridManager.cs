@@ -112,7 +112,7 @@ public class GridManager : MonoBehaviour
 
             }
         }
-        Debug.Log("adjusting Cam");
+        //Debug.Log("adjusting Cam");
         _cam.transform.position = new Vector3(2.5f, 0.8f, -10);
 
     }
@@ -288,7 +288,10 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public Tile GetRandomTile(Team team) {
+    public Tile GetRandomTile(Team team, bool emptyOnly = false) {
+        if(emptyOnly){
+            return ReturnTilesList(team).Where(t => t.OccupiedUnit == null).OrderBy(t => Random.value).First();
+        }
         return ReturnTilesList(team).OrderBy(t => Random.value).First();
     }
 

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6447859740044481387
+--- !u!1 &4475389610395054991
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,37 +8,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2496620232096355583}
-  - component: {fileID: 3065692715335362838}
+  - component: {fileID: 9117902312789482572}
+  - component: {fileID: 2505525179104209020}
   m_Layer: 0
-  m_Name: Fragmentation
+  m_Name: Fragmentation 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2496620232096355583
+--- !u!4 &9117902312789482572
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6447859740044481387}
+  m_GameObject: {fileID: 4475389610395054991}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.23089953, y: 0.1374411, z: -0.013668419}
+  m_LocalPosition: {x: 2.551766, y: 0.28141844, z: 0.03736796}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3065692715335362838
+--- !u!114 &2505525179104209020
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6447859740044481387}
+  m_GameObject: {fileID: 4475389610395054991}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea33aa779507f9e44824e1d35da4d75d, type: 3}
@@ -50,6 +50,6 @@ MonoBehaviour:
   passiveName: 
   fight_description: 
   holder: {fileID: 0}
-  scriptablePassive: {fileID: 11400000, guid: 3021bba887a8c044a938c90e6ad46701, type: 2}
+  scriptablePassive: {fileID: 0}
   modifier: {fileID: 0}
   summonedUnit: {fileID: 11400000, guid: 0450f5311ea5e9248b027048d88bcf5b, type: 2}
