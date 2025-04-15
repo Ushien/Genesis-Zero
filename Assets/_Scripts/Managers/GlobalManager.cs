@@ -173,6 +173,8 @@ public class GlobalManager : MonoBehaviour
                 Destroy(go);
             }
         }
+        GameObject.Find("ScreenTransitionEffect").GetComponent<Animator>().Play("ScreenTransition");
+        AudioManager.Instance.transition.Play();
     }
 
     public void LoseScreenIn(){
