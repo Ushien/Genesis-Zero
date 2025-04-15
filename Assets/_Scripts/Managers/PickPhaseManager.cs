@@ -21,7 +21,7 @@ public class PickPhaseManager : MonoBehaviour
     [SerializeField]
     private GameObject choiceCell;
     private List<Reward> currentRewards;
-    private List<GameObject> alliesCells;
+    private Transform alliesCells;
     [SerializeField]
     private List<BaseUnit> allies;
     private int currentSelectionIndex;
@@ -42,23 +42,24 @@ public class PickPhaseManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cam = GlobalManager.Instance.GetCam();
-        cam.transform.GetChild(0).gameObject.SetActive(true);
-        rewardParent = new GameObject("Rewards");
+        //cam = GlobalManager.Instance.GetCam();
+        //cam.transform.GetChild(0).gameObject.SetActive(true);
+        //rewardParent = new GameObject("Rewards");
         allies = GlobalManager.Instance.GetAllies();
-        alliesCells = new List<GameObject>();
+        alliesCells = GameObject.Find("Grid").transform.Find("Allies");
 
         currentSelectionIndex = 0;
-        rewardSelector = Instantiate(rewardSelectorPrefab);
-        rewardSelector.gameObject.SetActive(false);
+        // rewardSelector = Instantiate(rewardSelectorPrefab);
+        // rewardSelector.gameObject.SetActive(false);
 
         currentUnitIndex = 0;
-        unitSelector = Instantiate(rewardSelectorPrefab);
-        unitSelector.gameObject.SetActive(false);
+        // unitSelector = Instantiate(rewardSelectorPrefab);
+        // unitSelector.gameObject.SetActive(false);
 
-        informationPanel = Instantiate(informationPanelPrefab);
-        informationPanel.worldCamera = GlobalManager.Instance.GetCam();
-        ResetDisplay();
+        // informationPanel = Instantiate(informationPanelPrefab);
+        // informationPanel.worldCamera = GlobalManager.Instance.GetCam();
+        InterfaceManager.Instance.ResetDisplay();
+        //InterfaceManager.Instance.RewardUI.gameObject.SetActive(true);
 
         List<Reward> rewardsToSpawn = new List<Reward>();
         Reward rewardToAdd;
@@ -81,22 +82,22 @@ public class PickPhaseManager : MonoBehaviour
         }
         SetCurrentRewards(rewardsToSpawn);
 
-        int y_pos = 0;
-        for (int i = allies.Count-1; i >= 0; i--)
-        {
-            GameObject _object = Instantiate(choiceCell);
-            alliesCells.Insert(0, _object);
+        // int y_pos = 0;
+        // for (int i = allies.Count-1; i >= 0; i--)
+        // {
+        //     GameObject _object = Instantiate(choiceCell);
+        //     alliesCells.Insert(0, _object);
             
-            _object.transform.name = allies[i].GetName();
-            _object.GetComponent<SpriteRenderer>().sprite = allies[i].scriptableUnit.sprite;
+        //     _object.transform.name = allies[i].GetName();
+        //     _object.GetComponent<SpriteRenderer>().sprite = allies[i].scriptableUnit.sprite;
 
-            y_pos = y_pos + Screen.height/2/(allies.Count+1);
-            _object.transform.position = cam.ScreenToWorldPoint(new Vector3(Screen.width/7, y_pos, 1));
-            //_object.transform.SetParent(rewardParent.transform);
-        }
-        unitSelector.gameObject.SetActive(true);
-        currentUnitSelectorPosition = alliesCells[currentUnitIndex].transform.position;
-        targetUnitPosition = currentUnitSelectorPosition;
+        //     y_pos = y_pos + Screen.height/2/(allies.Count+1);
+        //     _object.transform.position = cam.ScreenToWorldPoint(new Vector3(Screen.width/7, y_pos, 1));
+        //     //_object.transform.SetParent(rewardParent.transform);
+        // }
+        // unitSelector.gameObject.SetActive(true);
+        // currentUnitSelectorPosition = alliesCells[currentUnitIndex].transform.position;
+        // targetUnitPosition = currentUnitSelectorPosition;
 
         DisplayRewards();
 
@@ -112,17 +113,17 @@ public class PickPhaseManager : MonoBehaviour
     public void End(){
         currentRewards = new List<Reward>();
         currentSelectionIndex = 0;
-        Destroy(rewardParent);
-        Destroy(rewardSelector.gameObject);
-        Destroy(informationPanel.gameObject);
-        Destroy(unitSelector.gameObject);
-        foreach (GameObject unitCell in alliesCells)
-        {
-            Destroy(unitCell);
-        }
+        //Destroy(rewardParent);
+        //Destroy(rewardSelector.gameObject);
+        //Destroy(informationPanel.gameObject);
+        // Destroy(unitSelector.gameObject);
+        // foreach (GameObject unitCell in alliesCells)
+        // {
+        //     Destroy(unitCell);
+        // }
         // Active blank background
         // TODO il faut changer ce fonctionnement
-        cam.transform.GetChild(0).gameObject.SetActive(false);
+        //cam.transform.GetChild(0).gameObject.SetActive(false);
     }
 
     void Awake(){
@@ -132,11 +133,11 @@ public class PickPhaseManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentRewardSelectorPosition = Vector3.Lerp(currentRewardSelectorPosition, targetSelectorPosition, Time.deltaTime*6);
-        rewardSelector.position = currentRewardSelectorPosition;
+        //currentRewardSelectorPosition = Vector3.Lerp(currentRewardSelectorPosition, targetSelectorPosition, Time.deltaTime*6);
+        //rewardSelector.position = currentRewardSelectorPosition;
 
-        currentUnitSelectorPosition = Vector3.Lerp(currentUnitSelectorPosition, targetUnitPosition, Time.deltaTime*6);
-        unitSelector.position = currentUnitSelectorPosition;
+        //currentUnitSelectorPosition = Vector3.Lerp(currentUnitSelectorPosition, targetUnitPosition, Time.deltaTime*6);
+        //unitSelector.position = currentUnitSelectorPosition;
 
         if(currentRewards != null){
             if(Input.GetKeyDown(KeyCode.LeftArrow)){
@@ -221,31 +222,37 @@ public class PickPhaseManager : MonoBehaviour
     }
 
     public void DisplayRewards(){
+        InterfaceManager.Instance.RewardUI.gameObject.SetActive(true);
         List<Reward> rewards = GetCurrentRewards();
-        int x_pos = 0;
+        float x_pos = -InterfaceManager.Instance.RewardUI.GetComponent<RectTransform>().rect.width/2;
+        int i = 1;
         foreach (Reward reward in rewards)
         {
             GameObject _object = Instantiate(choiceCell);
             reward.SetCell(_object);
-            _object.transform.name = reward.GetTitle();
-            x_pos = x_pos + Screen.width/(rewards.Count+1);
-            _object.transform.position = cam.ScreenToWorldPoint(new Vector3(x_pos, Screen.height/2, 1));
-            _object.transform.SetParent(rewardParent.transform);
+            _object.transform.SetParent(InterfaceManager.Instance.RewardUI.transform);
+            //_object.transform.name = reward.GetTitle();
+            _object.transform.name = $"reward_{i}";
+            x_pos = x_pos + InterfaceManager.Instance.RewardUI.GetComponent<RectTransform>().rect.width/(rewards.Count+1f);
+            _object.GetComponent<RectTransform>().anchoredPosition = new Vector2(x_pos, InterfaceManager.Instance.rewardYPos);
 
             //ADD Reward here
             if(reward is SpellReward){
                 SpellReward spellReward = (SpellReward)reward;
-                _object.GetComponent<SpriteRenderer>().sprite = spellReward.GetSpell().artwork;
+                _object.GetComponent<Image>().sprite = spellReward.GetSpell().artwork;
             }
             else if(reward is PassiveReward){
                 PassiveReward passiveReward = (PassiveReward)reward;
-                _object.GetComponent<SpriteRenderer>().sprite = passiveReward.GetPassive().artwork;
+                _object.GetComponent<Image>().sprite = passiveReward.GetPassive().artwork;
             }
-
+            i++;
         }
-        rewardSelector.gameObject.SetActive(true);
-        currentRewardSelectorPosition = new Vector3(rewards[0].GetCell().transform.position.x, rewards[0].GetCell().transform.position.y, (float)-9.5);
-        targetSelectorPosition = currentRewardSelectorPosition;
+        //rewardSelector.gameObject.SetActive(true);
+        //currentRewardSelectorPosition = new Vector3(rewards[0].GetCell().transform.position.x, rewards[0].GetCell().transform.position.y, (float)-9.5);
+        //targetSelectorPosition = currentRewardSelectorPosition;
+        currentSelectionIndex = 0;
+        SelectReward(GetCurrentRewards()[0], 1);
+        SelectNewUnit(0);
         UpdateDisplay();
     }
 
@@ -254,30 +261,33 @@ public class PickPhaseManager : MonoBehaviour
         {
             case Directions.LEFT:
                 if(currentSelectionIndex != 0){
-                    UnselectReward(GetCurrentRewards()[currentSelectionIndex]);
+                    UnselectReward(GetCurrentRewards()[currentSelectionIndex], currentSelectionIndex+1);
                     currentSelectionIndex = currentSelectionIndex-1;
-                    SelectReward(GetCurrentRewards()[currentSelectionIndex]);
+                    SelectReward(GetCurrentRewards()[currentSelectionIndex], currentSelectionIndex+1);
                     UpdateDisplay();
                 }
                 break;
             case Directions.RIGHT:
                 if(currentSelectionIndex != GetCurrentRewards().Count-1){
-                    UnselectReward(GetCurrentRewards()[currentSelectionIndex]);
+                    UnselectReward(GetCurrentRewards()[currentSelectionIndex], currentSelectionIndex+1);
                     currentSelectionIndex = currentSelectionIndex + 1;
-                    SelectReward(GetCurrentRewards()[currentSelectionIndex]);
+                    SelectReward(GetCurrentRewards()[currentSelectionIndex], currentSelectionIndex+1);
                     UpdateDisplay();
                 }
                 break;
             case Directions.UP:
                 if(currentUnitIndex != 0){
-                    //UnselectUnit()
+                    Debug.Log(currentUnitIndex);
+                    UnselectUnit(currentUnitIndex);
                     currentUnitIndex -= 1;
                     SelectNewUnit(currentUnitIndex);
                     UpdateDisplay();
                 }
                 break;
             case Directions.DOWN:
+                Debug.Log(currentUnitIndex);
                 if(currentUnitIndex != allies.Count-1){
+                    UnselectUnit(currentUnitIndex);
                     currentUnitIndex += 1;
                     SelectNewUnit(currentUnitIndex);
                     UpdateDisplay();
@@ -290,18 +300,31 @@ public class PickPhaseManager : MonoBehaviour
     }
 
 
-    public void SelectReward(Reward reward){
-        if(reward.GetCell() != null){
-            targetSelectorPosition = new Vector3(reward.GetCell().transform.position.x, reward.GetCell().transform.position.y, (float)-9.5);
-        }
-        else{
-            Debug.Log("Pas censé arriver ici");
-        }
+    public void SelectReward(Reward reward, int rewardIndex){
+        // if(reward.GetCell() != null){
+        //     targetSelectorPosition = new Vector3(reward.GetCell().transform.position.x, reward.GetCell().transform.position.y, (float)-9.5);
+        // }
+        // else{
+        //     Debug.Log("Pas censé arriver ici");
+        // }
         
+        if(reward is SpellReward){
+            Transform rewardTransform = InterfaceManager.Instance.RewardUI.transform.Find($"reward_{rewardIndex}").transform;
+            rewardTransform.Find("Highlight").gameObject.SetActive(true);
+            rewardTransform.gameObject.GetComponent<Animator>().Play("Selected");
+        }
+        else if(reward is PassiveReward){
+            Transform rewardTransform = InterfaceManager.Instance.RewardUI.transform.Find($"reward_{rewardIndex}").transform;
+            rewardTransform.Find("Highlight").gameObject.SetActive(true);
+            rewardTransform.gameObject.GetComponent<Animator>().Play("Selected");
+        }
     }
-
+    private void UnselectUnit(int unitIndex){
+        alliesCells.GetChild(unitIndex).gameObject.GetComponent<Animator>().Play("deselection");
+    }
     private void SelectNewUnit(int unitIndex){
-        targetUnitPosition = new Vector3(alliesCells[unitIndex].transform.position.x, alliesCells[unitIndex].transform.position.y, (float)-9.5);
+        //targetUnitPosition = new Vector3(alliesCells[unitIndex].transform.position.x, alliesCells[unitIndex].transform.position.y, (float)-9.5);
+        alliesCells.GetChild(unitIndex).gameObject.GetComponent<Animator>().Play("selection");
     }
 
     public void PickReward(Reward reward, BaseUnit unit){
@@ -325,49 +348,57 @@ public class PickPhaseManager : MonoBehaviour
         }
     }
 
-    private void UnselectReward(Reward reward){
-        //
+    private void UnselectReward(Reward reward, int rewardIndex){
+        if(reward is SpellReward){
+            Transform rewardTransform = InterfaceManager.Instance.RewardUI.transform.Find($"reward_{rewardIndex}").transform;
+            rewardTransform.Find("Highlight").gameObject.SetActive(false);
+            rewardTransform.gameObject.GetComponent<Animator>().Play("Deselected");
+        }
+        else if(reward is PassiveReward){
+            Transform rewardTransform = InterfaceManager.Instance.RewardUI.transform.Find($"reward_{rewardIndex}").transform;
+            rewardTransform.Find("Highlight").gameObject.SetActive(false);
+            rewardTransform.gameObject.GetComponent<Animator>().Play("Deselected");
+        }
     }
 
     public void UpdateDisplay(){
-        ResetDisplay();
+        //InterfaceManager.Instance.ResetDisplay();
         if(currentRewards.Count > currentSelectionIndex){
             //ADD Reward here
             if(currentRewards[currentSelectionIndex] is SpellReward){
                 // Devrait idéalement fonctionner avec un BaseSpell et non un ScriptableSpell
                 ScriptableSpell spell = ((SpellReward)currentRewards[currentSelectionIndex]).GetSpell();
-                informationPanel.gameObject.SetActive(true);
-                Transform spellPanel = informationPanel.transform.Find("SpellPanel");
-                spellPanel.gameObject.SetActive(true);
-                spellPanel.Find("Name").GetComponent<TextMeshProUGUI>().text = spell.name;
-                spellPanel.Find("Description").GetComponent<TextMeshProUGUI>().text = spell.GetFightDescription(allies[currentUnitIndex]);
-                spellPanel.Find("Cooldown").GetComponent<TextMeshProUGUI>().text = spell.cooldown.ToString();
-                spellPanel.Find("Sprite").GetComponent<Image>().sprite = spell.artwork;
+                //informationPanel.gameObject.SetActive(true);
+                //Transform spellPanel = informationPanel.transform.Find("SpellPanel");
+                //spellPanel.gameObject.SetActive(true);
+                // spellPanel.Find("Name").GetComponent<TextMeshProUGUI>().text = spell.name;
+                // spellPanel.Find("Description").GetComponent<TextMeshProUGUI>().text = spell.GetFightDescription(allies[currentUnitIndex]);
+                // spellPanel.Find("Cooldown").GetComponent<TextMeshProUGUI>().text = spell.cooldown.ToString();
+                // spellPanel.Find("Sprite").GetComponent<Image>().sprite = spell.artwork;
+                InterfaceManager.Instance.rewardSpellName.text = spell.name;
+                InterfaceManager.Instance.rewardSpellDescription.text = spell.GetFightDescription(allies[currentUnitIndex]);
+                InterfaceManager.Instance.rewardSpellCooldown.text = spell.cooldown.ToString();
             }
             else if(currentRewards[currentSelectionIndex] is PassiveReward){
                 // Devrait idéalement fonctionner avec un Passive et non un ScriptablePassive
                 ScriptablePassive passive = ((PassiveReward)currentRewards[currentSelectionIndex]).GetPassive();
-                informationPanel.gameObject.SetActive(true);
-                Transform passivePanel = informationPanel.transform.Find("PassivePanel");
-                passivePanel.gameObject.SetActive(true);
-                passivePanel.Find("NextSprite").gameObject.SetActive(false);
-                passivePanel.Find("Name").GetComponent<TextMeshProUGUI>().text = passive.name;
-                passivePanel.Find("Description").GetComponent<TextMeshProUGUI>().text = passive.GetFightDescription(allies[currentUnitIndex]);
-                passivePanel.Find("Sprite").GetComponent<Image>().sprite = passive.artwork;
+                // informationPanel.gameObject.SetActive(true);
+                // Transform passivePanel = informationPanel.transform.Find("PassivePanel");
+                // passivePanel.gameObject.SetActive(true);
+                // passivePanel.Find("NextSprite").gameObject.SetActive(false);
+                // passivePanel.Find("Name").GetComponent<TextMeshProUGUI>().text = passive.name;
+                // passivePanel.Find("Description").GetComponent<TextMeshProUGUI>().text = passive.GetFightDescription(allies[currentUnitIndex]);
+                // passivePanel.Find("Sprite").GetComponent<Image>().sprite = passive.artwork;
+                InterfaceManager.Instance.rewardSpellName.text = passive.name;
+                InterfaceManager.Instance.rewardSpellDescription.text = passive.GetFightDescription(allies[currentUnitIndex]);
+                InterfaceManager.Instance.rewardSpellCooldown.text = " ";
             }
             else{
-                informationPanel.gameObject.SetActive(false);
+                //informationPanel.gameObject.SetActive(false);
             }
         }
         else{
-            informationPanel.gameObject.SetActive(false);
+            //informationPanel.gameObject.SetActive(false);
         }
-    }
-
-    private void ResetDisplay(){
-            informationPanel.transform.Find("UnitPanel").gameObject.SetActive(false);
-            informationPanel.transform.Find("PassivePanel").gameObject.SetActive(false);
-            informationPanel.transform.Find("SpellPanel").gameObject.SetActive(false);
-            informationPanel.transform.Find("SpellSelector").gameObject.SetActive(false);
     }
 }

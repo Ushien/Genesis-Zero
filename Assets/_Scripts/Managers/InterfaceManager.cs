@@ -20,19 +20,24 @@ public class InterfaceManager : MonoBehaviour
     // UI elements
     [SerializeField]
     private Canvas UIPrefab;
+    [SerializeField]
+    private Canvas RewardUIPrefab;
     private Canvas UI;
+    public Canvas RewardUI;
 
-
+    // UI Lines
     public GameObject UILine;
     public GameObject UILinePrefab;
     public Transform UILineVertical;
     public Transform UILineHorizontal;
 
+    // UI Panel Lines
     public GameObject UIPanelLine;
     public GameObject UIPanelLinePrefab;
     public Transform UIPanelLineVertical;
     public Transform UIPanelLineHorizontal;
 
+    // UI elements
     private Transform unitPanel;
     public Transform spellPanel;
     private Transform passivePanel;
@@ -46,6 +51,9 @@ public class InterfaceManager : MonoBehaviour
     private TextMeshProUGUI spellNamePanel;
     private TextMeshProUGUI spellCooldownPanel;
     private TextMeshProUGUI spellDescriptionPanel;
+    public TextMeshProUGUI rewardSpellName;
+    public TextMeshProUGUI rewardSpellDescription;
+    public TextMeshProUGUI rewardSpellCooldown;
     private Image spellPanelIcon;
     public Transform spellSelector;
     public Transform shade;
@@ -73,6 +81,7 @@ public class InterfaceManager : MonoBehaviour
     public float xZoomOffset= 0f;
     public float yZoomOffset = 0f;
     public float zoomSpeed = 0.1f;
+    public float rewardYPos = 0.52f;
 
     public Vector3 lifeBarOffset;
 
@@ -116,13 +125,20 @@ public class InterfaceManager : MonoBehaviour
         // On initialise la UI
         UI = Instantiate(UIPrefab);
         lifeBarsUI = GlobalManager.Instance.GetUIWorldSpace();
+        RewardUI = Instantiate(RewardUIPrefab);
+        RewardUI.worldCamera = GlobalManager.Instance.GetCam();
         UI.worldCamera = GlobalManager.Instance.GetCam();
+        
 
         unitPanel = UI.transform.Find("UnitPanel");
         spellPanel = UI.transform.Find("SpellPanel");
         passivePanel = UI.transform.Find("PassivePanel");
         spellSelector = UI.transform.Find("SpellSelector");
         shade = UI.transform.Find("Shade");
+
+        rewardSpellName = RewardUI.transform.Find("DescriptionPanel").transform.Find("Name").GetComponent<TextMeshProUGUI>();
+        rewardSpellDescription = RewardUI.transform.Find("DescriptionPanel").transform.Find("Description").GetComponent<TextMeshProUGUI>();
+        rewardSpellCooldown = RewardUI.transform.Find("DescriptionPanel").transform.Find("Cooldown").GetComponent<TextMeshProUGUI>();
 
         unitNamePanel = unitPanel.Find("UnitName").GetComponent<TextMeshProUGUI>();
         unitPowerPanel = unitPanel.Find("UnitPower").GetComponent<TextMeshProUGUI>();
@@ -921,12 +937,13 @@ public class InterfaceManager : MonoBehaviour
         }
     }
     
-    void ResetDisplay(bool flag = false){
+    public void ResetDisplay(bool flag = false){
             if(!flag){
                 spellSelector.gameObject.SetActive(false);
                 UILine.SetActive(false);
             }
             UIPanelLine.SetActive(false);
+            RewardUI.gameObject.SetActive(false);
             shade.gameObject.SetActive(false);
             unitPanel.gameObject.SetActive(false);
             passivePanel.gameObject.SetActive(false);

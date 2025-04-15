@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIPrefab: {fileID: 2703114003398457339, guid: 78d60f1959b850c43ab69f3bb197ff2c, type: 3}
+  RewardUIPrefab: {fileID: 1896664207206199181, guid: 372f12cf37b4b5d4fb76b3aec1d86104, type: 3}
+  RewardUI: {fileID: 0}
   UILine: {fileID: 0}
   UILinePrefab: {fileID: 363797320139045019, guid: d0ced1c6df09e1149b1053595c927b39, type: 3}
   UILineVertical: {fileID: 0}
@@ -54,6 +56,9 @@ MonoBehaviour:
   UIPanelLineVertical: {fileID: 0}
   UIPanelLineHorizontal: {fileID: 0}
   spellPanel: {fileID: 0}
+  rewardSpellName: {fileID: 0}
+  rewardSpellDescription: {fileID: 0}
+  rewardSpellCooldown: {fileID: 0}
   spellSelector: {fileID: 0}
   shade: {fileID: 0}
   UIWorldSpace: {fileID: 3722291128606437924, guid: 7d72b36445a86f446892d74aff8d2150, type: 3}
@@ -73,6 +78,7 @@ MonoBehaviour:
   xZoomOffset: 0
   yZoomOffset: 0
   zoomSpeed: 0.1
+  rewardYPos: 0.52
   lifeBarOffset: {x: 0, y: 1, z: 0}
   selectorSpeed: 10
   tileOutliner: {fileID: 2100000, guid: 29bac064f9c8bfd4bab1f1bf7e92c24a, type: 2}

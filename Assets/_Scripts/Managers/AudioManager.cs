@@ -11,7 +11,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource UIBip1;
     public AudioSource UIBip2;
     public AudioSource UIBip3;
-
+    public AudioSource transition;
     void Awake(){
         Instance = this;
     }

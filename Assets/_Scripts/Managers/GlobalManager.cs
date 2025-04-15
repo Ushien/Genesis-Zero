@@ -129,7 +129,6 @@ public class GlobalManager : MonoBehaviour
     }
 
     public void BattlePhaseOut(){
-        Destroy(gridManager.gameObject);
         battleManager.GetArchive().name = "Battle " + battleID;
         battleManager.GetArchive().transform.SetParent(battleArchive.transform);
 
@@ -142,18 +141,6 @@ public class GlobalManager : MonoBehaviour
 
         Destroy(AIManager.gameObject);
         Destroy(eventManager.gameObject);
-        lifeBarUI.gameObject.SetActive(false);
-        
-        GameObject[] rootGameObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
-        foreach (GameObject _gameobject in rootGameObjects)
-        {
-            if(_gameobject.name == "Grid"){
-                Destroy(_gameobject);
-            }
-            if(_gameobject.name.Contains("UI - World Space")){
-                _gameobject.SetActive(false);
-            }
-        }
     }
 
     public Camera GetCam(){
@@ -167,8 +154,27 @@ public class GlobalManager : MonoBehaviour
     }
 
     public void PickPhaseOut(){
+        Destroy(gridManager.gameObject);
         pickPhaseManager.End();
-        Destroy(pickPhaseManager.gameObject);
+        Destroy(pickPhaseManager.gameObject);        
+        
+        lifeBarUI.gameObject.SetActive(false);
+        GameObject[] rootGameObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
+        foreach (Transform t in GameObject.FindObjectsOfType<Transform>())
+        {
+            GameObject go = t.gameObject;
+            if(go.name == "Grid"){
+                Destroy(go);
+            }
+            if(go.name.Contains("UI - World Space")){
+                go.SetActive(false);
+            }
+            if(go.name.Contains("reward_")){
+                Destroy(go);
+            }
+        }
+        GameObject.Find("Transition").GetComponent<Animator>().Play("screenTransition2");
+        AudioManager.Instance.transition.Play();
     }
 
     public void LoseScreenIn(){
