@@ -531,7 +531,7 @@ public class BattleManager : MonoBehaviour
         UnitManager.Instance.EndBattle();
         if(GetBattleState() == BattleState.WON){
             UnitManager.Instance.RemoveUnits(Team.Enemy);
-            UnitManager.Instance.MakeUnitsVisible(Team.Ally, false);
+            //UnitManager.Instance.MakeUnitsVisible(Team.Ally, false);
         }
         if(GetBattleState() == BattleState.LOST){
             UnitManager.Instance.RemoveUnits(Team.Both);
