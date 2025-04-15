@@ -173,7 +173,7 @@ public class GlobalManager : MonoBehaviour
                 Destroy(go);
             }
         }
-        GameObject.Find("ScreenTransitionEffect").GetComponent<Animator>().Play("ScreenTransition");
+        GameObject.Find("Transition").GetComponent<Animator>().Play("screenTransition2");
         AudioManager.Instance.transition.Play();
     }
 
