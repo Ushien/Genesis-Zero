@@ -43,36 +43,6 @@ public class BattleManager : MonoBehaviour
         Instance = this;
     }
 
-    void Update(){
-        if(!inAnimation){
-            ChangeState(Machine.PLAYERACTIONCHOICESTATE, Trigger.EMPTY);
-            ChangeState(Machine.PLAYERTURNSTATE, Trigger.EMPTY);
-            ChangeState(Machine.BATTLESTATE, Trigger.EMPTY);
-        }
-    }
-
-    /*
-    public void LaunchBattle(List<Tuple<Vector2, ScriptableUnit, int>> ally_composition, List<Tuple<Vector2, ScriptableUnit, int>> enemy_composition){
-        
-        GridManager.Instance.GenerateGrids();
-        UnitManager.Instance.SpawnAllies(ally_composition);
-        UnitManager.Instance.SpawnEnemies(enemy_composition);
-
-        StartBattle();
-    }
-    */
-
-    /*
-    public void LaunchBattle(List<BaseUnit> ally_composition, List<Tuple<Vector2, ScriptableUnit, int>> enemy_composition){
-
-        GridManager.Instance.GenerateGrids();
-        UnitManager.Instance.SpawnAllies(ally_composition);
-        UnitManager.Instance.SpawnEnemies(enemy_composition);
-
-        StartBattle();
-    }
-    */
-
     public void LaunchBattle(List<BaseUnit> ally_composition, List<BaseUnit> enemy_composition){
 
         GridManager.Instance.GenerateGrids();
@@ -80,6 +50,9 @@ public class BattleManager : MonoBehaviour
         UnitManager.Instance.SpawnEnemies(enemy_composition);
         UnitManager.Instance.MakeUnitsVisible(Team.Both, true);
         UnitManager.Instance.StartBattle();
+
+        Debug.Log(GetCurrentStatesSummary());
+        ChangeState(Machine.BATTLESTATE, Trigger.FORWARD);
 
         nTurn = 1;
         battleArchive = new GameObject("Current Battle Archive");
@@ -158,9 +131,15 @@ public class BattleManager : MonoBehaviour
                 switch (trigger)
                 {
                     case Trigger.VALIDATE:
-                        Debug.Log("6");
-                        playerActionChoiceState = PlayerActionChoiceState.VALIDATED_ACTION;
-                        Debug.Log("7");
+                        Debug.Log("8");
+                        if(UnitManager.Instance.DidEveryCharacterGaveInstruction()){
+                            playerActionChoiceState = PlayerActionChoiceState.OUT;
+                            ChangeState(Machine.PLAYERTURNSTATE, Trigger.FORWARD);
+                        }
+                        else{
+                            playerActionChoiceState = PlayerActionChoiceState.CHARACTER_SELECTION;
+                            Debug.Log("9");
+                        }
                         break;
                     case Trigger.CANCEL:
                         playerActionChoiceState = PlayerActionChoiceState.SPELL_SELECTION;
@@ -170,53 +149,96 @@ public class BattleManager : MonoBehaviour
                         break;
                 }
                 break;
-
-            case PlayerActionChoiceState.VALIDATED_ACTION:
-                Debug.Log("Validated Action");
-                switch (trigger)
-                {
-                    case Trigger.EMPTY:
-                        Debug.Log("8");
-                        if(UnitManager.Instance.DidEveryCharacterGaveInstruction()){
-                            playerActionChoiceState = PlayerActionChoiceState.EXIT;
-                        }
-                        else{
-                            playerActionChoiceState = PlayerActionChoiceState.CHARACTER_SELECTION;
-                            Debug.Log("9");
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            break;
-            
-            case PlayerActionChoiceState.EXIT:
-                Debug.Log("Exit");
-                switch (trigger)
-                {
-                    case Trigger.EMPTY:
-                        // Do stuff
-                        playerActionChoiceState = PlayerActionChoiceState.OUT;
-                        ChangeState(Machine.PLAYERTURNSTATE, Trigger.FORWARD);
-                        break;
-                    default:
-                        break;
-                }
-
-            break;
         }
     }
 
+    private void StartTurnPhaseIn(){
+        // Start turn effects
+        if(teamTurn == TeamTurn.ALLY){
+            StartTurnEffects();
+        }
+
+        if (GlobalManager.Instance.debug){
+            CheckAssertions();
+        };
+
+        NextTurn();
+
+        // Passage automatique à la phase de action choice
+        ChangeState(Machine.BATTLESTATE, Trigger.FORWARD);
+    }
+
+    private void ActionChoicePhaseIn(){
+        // TODO moyen de refactor un peu tout ça
+
+        // Si c'est au tour d'un joueur humain
+        if(teamTurn == TeamTurn.ALLY && !(GlobalManager.Instance.debug && TestScript.Instance.AreThereScriptedInstructions())){
+            ChangeState(Machine.PLAYERACTIONCHOICESTATE, Trigger.FORWARD);
+        }
+
+        // Si c'est au tour d'un ennemi (IA ou scripté)
+        else if(teamTurn == TeamTurn.ENEMY)
+        {
+            List<Instruction> EnemyOrders = AIManager.Instance.GetAIOrders(ConvertTeamTurn(teamTurn));
+            // S'il y a des instructions scriptées elles écrasent les ordres IA
+            // C'est important que les ordres IA soient calculés quand même pour préserver le même état d'aléatoire
+            if(GlobalManager.Instance.debug && TestScript.Instance.AreThereScriptedInstructions()){
+                foreach (Instruction AI_Instruc in EnemyOrders)
+                {
+                    Destroy(AI_Instruc.gameObject);
+                }
+                EnemyOrders = TestScript.Instance.GetScriptedInstructions();
+            }
+
+            currentTurn.SetInstructions(EnemyOrders);
+            playerActionChoiceState = PlayerActionChoiceState.OUT;
+            // Passage automatique à la phase APPLY_ACTIONS
+            ChangeState(Machine.BATTLESTATE, Trigger.FORWARD);
+        }
+
+        // Si c'est un tour scripté
+        else if(GlobalManager.Instance.debug && TestScript.Instance.AreThereScriptedInstructions()){
+            currentTurn.SetInstructions(TestScript.Instance.GetScriptedInstructions());
+            playerActionChoiceState = PlayerActionChoiceState.OUT;
+            // Passage automatique à la phase APPLY_ACTIONS
+            ChangeState(Machine.BATTLESTATE, Trigger.FORWARD);
+        }
+    }
+
+    private void ApplyActionsTurnPhaseIn(){
+        ApplyInstructions();
+
+        // Passage automatique à la phase ANIMATION
+        ChangeState(Machine.BATTLESTATE, Trigger.FORWARD);
+    }
+
+    private void AnimationTurnPhaseIn(){
+        // Passage automatique à la phase END
+        ChangeState(Machine.BATTLESTATE, Trigger.FORWARD);
+    }
+
+    private void EndTurnPhaseIn(){
+        // Passage automatique à la phase OUT
+        ChangeState(Machine.BATTLESTATE, Trigger.FORWARD);
+    }
+
+    private void OutTurnPhaseIn(){
+        // Passage automatique à la phase suivante du BattleState
+        ChangeState(Machine.BATTLESTATE, Trigger.FORWARD);
+    }
+
     private void ChangeTurnState(Trigger trigger){
+
+        // Il est nécessaire d'envoyer des triggers FORWARD pour passer d'une phase à la suivante
         switch (turnState)
         {
             case TurnState.OUT:
-                // Nothing happens unless it receives an FORWARD signal
                 switch (trigger)
                 {
                     case Trigger.FORWARD:
                         // Do stuff if needed
                         turnState = TurnState.START;
+                        StartTurnPhaseIn();
                         break;
                     default:
                         break;
@@ -224,20 +246,15 @@ public class BattleManager : MonoBehaviour
                 break;
 
             case TurnState.START:
-                // Do stuff
-                // Start turn effects
-                if(teamTurn == TeamTurn.ALLY){
-                    StartTurnEffects();
-                }
-                turnState = TurnState.ACTION_CHOICE;
-
-                if (GlobalManager.Instance.debug){
-                    CheckAssertions();
-                };
-
-                NextTurn();
-                if(teamTurn == TeamTurn.ALLY && !(GlobalManager.Instance.debug && TestScript.Instance.AreThereScriptedInstructions())){
-                    ChangeState(Machine.PLAYERACTIONCHOICESTATE, Trigger.FORWARD);
+                switch (trigger)
+                {
+                    case Trigger.FORWARD:
+                        // Do stuff if needed
+                        turnState = TurnState.ACTION_CHOICE;
+                        ActionChoicePhaseIn();
+                        break;
+                    default:
+                        break;
                 }
                 break;
 
@@ -246,39 +263,23 @@ public class BattleManager : MonoBehaviour
                 {
                     case Trigger.FORWARD:
                         turnState = TurnState.APPLY_ACTIONS;
+                        ApplyActionsTurnPhaseIn();
                         break;
-                    
                     default:
-                        if(teamTurn == TeamTurn.ENEMY){
-                            List<Instruction> EnemyOrders = AIManager.Instance.GetAIOrders(ConvertTeamTurn(teamTurn));
-                            // S'il y a des instructions scriptées elles écrasent les ordres IA
-                            // C'est important que les ordres IA soient calculés quand même pour préserver le même état d'aléatoire
-                            if(GlobalManager.Instance.debug && TestScript.Instance.AreThereScriptedInstructions()){
-                                foreach (Instruction AI_Instruc in EnemyOrders)
-                                {
-                                    Destroy(AI_Instruc.gameObject);
-                                }
-                                EnemyOrders = TestScript.Instance.GetScriptedInstructions();
-                            }
-                            currentTurn.SetInstructions(EnemyOrders);
-                            turnState = TurnState.APPLY_ACTIONS;
-                            playerActionChoiceState = PlayerActionChoiceState.OUT;
-                        }
-                        else if(GlobalManager.Instance.debug && TestScript.Instance.AreThereScriptedInstructions()){
-                            currentTurn.SetInstructions(TestScript.Instance.GetScriptedInstructions());
-                            turnState = TurnState.APPLY_ACTIONS;
-                            playerActionChoiceState = PlayerActionChoiceState.OUT;
-                        }
-                        
-
                         break;
                 }
                 break;
 
             case TurnState.APPLY_ACTIONS:
-                ApplyInstructions();
-
-                turnState = TurnState.ANIMATION;
+                switch (trigger)
+                {
+                    case Trigger.FORWARD:
+                        turnState = TurnState.ANIMATION;
+                        AnimationTurnPhaseIn();
+                        break;
+                    default:
+                        break;
+                }
                 break;
 
             case TurnState.ANIMATION:
@@ -286,6 +287,7 @@ public class BattleManager : MonoBehaviour
                 {
                     case Trigger.FORWARD:
                         turnState = TurnState.END;
+                        EndTurnPhaseIn();
                         break;
                     default:
                         break;
@@ -293,10 +295,15 @@ public class BattleManager : MonoBehaviour
                 break;
 
             case TurnState.END:
-                // Do stuff
-                // End turn effects
-                turnState = TurnState.OUT;
-                ChangeState(Machine.BATTLESTATE, Trigger.FORWARD);
+                switch (trigger)
+                {
+                    case Trigger.FORWARD:
+                        turnState = TurnState.OUT;
+                        OutTurnPhaseIn();
+                        break;
+                    default:
+                        break;
+                }
                 break;
             default:
                 break;

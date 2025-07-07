@@ -103,12 +103,10 @@ public class BaseUnit : MonoBehaviour
         position = _position;
 
         level = setup_level;
-        Debug.Log(name + " " + healthAmount);
 
         if(powerAmount == 0){
             finalPower = GetStatFromLevel(scriptableUnit.original_power, level);
             basePower = finalPower;
-            Debug.Log(name + " " + finalPower);
         }
         else{
             finalPower = powerAmount;
