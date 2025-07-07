@@ -88,9 +88,11 @@ public class BattleManager : MonoBehaviour
     }
 
     public void ChangeState(Machine machine, Trigger trigger){
+        Debug.Log("3");
         switch (machine)
         {
             case Machine.PLAYERACTIONCHOICESTATE:
+                Debug.Log("4");
                 ChangePlayerActionChoiceState(trigger);
                 break;
             case Machine.PLAYERTURNSTATE:
@@ -105,9 +107,11 @@ public class BattleManager : MonoBehaviour
     }
 
     private void ChangePlayerActionChoiceState(Trigger trigger){
+        Debug.Log("5");
         switch(playerActionChoiceState){
 
             case PlayerActionChoiceState.OUT:
+            Debug.Log("Out");
                 switch (trigger)
                 {
                     case Trigger.FORWARD:
@@ -122,6 +126,7 @@ public class BattleManager : MonoBehaviour
                 break;
 
             case PlayerActionChoiceState.CHARACTER_SELECTION:
+                Debug.Log("Character Selection");
                 switch (trigger){
                     case Trigger.VALIDATE:
                         playerActionChoiceState = PlayerActionChoiceState.SPELL_SELECTION;
@@ -135,6 +140,7 @@ public class BattleManager : MonoBehaviour
                 break;
 
             case PlayerActionChoiceState.SPELL_SELECTION:
+                Debug.Log("Spell Selection");
                 switch (trigger){
                     case Trigger.VALIDATE:
                         playerActionChoiceState = PlayerActionChoiceState.TARGET_SELECTION;
@@ -148,10 +154,13 @@ public class BattleManager : MonoBehaviour
                 break;
 
             case PlayerActionChoiceState.TARGET_SELECTION:
+                Debug.Log("Target Selection");
                 switch (trigger)
                 {
                     case Trigger.VALIDATE:
+                        Debug.Log("6");
                         playerActionChoiceState = PlayerActionChoiceState.VALIDATED_ACTION;
+                        Debug.Log("7");
                         break;
                     case Trigger.CANCEL:
                         playerActionChoiceState = PlayerActionChoiceState.SPELL_SELECTION;
@@ -163,14 +172,17 @@ public class BattleManager : MonoBehaviour
                 break;
 
             case PlayerActionChoiceState.VALIDATED_ACTION:
+                Debug.Log("Validated Action");
                 switch (trigger)
                 {
                     case Trigger.EMPTY:
+                        Debug.Log("8");
                         if(UnitManager.Instance.DidEveryCharacterGaveInstruction()){
                             playerActionChoiceState = PlayerActionChoiceState.EXIT;
                         }
                         else{
                             playerActionChoiceState = PlayerActionChoiceState.CHARACTER_SELECTION;
+                            Debug.Log("9");
                         }
                         break;
                     default:
@@ -179,6 +191,7 @@ public class BattleManager : MonoBehaviour
             break;
             
             case PlayerActionChoiceState.EXIT:
+                Debug.Log("Exit");
                 switch (trigger)
                 {
                     case Trigger.EMPTY:

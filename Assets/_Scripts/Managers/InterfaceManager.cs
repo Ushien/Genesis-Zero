@@ -453,6 +453,7 @@ public class InterfaceManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.B)){
                     // Sélectionner attaque
                     sourceTile.Unselect();
+                    Debug.Log("1");
                     SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
                     break;
                 }
@@ -779,6 +780,7 @@ public class InterfaceManager : MonoBehaviour
     
     void SpellSelectionTrigger(BattleManager.Trigger trigger){
         // On sort de la sélection des spells pour aller vers un autre état
+        Debug.Log("2");
         BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, trigger);
     }
     
