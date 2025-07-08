@@ -18,7 +18,7 @@ public class BattleEventManager : MonoBehaviour
         EventManager.Instance.BeforeTechCast(castEvent);
         BattleManager.Instance.AddEvent(castEvent);
         if(animation){
-            AnimationManager.Instance.addAnimation(castEvent);
+            AnimationManager.Instance.AddAnimation(castEvent);
         }
     }
 
@@ -30,7 +30,7 @@ public class BattleEventManager : MonoBehaviour
         EventManager.Instance.AfterTechCast(castEvent);
         BattleManager.Instance.AddEvent(castEvent);
         if(animation){
-            AnimationManager.Instance.addAnimation(castEvent);
+            AnimationManager.Instance.AddAnimation(castEvent);
         }
     }
 
@@ -46,7 +46,7 @@ public class BattleEventManager : MonoBehaviour
         EventManager.Instance.UnitDamaged(damageEvent);
         BattleManager.Instance.AddEvent(damageEvent);
         if(animation){
-            AnimationManager.Instance.addAnimation(damageEvent);
+            AnimationManager.Instance.AddAnimation(damageEvent);
         }
     }
 
@@ -58,7 +58,7 @@ public class BattleEventManager : MonoBehaviour
         EventManager.Instance.UnitGainedArmor(armorGainEvent);
         BattleManager.Instance.AddEvent(armorGainEvent);
         if(animation){
-            AnimationManager.Instance.addAnimation(armorGainEvent);
+            AnimationManager.Instance.AddAnimation(armorGainEvent);
         }
     }
 
@@ -71,7 +71,7 @@ public class BattleEventManager : MonoBehaviour
         EventManager.Instance.UnitHealed(healEvent);
         BattleManager.Instance.AddEvent(healEvent);
         if(animation){
-            AnimationManager.Instance.addAnimation(healEvent);
+            AnimationManager.Instance.AddAnimation(healEvent);
         }
     }
 
@@ -83,7 +83,7 @@ public class BattleEventManager : MonoBehaviour
         EventManager.Instance.UnitDied(deathEvent);
         BattleManager.Instance.AddEvent(deathEvent);
         if(animation){
-            AnimationManager.Instance.addAnimation(deathEvent);
+            AnimationManager.Instance.AddAnimation(deathEvent);
         }
     }
 
@@ -93,7 +93,7 @@ public class BattleEventManager : MonoBehaviour
 
     public void ApplyHPModificationEvent(HPModificationEvent hpModificationEvent){
         BattleManager.Instance.AddEvent(hpModificationEvent);
-        AnimationManager.Instance.addAnimation(hpModificationEvent);
+        AnimationManager.Instance.AddAnimation(hpModificationEvent);
     }
 
     public AttackEvent CreateAttackEvent(BaseUnit originUnit){
@@ -102,7 +102,7 @@ public class BattleEventManager : MonoBehaviour
 
     public void ApplyAttackEvent(AttackEvent attackEvent){
         BattleManager.Instance.AddEvent(attackEvent);
-        AnimationManager.Instance.addAnimation(attackEvent);
+        AnimationManager.Instance.AddAnimation(attackEvent);
     }
 
     public ReviveEvent CreateReviveEvent(BaseUnit revivedUnit, int hpAmount){
@@ -111,7 +111,7 @@ public class BattleEventManager : MonoBehaviour
 
     public void ApplyReviveEvent(ReviveEvent reviveEvent){
         BattleManager.Instance.AddEvent(reviveEvent);
-        AnimationManager.Instance.addAnimation(reviveEvent);
+        AnimationManager.Instance.AddAnimation(reviveEvent);
     }
 
     public GrowthEvent CreateGrowthEvent(BaseSpell spell){
@@ -120,7 +120,7 @@ public class BattleEventManager : MonoBehaviour
 
     public void ApplyReviveEvent(GrowthEvent growthEvent){
         BattleManager.Instance.AddEvent(growthEvent);
-        AnimationManager.Instance.addAnimation(growthEvent);
+        AnimationManager.Instance.AddAnimation(growthEvent);
     }
 
     public SummonEvent CreateSummonEvent(BaseUnit summonedUnit, Tile summonTile, BaseUnit summoner){
@@ -129,6 +129,6 @@ public class BattleEventManager : MonoBehaviour
 
     public void ApplySummonEvent(SummonEvent summonEvent){
         BattleManager.Instance.AddEvent(summonEvent);
-        AnimationManager.Instance.addAnimation(summonEvent);
+        AnimationManager.Instance.AddAnimation(summonEvent);
     }
 }

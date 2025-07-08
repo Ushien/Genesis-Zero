@@ -53,12 +53,9 @@ public class AnimationManager : MonoBehaviour
             if (animationQueue.Count != 0)
             {
                 //Si la file n'est pas vide, animer le premier évènement, en mode fifo
-                List<BattleEvent> listWrapper = new()
-                {
-                    animationQueue[0]
-                };
+                BattleEvent toAnimate = animationQueue[0];
                 animationQueue.RemoveAt(0);
-                var task = Animate(listWrapper);
+                Animate(toAnimate);
             }
 
             else
@@ -104,31 +101,30 @@ public class AnimationManager : MonoBehaviour
         while (animationQueue.Count != 0)
         {
             //Si la file n'est pas vide, animer le premier évènement, en mode fifo
-            List<BattleEvent> listWrapper = new()
-            {
-                animationQueue[0]
-            };
+            BattleEvent toAnimate = animationQueue[0];
             animationQueue.RemoveAt(0);
-            var task = Animate(listWrapper);
+            Animate(toAnimate);
         }
     }
 
-    public async Task Animate(List<BattleEvent> battleEvents)
+    /*
+    public IEnumerator Animate(List<BattleEvent> battleEvents)
     {
         for (var i = 0; i < battleEvents.Count; i++)
         {
-            await Animate(battleEvents[i]);
-            await Task.Delay((int)(delayTime / accelerator));
+            yield return new Animate(battleEvents[i]);
+            //await Task.Delay((int)(delayTime / accelerator));
         }
     }
+    */
 
-    public async Task Animate(BeforeCastEvent beforecastEvent)
+    private IEnumerator Animate(BeforeCastEvent beforecastEvent)
     {
         beforecastEvent.GetSourceUnit().GetComponent<Animator>().Play("castSpellAnimation");
-        await Task.Yield();
+        yield return null;
     }
 
-    private async Task Animate(DamageEvent damageEvent)
+    private IEnumerator Animate(DamageEvent damageEvent)
     {
 
         // Animer les dégats d'armure
@@ -145,7 +141,7 @@ public class AnimationManager : MonoBehaviour
             for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f * accelerator)
             {
                 damageDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));
-                await Task.Yield();
+                yield return null;
             }
             damageDisplay.gameObject.SetActive(false);
             Destroy(damageDisplay.gameObject);
@@ -173,7 +169,7 @@ public class AnimationManager : MonoBehaviour
             for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f * accelerator)
             {
                 damageDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));
-                await Task.Yield();
+                yield return null;
             }
             damageDisplay.gameObject.SetActive(false);
             Destroy(damageDisplay.gameObject);
@@ -181,7 +177,7 @@ public class AnimationManager : MonoBehaviour
 
     }
 
-    private async Task Animate(ArmorGainEvent armorGainEvent)
+    private IEnumerator Animate(ArmorGainEvent armorGainEvent)
     {
         TextMeshProUGUI armorGainDisplay = Instantiate(damageText);
         armorGainDisplay.transform.SetParent(DamageSection);
@@ -193,13 +189,13 @@ public class AnimationManager : MonoBehaviour
         for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f * accelerator)
         {
             armorGainDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));
-            await Task.Yield();
+            yield return null;
         }
         armorGainDisplay.gameObject.SetActive(false);
         Destroy(armorGainDisplay.gameObject);
     }
 
-    private async Task Animate(HealEvent healEvent)
+    private IEnumerator Animate(HealEvent healEvent)
     {
         TextMeshProUGUI armorGainDisplay = Instantiate(damageText);
         armorGainDisplay.transform.SetParent(DamageSection);
@@ -211,21 +207,21 @@ public class AnimationManager : MonoBehaviour
         for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f * accelerator)
         {
             armorGainDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));
-            await Task.Yield();
+            yield return null;
         }
         armorGainDisplay.gameObject.SetActive(false);
         Destroy(armorGainDisplay.gameObject);
     }
 
-    private async Task Animate(DeathEvent deathEvent)
+    private IEnumerator Animate(DeathEvent deathEvent)
     {
         deathEvent.GetDeadUnit().gameObject.SetActive(false);
         deathEvent.GetDeadUnit().lifeBar.SetHP(0);
         deathEvent.GetDeadUnit().lifeBar.gameObject.SetActive(false);
-        await Task.Yield();
+        yield return null;
     }
 
-    private async Task Animate(HPModificationEvent hpModificationEvent)
+    private IEnumerator Animate(HPModificationEvent hpModificationEvent)
     {
         if (hpModificationEvent.AreTotalHP())
         {
@@ -235,61 +231,61 @@ public class AnimationManager : MonoBehaviour
         {
             hpModificationEvent.GetTargetUnit().lifeBar.SetHP(hpModificationEvent.GetNewAmount());
         }
-        await Task.Yield();
+        yield return null;
     }
 
-    private async Task Animate(ReviveEvent reviveEvent)
+    private IEnumerator Animate(ReviveEvent reviveEvent)
     {
         reviveEvent.GetRevivedUnit().lifeBar.SetHP(reviveEvent.GetHPAmount());
-        await Task.Yield();
+        yield return null;
     }
 
-    private async Task Animate(SummonEvent summonEvent)
+    private IEnumerator Animate(SummonEvent summonEvent)
     {
         // Afficher l'unité
         summonEvent.GetSummonedUnit().gameObject.SetActive(true);
-        await Task.Yield();
+        yield return null;
     }
 
 
-    private async Task Animate(BattleEvent battleEvent)
+    private void Animate(BattleEvent battleEvent)
     {
         //Debug.Log(battleEvent.GetSummary());
         if (battleEvent is BeforeCastEvent)
         {
-            await Animate((BeforeCastEvent)battleEvent);
+            StartCoroutine(Animate((BeforeCastEvent)battleEvent));            
         }
         if (battleEvent is DamageEvent)
         {
-            await Animate((DamageEvent)battleEvent);
+            StartCoroutine(Animate((DamageEvent)battleEvent));
         }
         if (battleEvent is ArmorGainEvent)
         {
-            await Animate((ArmorGainEvent)battleEvent);
+            StartCoroutine(Animate((ArmorGainEvent)battleEvent));
         }
         if (battleEvent is HealEvent)
         {
-            await Animate((HealEvent)battleEvent);
+            StartCoroutine(Animate((HealEvent)battleEvent));
         }
         if (battleEvent is DeathEvent)
         {
-            await Animate((DeathEvent)battleEvent);
+            StartCoroutine(Animate((DeathEvent)battleEvent));
         }
         if (battleEvent is HPModificationEvent)
         {
-            await Animate((HPModificationEvent)battleEvent);
+            StartCoroutine(Animate((HPModificationEvent)battleEvent));
         }
         if (battleEvent is ReviveEvent)
         {
-            await Animate((ReviveEvent)battleEvent);
+            StartCoroutine(Animate((ReviveEvent)battleEvent));
         }
         if (battleEvent is SummonEvent)
         {
-            await Animate((SummonEvent)battleEvent);
+            StartCoroutine(Animate((SummonEvent)battleEvent));
         }
     }
 
-    public void addAnimation(BattleEvent battleEvent)
+    public void AddAnimation(BattleEvent battleEvent)
     {
         //Debug.Log(battleEvent.GetSummary());
         animationQueue.Add(battleEvent);
