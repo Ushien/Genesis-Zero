@@ -19,7 +19,7 @@ public class BattleManager : MonoBehaviour
     public enum TurnState {OUT, START, ACTION_CHOICE, APPLY_ACTIONS, ANIMATION, END}
     public enum PlayerActionChoiceState {OUT, START, CHARACTER_SELECTION, SWITCH_CHARACTER, SPELL_SELECTION, TARGET_SELECTION, VALIDATED_ACTION, OTHER_STATE, EXIT}
 
-    public enum Machine{BATTLESTATE, PLAYERTURNSTATE, PLAYERACTIONCHOICESTATE}
+    public enum Machine{BATTLESTATE, TURNSTATE, PLAYERACTIONCHOICESTATE}
     public enum Trigger {VALIDATE, CANCEL, FORWARD, START, OUT}
     public enum TeamTurn{OUT, ALLY, ENEMY}
 
@@ -68,7 +68,7 @@ public class BattleManager : MonoBehaviour
                 Debug.Log("4");
                 ChangePlayerActionChoiceState(trigger);
                 break;
-            case Machine.PLAYERTURNSTATE:
+            case Machine.TURNSTATE:
                 ChangeTurnState(trigger);
                 break;
             case Machine.BATTLESTATE:
@@ -78,12 +78,26 @@ public class BattleManager : MonoBehaviour
                 break;
         }
     }
-    
+
     #region Machine à états de Action Choice
+
+    private void CharacterSelectionPlayerActionChoicePhaseIn()
+    {
+        //
+    }
+
+    private void SpellSelectionPlayerActionChoicePhaseIn()
+    {
+        //
+    }
+
+    private void TargetSelectionPlayerActionChoicePhaseIn()
+    {
+        //
+    }
 
     private void ChangePlayerActionChoiceState(Trigger trigger)
     {
-        Debug.Log("5");
         switch (playerActionChoiceState)
         {
 
@@ -91,12 +105,9 @@ public class BattleManager : MonoBehaviour
                 Debug.Log("Out");
                 switch (trigger)
                 {
-                    case Trigger.FORWARD:
-                        // Do stuff if needed
-                        if (!(GlobalManager.Instance.debug && TestScript.Instance.AreThereScriptedInstructions()))
-                        {
-                            playerActionChoiceState = PlayerActionChoiceState.CHARACTER_SELECTION;
-                        }
+                    case Trigger.START:
+                        playerActionChoiceState = PlayerActionChoiceState.CHARACTER_SELECTION;
+                        CharacterSelectionPlayerActionChoicePhaseIn();
                         break;
                     default:
                         break;
@@ -109,8 +120,10 @@ public class BattleManager : MonoBehaviour
                 {
                     case Trigger.VALIDATE:
                         playerActionChoiceState = PlayerActionChoiceState.SPELL_SELECTION;
+                        SpellSelectionPlayerActionChoicePhaseIn();
                         break;
                     case Trigger.CANCEL:
+                        // On reste dans le même état mais on annule l'instruction précédente
                         CancelLastInstruction();
                         break;
                     default:
@@ -124,9 +137,11 @@ public class BattleManager : MonoBehaviour
                 {
                     case Trigger.VALIDATE:
                         playerActionChoiceState = PlayerActionChoiceState.TARGET_SELECTION;
+                        TargetSelectionPlayerActionChoicePhaseIn();
                         break;
                     case Trigger.CANCEL:
                         playerActionChoiceState = PlayerActionChoiceState.CHARACTER_SELECTION;
+                        CharacterSelectionPlayerActionChoicePhaseIn();
                         break;
                     default:
                         break;
@@ -142,16 +157,17 @@ public class BattleManager : MonoBehaviour
                         if (UnitManager.Instance.DidEveryCharacterGaveInstruction())
                         {
                             playerActionChoiceState = PlayerActionChoiceState.OUT;
-                            ChangeState(Machine.PLAYERTURNSTATE, Trigger.FORWARD);
+                            ChangeState(Machine.TURNSTATE, Trigger.FORWARD);
                         }
                         else
                         {
                             playerActionChoiceState = PlayerActionChoiceState.CHARACTER_SELECTION;
-                            Debug.Log("9");
+                            CharacterSelectionPlayerActionChoicePhaseIn();
                         }
                         break;
                     case Trigger.CANCEL:
                         playerActionChoiceState = PlayerActionChoiceState.SPELL_SELECTION;
+                        SpellSelectionPlayerActionChoicePhaseIn();
                         break;
 
                     default:
