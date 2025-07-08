@@ -20,7 +20,7 @@ public class BattleManager : MonoBehaviour
     public enum PlayerActionChoiceState {OUT, START, CHARACTER_SELECTION, SWITCH_CHARACTER, SPELL_SELECTION, TARGET_SELECTION, VALIDATED_ACTION, OTHER_STATE, EXIT}
 
     public enum Machine{BATTLESTATE, PLAYERTURNSTATE, PLAYERACTIONCHOICESTATE}
-    public enum Trigger {VALIDATE, CANCEL, FORWARD, EMPTY}
+    public enum Trigger {VALIDATE, CANCEL, FORWARD, START, OUT}
     public enum TeamTurn{OUT, ALLY, ENEMY}
 
     public BattleState battleState;
@@ -43,7 +43,8 @@ public class BattleManager : MonoBehaviour
         Instance = this;
     }
 
-    public void LaunchBattle(List<BaseUnit> ally_composition, List<BaseUnit> enemy_composition){
+    public void LaunchBattle(List<BaseUnit> ally_composition, List<BaseUnit> enemy_composition)
+    {
 
         GridManager.Instance.GenerateGrids();
         UnitManager.Instance.SpawnAllies(ally_composition);
@@ -51,13 +52,12 @@ public class BattleManager : MonoBehaviour
         UnitManager.Instance.MakeUnitsVisible(Team.Both, true);
         UnitManager.Instance.StartBattle();
 
-        Debug.Log(GetCurrentStatesSummary());
-        ChangeState(Machine.BATTLESTATE, Trigger.FORWARD);
-
         nTurn = 1;
         battleArchive = new GameObject("Current Battle Archive");
-
-        StartBattle();
+        
+        Debug.Log(GetCurrentStatesSummary());
+        ChangeState(Machine.BATTLESTATE, Trigger.START);
+        //StartBattle();
     }
 
     public void ChangeState(Machine machine, Trigger trigger){
@@ -78,18 +78,23 @@ public class BattleManager : MonoBehaviour
                 break;
         }
     }
+    
+    #region Machine à états de Action Choice
 
-    private void ChangePlayerActionChoiceState(Trigger trigger){
+    private void ChangePlayerActionChoiceState(Trigger trigger)
+    {
         Debug.Log("5");
-        switch(playerActionChoiceState){
+        switch (playerActionChoiceState)
+        {
 
             case PlayerActionChoiceState.OUT:
-            Debug.Log("Out");
+                Debug.Log("Out");
                 switch (trigger)
                 {
                     case Trigger.FORWARD:
                         // Do stuff if needed
-                        if(!(GlobalManager.Instance.debug && TestScript.Instance.AreThereScriptedInstructions())){
+                        if (!(GlobalManager.Instance.debug && TestScript.Instance.AreThereScriptedInstructions()))
+                        {
                             playerActionChoiceState = PlayerActionChoiceState.CHARACTER_SELECTION;
                         }
                         break;
@@ -100,7 +105,8 @@ public class BattleManager : MonoBehaviour
 
             case PlayerActionChoiceState.CHARACTER_SELECTION:
                 Debug.Log("Character Selection");
-                switch (trigger){
+                switch (trigger)
+                {
                     case Trigger.VALIDATE:
                         playerActionChoiceState = PlayerActionChoiceState.SPELL_SELECTION;
                         break;
@@ -114,7 +120,8 @@ public class BattleManager : MonoBehaviour
 
             case PlayerActionChoiceState.SPELL_SELECTION:
                 Debug.Log("Spell Selection");
-                switch (trigger){
+                switch (trigger)
+                {
                     case Trigger.VALIDATE:
                         playerActionChoiceState = PlayerActionChoiceState.TARGET_SELECTION;
                         break;
@@ -132,11 +139,13 @@ public class BattleManager : MonoBehaviour
                 {
                     case Trigger.VALIDATE:
                         Debug.Log("8");
-                        if(UnitManager.Instance.DidEveryCharacterGaveInstruction()){
+                        if (UnitManager.Instance.DidEveryCharacterGaveInstruction())
+                        {
                             playerActionChoiceState = PlayerActionChoiceState.OUT;
                             ChangeState(Machine.PLAYERTURNSTATE, Trigger.FORWARD);
                         }
-                        else{
+                        else
+                        {
                             playerActionChoiceState = PlayerActionChoiceState.CHARACTER_SELECTION;
                             Debug.Log("9");
                         }
@@ -151,18 +160,27 @@ public class BattleManager : MonoBehaviour
                 break;
         }
     }
+    
+    #endregion
 
-    private void StartTurnPhaseIn(){
+    #region Machine à états de TurnState
+
+    private void StartTurnPhaseIn()
+    {
         // Start turn effects
-        if(teamTurn == TeamTurn.ALLY){
+        if (teamTurn == TeamTurn.ALLY)
+        {
             StartTurnEffects();
         }
 
-        if (GlobalManager.Instance.debug){
+        if (GlobalManager.Instance.debug)
+        {
             CheckAssertions();
-        };
+        }
 
         NextTurn();
+        SwitchCurrentTeam();
+        UnitManager.Instance.MakeUnitsActive();
 
         // Passage automatique à la phase de action choice
         ChangeState(Machine.BATTLESTATE, Trigger.FORWARD);
@@ -218,6 +236,8 @@ public class BattleManager : MonoBehaviour
     }
 
     private void EndTurnPhaseIn(){
+        EndTurnEffects();
+        ArchiveTurn();
         // Passage automatique à la phase OUT
         ChangeState(Machine.BATTLESTATE, Trigger.FORWARD);
     }
@@ -235,7 +255,7 @@ public class BattleManager : MonoBehaviour
             case TurnState.OUT:
                 switch (trigger)
                 {
-                    case Trigger.FORWARD:
+                    case Trigger.START:
                         // Do stuff if needed
                         turnState = TurnState.START;
                         StartTurnPhaseIn();
@@ -310,18 +330,68 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    private void ChangeBattleState(Trigger trigger){
-        switch (battleState){
+    #endregion
+
+    private void StartBattlePhaseIn()
+    {
+        // Actions de début de bataille
+        ChangeTurnState(Trigger.FORWARD);
+
+        // Passage automatique à la phase START
+        ChangeBattleState(Trigger.FORWARD);
+    }
+
+    private void TurnBattlePhaseIn()
+    {
+        // Actions de début de la phase de tours
+    }
+
+    private void EndBattlePhaseIn()
+    {
+        // Passage automatique à la phase WON ou la phase LOST
+        ChangeBattleState(Trigger.FORWARD);
+    }
+
+    private void WonBattlePhaseIn()
+    {
+        // Ce qui se passe lorsqu'on atteint l'écran de victoire
+        // Passage automatique à la phase OUT
+        ChangeBattleState(Trigger.OUT);
+
+        // Communication avec le GlobalManager
+        GlobalManager.Instance.ChangeState(GlobalManager.RunPhase.PICKPHASE);
+    }
+
+    private void LostBattlePhaseIn()
+    {
+        // Ce qui se passe lorsqu'on atteint l'écran de défaite
+        // Passage automatique à la phase OUT
+        ChangeBattleState(Trigger.OUT);
+
+        // Communication avec le GlobalManager
+        GlobalManager.Instance.ChangeState(GlobalManager.RunPhase.LOSESCREEN);
+    }
+
+    #region Machine à états de BattleState
+    private void ChangeBattleState(Trigger trigger)
+    {
+        switch (battleState)
+        {
             case BattleState.OUT:
+                switch (trigger)
+                {
+                    case Trigger.START:
+                        battleState = BattleState.START;
+                        StartBattlePhaseIn();
+                        break;
+                }
                 break;
             case BattleState.START:
-                switch (trigger){
+                switch (trigger)
+                {
                     case Trigger.FORWARD:
-                        break;
-                    default:
-                        // Do stuff de début de bataille
                         battleState = BattleState.TURN;
-                        ChangeTurnState(Trigger.FORWARD);
+                        TurnBattlePhaseIn();
                         break;
                 }
                 break;
@@ -330,17 +400,15 @@ public class BattleManager : MonoBehaviour
                 {
                     case Trigger.FORWARD:
                         // Check if game is over
-                        if(isGameOver() != BattleState.OUT){
+                        if (isGameOver() != BattleState.OUT)
+                        {
                             battleState = BattleState.END;
+                            EndBattlePhaseIn();
                         }
-                        else{
-                            if(teamTurn == TeamTurn.ENEMY){
-                                EndTurnEffects();
-                            }
-                            ArchiveTurn();
-                            UnitManager.Instance.MakeUnitsActive();
-                            SwitchCurrentTeam();
-                            ChangeTurnState(Trigger.FORWARD);
+                        else
+                        {
+                            // On reste dans le même état, et on commence un nouveau tour dans la machine TurnState
+                            ChangeTurnState(Trigger.START);
                         }
                         break;
                     default:
@@ -348,33 +416,50 @@ public class BattleManager : MonoBehaviour
                 }
                 break;
             case BattleState.END:
-                switch (trigger){
+                switch (trigger)
+                {
                     case Trigger.FORWARD:
                         battleState = isGameOver();
-                        break;
-                    default:
-                        // Trigger qui intervient quand les trucs d'après batailles sont conclus
-                        ChangeBattleState(Trigger.FORWARD);
+                        if (battleState == BattleState.WON)
+                        {
+                            WonBattlePhaseIn();
+                        }
+                        if (battleState == BattleState.LOST)
+                        {
+                            LostBattlePhaseIn();
+                        }
                         break;
                 }
                 break;
             case BattleState.WON:
-                GlobalManager.Instance.ChangeState(GlobalManager.RunPhase.PICKPHASE);
+                switch (trigger)
+                {
+                    case Trigger.OUT:
+                        battleState = BattleState.OUT;
+                        break;
+                }
                 break;
             case BattleState.LOST:
-                GlobalManager.Instance.ChangeState(GlobalManager.RunPhase.LOSESCREEN);
-                break;
-            default:
+                switch (trigger)
+                {
+                    case Trigger.OUT:
+                        battleState = BattleState.OUT;
+                        break;
+                }
                 break;
         }
     }
+    
+    #endregion
 
     private BattleState isGameOver()
     {
-        if(UnitManager.Instance.GetUnits(Team.Ally).Count == 0){
+        if (UnitManager.Instance.GetUnits(Team.Ally).Count == 0)
+        {
             return BattleState.LOST;
         }
-        if(UnitManager.Instance.GetUnits(Team.Enemy).Count == 0){
+        if (UnitManager.Instance.GetUnits(Team.Enemy).Count == 0)
+        {
             return BattleState.WON;
         }
         return BattleState.OUT;
@@ -462,6 +547,7 @@ public class BattleManager : MonoBehaviour
         currentTurn.transform.SetParent(battleArchive.transform);
         currentTurn.name = "Turn " + nTurn;
         currentTurn.Setup(nTurn);
+        
     }
 
 
