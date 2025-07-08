@@ -12,7 +12,7 @@ public class UnitManager : MonoBehaviour
 {
     public static UnitManager Instance;
     private List<BaseUnit> units;
-    public BaseUnit EmptyUnit;
+    public GameObject EmptyUnit;
     public Passive EmptyPassive;
 
     GameObject all_units;
@@ -37,13 +37,12 @@ public class UnitManager : MonoBehaviour
     }
 
     public void SpawnUnit(BaseUnit unit_to_spawn, Team team){
-
         if(team == Team.Ally){
-            unit_to_spawn.transform.parent = all_allies.transform;
+            unit_to_spawn.transform.parent.parent = all_allies.transform;
             unit_to_spawn.SetTeam(Team.Ally);
         }
         else{
-            unit_to_spawn.transform.parent = all_enemies.transform;
+            unit_to_spawn.transform.parent.parent = all_enemies.transform;
             unit_to_spawn.SetTeam(Team.Enemy);
         }
         
@@ -54,7 +53,10 @@ public class UnitManager : MonoBehaviour
     }
 
     public void SpawnAllies(List<BaseUnit> units_to_spawn){
-        foreach(BaseUnit unit in units_to_spawn){
+        Debug.Log("Hi");
+        Debug.Log(units_to_spawn.Count);
+        foreach (BaseUnit unit in units_to_spawn)
+        {
             SpawnUnit(unit, Team.Ally);
         }  
     }
@@ -66,9 +68,9 @@ public class UnitManager : MonoBehaviour
     }
 
     public BaseUnit CreateUnit(Vector2 position, ScriptableUnit unit_to_create, int level, Team team, int healthAmount = 0, int powerAmount = 0){
-        var new_unit = Instantiate(EmptyUnit);
-        new_unit.Setup(unit_to_create, level, team, position, healthAmount : healthAmount, powerAmount : powerAmount);
-        return new_unit;
+        GameObject new_unit = Instantiate(EmptyUnit);
+        new_unit.transform.GetChild(0).GetComponent<BaseUnit>().Setup(unit_to_create, level, team, position, healthAmount : healthAmount, powerAmount : powerAmount);
+        return new_unit.transform.GetChild(0).GetComponent<BaseUnit>();
     }
 
     public List<BaseUnit> CreateUnits(List<Tuple<Vector2, ScriptableUnit, int>> units_to_create, Team team){
@@ -76,6 +78,8 @@ public class UnitManager : MonoBehaviour
         foreach(Tuple<Vector2, ScriptableUnit, int> unit in units_to_create){
             unitList.Add(CreateUnit(unit.Item1, unit.Item2, unit.Item3, team));
         }
+        Debug.Log("Go");
+        Debug.Log(unitList.Count);
         return unitList;
     }
 
@@ -175,19 +179,25 @@ public class UnitManager : MonoBehaviour
 
     public void MakeUnitsVisible(Team team, bool visibility){
         if(team == Team.Ally || team == Team.Both){
-            foreach (Transform unit in all_allies.transform)
+            foreach (Transform containerUnit in all_allies.transform)
             {
-                if(!unit.GetComponent<BaseUnit>().IsDead() || !visibility){
+                Transform unit = containerUnit.GetChild(0);
+                if (!unit.GetComponent<BaseUnit>().IsDead() || !visibility)
+                {
                     unit.gameObject.SetActive(visibility);
                     unit.GetComponent<BaseUnit>().lifeBar.gameObject.SetActive(visibility);
                 }
             }
         }
         if(team == Team.Enemy || team == Team.Both){
-            foreach (Transform unit in all_enemies.transform)
-            if(!unit.GetComponent<BaseUnit>().IsDead() || !visibility){
-                unit.gameObject.SetActive(visibility);
-                unit.GetComponent<BaseUnit>().lifeBar.gameObject.SetActive(visibility);
+            foreach (Transform containerUnit in all_enemies.transform)
+            {
+                Transform unit = containerUnit.GetChild(0);
+                if (!unit.GetComponent<BaseUnit>().IsDead() || !visibility)
+                {
+                    unit.gameObject.SetActive(visibility);
+                    unit.GetComponent<BaseUnit>().lifeBar.gameObject.SetActive(visibility);
+                }
             }
         }
     }

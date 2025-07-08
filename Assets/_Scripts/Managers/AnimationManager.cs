@@ -23,29 +23,32 @@ public class AnimationManager : MonoBehaviour
     private List<BattleEvent> animationQueue;
 
     [SerializeField]
-    int delayTime = 300;
+    int delayTime = 0;
     [SerializeField]
     float accelerator = 1f;
+    private bool animationLocked = false;
 
-    void Awake() {
+    void Awake()
+    {
         animationQueue = new List<BattleEvent>();
         Instance = this;
         DamageSection = InterfaceManager.Instance.GetUI().transform.Find("Damages").transform;
         damageText = DamageSection.Find("DamagesText").GetComponent<TextMeshProUGUI>();
     }
 
-    public void BattleIn() {
+    public void BattleIn()
+    {
         DamageSection.gameObject.SetActive(true);
     }
 
-    public void BattleOut() {
+    public void BattleOut()
+    {
         DamageSection.gameObject.SetActive(false);
     }
 
-    /*
     public void Update()
     {
-        if (BattleManager.Instance.GetTurnState() == BattleManager.TurnState.ANIMATION)
+        if (BattleManager.Instance.GetTurnState() == BattleManager.TurnState.ANIMATION && !animationLocked)
         {
             if (animationQueue.Count != 0)
             {
@@ -68,8 +71,8 @@ public class AnimationManager : MonoBehaviour
             }
         }
     }
-    */
 
+    /*
     public void LaunchAnimations()
     {
         if (animationQueue.Count != 0)
@@ -86,7 +89,6 @@ public class AnimationManager : MonoBehaviour
                 animationQueue.RemoveAt(0);
                 var task = Animate(listWrapper);
             }
-            */
         }
         foreach (BattleEvent battleEvent in animationQueue)
         {
@@ -99,6 +101,7 @@ public class AnimationManager : MonoBehaviour
 
         BattleManager.Instance.ChangeState(BattleManager.Machine.TURNSTATE, BattleManager.Trigger.FORWARD);
     }
+    */
 
     public void ForceAnimation()
     {
@@ -115,7 +118,8 @@ public class AnimationManager : MonoBehaviour
         }
     }
 
-    public async Task Animate(List<BattleEvent> battleEvents){
+    public async Task Animate(List<BattleEvent> battleEvents)
+    {
         for (var i = 0; i < battleEvents.Count; i++)
         {
             await Animate(battleEvents[i]);
@@ -124,45 +128,19 @@ public class AnimationManager : MonoBehaviour
         BattleManager.Instance.SetInAnimation(false);
     }
 
-    public async Task Animate(BeforeCastEvent beforecastEvent){
+    public async Task Animate(BeforeCastEvent beforecastEvent)
+    {
         beforecastEvent.GetSourceUnit().GetComponent<Animator>().Play("castSpellAnimation");
-        /*
-        if (beforecastEvent.GetCastedSpell().IsAnAttack())
-        {
-            float distanceValue = beforecastEvent.GetSourceUnit().GetTeam() == Team.Ally ? 0.02f : -0.02f;
-
-            for (float distance = 0.0f; distance <= 0.4f; distance += 0.02f * accelerator)
-            {
-                beforecastEvent.GetSourceUnit().gameObject.transform.Translate(new Vector3(distanceValue, 0, 0));
-                await Task.Yield();
-            }
-            for (float distance = 0.4f; distance >= 0.0f; distance -= 0.02f * accelerator)
-            {
-                beforecastEvent.GetSourceUnit().gameObject.transform.Translate(new Vector3(-distanceValue, 0, 0));
-                await Task.Yield();
-            }
-        }
-        else
-        {
-            for (float distance = 0.0f; distance <= 0.4f; distance += 0.02f * accelerator)
-            {
-                beforecastEvent.GetSourceUnit().gameObject.transform.Translate(new Vector3(0, 0.02f, 0));
-                await Task.Yield();
-            }
-            for (float distance = 0.4f; distance >= 0.0f; distance -= 0.02f * accelerator)
-            {
-                beforecastEvent.GetSourceUnit().gameObject.transform.Translate(new Vector3(0, -0.02f, 0));
-                await Task.Yield();
-            }
-        }
-        */
+        await Task.Yield();
     }
 
-    private async Task Animate(DamageEvent damageEvent){
+    private async Task Animate(DamageEvent damageEvent)
+    {
 
         // Animer les dégats d'armure
         int damage = damageEvent.GetArmorAmount();
-        if(damage > 0){
+        if (damage > 0)
+        {
             TextMeshProUGUI damageDisplay = Instantiate(damageText);
             damageDisplay.transform.SetParent(DamageSection);
             damageDisplay.text = "-" + damage.ToString();
@@ -181,7 +159,8 @@ public class AnimationManager : MonoBehaviour
 
         // Animer les dégats aux HP
         damage = damageEvent.GetHealthAmount();
-        if(damage > 0){
+        if (damage > 0)
+        {
             TextMeshProUGUI damageDisplay = Instantiate(damageText);
             damageDisplay.transform.SetParent(DamageSection);
             damageDisplay.text = "-" + damage.ToString();
@@ -192,8 +171,8 @@ public class AnimationManager : MonoBehaviour
 
             // Camera effects
             // --------------
-            CameraEffects.Instance.TriggerZoom(new Vector3(InterfaceManager.Instance.mainCamera.transform.position.x + (damageEvent.GetTargetUnit().transform.position.x - InterfaceManager.Instance.mainCamera.transform.position.x)/zoomDamping,
-                                                           InterfaceManager.Instance.mainCamera.transform.position.y + (damageEvent.GetTargetUnit().transform.position.y - InterfaceManager.Instance.mainCamera.transform.position.y)/zoomDamping, -10f),
+            CameraEffects.Instance.TriggerZoom(new Vector3(InterfaceManager.Instance.mainCamera.transform.position.x + (damageEvent.GetTargetUnit().transform.position.x - InterfaceManager.Instance.mainCamera.transform.position.x) / zoomDamping,
+                                                           InterfaceManager.Instance.mainCamera.transform.position.y + (damageEvent.GetTargetUnit().transform.position.y - InterfaceManager.Instance.mainCamera.transform.position.y) / zoomDamping, -10f),
                                                            damageZoomAmount, damageZoomSpeed, true);
             CameraEffects.Instance.TriggerShake(animShakeStrength, animShakeTime);
 
@@ -208,7 +187,8 @@ public class AnimationManager : MonoBehaviour
 
     }
 
-    private async Task Animate(ArmorGainEvent armorGainEvent){
+    private async Task Animate(ArmorGainEvent armorGainEvent)
+    {
         TextMeshProUGUI armorGainDisplay = Instantiate(damageText);
         armorGainDisplay.transform.SetParent(DamageSection);
         armorGainDisplay.text = "+" + armorGainEvent.GetAmount().ToString();
@@ -225,7 +205,8 @@ public class AnimationManager : MonoBehaviour
         Destroy(armorGainDisplay.gameObject);
     }
 
-    private async Task Animate(HealEvent healEvent){
+    private async Task Animate(HealEvent healEvent)
+    {
         TextMeshProUGUI armorGainDisplay = Instantiate(damageText);
         armorGainDisplay.transform.SetParent(DamageSection);
         armorGainDisplay.text = "+" + healEvent.GetAmount().ToString();
@@ -242,70 +223,97 @@ public class AnimationManager : MonoBehaviour
         Destroy(armorGainDisplay.gameObject);
     }
 
-    private async Task Animate(DeathEvent deathEvent){
+    private async Task Animate(DeathEvent deathEvent)
+    {
         deathEvent.GetDeadUnit().gameObject.SetActive(false);
         deathEvent.GetDeadUnit().lifeBar.SetHP(0);
         deathEvent.GetDeadUnit().lifeBar.gameObject.SetActive(false);
         await Task.Yield();
     }
 
-    private async Task Animate(HPModificationEvent hpModificationEvent){
-        if(hpModificationEvent.AreTotalHP()){
+    private async Task Animate(HPModificationEvent hpModificationEvent)
+    {
+        if (hpModificationEvent.AreTotalHP())
+        {
             hpModificationEvent.GetTargetUnit().lifeBar.SetTotalHP(hpModificationEvent.GetNewAmount());
         }
-        else{
+        else
+        {
             hpModificationEvent.GetTargetUnit().lifeBar.SetHP(hpModificationEvent.GetNewAmount());
         }
         await Task.Yield();
     }
 
-    private async Task Animate(ReviveEvent reviveEvent){
+    private async Task Animate(ReviveEvent reviveEvent)
+    {
         reviveEvent.GetRevivedUnit().lifeBar.SetHP(reviveEvent.GetHPAmount());
         await Task.Yield();
     }
 
-    private async Task Animate(SummonEvent summonEvent){
+    private async Task Animate(SummonEvent summonEvent)
+    {
         // Afficher l'unité
         summonEvent.GetSummonedUnit().gameObject.SetActive(true);
         await Task.Yield();
     }
 
 
-    private async Task Animate(BattleEvent battleEvent){
+    private async Task Animate(BattleEvent battleEvent)
+    {
         //Debug.Log(battleEvent.GetSummary());
-        if (battleEvent is BeforeCastEvent){
+        if (battleEvent is BeforeCastEvent)
+        {
             await Animate((BeforeCastEvent)battleEvent);
         }
-        if (battleEvent is DamageEvent){
+        if (battleEvent is DamageEvent)
+        {
             await Animate((DamageEvent)battleEvent);
         }
-        if (battleEvent is ArmorGainEvent){
+        if (battleEvent is ArmorGainEvent)
+        {
             await Animate((ArmorGainEvent)battleEvent);
         }
-        if (battleEvent is HealEvent){
+        if (battleEvent is HealEvent)
+        {
             await Animate((HealEvent)battleEvent);
         }
-        if (battleEvent is DeathEvent){
+        if (battleEvent is DeathEvent)
+        {
             await Animate((DeathEvent)battleEvent);
         }
-        if (battleEvent is HPModificationEvent){
+        if (battleEvent is HPModificationEvent)
+        {
             await Animate((HPModificationEvent)battleEvent);
         }
-        if (battleEvent is ReviveEvent){
+        if (battleEvent is ReviveEvent)
+        {
             await Animate((ReviveEvent)battleEvent);
         }
-        if (battleEvent is SummonEvent){
+        if (battleEvent is SummonEvent)
+        {
             await Animate((SummonEvent)battleEvent);
         }
     }
 
-    public void addAnimation(BattleEvent battleEvent){
+    public void addAnimation(BattleEvent battleEvent)
+    {
         //Debug.Log(battleEvent.GetSummary());
         animationQueue.Add(battleEvent);
     }
 
     [ContextMenu("Display queue count")]
-    public void DisplayAnimationQueueCount(){
+    public void DisplayAnimationQueueCount()
+    {
         Debug.Log(animationQueue.Count);
+    }
+
+    public void LockAnimation()
+    {
+        animationLocked = true;
+    }
+
+    public void DelockAnimation()
+    {
+        animationLocked = false;
     }
 }

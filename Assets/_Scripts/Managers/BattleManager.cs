@@ -242,7 +242,7 @@ public class BattleManager : MonoBehaviour
     }
 
     private void AnimationTurnPhaseIn(){
-        AnimationManager.Instance.LaunchAnimations();
+        //AnimationManager.Instance.LaunchAnimations();
         // Passage automatique à la phase END
         //ChangeState(Machine.TURNSTATE, Trigger.FORWARD);
     }
