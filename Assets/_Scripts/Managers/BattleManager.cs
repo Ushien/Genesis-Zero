@@ -199,7 +199,7 @@ public class BattleManager : MonoBehaviour
         UnitManager.Instance.MakeUnitsActive();
 
         // Passage automatique à la phase de action choice
-        ChangeState(Machine.BATTLESTATE, Trigger.FORWARD);
+        ChangeState(Machine.TURNSTATE, Trigger.FORWARD);
     }
 
     private void ActionChoicePhaseIn(){
@@ -207,7 +207,7 @@ public class BattleManager : MonoBehaviour
 
         // Si c'est au tour d'un joueur humain
         if(teamTurn == TeamTurn.ALLY && !(GlobalManager.Instance.debug && TestScript.Instance.AreThereScriptedInstructions())){
-            ChangeState(Machine.PLAYERACTIONCHOICESTATE, Trigger.FORWARD);
+            ChangeState(Machine.PLAYERACTIONCHOICESTATE, Trigger.START);
         }
 
         // Si c'est au tour d'un ennemi (IA ou scripté)
@@ -225,17 +225,17 @@ public class BattleManager : MonoBehaviour
             }
 
             currentTurn.SetInstructions(EnemyOrders);
-            playerActionChoiceState = PlayerActionChoiceState.OUT;
+            //playerActionChoiceState = PlayerActionChoiceState.OUT;
             // Passage automatique à la phase APPLY_ACTIONS
-            ChangeState(Machine.BATTLESTATE, Trigger.FORWARD);
+            ChangeState(Machine.TURNSTATE, Trigger.FORWARD);
         }
 
         // Si c'est un tour scripté
         else if(GlobalManager.Instance.debug && TestScript.Instance.AreThereScriptedInstructions()){
             currentTurn.SetInstructions(TestScript.Instance.GetScriptedInstructions());
-            playerActionChoiceState = PlayerActionChoiceState.OUT;
+            //playerActionChoiceState = PlayerActionChoiceState.OUT;
             // Passage automatique à la phase APPLY_ACTIONS
-            ChangeState(Machine.BATTLESTATE, Trigger.FORWARD);
+            ChangeState(Machine.TURNSTATE, Trigger.FORWARD);
         }
     }
 
@@ -243,19 +243,19 @@ public class BattleManager : MonoBehaviour
         ApplyInstructions();
 
         // Passage automatique à la phase ANIMATION
-        ChangeState(Machine.BATTLESTATE, Trigger.FORWARD);
+        ChangeState(Machine.TURNSTATE, Trigger.FORWARD);
     }
 
     private void AnimationTurnPhaseIn(){
         // Passage automatique à la phase END
-        ChangeState(Machine.BATTLESTATE, Trigger.FORWARD);
+        ChangeState(Machine.TURNSTATE, Trigger.FORWARD);
     }
 
     private void EndTurnPhaseIn(){
         EndTurnEffects();
         ArchiveTurn();
         // Passage automatique à la phase OUT
-        ChangeState(Machine.BATTLESTATE, Trigger.FORWARD);
+        ChangeState(Machine.TURNSTATE, Trigger.FORWARD);
     }
 
     private void OutTurnPhaseIn(){
@@ -348,10 +348,10 @@ public class BattleManager : MonoBehaviour
 
     #endregion
 
+    #region Machine à états de BattleState
     private void StartBattlePhaseIn()
     {
         // Actions de début de bataille
-        ChangeTurnState(Trigger.FORWARD);
 
         // Passage automatique à la phase START
         ChangeBattleState(Trigger.FORWARD);
@@ -360,6 +360,7 @@ public class BattleManager : MonoBehaviour
     private void TurnBattlePhaseIn()
     {
         // Actions de début de la phase de tours
+        ChangeTurnState(Trigger.START);
     }
 
     private void EndBattlePhaseIn()
@@ -388,7 +389,6 @@ public class BattleManager : MonoBehaviour
         GlobalManager.Instance.ChangeState(GlobalManager.RunPhase.LOSESCREEN);
     }
 
-    #region Machine à états de BattleState
     private void ChangeBattleState(Trigger trigger)
     {
         switch (battleState)

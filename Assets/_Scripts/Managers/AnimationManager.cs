@@ -62,7 +62,7 @@ public class AnimationManager : MonoBehaviour
             }
 
             else{
-                BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERTURNSTATE, BattleManager.Trigger.FORWARD);
+                BattleManager.Instance.ChangeState(BattleManager.Machine.TURNSTATE, BattleManager.Trigger.FORWARD);
             }
         }
     }
