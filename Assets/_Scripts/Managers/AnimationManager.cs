@@ -52,17 +52,13 @@ public class AnimationManager : MonoBehaviour
         {
             if (animationQueue.Count != 0)
             {
-                if (!BattleManager.Instance.IsInAnimation())
+                //Si la file n'est pas vide, animer le premier évènement, en mode fifo
+                List<BattleEvent> listWrapper = new()
                 {
-                    //Si la file n'est pas vide, animer le premier évènement, en mode fifo
-                    BattleManager.Instance.SetInAnimation(true);
-                    List<BattleEvent> listWrapper = new()
-                    {
-                        animationQueue[0]
-                    };
-                    animationQueue.RemoveAt(0);
-                    var task = Animate(listWrapper);
-                }
+                    animationQueue[0]
+                };
+                animationQueue.RemoveAt(0);
+                var task = Animate(listWrapper);
             }
 
             else
@@ -108,7 +104,6 @@ public class AnimationManager : MonoBehaviour
         while (animationQueue.Count != 0)
         {
             //Si la file n'est pas vide, animer le premier évènement, en mode fifo
-            BattleManager.Instance.SetInAnimation(true);
             List<BattleEvent> listWrapper = new()
             {
                 animationQueue[0]
@@ -125,7 +120,6 @@ public class AnimationManager : MonoBehaviour
             await Animate(battleEvents[i]);
             await Task.Delay((int)(delayTime / accelerator));
         }
-        BattleManager.Instance.SetInAnimation(false);
     }
 
     public async Task Animate(BeforeCastEvent beforecastEvent)

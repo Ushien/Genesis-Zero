@@ -35,7 +35,6 @@ public class BattleManager : MonoBehaviour
 
     public List<BattleTurn> archivedTurns = new List<BattleTurn>();
 
-    private bool inAnimation = false;
     private GameObject battleArchive;
     private 
 
@@ -630,14 +629,6 @@ public class BattleManager : MonoBehaviour
         if(currentTurn != null){
             currentTurn.AddEvent(_event);
         }
-    }
-
-    public void SetInAnimation(bool value){
-        inAnimation = value;
-    }
-
-    public bool IsInAnimation(){
-        return inAnimation;
     }
 
     public GameObject GetArchive(){
