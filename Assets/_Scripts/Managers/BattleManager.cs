@@ -55,17 +55,14 @@ public class BattleManager : MonoBehaviour
         nTurn = 1;
         battleArchive = new GameObject("Current Battle Archive");
         
-        Debug.Log(GetCurrentStatesSummary());
         ChangeState(Machine.BATTLESTATE, Trigger.START);
         //StartBattle();
     }
 
     public void ChangeState(Machine machine, Trigger trigger){
-        Debug.Log("3");
         switch (machine)
         {
             case Machine.PLAYERACTIONCHOICESTATE:
-                Debug.Log("4");
                 ChangePlayerActionChoiceState(trigger);
                 break;
             case Machine.TURNSTATE:
@@ -102,7 +99,7 @@ public class BattleManager : MonoBehaviour
         {
 
             case PlayerActionChoiceState.OUT:
-                Debug.Log("Out");
+
                 switch (trigger)
                 {
                     case Trigger.START:
@@ -115,7 +112,7 @@ public class BattleManager : MonoBehaviour
                 break;
 
             case PlayerActionChoiceState.CHARACTER_SELECTION:
-                Debug.Log("Character Selection");
+
                 switch (trigger)
                 {
                     case Trigger.VALIDATE:
@@ -132,7 +129,7 @@ public class BattleManager : MonoBehaviour
                 break;
 
             case PlayerActionChoiceState.SPELL_SELECTION:
-                Debug.Log("Spell Selection");
+
                 switch (trigger)
                 {
                     case Trigger.VALIDATE:
@@ -149,11 +146,9 @@ public class BattleManager : MonoBehaviour
                 break;
 
             case PlayerActionChoiceState.TARGET_SELECTION:
-                Debug.Log("Target Selection");
                 switch (trigger)
                 {
                     case Trigger.VALIDATE:
-                        Debug.Log("8");
                         if (UnitManager.Instance.DidEveryCharacterGaveInstruction())
                         {
                             playerActionChoiceState = PlayerActionChoiceState.OUT;
@@ -247,8 +242,9 @@ public class BattleManager : MonoBehaviour
     }
 
     private void AnimationTurnPhaseIn(){
+        AnimationManager.Instance.LaunchAnimations();
         // Passage automatique à la phase END
-        ChangeState(Machine.TURNSTATE, Trigger.FORWARD);
+        //ChangeState(Machine.TURNSTATE, Trigger.FORWARD);
     }
 
     private void EndTurnPhaseIn(){

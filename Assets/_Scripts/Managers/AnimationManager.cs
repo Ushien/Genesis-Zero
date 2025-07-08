@@ -21,35 +21,36 @@ public class AnimationManager : MonoBehaviour
     public float animShakeTime = 0.3f;
 
     private List<BattleEvent> animationQueue;
-    
+
     [SerializeField]
     int delayTime = 300;
     [SerializeField]
     float accelerator = 1f;
 
-    void Awake(){
+    void Awake() {
         animationQueue = new List<BattleEvent>();
         Instance = this;
         DamageSection = InterfaceManager.Instance.GetUI().transform.Find("Damages").transform;
         damageText = DamageSection.Find("DamagesText").GetComponent<TextMeshProUGUI>();
     }
 
-    void Start(){
-        
-    }
-
-    public void BattleIn(){
+    public void BattleIn() {
         DamageSection.gameObject.SetActive(true);
     }
 
-    public void BattleOut(){
+    public void BattleOut() {
         DamageSection.gameObject.SetActive(false);
     }
 
-    void Update(){
-        if (BattleManager.Instance.GetTurnState() == BattleManager.TurnState.ANIMATION){
-            if (animationQueue.Count != 0){
-                if(!BattleManager.Instance.IsInAnimation()){
+    /*
+    public void Update()
+    {
+        if (BattleManager.Instance.GetTurnState() == BattleManager.TurnState.ANIMATION)
+        {
+            if (animationQueue.Count != 0)
+            {
+                if (!BattleManager.Instance.IsInAnimation())
+                {
                     //Si la file n'est pas vide, animer le premier évènement, en mode fifo
                     BattleManager.Instance.SetInAnimation(true);
                     List<BattleEvent> listWrapper = new()
@@ -61,15 +62,48 @@ public class AnimationManager : MonoBehaviour
                 }
             }
 
-            else{
+            else
+            {
                 BattleManager.Instance.ChangeState(BattleManager.Machine.TURNSTATE, BattleManager.Trigger.FORWARD);
             }
         }
     }
+    */
 
-    public void ForceAnimation(){
-        //Debug.Log("Queue count: " + animationQueue.Count);
-        while(animationQueue.Count != 0){
+    public void LaunchAnimations()
+    {
+        if (animationQueue.Count != 0)
+        {
+            /*
+            if (!BattleManager.Instance.IsInAnimation())
+            {
+                //Si la file n'est pas vide, animer le premier évènement, en mode fifo
+                BattleManager.Instance.SetInAnimation(true);
+                List<BattleEvent> listWrapper = new()
+                {
+                    animationQueue[0]
+                };
+                animationQueue.RemoveAt(0);
+                var task = Animate(listWrapper);
+            }
+            */
+        }
+        foreach (BattleEvent battleEvent in animationQueue)
+        {
+            List<BattleEvent> listWrapper = new()
+                {
+                    battleEvent
+                };
+            var task = Animate(listWrapper);
+        }
+
+        BattleManager.Instance.ChangeState(BattleManager.Machine.TURNSTATE, BattleManager.Trigger.FORWARD);
+    }
+
+    public void ForceAnimation()
+    {
+        while (animationQueue.Count != 0)
+        {
             //Si la file n'est pas vide, animer le premier évènement, en mode fifo
             BattleManager.Instance.SetInAnimation(true);
             List<BattleEvent> listWrapper = new()
@@ -91,7 +125,10 @@ public class AnimationManager : MonoBehaviour
     }
 
     public async Task Animate(BeforeCastEvent beforecastEvent){
-        if(beforecastEvent.GetCastedSpell().IsAnAttack()){
+        beforecastEvent.GetSourceUnit().GetComponent<Animator>().Play("castSpellAnimation");
+        /*
+        if (beforecastEvent.GetCastedSpell().IsAnAttack())
+        {
             float distanceValue = beforecastEvent.GetSourceUnit().GetTeam() == Team.Ally ? 0.02f : -0.02f;
 
             for (float distance = 0.0f; distance <= 0.4f; distance += 0.02f * accelerator)
@@ -105,7 +142,8 @@ public class AnimationManager : MonoBehaviour
                 await Task.Yield();
             }
         }
-        else{
+        else
+        {
             for (float distance = 0.0f; distance <= 0.4f; distance += 0.02f * accelerator)
             {
                 beforecastEvent.GetSourceUnit().gameObject.transform.Translate(new Vector3(0, 0.02f, 0));
@@ -117,6 +155,7 @@ public class AnimationManager : MonoBehaviour
                 await Task.Yield();
             }
         }
+        */
     }
 
     private async Task Animate(DamageEvent damageEvent){

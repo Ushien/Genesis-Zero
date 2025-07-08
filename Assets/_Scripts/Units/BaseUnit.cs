@@ -95,8 +95,11 @@ public class BaseUnit : MonoBehaviour
         
         GetComponent<SpriteRenderer>().sprite = scriptableUnit.sprite;
         unit_name = scriptableUnit.unit_name;
-        if(scriptableUnit.animator != null)
-        animator.runtimeAnimatorController = scriptableUnit.animator;
+
+        /*
+        if (scriptableUnit.animator != null)
+            animator.runtimeAnimatorController = scriptableUnit.animator;
+        */
 
 
         Team = team;
