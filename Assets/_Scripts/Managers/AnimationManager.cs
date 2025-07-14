@@ -65,37 +65,6 @@ public class AnimationManager : MonoBehaviour
         }
     }
 
-    /*
-    public void LaunchAnimations()
-    {
-        if (animationQueue.Count != 0)
-        {
-            /*
-            if (!BattleManager.Instance.IsInAnimation())
-            {
-                //Si la file n'est pas vide, animer le premier évènement, en mode fifo
-                BattleManager.Instance.SetInAnimation(true);
-                List<BattleEvent> listWrapper = new()
-                {
-                    animationQueue[0]
-                };
-                animationQueue.RemoveAt(0);
-                var task = Animate(listWrapper);
-            }
-        }
-        foreach (BattleEvent battleEvent in animationQueue)
-        {
-            List<BattleEvent> listWrapper = new()
-                {
-                    battleEvent
-                };
-            var task = Animate(listWrapper);
-        }
-
-        BattleManager.Instance.ChangeState(BattleManager.Machine.TURNSTATE, BattleManager.Trigger.FORWARD);
-    }
-    */
-
     public void ForceAnimation()
     {
         while (animationQueue.Count != 0)
@@ -106,17 +75,6 @@ public class AnimationManager : MonoBehaviour
             Animate(toAnimate);
         }
     }
-
-    /*
-    public IEnumerator Animate(List<BattleEvent> battleEvents)
-    {
-        for (var i = 0; i < battleEvents.Count; i++)
-        {
-            yield return new Animate(battleEvents[i]);
-            //await Task.Delay((int)(delayTime / accelerator));
-        }
-    }
-    */
 
     private IEnumerator Animate(BeforeCastEvent beforecastEvent)
     {
