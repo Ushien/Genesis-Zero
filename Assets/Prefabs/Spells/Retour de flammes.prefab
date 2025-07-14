@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4491513040922733550}
   - component: {fileID: 698457534554450155}
+  - component: {fileID: 2534690920715264166}
   m_Layer: 0
   m_Name: Retour de flammes
   m_TagString: Untagged
@@ -45,11 +46,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scriptableSpell: {fileID: 11400000, guid: 6bcec8029b37f1541a1ed0943a6cd1b4, type: 2}
-  owner: {fileID: 0}
-  spell_name: Name
-  lore_description: Lore Description
-  fight_description: Fight Description
+  base_cooldown: 0
   cooldown: 0
-  artwork: {fileID: 0}
-  range: 0
-  team_restriction: 0
+  baseModifier: {fileID: 0}
+--- !u!114 &2534690920715264166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862956936155830111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls: []
+  references:
+    version: 2
+    RefIds: []

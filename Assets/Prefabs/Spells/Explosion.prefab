@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6502408752601263233}
   - component: {fileID: 9162928632122956477}
+  - component: {fileID: 107526193066200031}
   m_Layer: 0
   m_Name: Explosion
   m_TagString: Untagged
@@ -45,12 +46,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scriptableSpell: {fileID: 11400000, guid: c209bfb34a3dec245b7c626eb0d1cbbc, type: 2}
-  owner: {fileID: 0}
-  spell_name: Name
-  lore_description: Lore Description
-  fight_description: Fight Description
-  cooldown: 0
   base_cooldown: 0
-  artwork: {fileID: 0}
-  range: 0
-  team_restriction: 0
+  cooldown: 0
+  baseModifier: {fileID: 0}
+--- !u!114 &107526193066200031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6751247185425093193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls: []
+  references:
+    version: 2
+    RefIds: []

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7570239550828366934}
   - component: {fileID: 2804910480797656173}
+  - component: {fileID: 4228608310997498634}
   m_Layer: 0
   m_Name: Puit de Vie
   m_TagString: Untagged
@@ -45,3 +46,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scriptableSpell: {fileID: 11400000, guid: d6aa5b79483ccc6468f05e18772a141b, type: 2}
+  base_cooldown: 0
+  cooldown: 0
+  baseModifier: {fileID: 0}
+--- !u!114 &4228608310997498634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6658612272819786940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls: []
+  references:
+    version: 2
+    RefIds: []

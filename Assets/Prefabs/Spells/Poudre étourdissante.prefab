@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8930624199646472497}
   - component: {fileID: 794894405015748919}
+  - component: {fileID: -4036353054220643183}
   m_Layer: 0
   m_Name: "Poudre \xE9tourdissante"
   m_TagString: Untagged
@@ -45,12 +46,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scriptableSpell: {fileID: 11400000, guid: c53cedf3ac6312c48b7a7fbe3bbed6c3, type: 2}
-  owner: {fileID: 0}
-  spell_name: Name
-  lore_description: Lore Description
-  fight_description: Fight Description
-  cooldown: 0
   base_cooldown: 0
-  artwork: {fileID: 0}
-  range: 0
-  team_restriction: 0
+  cooldown: 0
+  baseModifier: {fileID: 0}
+--- !u!114 &-4036353054220643183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 474561829883229998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls: []
+  references:
+    version: 2
+    RefIds: []
