@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Attaque
   m_EditorClassIdentifier: 
   spell_name: Attaque
-  fight_description: "Inflige %%1 d\xE9g\xE2ts \xE0 une unite."
+  fight_description: 
   ratios:
   - 1
   - 1

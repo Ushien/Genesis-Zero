@@ -14,7 +14,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TableCollectionName: Spells
   m_TableCollectionNameGuidString: c0b0d794766417d42a7d612b578275ab
-  m_Entries: []
+  m_Entries:
+  - m_Id: 6569591173120
+    m_Key: 0_effect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6143156285440
+    m_Key: 0_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7088426577920
+    m_Key: 1_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7212523450368
+    m_Key: '1_effect
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8867688083456
+    m_Key: 0_effect_0
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

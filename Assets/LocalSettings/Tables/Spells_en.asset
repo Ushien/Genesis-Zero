@@ -17,7 +17,23 @@ MonoBehaviour:
   m_SharedData: {fileID: 11400000, guid: c0b0d794766417d42a7d612b578275ab, type: 2}
   m_Metadata:
     m_Items: []
-  m_TableData: []
+  m_TableData:
+  - m_Id: 6143156285440
+    m_Localized: Fireball
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6569591173120
+    m_Localized: Inflict %%1 damages to a unit - Pyro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7212523450368
+    m_Localized: Attack a unit **1 times
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7088426577920
+    m_Localized: Cybernetic assault
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

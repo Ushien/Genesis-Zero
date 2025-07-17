@@ -238,12 +238,11 @@ public class BaseSpell : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public string GetFightDescription(bool hyper = false){
-        string _fight_description;
         if(hyper){
-            _fight_description = fight_description_h.Clone().ToString();
+            _fight_description = LocalizationSettings.StringDatabase.GetLocalizedString("Spells", "0_name");
         }
         else{
-            _fight_description = fight_description.Clone().ToString();
+            _fight_description = LocalizationSettings.StringDatabase.GetLocalizedString("Spells", "0_name_0");
         }
 
         _fight_description = _fight_description.Replace("%%1", GetFinalDamages(GetRatio(hyper:hyper)[0]).ToString());

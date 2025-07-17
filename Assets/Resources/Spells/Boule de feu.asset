@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Boule de feu
   m_EditorClassIdentifier: 
   spell_name: Boule de feu (P)
-  fight_description: "Inflige %%1 d\xE9g\xE2ts \xE0 une unit\xE9 - Pyro"
+  fight_description: 
   ratios:
   - 1
   - 1
   - 1
-  overloaded_fight_description: "Inflige %%1 d\xE9gats \xE0 une unit\xE9 - Pyro"
+  overloaded_fight_description: 
   hyper_ratios:
   - 3
   - 1
