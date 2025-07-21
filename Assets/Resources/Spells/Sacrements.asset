@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
   m_Name: Sacrements
   m_EditorClassIdentifier: 
+  id: 22
   spell_name: Sacrements
   fight_description: "Inflige %%1 d\xE9g\xE2ts \xE0 une unit\xE9. Si la cible dispose
     d'armure, elle subit \xE0 la place %%2 d\xE9g\xE2ts."

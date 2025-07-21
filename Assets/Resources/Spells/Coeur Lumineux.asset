@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
   m_Name: Coeur Lumineux
   m_EditorClassIdentifier: 
+  id: 5
   spell_name: Coeur Lumineux
   fight_description: "Soigne une unit\xE9 de %%1. Conf\xE8re curatif \xE0 la prochaine
     technique du lanceur."

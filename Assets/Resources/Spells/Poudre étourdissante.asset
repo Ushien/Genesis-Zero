@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
   m_Name: "Poudre \xE9tourdissante"
   m_EditorClassIdentifier: 
+  id: 17
   spell_name: "Poudre \xE9tourdissante (P)"
   fight_description: "\xC9tourdit un adversaire pour un tour, et double ses points
     de vie. (P)"

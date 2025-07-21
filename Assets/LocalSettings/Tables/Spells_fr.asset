@@ -19,18 +19,34 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 6143156285440
-    m_Localized: Boule de feu
+    m_Localized: Attaque
     m_Metadata:
       m_Items: []
   - m_Id: 6569591173120
-    m_Localized: "Inflige %%1 d\xE9gats \xE0 une unit\xE9 - Pyro"
+    m_Localized: "Inflige %%1 d\xE9gats \xE0 une unit\xE9"
     m_Metadata:
       m_Items: []
   - m_Id: 7088426577920
-    m_Localized: "Assaut cybern\xE9tique"
+    m_Localized: Boule de feu
     m_Metadata:
       m_Items: []
   - m_Id: 7212523450368
+    m_Localized: "Inflige %%1 d\xE9gats \xE0 une unit\xE9 - Pyro"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8867688083456
+    m_Localized: "Inflige %%1 d\xE9gats \xE0 une unit\xE9 - Pyro"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2582944961015808
+    m_Localized: "Attaque **1 fois une unit\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2582904758611968
+    m_Localized: "Assaut cybern\xE9tique"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2582981107527680
     m_Localized: "Attaque **1 fois une unit\xE9"
     m_Metadata:
       m_Items: []

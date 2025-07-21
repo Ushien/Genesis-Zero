@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
+using UnityEngine.Localization.Tables;
 
 public class ResourceManager : MonoBehaviour
 {
@@ -18,15 +21,25 @@ public class ResourceManager : MonoBehaviour
         Instance = this;
     }
 
-    public void LoadResources(){
+    public void LoadResources()
+    {
         spellList = Resources.LoadAll("Spells", typeof(ScriptableSpell)).Cast<ScriptableSpell>().ToList();
         passiveList = Resources.LoadAll("Passives", typeof(ScriptablePassive)).Cast<ScriptablePassive>().ToList();
         enemyUnitList = Resources.LoadAll<ScriptableUnit>("Units/Enemies").ToList();
         enemyCompositionList = Resources.LoadAll<ScriptableComposition>("Teams/Enemies").ToList();
+        PreloadAllLocalization();
     }
 
-    public List<ScriptableSpell> GetSpells(bool lootable = true){
-        if(lootable){
+    public static void PreloadAllLocalization()
+    {
+        LocalizationSettings.StringDatabase.GetTable("Spells");
+        Debug.Log("Chargement des tables effectué");
+    }
+
+    public List<ScriptableSpell> GetSpells(bool lootable = true)
+    {
+        if (lootable)
+        {
             return spellList.Where(spell => spell.lootable == lootable).ToList();
         }
         return spellList;
@@ -45,11 +58,5 @@ public class ResourceManager : MonoBehaviour
 
     public List<ScriptableComposition> GetEnemyCompositions(bool lootable = true){
         return enemyCompositionList;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

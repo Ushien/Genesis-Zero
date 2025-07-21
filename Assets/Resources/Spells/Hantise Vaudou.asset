@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
   m_Name: Hantise Vaudou
   m_EditorClassIdentifier: 
+  id: 10
   spell_name: Hantise Vaudou (N)
   fight_description: "Inflige un statut \xE0 une unit\xE9. Chaque utilisation successive
     du sort sur une m\xEAme cible inflige un statut diff\xE9rent.  (Poison -> D\xE9sarm\xE9

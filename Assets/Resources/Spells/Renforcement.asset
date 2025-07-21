@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
   m_Name: Renforcement
   m_EditorClassIdentifier: 
+  id: 19
   spell_name: Renforcement
   fight_description: "Conf\xE8re %%1 d'armure au lanceur."
   ratios:

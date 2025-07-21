@@ -53,8 +53,6 @@ public class UnitManager : MonoBehaviour
     }
 
     public void SpawnAllies(List<BaseUnit> units_to_spawn){
-        Debug.Log("Hi");
-        Debug.Log(units_to_spawn.Count);
         foreach (BaseUnit unit in units_to_spawn)
         {
             SpawnUnit(unit, Team.Ally);
@@ -78,8 +76,6 @@ public class UnitManager : MonoBehaviour
         foreach(Tuple<Vector2, ScriptableUnit, int> unit in units_to_create){
             unitList.Add(CreateUnit(unit.Item1, unit.Item2, unit.Item3, team));
         }
-        Debug.Log("Go");
-        Debug.Log(unitList.Count);
         return unitList;
     }
 

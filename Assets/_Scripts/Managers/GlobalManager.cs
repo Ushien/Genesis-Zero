@@ -62,9 +62,14 @@ public class GlobalManager : MonoBehaviour
     private int startLevel = 1;
     public int runSeed = 0;
 
-    void Awake(){
+    void Awake()
+    {
         Instance = this;
         Application.targetFrameRate = 60;
+
+        resourceManager = Instantiate(resourceManagerPrefab);
+        resourceManager.transform.SetParent(transform.parent);
+        resourceManager.LoadResources();
     }
 
     // Start is called before the first frame update
@@ -198,9 +203,6 @@ public class GlobalManager : MonoBehaviour
         }
         UnityEngine.Random.InitState(runSeed);
 
-        resourceManager = Instantiate(resourceManagerPrefab);
-        resourceManager.transform.SetParent(transform.parent);
-        resourceManager.LoadResources();
         unitManager = Instantiate(unitManagerPrefab);
         unitManager.transform.SetParent(transform.parent);
         battleArchive = new GameObject("Battle Archive");
@@ -236,7 +238,6 @@ public class GlobalManager : MonoBehaviour
     }
 
     public void EndPhaseOut(){
-        Destroy(resourceManager.gameObject);
         Destroy(unitManager.gameObject);
         Destroy(lifeBarUI.gameObject);
         Destroy(interfaceManager.gameObject);

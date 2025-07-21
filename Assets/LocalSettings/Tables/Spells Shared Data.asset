@@ -28,13 +28,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7212523450368
-    m_Key: '1_effect
-
-'
+    m_Key: 1_effect
     m_Metadata:
       m_Items: []
   - m_Id: 8867688083456
-    m_Key: 0_effect_0
+    m_Key: 1_effect_0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2582904758611968
+    m_Key: 2_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2582944961015808
+    m_Key: 2_effect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2582981107527680
+    m_Key: 2_effect_0
     m_Metadata:
       m_Items: []
   m_Metadata:

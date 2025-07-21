@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
   m_Name: Retour de Flammes
   m_EditorClassIdentifier: 
+  id: 20
   spell_name: Retour de Flammes (N)
   fight_description: "Attaque un ennemi et \xE9change la place du personnage avec
     un alli\xE9 en r\xE9serve. (N)"

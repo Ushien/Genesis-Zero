@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
   m_Name: "Assaut Cybern\xE9tique"
   m_EditorClassIdentifier: 
+  id: 2
   spell_name: "Assaut cybern\xE9tique"
   fight_description: "Attaque **1 fois une unit\xE9."
   ratios:

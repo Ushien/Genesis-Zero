@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
   m_Name: "Temp\xEAte polym\xE8re"
   m_EditorClassIdentifier: 
+  id: 24
   spell_name: "Temp\xEAte Polym\xE8re (N)"
   fight_description: "Conf\xE8re Polym\xE8re \xE0 toutes les unit\xE9s sur le terrain.
     (N)"

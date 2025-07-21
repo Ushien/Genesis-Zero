@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
   m_Name: "B\xE9n\xE9diction"
   m_EditorClassIdentifier: 
+  id: 4
   spell_name: "B\xE9n\xE9diction"
   fight_description: "Renforce l'attaque de base d'une unit\xE9 de __1% pendant 3
     tours. (P)"

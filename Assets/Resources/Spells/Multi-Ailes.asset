@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
   m_Name: Multi-Ailes
   m_EditorClassIdentifier: 
+  id: 14
   spell_name: Multi-Ailes
   fight_description: "Inflige %%1 d\xE9g\xE2ts \xE0 tous les ennemis et augmente
     la puissance du lanceur de __2%."

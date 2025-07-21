@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
   m_Name: "R\xE9v\xE9lation"
   m_EditorClassIdentifier: 
+  id: 21
   spell_name: "R\xE9v\xE9lation"
   fight_description: "S\xE9lectionne une unit\xE9 et lui procure %%1 d'armure. Si
     ce montant est pr\xE9sent apr\xE8s 2 tours, celui-ci est converti en PV suppl\xE9mentaires

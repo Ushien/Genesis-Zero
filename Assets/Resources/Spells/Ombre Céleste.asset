@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
   m_Name: "Ombre C\xE9leste"
   m_EditorClassIdentifier: 
+  id: 15
   spell_name: "Ombre C\xE9leste"
   fight_description: "Ex\xE9cute (nombre de HP) toutes les unit\xE9s ayant \xE9t\xE9
     soign\xE9es lors du tour pr\xE9c\xE9dent"

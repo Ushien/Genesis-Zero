@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
   m_Name: Boule de feu
   m_EditorClassIdentifier: 
+  id: 1
   spell_name: Boule de feu (P)
   fight_description: 
   ratios:

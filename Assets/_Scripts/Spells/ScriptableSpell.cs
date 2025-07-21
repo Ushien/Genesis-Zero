@@ -8,6 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Scriptable Spell", menuName = "ScriptableSpell")]
 public class ScriptableSpell : ScriptableObject
 {
+    public int id;
     public string spell_name;
     [TextArea(5,10)]
     public string fight_description;

@@ -4,6 +4,9 @@ using UnityEngine;
 using System;
 using Unity.VisualScripting;
 using UnityEngine.Assertions;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
+using UnityEngine.Localization.Tables;
 
 /// <summary>
 /// Représente une attaque ou une technique
@@ -20,18 +23,14 @@ public class BaseSpell : MonoBehaviour
         #endregion
         #region Références à d'autres objets
     private BaseUnit owner;
-        #endregion
+    #endregion
 
-        #region Caractérstiques
-    private string spell_name = "Name";
+    #region Caractérstiques
+
+    private int unique_id;
     private bool isAAttack = false;
     private bool isAnAttack = false;
     private bool isATechnique = true;
-    [TextArea(5,10)]
-    private string fight_description = "Fight Description";
-    // Cooldown total du sort.
-    [TextArea(5,10)]
-    private string fight_description_h = "Overloaded Fight Description";
     public int base_cooldown = 0;
     // Cooldown actuel du sort. Lorsque celui-ci est égal au cooldown total, le sort peut être lancé. Quand le sort est lancé, celui-ci passe à zéro. Il augmente ensuite de 1 par tour.
     public int cooldown = 0;
@@ -75,11 +74,9 @@ public class BaseSpell : MonoBehaviour
         Assert.IsTrue(spellListIndex >= 0 || spellListIndex <= 4);
 
         owner = ownerUnit;
-        
+
+        unique_id = scriptableSpell.id;
         name = scriptableSpell.spell_name;
-        spell_name = scriptableSpell.spell_name;
-        fight_description = scriptableSpell.fight_description;
-        fight_description_h = scriptableSpell.overloaded_fight_description;
         base_cooldown = scriptableSpell.cooldown;
         cooldown = base_cooldown;
         artwork = scriptableSpell.artwork;
@@ -238,11 +235,14 @@ public class BaseSpell : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public string GetFightDescription(bool hyper = false){
-        if(hyper){
-            _fight_description = LocalizationSettings.StringDatabase.GetLocalizedString("Spells", "0_name");
+        string _fight_description;
+        if (hyper)
+        {
+            _fight_description = LocalizationSettings.StringDatabase.GetLocalizedString("Spells", unique_id.ToString() + "_effect_0");
         }
-        else{
-            _fight_description = LocalizationSettings.StringDatabase.GetLocalizedString("Spells", "0_name_0");
+        else
+        {
+            _fight_description = LocalizationSettings.StringDatabase.GetLocalizedString("Spells", unique_id.ToString() + "_effect");
         }
 
         _fight_description = _fight_description.Replace("%%1", GetFinalDamages(GetRatio(hyper:hyper)[0]).ToString());
@@ -322,7 +322,7 @@ public class BaseSpell : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public string GetName(){
-        return spell_name;
+        return LocalizationSettings.StringDatabase.GetLocalizedString("Spells", unique_id.ToString() + "_name");
     }
 
     /// <summary>

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ad37c41fe134042a6c02b3284b22dc, type: 3}
   m_Name: Bombe solaire
   m_EditorClassIdentifier: 
+  id: 3
   spell_name: Bombe Solaire (N)
   fight_description: "Inflige %%1 d\xE9g\xE2ts \xE0 toutes les unit\xE9s adverses
     et soigne les alli\xE9s de 50% des d\xE9g\xE2ts totaux, r\xE9partis \xE9quitablement.

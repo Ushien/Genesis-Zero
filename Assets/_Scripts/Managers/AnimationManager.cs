@@ -23,8 +23,6 @@ public class AnimationManager : MonoBehaviour
     private List<BattleEvent> animationQueue;
 
     [SerializeField]
-    int delayTime = 0;
-    [SerializeField]
     float accelerator = 1f;
     private bool animationLocked = false;
 
