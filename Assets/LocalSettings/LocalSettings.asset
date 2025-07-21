@@ -69,7 +69,8 @@ MonoBehaviour:
           rid: -2
         m_UseFallback: 0
         m_MissingTranslationState: 1
-        m_NoTranslationFoundMessage: No translation found for '{key}' in {table.TableCollectionName}
+        m_NoTranslationFoundMessage: No translation found for '{key}' in {table.TableCollectionName}.
+          Please contact the developer if you found this message !
         m_SmartFormat:
           rid: 386727151729377286
     - rid: 386727151729377286

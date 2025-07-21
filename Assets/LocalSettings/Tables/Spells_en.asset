@@ -34,10 +34,6 @@ MonoBehaviour:
     m_Localized: Fireball
     m_Metadata:
       m_Items: []
-  - m_Id: 8867688083456
-    m_Localized: Inflict %%1 damages to a unit - Pyro
-    m_Metadata:
-      m_Items: []
   - m_Id: 2582944961015808
     m_Localized: Attack a unit **1 times
     m_Metadata:
@@ -46,8 +42,20 @@ MonoBehaviour:
     m_Localized: Cybernetic assault
     m_Metadata:
       m_Items: []
-  - m_Id: 2582981107527680
-    m_Localized: Attack a unit **1 times
+  - m_Id: 2638152281894912
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2638152353198080
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2638152353198081
+    m_Localized: 
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2638152353198082
+    m_Localized: 
     m_Metadata:
       m_Items: []
   references:
