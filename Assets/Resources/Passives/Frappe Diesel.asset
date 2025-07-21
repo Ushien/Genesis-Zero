@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5537ca8029f6d4082df846b5a8501c, type: 3}
   m_Name: Frappe Diesel
   m_EditorClassIdentifier: 
+  id: 9
   passive_name: 
   fight_description: "Les attaques de base du personnage font des d\xE9g\xE2ts suppl\xE9mentaires
     et appliquent l'\xE9l\xE9ment pyro. (N)"

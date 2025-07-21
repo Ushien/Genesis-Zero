@@ -6,15 +6,21 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine.Assertions;
 using TMPro;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
+using UnityEngine.Localization.Tables;
+using System.Data.Common;
+using System.Xml;
 
 /// <summary>
 /// Représente une unité au sens large
 /// </summary>
 public class BaseUnit : MonoBehaviour
 {
-        #region Fields
-        #region Fields de setup
+    #region Fields
+    #region Fields de setup
 
+    private int unique_id;
     public ScriptableUnit scriptableUnit;
     public Modifier emptyModifier;
         #endregion
@@ -91,10 +97,10 @@ public class BaseUnit : MonoBehaviour
     /// <param name="team">Equipe de l'unité</param>
     public void Setup(ScriptableUnit originUnit, int setup_level, Team team, Vector2 _position, int healthAmount = 0, int powerAmount = 0){
         scriptableUnit = originUnit;
-        name = scriptableUnit.unit_name;
+        unique_id = scriptableUnit.id;
+        name = scriptableUnit.name;
         
         GetComponent<SpriteRenderer>().sprite = scriptableUnit.sprite;
-        unit_name = scriptableUnit.unit_name;
         transform.parent.name = name + " (Container)";
 
         /*
@@ -126,9 +132,6 @@ public class BaseUnit : MonoBehaviour
             totalHealth = healthAmount;
             finalHealth = healthAmount;
         }
-
-        lore_description = scriptableUnit.lore_description;
-        fight_description = scriptableUnit.fight_description;
 
         // Il faut ajouter un modifier pour chaque méthode qui pourrait y être sujette
         modifiers[Heal] = new List<Modifier>();

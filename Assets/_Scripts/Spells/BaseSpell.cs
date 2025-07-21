@@ -76,7 +76,7 @@ public class BaseSpell : MonoBehaviour
         owner = ownerUnit;
 
         unique_id = scriptableSpell.id;
-        name = scriptableSpell.spell_name;
+        name = scriptableSpell.name;
         base_cooldown = scriptableSpell.cooldown;
         cooldown = base_cooldown;
         artwork = scriptableSpell.artwork;
@@ -229,36 +229,6 @@ public class BaseSpell : MonoBehaviour
     public Sprite GetArtwork(){
         return artwork;
     }
-
-    /// <summary>
-    /// Renvoie la description en combat du sort, avec les nombres convertis en fonction de la puissance du personnage.
-    /// </summary>
-    /// <returns></returns>
-    public string GetFightDescription(bool hyper = false){
-        string _fight_description;
-        if (hyper)
-        {
-            _fight_description = LocalizationSettings.StringDatabase.GetLocalizedString("Spells", unique_id.ToString() + "_effect_0");
-        }
-        else
-        {
-            _fight_description = LocalizationSettings.StringDatabase.GetLocalizedString("Spells", unique_id.ToString() + "_effect");
-        }
-
-        _fight_description = _fight_description.Replace("%%1", GetFinalDamages(GetRatio(hyper:hyper)[0]).ToString());
-        _fight_description = _fight_description.Replace("%%2", GetFinalDamages(GetRatio(hyper:hyper)[1]).ToString());
-        _fight_description = _fight_description.Replace("%%3", GetFinalDamages(GetRatio(hyper:hyper)[2]).ToString());
-
-        _fight_description = _fight_description.Replace("__1", DisplayPercents(GetRatio(hyper:hyper)[0]));
-        _fight_description = _fight_description.Replace("__2", DisplayPercents(GetRatio(hyper:hyper)[1]));
-        _fight_description = _fight_description.Replace("__3", DisplayPercents(GetRatio(hyper:hyper)[2]));
-
-        _fight_description = _fight_description.Replace("**1", GetRatio(hyper:hyper)[0].ToString());
-        _fight_description = _fight_description.Replace("**2", GetRatio(hyper:hyper)[1].ToString());
-        _fight_description = _fight_description.Replace("**3", GetRatio(hyper:hyper)[2].ToString());
-
-        return _fight_description;
-    }
     
     /// <summary>
     /// Renvoie les différents ratios associés au sort
@@ -324,12 +294,43 @@ public class BaseSpell : MonoBehaviour
     public string GetName(){
         return LocalizationSettings.StringDatabase.GetLocalizedString("Spells", unique_id.ToString() + "_name");
     }
+    
+    /// <summary>
+    /// Renvoie la description en combat du sort, avec les nombres convertis en fonction de la puissance du personnage.
+    /// </summary>
+    /// <returns></returns>
+    public string GetDescription(bool hyper = false){
+        string _fight_description;
+        if (hyper)
+        {
+            _fight_description = LocalizationSettings.StringDatabase.GetLocalizedString("Spells", unique_id.ToString() + "_effect_0");
+        }
+        else
+        {
+            _fight_description = LocalizationSettings.StringDatabase.GetLocalizedString("Spells", unique_id.ToString() + "_effect");
+        }
+
+        _fight_description = _fight_description.Replace("%%1", GetFinalDamages(GetRatio(hyper:hyper)[0]).ToString());
+        _fight_description = _fight_description.Replace("%%2", GetFinalDamages(GetRatio(hyper:hyper)[1]).ToString());
+        _fight_description = _fight_description.Replace("%%3", GetFinalDamages(GetRatio(hyper:hyper)[2]).ToString());
+
+        _fight_description = _fight_description.Replace("__1", DisplayPercents(GetRatio(hyper:hyper)[0]));
+        _fight_description = _fight_description.Replace("__2", DisplayPercents(GetRatio(hyper:hyper)[1]));
+        _fight_description = _fight_description.Replace("__3", DisplayPercents(GetRatio(hyper:hyper)[2]));
+
+        _fight_description = _fight_description.Replace("**1", GetRatio(hyper:hyper)[0].ToString());
+        _fight_description = _fight_description.Replace("**2", GetRatio(hyper:hyper)[1].ToString());
+        _fight_description = _fight_description.Replace("**3", GetRatio(hyper:hyper)[2].ToString());
+
+        return _fight_description;
+    }
 
     /// <summary>
     /// Augmente le cooldown actuel d'un nombre donné
     /// </summary>
     /// <param name="amount"></param>
-    public void ModifyCooldown(int amount){
+    public void ModifyCooldown(int amount)
+    {
         cooldown += amount;
         CheckCooldown();
     }

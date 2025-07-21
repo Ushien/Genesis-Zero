@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5537ca8029f6d4082df846b5a8501c, type: 3}
   m_Name: "Acad\xE9mique"
   m_EditorClassIdentifier: 
+  id: 0
   passive_name: "Acad\xE9mique"
   fight_description: "Apr\xE8s avoir lanc\xE9 une technique, le lanceur gagne __1%
     de puissance."

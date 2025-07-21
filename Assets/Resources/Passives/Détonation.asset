@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5537ca8029f6d4082df846b5a8501c, type: 3}
   m_Name: "D\xE9tonation"
   m_EditorClassIdentifier: 
+  id: 4
   passive_name: "D\xE9tonation"
   fight_description: "Lorsqu'une unit\xE9 adverse meurt, elle inflige %%1 d\xE9g\xE2ts
     aux unit\xE9s adjacentes"

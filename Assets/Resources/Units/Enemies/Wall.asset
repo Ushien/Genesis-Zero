@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74e90ef35834eb84dbcc3899f95ea8e4, type: 3}
   m_Name: Wall
   m_EditorClassIdentifier: 
+  id: 2
   unit_name: Mur
   sprite: {fileID: 21300000, guid: d19f9321838faf944b11fa4b12b7904d, type: 3}
+  animator: {fileID: 0}
   original_power: 120
   original_health: 1100
   lore_description: 

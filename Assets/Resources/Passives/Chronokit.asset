@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5537ca8029f6d4082df846b5a8501c, type: 3}
   m_Name: Chronokit
   m_EditorClassIdentifier: 
+  id: 3
   passive_name: Chronokit
   fight_description: "Les effets de d\xE9but et de fin de tour s'appliquent deux
     fois"

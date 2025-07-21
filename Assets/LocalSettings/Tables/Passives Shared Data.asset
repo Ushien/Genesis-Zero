@@ -31,14 +31,6 @@ MonoBehaviour:
     m_Key: 1_effect
     m_Metadata:
       m_Items: []
-  - m_Id: 64020415524867
-    m_Key: 1.1_name
-    m_Metadata:
-      m_Items: []
-  - m_Id: 64020415524868
-    m_Key: 1.1_effect
-    m_Metadata:
-      m_Items: []
   - m_Id: 64020415524869
     m_Key: 2_name
     m_Metadata:

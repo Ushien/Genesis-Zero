@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
+using UnityEngine.Localization.Tables;
 
 [CreateAssetMenu(fileName = "New Scriptable Passive", menuName = "ScriptablePassive")]
 public class ScriptablePassive : ScriptableObject
 {
-    public string passive_name;
-    [TextArea(5,10)]
-    public string fight_description;
+    public int id;
     public float[] ratios = {1f, 1f, 1f};
     public Sprite artwork;
     public Passive passivePrefab;
@@ -20,8 +21,13 @@ public class ScriptablePassive : ScriptableObject
         return passive;
     }
     
-    public string GetFightDescription(BaseUnit unit){
-        string _fight_description = fight_description.Clone().ToString();
+    public string GetName(){
+        return LocalizationSettings.StringDatabase.GetLocalizedString("Passives", id.ToString() + "_name");
+    }
+    
+    public string GetFightDescription(BaseUnit unit)
+    {
+        string _fight_description = LocalizationSettings.StringDatabase.GetLocalizedString("Passives", id.ToString() + "_effect");
         _fight_description = _fight_description.Replace("%%1", GetFinalDamages(ratios[0], unit).ToString());
         _fight_description = _fight_description.Replace("%%2", GetFinalDamages(ratios[1], unit).ToString());
         _fight_description = _fight_description.Replace("%%3", GetFinalDamages(ratios[2], unit).ToString());

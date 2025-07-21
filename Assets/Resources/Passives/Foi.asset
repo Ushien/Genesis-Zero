@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5537ca8029f6d4082df846b5a8501c, type: 3}
   m_Name: Foi
   m_EditorClassIdentifier: 
+  id: 7
   passive_name: Foi
   fight_description: "L'unit\xE9 re\xE7oit un bonus de __1% sur tous les soins qu'elle
     re\xE7oit (P)"

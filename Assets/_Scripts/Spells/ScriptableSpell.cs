@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
+using UnityEngine.Localization.Tables;
 
 /// <summary>
 /// Contient les informations relatives à une technique, afin de l'initialiser
@@ -9,12 +12,7 @@ using UnityEngine;
 public class ScriptableSpell : ScriptableObject
 {
     public int id;
-    public string spell_name;
-    [TextArea(5,10)]
-    public string fight_description;
     public float[] ratios = {1f, 1f, 1f};
-    [TextArea(5,10)]
-    public string overloaded_fight_description;
     public float[] hyper_ratios = {1f, 1f, 1f};
     public int cooldown;
     public bool isAnAttack = false;
@@ -27,9 +25,13 @@ public class ScriptableSpell : ScriptableObject
     public bool lootable;
     public Rarity rarity = Rarity.Common;
     public List<Tag> tags;
-
-    public string GetFightDescription(BaseUnit unit){
-        string _fight_description = fight_description.Clone().ToString();
+    public string GetName(){
+        return LocalizationSettings.StringDatabase.GetLocalizedString("Spells", id.ToString() + "_name");
+    }
+    
+    public string GetFightDescription(BaseUnit unit)
+    {
+        string _fight_description = LocalizationSettings.StringDatabase.GetLocalizedString("Spells", id.ToString() + "_effect");
         _fight_description = _fight_description.Replace("%%1", GetFinalDamages(ratios[0], unit).ToString());
         _fight_description = _fight_description.Replace("%%2", GetFinalDamages(ratios[1], unit).ToString());
         _fight_description = _fight_description.Replace("%%3", GetFinalDamages(ratios[2], unit).ToString());

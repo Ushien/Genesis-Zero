@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5537ca8029f6d4082df846b5a8501c, type: 3}
   m_Name: Fragmentation
   m_EditorClassIdentifier: 
+  id: 8
   passive_name: Fragmentation
   fight_description: "Lorsque le porteur est perd des PV, une unit\xE9 alli\xE9e
     disposant du m\xEAme montant de PV est invoqu\xE9e."

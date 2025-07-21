@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5537ca8029f6d4082df846b5a8501c, type: 3}
   m_Name: TODO2
   m_EditorClassIdentifier: 
+  id: 15
   passive_name: 
   fight_description: "Augmente le nombre de r\xE9compenses de fin de combat de 1."
   ratios:

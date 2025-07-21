@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5537ca8029f6d4082df846b5a8501c, type: 3}
   m_Name: Elysium
   m_EditorClassIdentifier: 
+  id: 5
   passive_name: Elysium
   fight_description: "Conf\xE8re Curatif aux techniques de l'unit\xE9."
   ratios:

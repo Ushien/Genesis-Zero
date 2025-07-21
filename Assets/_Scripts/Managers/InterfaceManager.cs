@@ -878,7 +878,7 @@ public class InterfaceManager : MonoBehaviour
         if(spell != null){
             spellPanel.gameObject.SetActive(true);
             spellNamePanel.text = spell.GetName();
-            spellDescriptionPanel.text = spell.GetFightDescription(hyper);
+            spellDescriptionPanel.text = spell.GetDescription(hyper);
 
             if(spell.IsAAttack()){
                 spellCooldownPanel.text = ""; 
@@ -915,7 +915,7 @@ public class InterfaceManager : MonoBehaviour
         ResetPanel(passivePanel);
         if(unit.GetPassives().Count >= 1){
             unitPassiveNamePanel.text = unit.GetPassives()[selectedPassiveIndex].GetName();
-            unitPassiveDescriptionPanel.text = unit.GetPassives()[selectedPassiveIndex].GetFightDescription();
+            unitPassiveDescriptionPanel.text = unit.GetPassives()[selectedPassiveIndex].GetDescription();
             passivePanel.Find("Sprite").GetComponent<Image>().sprite = unit.GetPassives()[selectedPassiveIndex].GetScriptablePassive().artwork;
             if(unit.GetPassives().Count >= 2){
                 passivePanel.Find("NextSprite").gameObject.SetActive(true);

@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
+using UnityEngine.Localization.Tables;
 
 /// <summary>
 /// Un passif s'attache à une unité et s'active continuellement sous certaines conditions. 
@@ -9,11 +12,10 @@ using UnityEngine;
 
 public class Passive : MonoBehaviour
 {
+    private int unique_id;
     public float ratio1;
     public float ratio2;
     public float ratio3;
-    public string passiveName;
-    public string fight_description;
     public BaseUnit holder;
     public ScriptablePassive scriptablePassive;
 
@@ -26,9 +28,8 @@ public class Passive : MonoBehaviour
     }
 
     virtual public void Setup(BaseUnit unit, ScriptablePassive _scriptablePassive){
-        passiveName = _scriptablePassive.passive_name;
-        name = passiveName;
-        fight_description = _scriptablePassive.fight_description;
+        unique_id = scriptablePassive.id;
+        name = _scriptablePassive.name;
         ratio1 = _scriptablePassive.ratios[0];
         ratio2 = _scriptablePassive.ratios[1];
         ratio3 = _scriptablePassive.ratios[2];
@@ -53,20 +54,11 @@ public class Passive : MonoBehaviour
     }
 
     virtual public string GetName(){
-        return passiveName;
+        return LocalizationSettings.StringDatabase.GetLocalizedString("Passives", unique_id.ToString() + "_name");
     }
 
-    virtual public List<float> GetRatio(){
-        return new List<float>{
-            ratio1,
-            ratio2,
-            ratio3
-        };
-
-    }
-
-    virtual public string GetFightDescription(){
-        string _fight_description = fight_description.Clone().ToString();
+    virtual public string GetDescription(){
+        string _fight_description = LocalizationSettings.StringDatabase.GetLocalizedString("Passives", unique_id.ToString() + "_effect");
         _fight_description = _fight_description.Replace("%%1", GetFinalDamages(GetRatio()[0]).ToString());
         _fight_description = _fight_description.Replace("%%2", GetFinalDamages(GetRatio()[1]).ToString());
         _fight_description = _fight_description.Replace("%%3", GetFinalDamages(GetRatio()[2]).ToString());
@@ -75,6 +67,16 @@ public class Passive : MonoBehaviour
         _fight_description = _fight_description.Replace("__2", DisplayPercents(GetRatio()[1]));
         _fight_description = _fight_description.Replace("__3", DisplayPercents(GetRatio()[2]));
         return _fight_description;
+    }
+
+    virtual public List<float> GetRatio()
+    {
+        return new List<float>{
+            ratio1,
+            ratio2,
+            ratio3
+        };
+
     }
 
     public float ApplyPower(float ratio){

@@ -36,129 +36,129 @@ MonoBehaviour:
       techniques lui inflige %%1 d\xE9g\xE2ts suppl\xE9mentaires"
     m_Metadata:
       m_Items: []
-  - m_Id: 64020415524867
+  - m_Id: 64020415524869
     m_Localized: "Cribl\xE9 d'argent"
     m_Metadata:
       m_Items:
-      - rid: 4519861889816592452
-  - m_Id: 64020415524868
+      - rid: 386727323239972866
+  - m_Id: 64020415524870
     m_Localized: "L'unit\xE9 a subi plusieurs attaques"
     m_Metadata:
       m_Items:
-      - rid: 4519861889816592453
-  - m_Id: 64020415524869
+      - rid: 386727323239972867
+  - m_Id: 64020415524871
     m_Localized: Chronokit
     m_Metadata:
       m_Items: []
-  - m_Id: 64020415524870
+  - m_Id: 64020415524872
     m_Localized: "Les effets de d\xE9but et de fin de tour s'appliquent une fois
       suppl\xE9mentaire. (N)"
     m_Metadata:
       m_Items: []
-  - m_Id: 64020415524871
+  - m_Id: 64020415524873
     m_Localized: "D\xE9tonation"
     m_Metadata:
       m_Items: []
-  - m_Id: 64020415524872
+  - m_Id: 64020415524874
     m_Localized: "Lorsqu'une unit\xE9 adverse meurt, elle inflige %%1 d\xE9g\xE2ts
       aux unit\xE9s adjacentes. (P)"
     m_Metadata:
       m_Items: []
-  - m_Id: 64020415524873
+  - m_Id: 64020415524875
     m_Localized: Elysium
     m_Metadata:
       m_Items: []
-  - m_Id: 64020415524874
+  - m_Id: 64020415524876
     m_Localized: "Conf\xE8re Curatif aux techniques de l'unit\xE9."
     m_Metadata:
       m_Items: []
-  - m_Id: 64020415524875
+  - m_Id: 64020415524877
     m_Localized: Flux Vital
     m_Metadata:
       m_Items: []
-  - m_Id: 64020415524876
+  - m_Id: 64020415524878
     m_Localized: "Les soins adverses sont redirig\xE9s vers le porteur. (N)"
     m_Metadata:
       m_Items: []
-  - m_Id: 64020415524877
+  - m_Id: 64020415524879
     m_Localized: Foi
     m_Metadata:
       m_Items: []
-  - m_Id: 64020415524878
+  - m_Id: 64020415524880
     m_Localized: "L'unit\xE9 re\xE7oit un bonus de __1% sur tous les soins qu'elle
       re\xE7oit (P)"
     m_Metadata:
       m_Items: []
-  - m_Id: 64020415524879
+  - m_Id: 64020415524881
     m_Localized: Fragmentation
     m_Metadata:
       m_Items: []
-  - m_Id: 64020415524880
+  - m_Id: 64020415524882
     m_Localized: "Lorsque le porteur perd des PV, une unit\xE9 alli\xE9e disposant
       du m\xEAme montant de PV est invoqu\xE9e. (P)"
     m_Metadata:
       m_Items: []
-  - m_Id: 64020415524881
+  - m_Id: 64020415524883
     m_Localized: Frappe Diesel
     m_Metadata:
       m_Items: []
-  - m_Id: 64020415524882
+  - m_Id: 64020415524884
     m_Localized: "Les attaques de l'unit\xE9 font des d\xE9g\xE2ts suppl\xE9mentaires
       et appliquent l'\xE9l\xE9ment pyro. (N)"
     m_Metadata:
       m_Items: []
-  - m_Id: 64020415524883
+  - m_Id: 64020415524885
     m_Localized: Inspiration
     m_Metadata:
       m_Items: []
-  - m_Id: 64020415524884
+  - m_Id: 64020415524886
     m_Localized: "Avant de lancer une technique sur un alli\xE9, retire ses \xE9tats
       n\xE9gatifs. (P)"
     m_Metadata:
       m_Items: []
-  - m_Id: 64020415524885
+  - m_Id: 64020415524887
     m_Localized: Nyx
     m_Metadata:
       m_Items: []
-  - m_Id: 64020415524886
+  - m_Id: 64020415524888
     m_Localized: "Lorsque l'unit\xE9 attaque, charge ses autres techniques de 1."
     m_Metadata:
       m_Items: []
-  - m_Id: 64020415524887
+  - m_Id: 64020415524889
     m_Localized: Requiem
     m_Metadata:
       m_Items: []
-  - m_Id: 64020415524888
+  - m_Id: 64020415524890
     m_Localized: "A la fin du tour, inflige %%1 d\xE9g\xE2ts \xE0 toutes les unites
       adverses. (N)"
     m_Metadata:
       m_Items: []
-  - m_Id: 64020415524889
-    m_Localized: Scintillement
-    m_Metadata:
-      m_Items: []
-  - m_Id: 64020415524890
+  - m_Id: 64020415524892
     m_Localized: "Lorsque l'unit\xE9 utilise une technique, renforce les d\xE9g\xE2ts
       de sa prochaine attaque de %%1%. (N)"
     m_Metadata:
       m_Items: []
-  - m_Id: 64020415524892
+  - m_Id: 64020415524894
     m_Localized: "Lorsqu'une des techniques du personnage tue une unit\xE9, la puissance
       surcharg\xE9e de cette technique augmente d\xE9finitivement de %%1. (N)"
     m_Metadata:
       m_Items: []
-  - m_Id: 64020415524894
+  - m_Id: 64020415524891
+    m_Localized: Scintillement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524896
     m_Localized: "Augmente le nombre de r\xE9compenses de fin de combat de 1. (N)"
     m_Metadata:
       m_Items: []
   references:
     version: 2
     RefIds:
-    - rid: 4519861889816592452
+    - rid: 386727323239972866
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: Invisible pour le joueur
-    - rid: 4519861889816592453
+    - rid: 386727323239972867
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_CommentText: Invisible pour le joueur

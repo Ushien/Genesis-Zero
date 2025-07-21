@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5537ca8029f6d4082df846b5a8501c, type: 3}
   m_Name: Scintillement
   m_EditorClassIdentifier: 
+  id: 13
   passive_name: Scintillement
   fight_description: "Lorsque l'unit\xE9 utilise une technique, renforce les d\xE9g\xE2ts
     de sa prochaine attaque de %%1%."

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5537ca8029f6d4082df846b5a8501c, type: 3}
   m_Name: Requiem
   m_EditorClassIdentifier: 
+  id: 12
   passive_name: Requiem
   fight_description: "A la fin du tour, inflige %%1 d\xE9g\xE2ts \xE0 toutes les
     unites adverses."
