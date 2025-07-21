@@ -16,8 +16,42 @@ MonoBehaviour:
   m_Tables:
   - {fileID: 11400000, guid: 3dac9b2c4b81db04ba8c516133f2a276, type: 2}
   - {fileID: 11400000, guid: 921fa4cf3e20a3b4ab72db00c8d72c73, type: 2}
-  m_Extensions: []
+  m_Extensions:
+  - rid: 4519861889816592428
   m_Group: String Table
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4519861889816592428
+      type: {class: CsvExtension, ns: UnityEditor.Localization.Plugins.CSV, asm: Unity.Localization.Editor}
+      data:
+        m_Collection: {fileID: 11400000}
+        m_ColumnsList:
+        - rid: 4519861889816592429
+        - rid: 4519861889816592430
+        - rid: 4519861889816592431
+        m_ConnectedFile: Assets/LocalSettings/Tables/Localization - Passives.csv
+    - rid: 4519861889816592429
+      type: {class: KeyIdColumns, ns: UnityEditor.Localization.Plugins.CSV.Columns, asm: Unity.Localization.Editor}
+      data:
+        m_IncludeId: 0
+        m_IncludeSharedComments: 0
+        m_KeyFieldName: Key
+        m_IdFieldName: Id
+        m_CommentFieldName: Shared Comments
+    - rid: 4519861889816592430
+      type: {class: LocaleColumns, ns: UnityEditor.Localization.Plugins.CSV.Columns, asm: Unity.Localization.Editor}
+      data:
+        m_LocaleIdentifier:
+          m_Code: en
+        m_FieldName: English
+        m_CommentFieldName: English Comments
+        m_IncludeComments: 1
+    - rid: 4519861889816592431
+      type: {class: LocaleColumns, ns: UnityEditor.Localization.Plugins.CSV.Columns, asm: Unity.Localization.Editor}
+      data:
+        m_LocaleIdentifier:
+          m_Code: fr
+        m_FieldName: French
+        m_CommentFieldName: French Comments
+        m_IncludeComments: 1

@@ -22,8 +22,8 @@ MonoBehaviour:
     m_Localized: Academic
     m_Metadata:
       m_Items: []
-  - m_Id: 43157303296
-    m_Localized: After it uses a skill, le user gains __% power.
+  - m_Id: 64020415524864
+    m_Localized: After they use a skill, le user gains __% power.
     m_Metadata:
       m_Items: []
   references:

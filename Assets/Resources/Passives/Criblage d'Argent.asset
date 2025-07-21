@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb5537ca8029f6d4082df846b5a8501c, type: 3}
-  m_Name: "Armes Argent\xE9es"
+  m_Name: Criblage d'Argent
   m_EditorClassIdentifier: 
   passive_name: "Armes Argent\xE9es"
   fight_description: "Infliger des d\xE9g\xE2ts \xE0 une unit\xE9 avec 3 attaques
