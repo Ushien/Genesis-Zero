@@ -33,7 +33,6 @@ public class ResourceManager : MonoBehaviour
     public static void PreloadAllLocalization()
     {
         LocalizationSettings.StringDatabase.GetTable("Spells");
-        Debug.Log("Chargement des tables effectué");
     }
 
     public List<ScriptableSpell> GetSpells(bool lootable = true)
