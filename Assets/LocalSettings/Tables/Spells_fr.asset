@@ -23,15 +23,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6569591173120
-    m_Localized: "Inflige %%1 d\xE9gats \xE0 une unit\xE9"
+    m_Localized: "Inflige %%1 d\xE9gats \xE0 une unit\xE9."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 386727366210355200
   - m_Id: 7088426577920
     m_Localized: Boule de feu
     m_Metadata:
       m_Items: []
   - m_Id: 7212523450368
-    m_Localized: "Inflige %%1 d\xE9gats \xE0 une unit\xE9 - Pyro"
+    m_Localized: "Inflige %%1 d\xE9gats \xE0 une unit\xE9. - Pyro"
     m_Metadata:
       m_Items: []
   - m_Id: 2638152353198081
@@ -39,7 +40,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2582944961015808
-    m_Localized: "Attaque **1 fois une unit\xE9"
+    m_Localized: "Attaque **1 fois une unit\xE9."
     m_Metadata:
       m_Items:
       - rid: 4519861889816592419
@@ -65,7 +66,8 @@ MonoBehaviour:
       soigne les alli\xE9s de 50% des d\xE9g\xE2ts totaux, r\xE9partis \xE9quitablement.
       (N)"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 386727366210355201
   - m_Id: 2638152353198084
     m_Localized: "B\xE9n\xE9diction"
     m_Metadata:
@@ -86,7 +88,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2638152353198089
     m_Localized: "Soigne une unit\xE9 de %%1. Conf\xE8re curatif aux %%2 prochaines
-      techniques du lanceur."
+      techniques du lanceur. (N)"
     m_Metadata:
       m_Items: []
   - m_Id: 2662150076116993
@@ -105,12 +107,12 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2662150076116997
     m_Localized: "Inflige %%1 d\xE9g\xE2ts \xE0 une unit\xE9. Les d\xE9g\xE2ts augmentent
-      d\xE9finitivement chaque fois que le lanceur est soign\xE9 - Vampirisme"
+      d\xE9finitivement chaque fois que le lanceur est soign\xE9 (P) - Vampirisme"
     m_Metadata:
       m_Items: []
   - m_Id: 2662150076116998
     m_Localized: "Inflige %%1 d\xE9gats \xE0 une unit\xE9. Les d\xE9gats augmentent
-      d\xE9finitivement chaque fois que le lanceur est soign\xE9 - Vampirisme"
+      d\xE9finitivement chaque fois que le lanceur est soign\xE9 (N) - Vampirisme"
     m_Metadata:
       m_Items: []
   - m_Id: 2662150076116999
@@ -131,8 +133,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2662150076117003
-    m_Localized: "Inflige %%1 d\xE9g\xE2ts \xE0 l'unit\xE9 adverse avec le plus de
-      vie et augmente l'attaque de l'unit\xE9 alli\xE9e en r\xE9serve de %%2 % (N)"
+    m_Localized: 
     m_Metadata:
       m_Items: []
   - m_Id: 2662150076117005
@@ -141,8 +142,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2662150076117006
     m_Localized: "Inflige un statut \xE0 une unit\xE9. Chaque utilisation successive
-      du sort sur une m\xEAme cible inflige un statut diff\xE9rent.  (Poison -> D\xE9sarm\xE9
-      -> Silence -> Etourdissement -> retour au debut) (N)"
+      de la technique sur une m\xEAme cible inflige un statut diff\xE9rent.  (Poison
+      -> D\xE9sarm\xE9 -> Silence -> Etourdissement -> Poison) (N)"
     m_Metadata:
       m_Items: []
   - m_Id: 2662150076117008
@@ -181,13 +182,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2662150076117021
     m_Localized: "Ex\xE9cute (%%1) toutes les unit\xE9s ayant \xE9t\xE9 soign\xE9es
-      lors du tour pr\xE9c\xE9dent"
+      lors du tour pr\xE9c\xE9dent. (N)"
     m_Metadata:
       m_Items: []
   - m_Id: 2662150076117023
     m_Localized: Onde
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 386727366210355202
   - m_Id: 2662150076117024
     m_Localized: "Soigne une unit\xE9 de %%1 d\xE9g\xE2ts et augmente sa puissance
       de __2 %."
@@ -203,7 +205,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2662150076117029
-    m_Localized: Puit de Vie
+    m_Localized: Puits de Vie
     m_Metadata:
       m_Items: []
   - m_Id: 2662150076117030
@@ -234,7 +236,7 @@ MonoBehaviour:
   - m_Id: 2662150076117039
     m_Localized: "S\xE9lectionne une unit\xE9 et lui procure %%1 d'armure. Si ce
       montant est pr\xE9sent apr\xE8s 2 tours, celui-ci est converti en PV suppl\xE9mentaires
-      d\xE9finitifs."
+      d\xE9finitifs. (P)"
     m_Metadata:
       m_Items: []
   - m_Id: 2662150076117041
@@ -243,7 +245,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2662150076117042
     m_Localized: "Inflige %%1 d\xE9g\xE2ts \xE0 une unit\xE9. Si la cible dispose
-      d'armure, elle subit \xE0 la place %%2 d\xE9g\xE2ts."
+      d'armure, inflige \xE0 la place %%2 d\xE9g\xE2ts."
     m_Metadata:
       m_Items: []
   - m_Id: 2662150076117044
@@ -252,8 +254,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2662150076117045
     m_Localized: "Inflige %%1 d\xE9g\xE2ts \xE0 une unit\xE9, si celle-ci a \xE9t\xE9
-      soign\xE9e lors du pr\xE9c\xE9dent tour, elle subit \xE0 la place %%2 d\xE9g\xE2ts.
-      (N)"
+      soign\xE9e lors du pr\xE9c\xE9dent tour, inflige %%2 d\xE9g\xE2ts. (N)"
     m_Metadata:
       m_Items: []
   - m_Id: 2662150076117047
@@ -272,6 +273,20 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 386727366210355200
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: "j'ai enlev\xE9 le \"s\" \xE0 damages, avec un s le mot a
+          un autre sens, ici damage reste damage au pluriel"
+    - rid: 386727366210355201
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: "\"inflict health damage\" est peut \xEAtre plus accurate?
+          \xE0 voir si c'est bon dans le contexte "
+    - rid: 386727366210355202
+      type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_CommentText: "shockwave=onde de choc, mais c'est plus styl\xE9 que wave"
     - rid: 4519861889816592419
       type: {class: Comment, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:

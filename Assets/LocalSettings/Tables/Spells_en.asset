@@ -23,11 +23,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6569591173120
-    m_Localized: Inflict %%1 damages to a unit
+    m_Localized: Inflicts %%1 damage to a unit.
     m_Metadata:
       m_Items: []
   - m_Id: 7212523450368
-    m_Localized: Inflict %%1 damages to a unit - Pyro
+    m_Localized: Inflicts %%1 damage to a unit. - Pyro
     m_Metadata:
       m_Items: []
   - m_Id: 7088426577920
@@ -35,11 +35,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2582944961015808
-    m_Localized: Attack a unit **1 times
+    m_Localized: Attack a unit **1 times.
     m_Metadata:
       m_Items: []
   - m_Id: 2582904758611968
-    m_Localized: Cybernetic assault
+    m_Localized: Cybernetic Assault
     m_Metadata:
       m_Items: []
   - m_Id: 2638152281894912
@@ -51,11 +51,200 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2638152353198081
-    m_Localized: 
+    m_Localized: Solar Bomb
     m_Metadata:
       m_Items: []
   - m_Id: 2638152353198082
-    m_Localized: 
+    m_Localized: Inflict %%1 damage to all enemy units and heals allies from 50%
+      of total damage, distributed evenly. (N)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2638152353198084
+    m_Localized: Blessing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2638152353198085
+    m_Localized: Strengthen the basic attack of a unit of __1% during 3 rounds. (P)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2638152353198087
+    m_Localized: Luminous Heart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2638152353198088
+    m_Localized: Heals %%1 HP of a unit. Grants curative for the player's next skill.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2638152353198089
+    m_Localized: Heals %%1 HP of a unit. Grants Curative for the player's next two
+      skills. (N)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076116993
+    m_Localized: Mechanical Heart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076116994
+    m_Localized: Grants a shield and %%1 armor to the player. If the player already
+      owns a shield, inflicts %%2 damage to all enemy units.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076116996
+    m_Localized: Voracious Heart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076116997
+    m_Localized: Inflicts %%1 damage to a unit. The damage increases permanently
+      each time the user is healed (P) - Vampirism
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076116998
+    m_Localized: Inflicts %%1 damage to a unit. The damage increases permanently
+      each time the user is healed (N) - Vampirism
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076116999
+    m_Localized: Explosion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117000
+    m_Localized: Inflicts %%1 damage to a target, and %%2 damage to its allies.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117001
+    m_Localized: Inflicts %%1 damage to a target and its allies.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117002
+    m_Localized: Flare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117005
+    m_Localized: Voodoo Curse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117006
+    m_Localized: Gives a status to a unit. Every successive usage of a skill on the
+      same target inflicts a different status. (Poison -> Disarmed -> Silence ->
+      Stun -> Poison) (N)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117008
+    m_Localized: Heliolaser
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117009
+    m_Localized: Inflicts %%1 damage to a unit - Vampirism
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117011
+    m_Localized: Sovereign Hand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117012
+    m_Localized: Selects a unit. Each player's ally throws an attack on the target.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117014
+    m_Localized: Midnight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117017
+    m_Localized: Multi-Wings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117018
+    m_Localized: Inflicts %%1 damage to all enemies and increases the player's power
+      by __2%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117020
+    m_Localized: Celestial Shadow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117021
+    m_Localized: Executes (%%1) all units that were healed during the previous round.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117023
+    m_Localized: Pulse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117024
+    m_Localized: Heals %%1 HP of a unit and increases its power by __2%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117026
+    m_Localized: Dust of Daze
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117027
+    m_Localized: Stuns an enemy for one round and doubles its health points. (P)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117029
+    m_Localized: Well of Life
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117030
+    m_Localized: Heals %%1 HP of a unit.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117032
+    m_Localized: Reinforcement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117033
+    m_Localized: Grants %%1 armor to the player.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117035
+    m_Localized: Backfire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117036
+    m_Localized: Attacks an enemy and swaps the character with a substitute ally.
+      (N)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117038
+    m_Localized: Revelation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117039
+    m_Localized: Selects a unit and grants it %%1 armor. If that amount of armor
+      remains after two turns, it will be converted into definitive health points.
+      (P)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117041
+    m_Localized: Sacraments
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117042
+    m_Localized: Inflicts %%1 damage to a unit. If the target has armor, inflicts
+      %%2 damage instead.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117044
+    m_Localized: Scalpel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117045
+    m_Localized: Inflict %%1 damage to a unit. If it has been healed during the previous
+      round, inflict %%2 damage instead.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117047
+    m_Localized: Polymer Storm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117048
+    m_Localized: Grants Polymer to every unit on the field. (N)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2662150076117050
+    m_Localized: Ultimatum
     m_Metadata:
       m_Items: []
   references:

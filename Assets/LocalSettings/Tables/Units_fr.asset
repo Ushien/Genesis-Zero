@@ -23,19 +23,35 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 422204944384
-    m_Localized: Cyberange
+    m_Localized: "Ange Nucl\xE9aire"
     m_Metadata:
       m_Items: []
-  - m_Id: 92213882880
+  - m_Id: 768287678263296
     m_Localized: "Lors de ses balades, il s'amuse \xE0 tester ses sorts de feu sur
       les plantes environnantes. On r\xE9pertorie des incendies l\xE9gers aux alentours
       de ses zones de promenade."
     m_Metadata:
       m_Items: []
-  - m_Id: 437698703360
+  - m_Id: 768287716012032
     m_Localized: "Sa puissance de feu rivalise avec le mat\xE9riel militaire humain
       de pointe. Sa pr\xE9sence est souvent signal\xE9e peu avant l'apparition d'une
       catastrophe de grande envergure."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 768287716012039
+    m_Localized: Anasta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 768287716012041
+    m_Localized: Jacob
+    m_Metadata:
+      m_Items: []
+  - m_Id: 768287716012043
+    m_Localized: Lizz
+    m_Metadata:
+      m_Items: []
+  - m_Id: 768287716012045
+    m_Localized: Leo
     m_Metadata:
       m_Items: []
   references:

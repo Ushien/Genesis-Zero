@@ -23,7 +23,126 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 64020415524864
-    m_Localized: After they use a skill, le user gains __% power.
+    m_Localized: After using a skill, the player gains __% power.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524865
+    m_Localized: Silver Hail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524866
+    m_Localized: Inflicting damage to a unit with 3 attacks or skills inflicts it
+      %%1 additional damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524869
+    m_Localized: Silver riddled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524870
+    m_Localized: The unit suffered many attacks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524871
+    m_Localized: Chronokit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524872
+    m_Localized: Start-of-turn and end-of-turn effects apply an additional time.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524873
+    m_Localized: Detonation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524874
+    m_Localized: When an enemy unit dies, it inflicts %%1 damage to adjacent units.
+      (P)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524875
+    m_Localized: Elysium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524876
+    m_Localized: Grants Curative to the unit's skills.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524877
+    m_Localized: Vital flow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524878
+    m_Localized: Opposing heals are redirected to the wearer. (N)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524879
+    m_Localized: Faith
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524880
+    m_Localized: The unit is granted a bonus of __1% on all heals it receives (P)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524881
+    m_Localized: Fragmentation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524882
+    m_Localized: When the wearer loses HP, an ally unit with the same amount of HP
+      is summoned. (P)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524883
+    m_Localized: Diesel strike
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524884
+    m_Localized: The unit's attacks do %%1 additional damages and apply Pyro. (N)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524885
+    m_Localized: Inspiration
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524886
+    m_Localized: Removes an ally's negative status before using a skill on them.
+      (P)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524887
+    m_Localized: Nyx
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524888
+    m_Localized: When the unit attacks; charges its other skills by 1.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524889
+    m_Localized: Requiem
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524890
+    m_Localized: At the end of the round, inflicts %%1 damage to all enemy units.
+      (N)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524891
+    m_Localized: Glimmer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524892
+    m_Localized: When the unit uses a skill, increases the strength of its next attack
+      by %%1%. (N)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524894
+    m_Localized: When one of the skills of the holder kills a unit, the overcharged
+      power of that skill permanently increases by %%1. (N)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524896
+    m_Localized: Increases the number of end-of-fight rewards by 1. (N)
     m_Metadata:
       m_Items: []
   references:

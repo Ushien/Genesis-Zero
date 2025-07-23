@@ -23,7 +23,34 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 422204944384
-    m_Localized: Cyberangel
+    m_Localized: Nuclear Angel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 768287678263296
+    m_Localized: When he goes for a walk, he likes to practice his fire spells on
+      the surrounding plants. Mild wildfires have been recorded in the areas he walks
+      in.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 768287716012032
+    m_Localized: Its firepower compete with the top notch human military gear. Its
+      presence is often signaled shortly before a large-scale disaster.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 768287716012039
+    m_Localized: Anasta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 768287716012041
+    m_Localized: Jacob
+    m_Metadata:
+      m_Items: []
+  - m_Id: 768287716012043
+    m_Localized: Lizz
+    m_Metadata:
+      m_Items: []
+  - m_Id: 768287716012045
+    m_Localized: Leo
     m_Metadata:
       m_Items: []
   references:
