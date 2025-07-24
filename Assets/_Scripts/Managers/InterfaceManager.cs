@@ -167,6 +167,7 @@ public class InterfaceManager : MonoBehaviour
         PlayerInputActions playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
         playerInputActions.Player.Validate.performed += ValidateInput;
+        playerInputActions.Player.Cancel.performed += CancelInput;
         playerInputActions.Player.Movement.performed += MovementInput;
     }
 
@@ -204,12 +205,12 @@ public class InterfaceManager : MonoBehaviour
         // Super moche mais flemme de débug plus finement maintenant
         if (!overloaded && spellPanel.transform.Find("overloaded").gameObject.activeSelf)
             spellPanel.transform.Find("overloaded").gameObject.SetActive(false);
+
         if (BattleManager.Instance != null)
         {
             switch (BattleManager.Instance.GetPlayerActionChoiceState())
             {
                 case BattleManager.PlayerActionChoiceState.CHARACTER_SELECTION:
-                    //Debug.Log("Je ne dois pas arriver ici");
                     SourceSelectionDisplay();
                     break;
                 case BattleManager.PlayerActionChoiceState.SPELL_SELECTION:
@@ -320,45 +321,6 @@ public class InterfaceManager : MonoBehaviour
         tileSelector_targetPos = sourceTile.transform.position;
         tileSelector_currentPos = Vector3.Lerp(tileSelector_currentPos, tileSelector_targetPos, Time.deltaTime * selectorSpeed);
         tileSelector.transform.position = tileSelector_currentPos;
-
-        //GridManager.Instance.DisplayHighlights();
-
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            if (sourceTile.GetUnit() != null)
-            {
-                if (sourceTile.GetUnit().GetTeam() == Team.Ally && !sourceTile.GetUnit().HasGivenInstruction())
-                {
-                    SourceSelectionTrigger(BattleManager.Trigger.VALIDATE);
-                    CameraEffects.Instance.TriggerZoom(mainCamera.transform.position, 2.8f, zoomSpeed);
-                }
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            SourceSelectionTrigger(BattleManager.Trigger.CANCEL);
-        }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            NavigateSource(Directions.UP);
-            CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(driftAmount, driftAmount, 0f));
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            NavigateSource(Directions.DOWN);
-            CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(-driftAmount, -driftAmount, 0f));
-        }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            NavigateSource(Directions.LEFT);
-            CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(-driftAmount, driftAmount, 0f));
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            NavigateSource(Directions.RIGHT);
-            CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(driftAmount, -driftAmount, 0f));
-        }
     }
     void SourceSelectionTrigger(BattleManager.Trigger trigger)
     {
@@ -1101,6 +1063,8 @@ public class InterfaceManager : MonoBehaviour
             sourceTile.GetNextTile(direction).Select();
             sourceTile.Unselect();
             sourceTile = sourceTile.GetNextTile(direction);
+            Vector2 vectorDirection = Tools.ConvertDirectionsToVector2(direction);
+            CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(driftAmount*vectorDirection.x, driftAmount*vectorDirection.y, 0f));
         }
         selectedPassiveIndex = 0;
 
@@ -1307,16 +1271,51 @@ public class InterfaceManager : MonoBehaviour
 
     private void ValidateInput(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        switch (BattleManager.Instance.GetPlayerActionChoiceState())
         {
-            Debug.Log("Test");
+            case BattleManager.PlayerActionChoiceState.CHARACTER_SELECTION:
+                if (sourceTile.GetUnit() != null)
+                {
+                    if (sourceTile.GetUnit().GetTeam() == Team.Ally && !sourceTile.GetUnit().HasGivenInstruction())
+                    {
+                        SourceSelectionTrigger(BattleManager.Trigger.VALIDATE);
+                        CameraEffects.Instance.TriggerZoom(mainCamera.transform.position, 2.8f, zoomSpeed);
+                    }
+                }
+                break;
+            case BattleManager.PlayerActionChoiceState.SPELL_SELECTION:
+                
+                break;
+            case BattleManager.PlayerActionChoiceState.TARGET_SELECTION:
+                
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void CancelInput(InputAction.CallbackContext context)
+    {
+        switch (BattleManager.Instance.GetPlayerActionChoiceState())
+        {
+            case BattleManager.PlayerActionChoiceState.CHARACTER_SELECTION:
+                SourceSelectionTrigger(BattleManager.Trigger.CANCEL);
+                break;
+            case BattleManager.PlayerActionChoiceState.SPELL_SELECTION:
+                
+                break;
+            case BattleManager.PlayerActionChoiceState.TARGET_SELECTION:
+                
+                break;
+            default:
+                break;
         }
     }
     private void MovementInput(InputAction.CallbackContext context)
     {
-        Vector2 inputVector = context.ReadValue<Vector2>();
+        Directions direction = Tools.ConvertVector2ToDirections(context.ReadValue<Vector2>());
+        NavigateSource(direction);
     }
-
 }
 
-public enum Directions {RIGHT, LEFT, UP, DOWN}
+public enum Directions { RIGHT, LEFT, UP, DOWN , UP_R, UP_L, DOWN_R, DOWN_L, NONE}

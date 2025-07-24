@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Unity.Collections;
+using UnityEngine.AI;
 
 /// <summary>
 /// Gestion de la grille de combat. Une grille appartient à une équipe et est composée de Tiles.
@@ -156,6 +157,14 @@ public class GridManager : MonoBehaviour
                 return ReturnTilesList(team, width-1, coordinate)[0];
             case Directions.LEFT:
                 return ReturnTilesList(team, 0, coordinate)[0];
+            case Directions.UP_L:
+                return ReturnTilesList(team, 0, height-1)[0];
+            case Directions.UP_R:
+                return ReturnTilesList(team, width-1, height-1)[0];
+            case Directions.DOWN_L:
+                return ReturnTilesList(team, 0, 0)[0];
+            case Directions.DOWN_R:
+                return ReturnTilesList(team, width-1, 0)[0];
             default:
                 return null;
         }
@@ -336,34 +345,119 @@ public static class Tools
         Debug.Log(output);
     }
 
-    public static int Ceiling(float amount){
+    public static int Ceiling(float amount)
+    {
         return (int)System.Math.Ceiling(amount);
     }
 
-    public static Vector2 IsoToXY(Vector2 v){
+    public static Vector2 IsoToXY(Vector2 v)
+    {
         return new Vector2(0.5f * v.x - v.y, 0.5f * v.x + v.y);
     }
 
-    public static Vector2 XYToIso(Vector2 v){
-        return new Vector2(v.x + v.y,  0.5f * (v.y - v.x));
+    public static Vector2 XYToIso(Vector2 v)
+    {
+        return new Vector2(v.x + v.y, 0.5f * (v.y - v.x));
     }
 
-    public static List<Properties> CombineProperties(List<Properties> props1, List<Properties> props2){
-        if(props1 == null){
+    public static List<Properties> CombineProperties(List<Properties> props1, List<Properties> props2)
+    {
+        if (props1 == null)
+        {
             props1 = new List<Properties>();
         }
-        if(props2 == null){
-            props2 =  new List<Properties>();
+        if (props2 == null)
+        {
+            props2 = new List<Properties>();
         }
 
         return props1.Union(props2).ToList();
     }
 
-    public static List<Properties> CombineProperties(List<Properties> props1, Properties props2){
-        if(props1 == null){
+    public static List<Properties> CombineProperties(List<Properties> props1, Properties props2)
+    {
+        if (props1 == null)
+        {
             props1 = new List<Properties>();
         }
-        
-        return props1.Union(new List<Properties>(){props2}).ToList();
+
+        return props1.Union(new List<Properties>() { props2 }).ToList();
+    }
+
+    public static Vector2 ConvertDirectionsToVector2(Directions originDirection)
+    {
+        switch (originDirection)
+        {
+            case Directions.UP_L:
+                return new Vector2(-1, 1);
+            case Directions.UP:
+                return new Vector2(0, 1);
+            case Directions.UP_R:
+                return new Vector2(1, 1);
+            case Directions.LEFT:
+                return new Vector2(-1, 0);
+            case Directions.NONE:
+                return new Vector2(0, 0);
+            case Directions.RIGHT:
+                return new Vector2(1, 0);
+            case Directions.DOWN_L:
+                return new Vector2(-1, -1);
+            case Directions.DOWN:
+                return new Vector2(0, -1);
+            case Directions.DOWN_R:
+                return new Vector2(1, -1);
+            default:
+                return new Vector2(0, 0);
+        }
+    }
+
+    public static Directions ConvertVector2ToDirections(Vector2 originVector)
+    {
+        if (originVector.y > 0)
+        {
+            if (originVector.x < 0)
+            {
+                return Directions.UP_L;
+            }
+            if (originVector.x == 0)
+            {
+                return Directions.UP;
+            }
+            if (originVector.x > 0)
+            {
+                return Directions.UP_R;
+            }
+        }
+        if (originVector.y == 0)
+        {
+            if (originVector.x < 0)
+            {
+                return Directions.LEFT;
+            }
+            if (originVector.x == 0)
+            {
+                return Directions.NONE;
+            }
+            if (originVector.x > 0)
+            {
+                return Directions.RIGHT;
+            }
+        }
+        if (originVector.y < 0)
+        {
+            if (originVector.x < 0)
+            {
+                return Directions.DOWN_L;
+            }
+            if (originVector.x == 0)
+            {
+                return Directions.DOWN;
+            }
+            if (originVector.x > 0)
+            {
+                return Directions.DOWN_R;
+            }
+        }
+        return Directions.NONE;
     }
 }

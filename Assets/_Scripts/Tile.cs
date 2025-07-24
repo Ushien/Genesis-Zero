@@ -72,30 +72,24 @@ public class Tile : MonoBehaviour
     /// <param name="direction"></param>
     /// <returns></returns>
     public Tile GetNextTile(Directions direction){
-        Tile next_tile = null;
-        switch (direction){
-            case Directions.UP:
-                next_tile = GridManager.Instance.GetTileAtPosition(team, new Vector2(x_position, y_position + 1));
-                // Passage de la grille des alliés à la grille des ennemis
-                if(next_tile == null && team == Team.Ally){
-                    next_tile = GridManager.Instance.GetBorderTile(Team.Enemy, Directions.DOWN, x_position);
-                }
-                break;
-            case Directions.DOWN:
-                next_tile = GridManager.Instance.GetTileAtPosition(team, new Vector2(x_position, y_position - 1));
-                // Passage de la grille des ennemis à la grille des alliés
-                if(next_tile == null && team == Team.Enemy){
-                    next_tile = GridManager.Instance.GetBorderTile(Team.Ally, Directions.UP, x_position);
-                }
-                break;
-            case Directions.LEFT:
-                next_tile = GridManager.Instance.GetTileAtPosition(team, new Vector2(x_position - 1, y_position));
-                break;
-            case Directions.RIGHT:
-                next_tile = GridManager.Instance.GetTileAtPosition(team, new Vector2(x_position + 1, y_position));
-                break;
+
+        Vector2 directionsCoordinates = Tools.ConvertDirectionsToVector2(direction);
+        int next_x = x_position + (int)directionsCoordinates.x;
+        int next_y = y_position + (int)directionsCoordinates.y;
+        Tile next_tile = GridManager.Instance.GetTileAtPosition(team, new Vector2(next_x, next_y));
+ 
+        if (next_tile == null && team == Team.Ally && next_y > y_position)
+        {
+            return GridManager.Instance.GetBorderTile(Team.Enemy, Directions.DOWN, next_x);
         }
-        return next_tile;
+        else if (next_tile == null && team == Team.Enemy && next_y < 0)
+        {
+            return GridManager.Instance.GetBorderTile(Team.Ally, Directions.UP, next_x);
+        }
+        else
+        {
+            return next_tile;
+        }
     }
 
     public Vector2 GetPosition(){
