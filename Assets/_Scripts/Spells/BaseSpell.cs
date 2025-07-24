@@ -303,7 +303,7 @@ public class BaseSpell : MonoBehaviour
         string _fight_description;
         if (hyper)
         {
-            _fight_description = LocalizationSettings.StringDatabase.GetLocalizedString("Spells", unique_id.ToString() + "_effect_0");
+            _fight_description = LocalizationSettings.StringDatabase.GetLocalizedString("Spells", unique_id.ToString() + "_effect_h");
         }
         else
         {
