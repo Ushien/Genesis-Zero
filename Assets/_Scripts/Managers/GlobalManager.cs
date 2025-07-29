@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
 using System.Linq;
+using UnityEngine.InputSystem;
 
 public class GlobalManager : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class GlobalManager : MonoBehaviour
     [SerializeField] private ResourceManager resourceManagerPrefab;
     [SerializeField] private EndScreenManager endScreenManagerPrefab;
 
-    public enum RunPhase {OUT, STARTPHASE, PICKPHASE, BATTLEPHASE, LOSESCREEN, ENDPHASE}
+    public enum RunPhase { OUT, STARTPHASE, PICKPHASE, BATTLEPHASE, LOSESCREEN, ENDPHASE }
     [SerializeField]
     private RunPhase runPhase;
 
@@ -92,12 +93,13 @@ public class GlobalManager : MonoBehaviour
         battleID = 0;
     }
 
-    public void BattlePhaseIn(){
+    public void BattlePhaseIn()
+    {
         battleID += 1;
         gridManager = Instantiate(gridManagerPrefab);
         GridManager.Instance.SetCam(cam.transform);
         gridManager.transform.SetParent(transform.parent);
-        
+
         AIManager = Instantiate(AIManagerPrefab);
         AIManager.transform.SetParent(transform.parent);
         eventManager = Instantiate(eventManagerPrefab);
@@ -108,29 +110,35 @@ public class GlobalManager : MonoBehaviour
         GameObject[] rootGameObjects = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
         foreach (GameObject _gameobject in rootGameObjects)
         {
-            if(_gameobject.name == "Units" || _gameobject.name.Contains("UI - World Space")){
+            if (_gameobject.name == "Units" || _gameobject.name.Contains("UI - World Space"))
+            {
                 _gameobject.SetActive(true);
             }
         }
 
 
         // Générer un nouveau groupe d'ennemis
-        List<ScriptableComposition> enemiesCompositions = resourceManager.GetEnemyCompositions(lootable:true);
+        List<ScriptableComposition> enemiesCompositions = resourceManager.GetEnemyCompositions(lootable: true);
         ScriptableComposition enemyComposition = enemiesCompositions.Where(_ => true).OrderBy(_ => UnityEngine.Random.value).First();
-        if(debug && testScript.enemy_composition != null){
+        if (debug && testScript.enemy_composition != null)
+        {
             enemyComposition = testScript.enemy_composition;
         }
         enemies = UnitManager.Instance.CreateUnits(enemyComposition.GetTuples(battleID), Team.Enemy);
-        
+
         BattleManager.Instance.LaunchBattle(allies, enemies);
         AnimationManager.Instance.BattleIn();
 
         //BattleManager.Instance.DebugSetState();
         BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, BattleManager.Trigger.FORWARD);
 
-        if(debug && battleID == 1){
+        if (debug && battleID == 1)
+        {
             testScript.LaunchDebug();
         }
+
+        PlayerInput playerInput = InputManager.Instance.GetPlayerInput();
+        playerInput.SwitchCurrentActionMap("Battle");
     }
 
     public void BattlePhaseOut(){

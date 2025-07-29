@@ -24,7 +24,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     ""name"": ""PlayerInputActions"",
     ""maps"": [
         {
-            ""name"": ""Player"",
+            ""name"": ""Battle"",
             ""id"": ""a4baf7c4-886c-423a-8f83-72dc714939bd"",
             ""actions"": [
                 {
@@ -226,14 +226,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     ],
     ""controlSchemes"": []
 }");
-        // Player
-        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_Validate = m_Player.FindAction("Validate", throwIfNotFound: true);
-        m_Player_Cancel = m_Player.FindAction("Cancel", throwIfNotFound: true);
-        m_Player_Menu = m_Player.FindAction("Menu", throwIfNotFound: true);
-        m_Player_Switch = m_Player.FindAction("Switch", throwIfNotFound: true);
-        m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
-        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        // Battle
+        m_Battle = asset.FindActionMap("Battle", throwIfNotFound: true);
+        m_Battle_Validate = m_Battle.FindAction("Validate", throwIfNotFound: true);
+        m_Battle_Cancel = m_Battle.FindAction("Cancel", throwIfNotFound: true);
+        m_Battle_Menu = m_Battle.FindAction("Menu", throwIfNotFound: true);
+        m_Battle_Switch = m_Battle.FindAction("Switch", throwIfNotFound: true);
+        m_Battle_Movement = m_Battle.FindAction("Movement", throwIfNotFound: true);
+        m_Battle_Pause = m_Battle.FindAction("Pause", throwIfNotFound: true);
         // Pause
         m_Pause = asset.FindActionMap("Pause", throwIfNotFound: true);
         m_Pause_Unpause = m_Pause.FindAction("Unpause", throwIfNotFound: true);
@@ -295,34 +295,34 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Player
-    private readonly InputActionMap m_Player;
-    private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-    private readonly InputAction m_Player_Validate;
-    private readonly InputAction m_Player_Cancel;
-    private readonly InputAction m_Player_Menu;
-    private readonly InputAction m_Player_Switch;
-    private readonly InputAction m_Player_Movement;
-    private readonly InputAction m_Player_Pause;
-    public struct PlayerActions
+    // Battle
+    private readonly InputActionMap m_Battle;
+    private List<IBattleActions> m_BattleActionsCallbackInterfaces = new List<IBattleActions>();
+    private readonly InputAction m_Battle_Validate;
+    private readonly InputAction m_Battle_Cancel;
+    private readonly InputAction m_Battle_Menu;
+    private readonly InputAction m_Battle_Switch;
+    private readonly InputAction m_Battle_Movement;
+    private readonly InputAction m_Battle_Pause;
+    public struct BattleActions
     {
         private @PlayerInputActions m_Wrapper;
-        public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Validate => m_Wrapper.m_Player_Validate;
-        public InputAction @Cancel => m_Wrapper.m_Player_Cancel;
-        public InputAction @Menu => m_Wrapper.m_Player_Menu;
-        public InputAction @Switch => m_Wrapper.m_Player_Switch;
-        public InputAction @Movement => m_Wrapper.m_Player_Movement;
-        public InputAction @Pause => m_Wrapper.m_Player_Pause;
-        public InputActionMap Get() { return m_Wrapper.m_Player; }
+        public BattleActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Validate => m_Wrapper.m_Battle_Validate;
+        public InputAction @Cancel => m_Wrapper.m_Battle_Cancel;
+        public InputAction @Menu => m_Wrapper.m_Battle_Menu;
+        public InputAction @Switch => m_Wrapper.m_Battle_Switch;
+        public InputAction @Movement => m_Wrapper.m_Battle_Movement;
+        public InputAction @Pause => m_Wrapper.m_Battle_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_Battle; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerActions instance)
+        public static implicit operator InputActionMap(BattleActions set) { return set.Get(); }
+        public void AddCallbacks(IBattleActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_BattleActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_BattleActionsCallbackInterfaces.Add(instance);
             @Validate.started += instance.OnValidate;
             @Validate.performed += instance.OnValidate;
             @Validate.canceled += instance.OnValidate;
@@ -343,7 +343,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Pause.canceled += instance.OnPause;
         }
 
-        private void UnregisterCallbacks(IPlayerActions instance)
+        private void UnregisterCallbacks(IBattleActions instance)
         {
             @Validate.started -= instance.OnValidate;
             @Validate.performed -= instance.OnValidate;
@@ -365,21 +365,21 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Pause.canceled -= instance.OnPause;
         }
 
-        public void RemoveCallbacks(IPlayerActions instance)
+        public void RemoveCallbacks(IBattleActions instance)
         {
-            if (m_Wrapper.m_PlayerActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_BattleActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPlayerActions instance)
+        public void SetCallbacks(IBattleActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayerActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_BattleActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_BattleActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public PlayerActions @Player => new PlayerActions(this);
+    public BattleActions @Battle => new BattleActions(this);
 
     // Pause
     private readonly InputActionMap m_Pause;
@@ -426,7 +426,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public PauseActions @Pause => new PauseActions(this);
-    public interface IPlayerActions
+    public interface IBattleActions
     {
         void OnValidate(InputAction.CallbackContext context);
         void OnCancel(InputAction.CallbackContext context);

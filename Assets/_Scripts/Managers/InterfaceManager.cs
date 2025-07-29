@@ -87,7 +87,8 @@ public class InterfaceManager : MonoBehaviour
 
     public Vector3 lifeBarOffset;
 
-
+    [SerializeField]
+    private PlayerInput playerInput;
     [SerializeField]
     private float selectorSpeed;
 
@@ -168,12 +169,11 @@ public class InterfaceManager : MonoBehaviour
             {
                 activated_states[state] = false;
             }
-
-            PlayerInputActions playerInputActions = new PlayerInputActions();
-            playerInputActions.Player.Enable();
-            playerInputActions.Player.Validate.performed += ValidateInput;
-            playerInputActions.Player.Cancel.performed += CancelInput;
-            playerInputActions.Player.Movement.performed += MovementInput;
+            
+            PlayerInput playerInput = InputManager.Instance.GetPlayerInput();
+            playerInput.actions["Validate"].performed += ValidateInput;
+            playerInput.actions["Cancel"].performed += CancelInput;
+            playerInput.actions["Movement"].performed += MovementInput;
         }
         catch (Exception)
         {
