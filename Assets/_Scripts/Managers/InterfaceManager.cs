@@ -8,6 +8,7 @@ using System.Linq;
 using UnityEngine.Assertions;
 using System.Data.Common;
 using UnityEngine.InputSystem;
+using System;
 
 /// <summary>
 /// Gestion de l'interface de jeu
@@ -126,51 +127,58 @@ public class InterfaceManager : MonoBehaviour
     {
         Instance = this;
 
-        // On initialise la UI
-        UI = Instantiate(UIPrefab);
-        lifeBarsUI = GlobalManager.Instance.GetUIWorldSpace();
-        RewardUI = Instantiate(RewardUIPrefab);
-        RewardUI.worldCamera = GlobalManager.Instance.GetCam();
-        UI.worldCamera = GlobalManager.Instance.GetCam();
-
-
-        unitPanel = UI.transform.Find("UnitPanel");
-        spellPanel = UI.transform.Find("SpellPanel");
-        passivePanel = UI.transform.Find("PassivePanel");
-        spellSelector = UI.transform.Find("SpellSelector");
-        shade = UI.transform.Find("Shade");
-
-        rewardSpellName = RewardUI.transform.Find("DescriptionPanel").transform.Find("Name").GetComponent<TextMeshProUGUI>();
-        rewardSpellDescription = RewardUI.transform.Find("DescriptionPanel").transform.Find("Description").GetComponent<TextMeshProUGUI>();
-        rewardSpellCooldown = RewardUI.transform.Find("DescriptionPanel").transform.Find("Cooldown").GetComponent<TextMeshProUGUI>();
-
-        unitNamePanel = unitPanel.Find("UnitName").GetComponent<TextMeshProUGUI>();
-        unitPowerPanel = unitPanel.Find("UnitPower").GetComponent<TextMeshProUGUI>();
-        unitHealthPanel = unitPanel.Find("UnitHealth").GetComponent<TextMeshProUGUI>();
-        unitArmorPanel = unitPanel.Find("UnitArmor").GetComponent<TextMeshProUGUI>();
-        unitLevelPanel = unitPanel.Find("UnitLevel").GetComponent<TextMeshProUGUI>();
-
-        unitPassiveNamePanel = passivePanel.Find("Name").GetComponent<TextMeshProUGUI>();
-        unitPassiveDescriptionPanel = passivePanel.Find("Description").GetComponent<TextMeshProUGUI>();
-
-        spellNamePanel = spellPanel.transform.Find("Name").GetComponent<TextMeshProUGUI>();
-        spellCooldownPanel = spellPanel.transform.Find("Cooldown").GetComponent<TextMeshProUGUI>();
-        spellDescriptionPanel = spellPanel.transform.Find("Description").GetComponent<TextMeshProUGUI>();
-        spellPanelIcon = spellPanel.transform.Find("Sprite").GetComponent<Image>();
-
-        mainCamera = GlobalManager.Instance.GetCam();
-
-        activated_states = new Dictionary<BattleManager.PlayerActionChoiceState, bool>();
-        foreach (BattleManager.PlayerActionChoiceState state in System.Enum.GetValues(typeof(BattleManager.PlayerActionChoiceState)))
+        try
         {
-            activated_states[state] = false;
-        }
+            // On initialise la UI
+            UI = Instantiate(UIPrefab);
+            lifeBarsUI = GlobalManager.Instance.GetUIWorldSpace();
+            RewardUI = Instantiate(RewardUIPrefab);
+            RewardUI.worldCamera = GlobalManager.Instance.GetCam();
+            UI.worldCamera = GlobalManager.Instance.GetCam();
 
-        PlayerInputActions playerInputActions = new PlayerInputActions();
-        playerInputActions.Player.Enable();
-        playerInputActions.Player.Validate.performed += ValidateInput;
-        playerInputActions.Player.Cancel.performed += CancelInput;
-        playerInputActions.Player.Movement.performed += MovementInput;
+
+            unitPanel = UI.transform.Find("UnitPanelEncapsulator").Find("UnitPanel");
+            spellPanel = UI.transform.Find("SpellPanelEncapsulator").Find("SpellPanel");
+            passivePanel = UI.transform.Find("PassivePanelEncapsulator").Find("PassivePanel");
+            spellSelector = UI.transform.Find("SpellSelectorEncapsulator").Find("SpellSelector");
+            shade = UI.transform.Find("Shade");
+
+            rewardSpellName = RewardUI.transform.Find("DescriptionPanel").transform.Find("Name").GetComponent<TextMeshProUGUI>();
+            rewardSpellDescription = RewardUI.transform.Find("DescriptionPanel").transform.Find("Description").GetComponent<TextMeshProUGUI>();
+            rewardSpellCooldown = RewardUI.transform.Find("DescriptionPanel").transform.Find("Cooldown").GetComponent<TextMeshProUGUI>();
+
+            unitNamePanel = unitPanel.Find("UnitName").GetComponent<TextMeshProUGUI>();
+            unitPowerPanel = unitPanel.Find("UnitPower").GetComponent<TextMeshProUGUI>();
+            unitHealthPanel = unitPanel.Find("UnitHealth").GetComponent<TextMeshProUGUI>();
+            unitArmorPanel = unitPanel.Find("UnitArmor").GetComponent<TextMeshProUGUI>();
+            unitLevelPanel = unitPanel.Find("UnitLevel").GetComponent<TextMeshProUGUI>();
+
+            unitPassiveNamePanel = passivePanel.Find("Name").GetComponent<TextMeshProUGUI>();
+            unitPassiveDescriptionPanel = passivePanel.Find("Description").GetComponent<TextMeshProUGUI>();
+
+            spellNamePanel = spellPanel.transform.Find("Name").GetComponent<TextMeshProUGUI>();
+            spellCooldownPanel = spellPanel.transform.Find("Cooldown").GetComponent<TextMeshProUGUI>();
+            spellDescriptionPanel = spellPanel.transform.Find("Description").GetComponent<TextMeshProUGUI>();
+            spellPanelIcon = spellPanel.transform.Find("Sprite").GetComponent<Image>();
+
+            mainCamera = GlobalManager.Instance.GetCam();
+
+            activated_states = new Dictionary<BattleManager.PlayerActionChoiceState, bool>();
+            foreach (BattleManager.PlayerActionChoiceState state in System.Enum.GetValues(typeof(BattleManager.PlayerActionChoiceState)))
+            {
+                activated_states[state] = false;
+            }
+
+            PlayerInputActions playerInputActions = new PlayerInputActions();
+            playerInputActions.Player.Enable();
+            playerInputActions.Player.Validate.performed += ValidateInput;
+            playerInputActions.Player.Cancel.performed += CancelInput;
+            playerInputActions.Player.Movement.performed += MovementInput;
+        }
+        catch (Exception)
+        {
+            Warning.Info("Il y a eu un problème lors de l'initialisation de l'interface");
+        }
     }
 
     void Start()
@@ -772,7 +780,7 @@ public class InterfaceManager : MonoBehaviour
         {
             if (shakeTime > 0f)
             {
-                Vector2 randomOffset = Random.insideUnitCircle * intensity;
+                Vector2 randomOffset = UnityEngine.Random.insideUnitCircle * intensity;
                 uiElement.anchoredPosition = originalPosition + (Vector3)randomOffset;
                 shakeTime -= Time.deltaTime;
             }
