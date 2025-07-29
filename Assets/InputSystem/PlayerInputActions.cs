@@ -207,6 +207,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveMenu"",
+                    ""type"": ""Value"",
+                    ""id"": ""51352045-e85b-466d-a023-0f1a2542db0d"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -220,6 +229,61 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Unpause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""94aba8bf-bfbf-4f89-af17-69d37a019694"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveMenu"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""fc6383ff-24aa-450c-bf4a-8d1bdbcaecc4"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""2339907b-97b6-4145-bf52-cc14d53150d0"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""532f6f6b-fb04-470e-b7c1-d8f4588520ee"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""f8993886-a3dc-4b09-8448-ad72ee4d8c51"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -237,6 +301,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // Pause
         m_Pause = asset.FindActionMap("Pause", throwIfNotFound: true);
         m_Pause_Unpause = m_Pause.FindAction("Unpause", throwIfNotFound: true);
+        m_Pause_MoveMenu = m_Pause.FindAction("MoveMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -385,11 +450,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Pause;
     private List<IPauseActions> m_PauseActionsCallbackInterfaces = new List<IPauseActions>();
     private readonly InputAction m_Pause_Unpause;
+    private readonly InputAction m_Pause_MoveMenu;
     public struct PauseActions
     {
         private @PlayerInputActions m_Wrapper;
         public PauseActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Unpause => m_Wrapper.m_Pause_Unpause;
+        public InputAction @MoveMenu => m_Wrapper.m_Pause_MoveMenu;
         public InputActionMap Get() { return m_Wrapper.m_Pause; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -402,6 +469,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Unpause.started += instance.OnUnpause;
             @Unpause.performed += instance.OnUnpause;
             @Unpause.canceled += instance.OnUnpause;
+            @MoveMenu.started += instance.OnMoveMenu;
+            @MoveMenu.performed += instance.OnMoveMenu;
+            @MoveMenu.canceled += instance.OnMoveMenu;
         }
 
         private void UnregisterCallbacks(IPauseActions instance)
@@ -409,6 +479,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Unpause.started -= instance.OnUnpause;
             @Unpause.performed -= instance.OnUnpause;
             @Unpause.canceled -= instance.OnUnpause;
+            @MoveMenu.started -= instance.OnMoveMenu;
+            @MoveMenu.performed -= instance.OnMoveMenu;
+            @MoveMenu.canceled -= instance.OnMoveMenu;
         }
 
         public void RemoveCallbacks(IPauseActions instance)
@@ -438,5 +511,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public interface IPauseActions
     {
         void OnUnpause(InputAction.CallbackContext context);
+        void OnMoveMenu(InputAction.CallbackContext context);
     }
 }

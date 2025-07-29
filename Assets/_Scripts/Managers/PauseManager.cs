@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 
 public class PauseManager : MonoBehaviour
 {
@@ -12,6 +14,8 @@ public class PauseManager : MonoBehaviour
     public bool isPaused { get; private set; }
     private PlayerInput playerInput;
     private string previousActionMap;
+    List<Locale> localesList;
+    int currentLocaleId;
 
     void Awake()
     {
@@ -21,6 +25,39 @@ public class PauseManager : MonoBehaviour
 
         playerInput.actions["Pause"].performed += PauseGame;
         playerInput.actions["Unpause"].performed += UnpauseGame;
+        playerInput.actions["MoveMenu"].performed += MoveInMenu;
+
+        localesList = LocalizationSettings.Instance.GetAvailableLocales().Locales;
+        currentLocaleId = localesList.IndexOf(LocalizationSettings.Instance.GetSelectedLocale());
+    }
+
+    private void MoveInMenu(InputAction.CallbackContext context)
+    {
+        float xMove = context.ReadValue<Vector2>().x;
+        if (xMove > 0)
+        {
+            if (currentLocaleId == localesList.Count - 1)
+            {
+                currentLocaleId = 0;
+            }
+            else
+            {
+                currentLocaleId += 1;
+            }
+            LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[currentLocaleId];
+        }
+        else if (xMove < 0)
+        {
+            if (currentLocaleId == 0)
+            {
+                currentLocaleId = localesList.Count - 1;
+            }
+            else
+            {
+                currentLocaleId -= 1;
+            }
+            LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[currentLocaleId];
+        }
     }
 
     public void PauseGame(InputAction.CallbackContext context)
