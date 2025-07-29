@@ -50,10 +50,6 @@ public class BaseUnit : MonoBehaviour
     private int finalHealth = 1;
     // Niveau (influence la vie et la puissance)
     private int level = 1;
-    [TextArea(5,10)]
-    private string lore_description = "Lore Description";
-    [TextArea(5,10)]
-    private string fight_description = "Fight Description";
     private Team Team = Team.Enemy;
     // Combien de tours d'étourdissement restants
     private int stunTime = 0;
@@ -670,7 +666,7 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public string GetFightDescription(){
-        return fight_description;
+        return "TODO";
     }
 
     /// <summary>

@@ -21,7 +21,6 @@ public class GlobalManager : MonoBehaviour
     [SerializeField] private BattleEventManager battleEventManagerPrefab;
     [SerializeField] private EventManager eventManagerPrefab;
     [SerializeField] private Canvas UIWorldSpacePrefab;
-    [SerializeField] private Camera camPrefab;
 
     [SerializeField] private PickPhaseManager pickPhaseManagerPrefab;
     [SerializeField] private ResourceManager resourceManagerPrefab;
@@ -47,6 +46,7 @@ public class GlobalManager : MonoBehaviour
     private PickPhaseManager pickPhaseManager;
     private ResourceManager resourceManager;
     private EndScreenManager endScreenManager;
+    [SerializeField]
     private Camera cam;
     [SerializeField]
 
@@ -75,7 +75,6 @@ public class GlobalManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     { 
-        cam = Instantiate(camPrefab);
         audioManager = Instantiate(audioManagerPrefab); // Pour l'instant ici, je gère pas ou il doit être supprimé/ajouté
         audioManager.transform.SetParent(transform.parent);
         ResetRun();
