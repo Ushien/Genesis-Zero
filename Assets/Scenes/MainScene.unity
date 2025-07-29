@@ -10623,6 +10623,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1840686735}
   - component: {fileID: 1840686736}
+  - component: {fileID: 1840686737}
   m_Layer: 0
   m_Name: InputManager
   m_TagString: Untagged
@@ -10700,9 +10701,21 @@ MonoBehaviour:
     m_ActionName: Pause/Unpause[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
+  m_DefaultActionMap: Battle
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1840686737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840686734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 640b76ab0389a6a4dbaf5517ac8dc436, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2047649787
 GameObject:
   m_ObjectHideFlags: 0
@@ -10733,7 +10746,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 4130819776133638628}
-  playerInput: {fileID: 1840686736}
 --- !u!4 &2047649789
 Transform:
   m_ObjectHideFlags: 0
@@ -11160,7 +11172,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 140.22, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!20 &2605031424573511663
 Camera:
@@ -11510,6 +11522,7 @@ GameObject:
   - component: {fileID: 2579757039960525880}
   - component: {fileID: 5567797106544268499}
   - component: {fileID: 8466241769170217324}
+  - component: {fileID: 8755679740721242237}
   m_Layer: 0
   m_Name: Flag
   m_TagString: Untagged
@@ -11517,6 +11530,41 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8755679740721242237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8755679740721242236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f55fcc3768689a4f9cf863b8c11c618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LocalizedAssetReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:b9836e4f6462cc540bb968cbedc0228c
+    m_TableEntryReference:
+      m_KeyId: 1037874622464
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+  m_UpdateAsset:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8466241769170217324}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
+        m_MethodName: set_sprite
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &8888908722350149709
 Transform:
   m_ObjectHideFlags: 0
