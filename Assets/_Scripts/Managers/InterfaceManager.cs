@@ -96,9 +96,6 @@ public class InterfaceManager : MonoBehaviour
 
     public float tileSize = 250f; // A bit ugly but still good for now
 
-    // La Tile contenant la source du spell, lorsqu'un spell est lancé (lorsqu'on revient en arrière pendant la sélection de cible)
-    private Tile sourceTile;
-
     private enum SpellChoice { CHARACTER, LEFT, RIGHT, UP, DOWN }
     private SpellChoice spellChoice;
     private SpellChoice currentSpellChoice = SpellChoice.DOWN;
@@ -107,11 +104,16 @@ public class InterfaceManager : MonoBehaviour
 
     [SerializeField]
     public bool overloaded = false;
+    // La Tile contenant la source du spell, lorsqu'un spell est lancé (lorsqu'on revient en arrière pendant la sélection de cible)
+    [SerializeField]
+    private Tile sourceTile;
 
     // Le spell pour lequel on va sélectionner une cible
+    [SerializeField]
     private BaseSpell selectedSpell;
 
     // La Tile contenant la cible du spell, lorsqu'un spell est lancé
+    [SerializeField]
     public Tile targetTile;
 
     private Dictionary<BattleManager.PlayerActionChoiceState, bool> activated_states;
@@ -294,7 +296,7 @@ public class InterfaceManager : MonoBehaviour
             // Just changed from another state
 
             // Reset view
-            ResetDisplay(true);
+            ResetDisplay();
 
             // Activate the needed interface
             spellSelector.gameObject.SetActive(true);
@@ -377,7 +379,6 @@ public class InterfaceManager : MonoBehaviour
             {
                 case SpellChoice.CHARACTER:
                     spellSelector.transform.GetChild(4).transform.GetChild(0).gameObject.SetActive(true);
-                    //Debug.Log("Animating Character");
                     AnimateSpellChoice(4);
                     break;
                 case SpellChoice.LEFT:
@@ -421,13 +422,13 @@ public class InterfaceManager : MonoBehaviour
             // Just changed from another state
 
             // Reset view
-            ResetDisplay(true);
+            ResetDisplay();
 
 
             // Activate the needed interface
             unitPanel.gameObject.SetActive(true);
             tileSelector.gameObject.SetActive(true);
-            spellSelector.gameObject.SetActive(true);
+            //spellSelector.gameObject.SetActive(true);
             shade.gameObject.SetActive(true);
             spellPanel.gameObject.SetActive(true);
 
@@ -445,58 +446,6 @@ public class InterfaceManager : MonoBehaviour
         tileSelector_currentPos = Vector3.Lerp(tileSelector_currentPos, tileSelector_targetPos, Time.deltaTime * selectorSpeed);
         tileSelector.transform.position = tileSelector_currentPos;
         tileSelector.transform.position = targetTile.transform.position;
-        //GridManager.Instance.DisplayHighlights();
-
-        // Highlight the selected tiles depending on the range of the spell
-
-        // Change the tile or the state depending on the input (same algorithm than the source selection !)
-
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            if (targetTile.GetUnit() != null)
-            {
-                targetTile.Unselect();
-                UIPanelLine.SetActive(false);
-                TargetSelectionTrigger(BattleManager.Trigger.VALIDATE);
-                DisableSpellOverload();
-                CameraEffects.Instance.TriggerZoom(mainCamera.transform.position, 3f, zoomSpeed);
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            targetTile.Unselect();
-            sourceTile.Select();
-            TargetSelectionTrigger(BattleManager.Trigger.CANCEL);
-        }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            NavigateTarget(Directions.UP);
-            DrawUILine(UIPanelLine, targetTile);
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            NavigateTarget(Directions.DOWN);
-            DrawUILine(UIPanelLine, targetTile);
-        }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            NavigateTarget(Directions.LEFT);
-            DrawUILine(UIPanelLine, targetTile);
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            NavigateTarget(Directions.RIGHT);
-            DrawUILine(UIPanelLine, targetTile);
-        }
-
-        GridManager.Instance.SetSelectionMode(selectedSpell.GetRange());
-
-        //Abstraire ce code
-        //BaseUnit currentUnit = targetTile.GetUnit();
-
-        // Write into a variable the instruction if validated
-
-        // Go back to the same spell selection if cancel
     }
 
     void TargetSelectionTrigger(BattleManager.Trigger trigger)
@@ -596,13 +545,9 @@ public class InterfaceManager : MonoBehaviour
         }
     }
 
-    public void ResetDisplay(bool flag = false)
+    public void ResetDisplay()
     {
-        if (!flag)
-        {
-            spellSelector.gameObject.SetActive(false);
-            UILine.SetActive(false);
-        }
+        UILine.SetActive(false);
         UIPanelLine.SetActive(false);
         RewardUI.gameObject.SetActive(false);
         shade.gameObject.SetActive(false);
@@ -610,6 +555,7 @@ public class InterfaceManager : MonoBehaviour
         passivePanel.gameObject.SetActive(false);
         tileSelector.gameObject.SetActive(false);
         spellPanel.gameObject.SetActive(false);
+        spellSelector.gameObject.SetActive(false);
     }
 
     void ResetPanel(Transform panel)
@@ -643,8 +589,10 @@ public class InterfaceManager : MonoBehaviour
             sourceTile.Unselect();
             sourceTile = sourceTile.GetNextTile(direction);
             Vector2 vectorDirection = Tools.ConvertDirectionsToVector2(direction);
+            //Petit coup de caméra dans la direction
             CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(driftAmount * vectorDirection.x, driftAmount * vectorDirection.y, 0f));
         }
+        // Reset le slider de passifs
         selectedPassiveIndex = 0;
 
         BaseUnit currentUnit = sourceTile.GetUnit();
@@ -669,6 +617,7 @@ public class InterfaceManager : MonoBehaviour
             targetTile.Unselect();
             targetTile = targetTile.GetNextTile(direction);
             targetTile.Select();
+            DrawUILine(UIPanelLine, targetTile);
         }
         selectedPassiveIndex = 0;
     }
@@ -854,20 +803,13 @@ public class InterfaceManager : MonoBehaviour
         switch (BattleManager.Instance.GetPlayerActionChoiceState())
         {
             case BattleManager.PlayerActionChoiceState.CHARACTER_SELECTION:
-                if (sourceTile.GetUnit() != null)
-                {
-                    if (sourceTile.GetUnit().GetTeam() == Team.Ally && !sourceTile.GetUnit().HasGivenInstruction())
-                    {
-                        SourceSelectionTrigger(BattleManager.Trigger.VALIDATE);
-                        CameraEffects.Instance.TriggerZoom(mainCamera.transform.position, 2.8f, zoomSpeed);
-                    }
-                }
+                SourceSelectionValidateInput(context);
                 break;
             case BattleManager.PlayerActionChoiceState.SPELL_SELECTION:
                 SpellValidateInput(context);
                 break;
             case BattleManager.PlayerActionChoiceState.TARGET_SELECTION:
-
+                TargetSelectionValidateInput(context);
                 break;
             default:
                 break;
@@ -880,41 +822,65 @@ public class InterfaceManager : MonoBehaviour
         switch (BattleManager.Instance.GetPlayerActionChoiceState())
         {
             case BattleManager.PlayerActionChoiceState.CHARACTER_SELECTION:
-                SourceSelectionTrigger(BattleManager.Trigger.CANCEL);
+                SourceSelectionCancelInput(context);
                 break;
             case BattleManager.PlayerActionChoiceState.SPELL_SELECTION:
                 SpellCancelInput(context);
                 break;
             case BattleManager.PlayerActionChoiceState.TARGET_SELECTION:
-
+                TargetSelectionCancelInput(context);
                 break;
             default:
                 break;
         }
     }
+
     private void MovementInput(InputAction.CallbackContext context)
     {
         switch (BattleManager.Instance.GetPlayerActionChoiceState())
         {
             case BattleManager.PlayerActionChoiceState.CHARACTER_SELECTION:
-                Directions direction = Tools.ConvertVector2ToDirections(context.ReadValue<Vector2>());
-                NavigateSource(direction);
                 AudioManager.Instance.UIBip1.Play();
+                SourceSelectionMovementInput(context);
                 break;
             case BattleManager.PlayerActionChoiceState.SPELL_SELECTION:
                 SpellMovementInput(context);
                 break;
             case BattleManager.PlayerActionChoiceState.TARGET_SELECTION:
-
+                AudioManager.Instance.UIBip1.Play();
+                TargetSelectionMovementInput(context);
                 break;
             default:
                 break;
         }
     }
 
+    private void SourceSelectionValidateInput(InputAction.CallbackContext context)
+    {
+        if (sourceTile.GetUnit() != null)
+        {
+            if (sourceTile.GetUnit().GetTeam() == Team.Ally && !sourceTile.GetUnit().HasGivenInstruction())
+            {
+                SourceSelectionTrigger(BattleManager.Trigger.VALIDATE);
+                CameraEffects.Instance.TriggerZoom(mainCamera.transform.position, 2.8f, zoomSpeed);
+            }
+        }
+    }
+
+    private void SourceSelectionCancelInput(InputAction.CallbackContext context)
+    {
+        SourceSelectionTrigger(BattleManager.Trigger.CANCEL);
+    }
+
+    private void SourceSelectionMovementInput(InputAction.CallbackContext context)
+    {
+        Directions direction = Tools.ConvertVector2ToDirections(context.ReadValue<Vector2>());
+        NavigateSource(direction);
+    }
+
     private void SpellValidateInput(InputAction.CallbackContext context)
     {
-    if (selectedSpell == null)
+        if (selectedSpell == null)
         {
             AudioManager.Instance.errorSound.Play();
             CameraEffects.Instance.TriggerShake(errorShakeIntensity, errorShakeDuration);
@@ -926,6 +892,7 @@ public class InterfaceManager : MonoBehaviour
             SpellSelectionTrigger(BattleManager.Trigger.VALIDATE);
         }
     }
+
     private void SpellCancelInput(InputAction.CallbackContext context)
     {
         if (spellChoice == SpellChoice.CHARACTER)
@@ -940,7 +907,7 @@ public class InterfaceManager : MonoBehaviour
             // Retour au centre
             spellChoice = SpellChoice.CHARACTER;
             overloaded = false;
-            DisableSpellOverload();        
+            DisableSpellOverload();
         }
     }
 
@@ -1086,6 +1053,31 @@ public class InterfaceManager : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    private void TargetSelectionValidateInput(InputAction.CallbackContext context)
+    {
+        if (targetTile.GetUnit() != null)
+        {
+            targetTile.Unselect();
+            UIPanelLine.SetActive(false);
+            TargetSelectionTrigger(BattleManager.Trigger.VALIDATE);
+            DisableSpellOverload();
+            CameraEffects.Instance.TriggerZoom(mainCamera.transform.position, 3f, zoomSpeed);
+        }
+    }
+
+    private void TargetSelectionCancelInput(InputAction.CallbackContext context)
+    {
+        targetTile.Unselect();
+        sourceTile.Select();
+        TargetSelectionTrigger(BattleManager.Trigger.CANCEL);
+    }
+
+    private void TargetSelectionMovementInput(InputAction.CallbackContext context)
+    {
+        Directions direction = Tools.ConvertVector2ToDirections(context.ReadValue<Vector2>());
+        NavigateTarget(direction);
     }
 }
 
