@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5537ca8029f6d4082df846b5a8501c, type: 3}
   m_Name: Goliath
   m_EditorClassIdentifier: 
-  id: 10
-  passive_name: Goliath
-  fight_description: "Augmente les PV de l'unit\xE9 de __1%."
+  id: 16
   ratios:
   - 0.2
   - 1

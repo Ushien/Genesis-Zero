@@ -151,6 +151,14 @@ MonoBehaviour:
     m_Localized: "Augmente le nombre de r\xE9compenses de fin de combat de 1. (N)"
     m_Metadata:
       m_Items: []
+  - m_Id: 64020415524897
+    m_Localized: Goliath
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64020415524898
+    m_Localized: "Augmente les PV de l'unit\xE9 de __1%."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

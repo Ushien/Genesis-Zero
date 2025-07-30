@@ -169,11 +169,12 @@ public class InterfaceManager : MonoBehaviour
             {
                 activated_states[state] = false;
             }
-            
+
             PlayerInput playerInput = InputManager.Instance.GetPlayerInput();
             playerInput.actions["Validate"].performed += ValidateInput;
             playerInput.actions["Cancel"].performed += CancelInput;
             playerInput.actions["Movement"].performed += MovementInput;
+            playerInput.actions["Switch"].performed += SwitchInput;
         }
         catch (Exception)
         {
@@ -863,6 +864,10 @@ public class InterfaceManager : MonoBehaviour
         }
     }
 
+    private void SwitchInput(InputAction.CallbackContext context)
+    {
+        NavigatePassives(Directions.RIGHT);
+    }
     private void SourceSelectionValidateInput(InputAction.CallbackContext context)
     {
         if (sourceTile.GetUnit() != null)

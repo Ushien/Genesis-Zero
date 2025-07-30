@@ -47,8 +47,6 @@ MonoBehaviour:
   ratio1: 0
   ratio2: 0
   ratio3: 0
-  passiveName: 
-  fight_description: 
   holder: {fileID: 0}
-  scriptablePassive: {fileID: 0}
+  scriptablePassive: {fileID: 11400000, guid: b587a4d339b2d264fb83cd02d811e9e5, type: 2}
   modifier: {fileID: 0}
