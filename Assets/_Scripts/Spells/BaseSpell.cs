@@ -304,6 +304,11 @@ public class BaseSpell : MonoBehaviour
         if (hyper)
         {
             _fight_description = LocalizationSettings.StringDatabase.GetLocalizedString("Spells", unique_id.ToString() + "_effect_h");
+            // Si l'effet de la technique surchargée est similaire à la technique classique, elle est notée "//"
+            if (_fight_description == "//")
+            {
+                _fight_description = LocalizationSettings.StringDatabase.GetLocalizedString("Spells", unique_id.ToString() + "_effect");
+            }
         }
         else
         {

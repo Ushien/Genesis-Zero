@@ -5249,7 +5249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dcb93cad8514e946b9119230c473bac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy_composition: {fileID: 11400000, guid: 2c84b9165749c4c448068f7a2a1d7e81, type: 2}
+  enemy_composition: {fileID: 11400000, guid: ba6da0ad3ecd31d4ea3459ca85243800, type: 2}
   ally_composition: {fileID: 11400000, guid: 600e2b1bfbd13f64b95130b49b50a979, type: 2}
   rewardsToSpawn: []
 --- !u!4 &454166814
@@ -10883,6 +10883,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 5922f90d-a15e-460d-be96-b34e35e902e8
     m_ActionName: Pause/Unpause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 51352045-e85b-466d-a023-0f1a2542db0d
+    m_ActionName: Pause/MoveMenu[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Battle
@@ -11475,7 +11479,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &4371619444550896706
 GameObject:
   m_ObjectHideFlags: 0

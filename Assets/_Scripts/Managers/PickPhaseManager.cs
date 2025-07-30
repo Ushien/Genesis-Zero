@@ -6,6 +6,8 @@ using System.IO;
 using TMPro;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEngine.InputSystem;
+using System;
 
 public class PickPhaseManager : MonoBehaviour
 {
@@ -27,7 +29,6 @@ public class PickPhaseManager : MonoBehaviour
     private int currentSelectionIndex;
     private int currentUnitIndex;
     public enum RewardType{EMPTY, PASSIVE, SPELL}
-    public enum Directions{NONE, LEFT, RIGHT,UP, DOWN}
     [SerializeField]
     private Canvas informationPanelPrefab;
     private Canvas informationPanel;
@@ -38,6 +39,7 @@ public class PickPhaseManager : MonoBehaviour
 
     [SerializeField]
     int howManyRewards = 3;
+    private PlayerInput playerInput;
 
     // Start is called before the first frame update
     void Start()
@@ -126,38 +128,31 @@ public class PickPhaseManager : MonoBehaviour
         //cam.transform.GetChild(0).gameObject.SetActive(false);
     }
 
-    void Awake(){
+    void Awake()
+    {
         Instance = this;
+
+        playerInput = InputManager.Instance.GetPlayerInput();
+
+        playerInput.actions["Validate"].performed += ValidateInput;
+        playerInput.actions["Movement"].performed += MovementInput;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void MovementInput(InputAction.CallbackContext context)
     {
-        //currentRewardSelectorPosition = Vector3.Lerp(currentRewardSelectorPosition, targetSelectorPosition, Time.deltaTime*6);
-        //rewardSelector.position = currentRewardSelectorPosition;
+        if (currentRewards != null)
+        {
+            Directions direction = Tools.ConvertVector2ToDirections(context.ReadValue<Vector2>());
+            Move(direction);     
+        }
+    }
 
-        //currentUnitSelectorPosition = Vector3.Lerp(currentUnitSelectorPosition, targetUnitPosition, Time.deltaTime*6);
-        //unitSelector.position = currentUnitSelectorPosition;
-
-        if(currentRewards != null){
-            if(Input.GetKeyDown(KeyCode.LeftArrow)){
-                Move(Directions.LEFT);
-            }
-            if(Input.GetKeyDown(KeyCode.RightArrow)){
-                Move(Directions.RIGHT);
-            }
-            if(Input.GetKeyDown(KeyCode.UpArrow)){
-                Move(Directions.UP);
-            }
-            if(Input.GetKeyDown(KeyCode.DownArrow)){
-                Move(Directions.DOWN);
-            }
-            if(Input.GetKeyDown(KeyCode.B)){
-                if(currentRewards.Count > 0){
-                    PickReward(currentRewards[currentSelectionIndex], allies[currentUnitIndex]);
-                    GlobalManager.Instance.ChangeState(GlobalManager.RunPhase.BATTLEPHASE);
-                }
-            }
+    private void ValidateInput(InputAction.CallbackContext context)
+    {
+        if (currentRewards.Count > 0)
+        {
+            PickReward(currentRewards[currentSelectionIndex], allies[currentUnitIndex]);
+            GlobalManager.Instance.ChangeState(GlobalManager.RunPhase.BATTLEPHASE);
         }
     }
 
