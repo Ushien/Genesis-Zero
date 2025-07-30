@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 public class LifeBar : MonoBehaviour
@@ -60,9 +61,9 @@ public class LifeBar : MonoBehaviour
     public void Setup(BaseUnit _owner){
         owner = _owner;
         HP = owner.GetBaseTotalHealth();
-        HPtext.text = HP.ToString() + " HP";
+        ChangeHPText(HP);
         Armor = owner.GetArmor();
-        ARtext.text = Armor.ToString() + " AR";
+        ChangeARText(Armor);
         totalHP = owner.GetTotalHealth();
 
         CheckNewScale();
@@ -86,13 +87,13 @@ public class LifeBar : MonoBehaviour
 
     public void UpdateHP(int HPChange){
         HP += HPChange;
-        HPtext.text = HP.ToString() + " HP";
+        ChangeHPText(HP);
         CheckNewScale();
     }
 
     public void SetHP(int newHP){
         HP = newHP;
-        HPtext.text = HP.ToString() + " HP";
+        ChangeHPText(HP);
         CheckNewScale(); 
     }
 
@@ -108,23 +109,43 @@ public class LifeBar : MonoBehaviour
 
     public void UpdateArmor(int ArmorChange){
         Armor += ArmorChange;
-        ARtext.text = Armor.ToString() + " AR";
+        ChangeARText(Armor);
         CheckNewScale();
     }
 
     public void SetArmor(int newArmor){
         Armor = newArmor;
-        ARtext.text = Armor.ToString() + " AR";
+        ChangeARText(Armor);
         CheckNewScale();
     }
 
-    public void CheckNewScale(){
-        if(HP != 0){
-            targetLifeBarScale = new Vector3((float)HP/totalHP, 1, 1);
+    public void RefreshDisplays()
+    {
+        Debug.Log(owner.name);
+        ChangeHPText(HP);
+        ChangeARText(Armor);
+    }
+
+    public void ChangeHPText(int newHP)
+    {
+        HPtext.text = newHP.ToString() + " " + LocalizationSettings.StringDatabase.GetLocalizedString("Interface", "HP");
+    }
+
+    public void ChangeARText(int newAR)
+    {
+        ARtext.text = newAR.ToString() + " " + LocalizationSettings.StringDatabase.GetLocalizedString("Interface", "AR");
+    }
+
+    public void CheckNewScale()
+    {
+        if (HP != 0)
+        {
+            targetLifeBarScale = new Vector3((float)HP / totalHP, 1, 1);
         }
-        else{
+        else
+        {
             targetLifeBarScale = new Vector3(0f, 1, 1);
         }
-        targetArmorBarScale = new Vector3((float)Armor/totalHP, 1, 1);
+        targetArmorBarScale = new Vector3((float)Armor / totalHP, 1, 1);
     }
 }

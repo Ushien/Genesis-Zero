@@ -370,7 +370,7 @@ public class PickPhaseManager : MonoBehaviour
                 // spellPanel.Find("Description").GetComponent<TextMeshProUGUI>().text = spell.GetFightDescription(allies[currentUnitIndex]);
                 // spellPanel.Find("Cooldown").GetComponent<TextMeshProUGUI>().text = spell.cooldown.ToString();
                 // spellPanel.Find("Sprite").GetComponent<Image>().sprite = spell.artwork;
-                InterfaceManager.Instance.rewardSpellName.text = spell.name;
+                InterfaceManager.Instance.rewardSpellName.text = spell.GetName();
                 InterfaceManager.Instance.rewardSpellDescription.text = spell.GetFightDescription(allies[currentUnitIndex]);
                 InterfaceManager.Instance.rewardSpellCooldown.text = spell.cooldown.ToString();
             }

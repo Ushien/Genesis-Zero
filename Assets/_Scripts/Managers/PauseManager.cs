@@ -58,7 +58,14 @@ public class PauseManager : MonoBehaviour
             }
             LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[currentLocaleId];
         }
-        InterfaceManager.Instance.RefreshDisplays();
+        if (InterfaceManager.Instance != null)
+        {
+            InterfaceManager.Instance.RefreshDisplays();
+        }
+        if (PickPhaseManager.Instance != null)
+        {
+            PickPhaseManager.Instance.UpdateDisplay();
+        }
     }
 
     public void PauseGame(InputAction.CallbackContext context)

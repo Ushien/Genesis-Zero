@@ -413,6 +413,7 @@ public class BattleManager : MonoBehaviour
                         // Check if game is over
                         if (isGameOver() != BattleState.OUT)
                         {
+                            teamTurn = TeamTurn.OUT;
                             battleState = BattleState.END;
                             EndBattlePhaseIn();
                         }

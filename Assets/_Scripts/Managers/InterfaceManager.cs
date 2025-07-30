@@ -496,7 +496,7 @@ public class InterfaceManager : MonoBehaviour
 
             if (spell.IsAAttack())
             {
-                spellCooldownPanel.text = "";
+                spellCooldownPanel.text = " ";
             }
             else
             {
@@ -762,6 +762,14 @@ public class InterfaceManager : MonoBehaviour
         unit.lifeBar.transform.position = unit.transform.position + lifeBarOffset;
     }
 
+    public void RefreshLifeBars()
+    {
+        foreach (BaseUnit unit in UnitManager.Instance.GetUnits())
+        {
+            unit.lifeBar.RefreshDisplays();
+        }
+    }
+
     // Fonction pour gérer les anims de la croix de sorts. La solution actuelles est dégeu, il faudra la rebosser intelligemment.
     // Notamment on peut réduire le nombre d'animations requises par 5 si j'apprends à faire des anims paramétrables.
     private void AnimateSpellChoice(int index)
@@ -946,7 +954,9 @@ public class InterfaceManager : MonoBehaviour
         {
             // Retour au centre
             spellChoice = SpellChoice.CHARACTER;
+            selectedSpell = sourceTile.GetUnit().GetAttack();
             overloaded = false;
+            DisplaySpell();
             DisableSpellOverload();
         }
     }
@@ -1134,6 +1144,7 @@ public class InterfaceManager : MonoBehaviour
         {
             DisplayPassives();
         }
+        RefreshLifeBars();
     }
 }
 
