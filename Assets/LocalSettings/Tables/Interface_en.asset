@@ -23,11 +23,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 68427984896
-    m_Localized: power
+    m_Localized: Power
     m_Metadata:
       m_Items: []
   - m_Id: 310690983936
-    m_Localized: armor
+    m_Localized: Armor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3407696705744896
+    m_Localized: Level
     m_Metadata:
       m_Items: []
   references:

@@ -27,6 +27,10 @@ MonoBehaviour:
     m_Key: Armor
     m_Metadata:
       m_Items: []
+  - m_Id: 3407696705744896
+    m_Key: Level
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

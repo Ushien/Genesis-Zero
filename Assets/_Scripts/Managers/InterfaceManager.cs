@@ -9,6 +9,7 @@ using UnityEngine.Assertions;
 using System.Data.Common;
 using UnityEngine.InputSystem;
 using System;
+using UnityEngine.Localization.Settings;
 
 /// <summary>
 /// Gestion de l'interface de jeu
@@ -315,6 +316,9 @@ public class InterfaceManager : MonoBehaviour
             unitPanel.gameObject.SetActive(true);
             spellPanel.gameObject.SetActive(true);
 
+            selectedUnit = sourceTile.GetUnit();
+            DisplayUnit();
+
             //spellSelector.transform.position = sourceTile.transform.position;
             DrawUILine(UILine, sourceTile);
 
@@ -435,7 +439,6 @@ public class InterfaceManager : MonoBehaviour
             // Reset view
             ResetDisplay();
 
-
             // Activate the needed interface
             unitPanel.gameObject.SetActive(true);
             tileSelector.gameObject.SetActive(true);
@@ -447,7 +450,7 @@ public class InterfaceManager : MonoBehaviour
             targetTile = UnitManager.Instance.GetUnits(Team.Enemy)[0].GetTile();
             targetTile.Select();
             selectedUnit = targetTile.GetUnit();
-
+            DisplayUnit();
             DrawUILine(UIPanelLine, targetTile);
 
             ActivateState(BattleManager.PlayerActionChoiceState.TARGET_SELECTION);
@@ -511,20 +514,24 @@ public class InterfaceManager : MonoBehaviour
     private void DisplayUnit()
     {
         ResetPanel(unitPanel);
-        BaseUnit unit = selectedUnit;
-        unitNamePanel.text = unit.GetName();
-        unitPowerPanel.text = "Puissance : " + unit.GetFinalPower().ToString();
-        unitHealthPanel.text = "PV : " + unit.GetFinalHealth().ToString() + "/" + unit.GetTotalHealth().ToString();
-        if (unit.GetArmor() > 0)
+        if (selectedUnit != null)
         {
-            unitArmorPanel.text = "Armure : " + unit.GetArmor().ToString();
+            BaseUnit unit = selectedUnit;
+            unitNamePanel.text = unit.GetName();
+            unitPowerPanel.text = LocalizationSettings.StringDatabase.GetLocalizedString("Interface", "Power") + " : " + unit.GetFinalPower().ToString();
+            unitHealthPanel.text = LocalizationSettings.StringDatabase.GetLocalizedString("Interface", "HP") + " : " + unit.GetFinalHealth().ToString() + "/" + unit.GetTotalHealth().ToString();
+            if (unit.GetArmor() > 0)
+            {
+                Debug.Log("Test1");
+                unitArmorPanel.text = LocalizationSettings.StringDatabase.GetLocalizedString("Interface", "Armor") + " : " + unit.GetArmor().ToString();
+            }
+            else
+            {
+                Debug.Log("Test2");
+                unitArmorPanel.text = " ";
+            }
+            unitLevelPanel.text = LocalizationSettings.StringDatabase.GetLocalizedString("Interface", "Level") + " : " + unit.GetLevel().ToString();    
         }
-        else
-        {
-            unitArmorPanel.text = "";
-        }
-        unitLevelPanel.text = "Niveau : " + unit.GetLevel().ToString();
-
     }
 
     private void DisplayPassives()
@@ -604,31 +611,29 @@ public class InterfaceManager : MonoBehaviour
             sourceTile.GetNextTile(direction).Select();
             sourceTile.Unselect();
             sourceTile = sourceTile.GetNextTile(direction);
-            selectedUnit = sourceTile.GetUnit();
             Vector2 vectorDirection = Tools.ConvertDirectionsToVector2(direction);
             //Petit coup de caméra dans la direction
             CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(driftAmount * vectorDirection.x, driftAmount * vectorDirection.y, 0f));
             // Reset le slider de passifs
             selectedPassiveIndex = 0;
-        }
 
-        BaseUnit currentUnit = sourceTile.GetUnit();
-        if (currentUnit != null)
-        {
-            unitPanel.gameObject.SetActive(true);
-            passivePanel.gameObject.SetActive(true);
-            DisplayUnit();
-            DisplayPassives();
-        }
-        else
-        {
-            unitPanel.gameObject.SetActive(false);
-            passivePanel.gameObject.SetActive(false);
+            selectedUnit = sourceTile.GetUnit();
+            if (selectedUnit != null)
+            {
+                DisplayUnit();
+                DisplayPassives();
+            }
+            else
+            {
+                unitPanel.gameObject.SetActive(false);
+                passivePanel.gameObject.SetActive(false);
+            }
         }
     }
 
     void NavigateTarget(Directions direction)
     {
+        // S'il y a une case dans la direction indiquée
         if (targetTile.GetNextTile(direction) != null)
         {
             targetTile.Unselect();
@@ -639,8 +644,18 @@ public class InterfaceManager : MonoBehaviour
             Vector2 vectorDirection = Tools.ConvertDirectionsToVector2(direction);
             //Petit coup de caméra dans la direction
             CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(driftAmount * vectorDirection.x, driftAmount * vectorDirection.y, 0f));
+
+            selectedUnit = targetTile.GetUnit();
+            if (selectedUnit != null)
+            {
+                DisplayUnit();
+            }
+            else
+            {
+                unitPanel.gameObject.SetActive(false);
+                passivePanel.gameObject.SetActive(false);
+            }
         }
-        selectedPassiveIndex = 0;
     }
 
     void NavigatePassives(Directions direction)
