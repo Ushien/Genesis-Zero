@@ -370,6 +370,8 @@ public class InterfaceManager : MonoBehaviour
 
             // Change aAttack image
             spellSelector.transform.GetChild(currentSpellIndex).GetComponent<Image>().sprite = sourceUnit.GetAttack().GetArtwork();
+            selectedSpell = sourceUnit.GetAttack();
+            DisplaySpell();
 
             GridManager.Instance.SetSelectionMode(GridManager.Selection_mode.Single_selection);
 
@@ -522,12 +524,10 @@ public class InterfaceManager : MonoBehaviour
             unitHealthPanel.text = LocalizationSettings.StringDatabase.GetLocalizedString("Interface", "HP") + " : " + unit.GetFinalHealth().ToString() + "/" + unit.GetTotalHealth().ToString();
             if (unit.GetArmor() > 0)
             {
-                Debug.Log("Test1");
                 unitArmorPanel.text = LocalizationSettings.StringDatabase.GetLocalizedString("Interface", "Armor") + " : " + unit.GetArmor().ToString();
             }
             else
             {
-                Debug.Log("Test2");
                 unitArmorPanel.text = " ";
             }
             unitLevelPanel.text = LocalizationSettings.StringDatabase.GetLocalizedString("Interface", "Level") + " : " + unit.GetLevel().ToString();    

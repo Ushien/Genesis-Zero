@@ -34,11 +34,10 @@ public class BaseUnit : MonoBehaviour
     public BaseSpell[] availableSpells = new BaseSpell[4];
     public Animator animator;
 
-        #endregion
+    #endregion
 
-        #region Caractéristiques
-
-    private string unit_name = "Name";
+    #region Caractéristiques
+        
     // Puissance de l'unité
     private int basePower = 1;
     private int finalPower = 1;
@@ -658,7 +657,15 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public string GetName(){
-        return unit_name;
+        string name = LocalizationSettings.StringDatabase.GetLocalizedString("Units", unique_id.ToString() + "_name");
+        if (name == "")
+        {
+            return "No name yet";
+        }
+        else
+        {
+            return name;
+        }
     }
 
     /// <summary>
