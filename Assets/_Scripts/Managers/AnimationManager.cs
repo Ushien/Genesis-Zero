@@ -22,8 +22,6 @@ public class AnimationManager : MonoBehaviour
 
     private List<BattleEvent> animationQueue;
 
-    [SerializeField]
-    float accelerator = 1f;
     private bool animationLocked = false;
 
     void Awake()

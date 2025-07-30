@@ -117,6 +117,7 @@ public class InterfaceManager : MonoBehaviour
     // La Tile contenant la cible du spell, lorsqu'un spell est lancé
     [SerializeField]
     public Tile targetTile;
+    private BaseUnit selectedUnit;
 
     private Dictionary<BattleManager.PlayerActionChoiceState, bool> activated_states;
 
@@ -267,8 +268,9 @@ public class InterfaceManager : MonoBehaviour
 
             if (sourceTile.GetUnit() != null)
             {
-                DisplayUnit(sourceTile.GetUnit());
-                DisplayPassives(sourceTile.GetUnit());
+                selectedUnit = sourceTile.GetUnit();
+                DisplayUnit();
+                DisplayPassives();
             }
 
             sourceTile.Select();
@@ -444,6 +446,7 @@ public class InterfaceManager : MonoBehaviour
             // TODO Définir un emplacement par défaut plus intelligent
             targetTile = UnitManager.Instance.GetUnits(Team.Enemy)[0].GetTile();
             targetTile.Select();
+            selectedUnit = targetTile.GetUnit();
 
             DrawUILine(UIPanelLine, targetTile);
 
@@ -474,10 +477,12 @@ public class InterfaceManager : MonoBehaviour
         BattleManager.Instance.ChangeState(BattleManager.Machine.PLAYERACTIONCHOICESTATE, trigger);
     }
 
-    private void DisplaySpell(BaseSpell spell, bool hyper = false)
+    private void DisplaySpell()
     {
         // manière cheap de rejouer les anims de texte et d'éviter des bugs
         ResetPanel(spellPanel);
+        BaseSpell spell = selectedSpell;
+        bool hyper = overloaded;
         if (spell != null)
         {
             spellPanel.gameObject.SetActive(true);
@@ -503,9 +508,10 @@ public class InterfaceManager : MonoBehaviour
         }
     }
 
-    private void DisplayUnit(BaseUnit unit)
+    private void DisplayUnit()
     {
         ResetPanel(unitPanel);
+        BaseUnit unit = selectedUnit;
         unitNamePanel.text = unit.GetName();
         unitPowerPanel.text = "Puissance : " + unit.GetFinalPower().ToString();
         unitHealthPanel.text = "PV : " + unit.GetFinalHealth().ToString() + "/" + unit.GetTotalHealth().ToString();
@@ -521,8 +527,9 @@ public class InterfaceManager : MonoBehaviour
 
     }
 
-    private void DisplayPassives(BaseUnit unit)
+    private void DisplayPassives()
     {
+        BaseUnit unit = selectedUnit;
         ResetPanel(passivePanel);
         if (unit.GetPassives().Count >= 1)
         {
@@ -597,20 +604,21 @@ public class InterfaceManager : MonoBehaviour
             sourceTile.GetNextTile(direction).Select();
             sourceTile.Unselect();
             sourceTile = sourceTile.GetNextTile(direction);
+            selectedUnit = sourceTile.GetUnit();
             Vector2 vectorDirection = Tools.ConvertDirectionsToVector2(direction);
             //Petit coup de caméra dans la direction
             CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(driftAmount * vectorDirection.x, driftAmount * vectorDirection.y, 0f));
+            // Reset le slider de passifs
+            selectedPassiveIndex = 0;
         }
-        // Reset le slider de passifs
-        selectedPassiveIndex = 0;
 
         BaseUnit currentUnit = sourceTile.GetUnit();
         if (currentUnit != null)
         {
             unitPanel.gameObject.SetActive(true);
             passivePanel.gameObject.SetActive(true);
-            DisplayUnit(currentUnit);
-            DisplayPassives(currentUnit);
+            DisplayUnit();
+            DisplayPassives();
         }
         else
         {
@@ -626,7 +634,11 @@ public class InterfaceManager : MonoBehaviour
             targetTile.Unselect();
             targetTile = targetTile.GetNextTile(direction);
             targetTile.Select();
+            selectedUnit = targetTile.GetUnit();
             DrawUILine(UIPanelLine, targetTile);
+            Vector2 vectorDirection = Tools.ConvertDirectionsToVector2(direction);
+            //Petit coup de caméra dans la direction
+            CameraEffects.Instance.TriggerDrift(driftIntensity, driftSmoothing, new Vector3(driftAmount * vectorDirection.x, driftAmount * vectorDirection.y, 0f));
         }
         selectedPassiveIndex = 0;
     }
@@ -662,7 +674,7 @@ public class InterfaceManager : MonoBehaviour
                     }
                 }
             }
-            DisplayPassives(currentUnit);
+            DisplayPassives();
         }
         if (GlobalManager.Instance.debug)
         {
@@ -962,7 +974,7 @@ public class InterfaceManager : MonoBehaviour
                     spellChoice = SpellChoice.UP;
                     selectedSpell = currentSpells[2];
                 }
-                DisplaySpell(currentSpells[2], hyper: overloaded);
+                DisplaySpell();
                 break;
             case Directions.DOWN:
                 // Passage en mode surchargé / Retour en mode normal
@@ -995,7 +1007,7 @@ public class InterfaceManager : MonoBehaviour
                     spellChoice = SpellChoice.DOWN;
                     selectedSpell = currentSpells[3];
                 }
-                DisplaySpell(currentSpells[3], hyper: overloaded);
+                DisplaySpell();
                 break;
             case Directions.LEFT:
                 if (spellChoice == SpellChoice.LEFT)
@@ -1028,7 +1040,7 @@ public class InterfaceManager : MonoBehaviour
                     spellChoice = SpellChoice.LEFT;
                     selectedSpell = currentSpells[0];
                 }
-                DisplaySpell(currentSpells[0], hyper: overloaded);
+                DisplaySpell();
                 break;
             case Directions.RIGHT:
                 if (spellChoice == SpellChoice.RIGHT)
@@ -1061,7 +1073,7 @@ public class InterfaceManager : MonoBehaviour
                     spellChoice = SpellChoice.RIGHT;
                     selectedSpell = currentSpells[1];
                 }
-                DisplaySpell(currentSpells[1], hyper: overloaded);
+                DisplaySpell();
                 break;
             default:
                 break;
@@ -1091,6 +1103,22 @@ public class InterfaceManager : MonoBehaviour
     {
         Directions direction = Tools.ConvertVector2ToDirections(context.ReadValue<Vector2>());
         NavigateTarget(direction);
+    }
+
+    internal void RefreshDisplays()
+    {
+        if (unitPanel.gameObject.activeSelf)
+        {
+            DisplayUnit();
+        }
+        if (spellPanel.gameObject.activeSelf)
+        {
+            DisplaySpell();
+        }
+        if (passivePanel.gameObject.activeSelf)
+        {
+            DisplayPassives();
+        }
     }
 }
 
