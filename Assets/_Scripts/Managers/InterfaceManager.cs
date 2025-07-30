@@ -967,20 +967,20 @@ public class InterfaceManager : MonoBehaviour
                         break;
                     overloaded = !overloaded;
                     // On joue le FX d'overload
-                    if (spellSelector.transform.GetChild(0).transform.Find("SpecialFX").gameObject.activeSelf)
-                        spellSelector.transform.GetChild(0).transform.Find("SpecialFX").gameObject.SetActive(false);
-                    spellSelector.transform.GetChild(0).transform.Find("SpecialFX").gameObject.SetActive(true);
-                    spellSelector.transform.GetChild(0).GetComponent<Animator>().Play("left overloaded");
+                    if (spellSelector.transform.GetChild(3).transform.Find("SpecialFX").gameObject.activeSelf)
+                        spellSelector.transform.GetChild(3).transform.Find("SpecialFX").gameObject.SetActive(false);
+                    spellSelector.transform.GetChild(3).transform.Find("SpecialFX").gameObject.SetActive(true);
+                    spellSelector.transform.GetChild(3).GetComponent<Animator>().Play("down overloaded");
                     if (overloaded)
                     {
-                        spellSelector.transform.GetChild(0).transform.Find("overloaded").gameObject.SetActive(true);
+                        spellSelector.transform.GetChild(3).transform.Find("overloaded").gameObject.SetActive(true);
                         CameraEffects.Instance.TriggerShake(0.05f, 0.2f);
                         AudioManager.Instance.overloadSound.Play();
                         spellPanel.transform.Find("overloaded").gameObject.SetActive(true);
                     }
                     else
                     {
-                        spellSelector.transform.GetChild(0).transform.Find("overloaded").gameObject.SetActive(false);
+                        spellSelector.transform.GetChild(3).transform.Find("overloaded").gameObject.SetActive(false);
                         spellPanel.transform.Find("overloaded").gameObject.SetActive(false);
                     }
                 }

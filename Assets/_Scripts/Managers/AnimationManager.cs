@@ -12,7 +12,7 @@ using UnityEngine;
 public class AnimationManager : MonoBehaviour
 {
     public static AnimationManager Instance;
-    public TextMeshProUGUI damageText;
+    public GameObject damageText;
     public Transform DamageSection;
     public float damageZoomAmount = 2.5f;
     public float damageZoomSpeed = 0.5f;
@@ -31,7 +31,7 @@ public class AnimationManager : MonoBehaviour
         animationQueue = new List<BattleEvent>();
         Instance = this;
         DamageSection = InterfaceManager.Instance.GetUI().transform.Find("Damages").transform;
-        damageText = DamageSection.Find("DamagesText").GetComponent<TextMeshProUGUI>();
+        damageText = DamageSection.Find("DamageEncapsulator").gameObject;
     }
 
     public void BattleIn()
@@ -82,36 +82,29 @@ public class AnimationManager : MonoBehaviour
 
     private IEnumerator Animate(DamageEvent damageEvent)
     {
-
         // Animer les dégats d'armure
         int damage = damageEvent.GetArmorAmount();
         if (damage > 0)
         {
-            TextMeshProUGUI damageDisplay = Instantiate(damageText);
+            GameObject damageDisplay = Instantiate(damageText);
             damageDisplay.transform.SetParent(DamageSection);
-            damageDisplay.text = "-" + damage.ToString();
-            damageDisplay.transform.position = damageEvent.GetTargetUnit().transform.position;
+            damageDisplay.transform.Find("DamagesText").GetComponent<TextMeshProUGUI>().text = "-" + damage.ToString();
             damageDisplay.transform.localScale = new Vector3(1, 1, 1);
+            damageDisplay.transform.position = damageEvent.GetTargetUnit().transform.position;
             damageDisplay.gameObject.SetActive(true);
             InterfaceManager.Instance.UpdateLifebar(damageEvent.GetTargetUnit(), 0, 0, -damage);
-            for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f * accelerator)
-            {
-                damageDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));
-                yield return null;
-            }
-            damageDisplay.gameObject.SetActive(false);
-            Destroy(damageDisplay.gameObject);
+            yield return null;
         }
 
         // Animer les dégats aux HP
         damage = damageEvent.GetHealthAmount();
         if (damage > 0)
         {
-            TextMeshProUGUI damageDisplay = Instantiate(damageText);
+            GameObject damageDisplay = Instantiate(damageText);
             damageDisplay.transform.SetParent(DamageSection);
-            damageDisplay.text = "-" + damage.ToString();
-            damageDisplay.transform.position = damageEvent.GetTargetUnit().transform.position;
+            damageDisplay.transform.Find("DamagesText").GetComponent<TextMeshProUGUI>().text = "-" + damage.ToString();
             damageDisplay.transform.localScale = new Vector3(1, 1, 1);
+            damageDisplay.transform.position = damageEvent.GetTargetUnit().transform.position;
             damageDisplay.gameObject.SetActive(true);
             InterfaceManager.Instance.UpdateLifebar(damageEvent.GetTargetUnit(), -damage, 0, 0);
 
@@ -121,52 +114,33 @@ public class AnimationManager : MonoBehaviour
                                                            InterfaceManager.Instance.mainCamera.transform.position.y + (damageEvent.GetTargetUnit().transform.position.y - InterfaceManager.Instance.mainCamera.transform.position.y) / zoomDamping, -10f),
                                                            damageZoomAmount, damageZoomSpeed, true);
             CameraEffects.Instance.TriggerShake(animShakeStrength, animShakeTime);
-
-            for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f * accelerator)
-            {
-                damageDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));
-                yield return null;
-            }
-            damageDisplay.gameObject.SetActive(false);
-            Destroy(damageDisplay.gameObject);
+            yield return null;
         }
 
     }
 
     private IEnumerator Animate(ArmorGainEvent armorGainEvent)
     {
-        TextMeshProUGUI armorGainDisplay = Instantiate(damageText);
+        GameObject armorGainDisplay = Instantiate(damageText);
         armorGainDisplay.transform.SetParent(DamageSection);
-        armorGainDisplay.text = "+" + armorGainEvent.GetAmount().ToString();
-        armorGainDisplay.transform.position = armorGainEvent.GetTargetUnit().transform.position;
+        armorGainDisplay.transform.Find("DamagesText").GetComponent<TextMeshProUGUI>().text = "+" + armorGainEvent.GetAmount().ToString();
         armorGainDisplay.transform.localScale = new Vector3(1, 1, 1);
+        armorGainDisplay.transform.position = armorGainEvent.GetTargetUnit().transform.position;
         armorGainDisplay.gameObject.SetActive(true);
         InterfaceManager.Instance.UpdateLifebar(armorGainEvent.GetTargetUnit(), 0, 0, armorGainEvent.GetAmount());
-        for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f * accelerator)
-        {
-            armorGainDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));
-            yield return null;
-        }
-        armorGainDisplay.gameObject.SetActive(false);
-        Destroy(armorGainDisplay.gameObject);
+        yield return null;
     }
 
     private IEnumerator Animate(HealEvent healEvent)
     {
-        TextMeshProUGUI armorGainDisplay = Instantiate(damageText);
+        GameObject armorGainDisplay = Instantiate(damageText);
         armorGainDisplay.transform.SetParent(DamageSection);
-        armorGainDisplay.text = "+" + healEvent.GetAmount().ToString();
-        armorGainDisplay.transform.position = healEvent.GetTargetUnit().transform.position;
+        armorGainDisplay.transform.Find("DamagesText").GetComponent<TextMeshProUGUI>().text = "+" + healEvent.GetAmount().ToString();
         armorGainDisplay.transform.localScale = new Vector3(1, 1, 1);
+        armorGainDisplay.transform.position = healEvent.GetTargetUnit().transform.position;
         armorGainDisplay.gameObject.SetActive(true);
         InterfaceManager.Instance.UpdateLifebar(healEvent.GetTargetUnit(), healEvent.GetAmount(), 0, 0);
-        for (float distance = 0.0f; distance <= 0.5f; distance += 0.005f * accelerator)
-        {
-            armorGainDisplay.gameObject.transform.Translate(new Vector3(0, 0.005f, 0));
-            yield return null;
-        }
-        armorGainDisplay.gameObject.SetActive(false);
-        Destroy(armorGainDisplay.gameObject);
+        yield return null;
     }
 
     private IEnumerator Animate(DeathEvent deathEvent)
