@@ -27,12 +27,13 @@ public class ResourceManager : MonoBehaviour
         passiveList = Resources.LoadAll("Passives", typeof(ScriptablePassive)).Cast<ScriptablePassive>().ToList();
         enemyUnitList = Resources.LoadAll<ScriptableUnit>("Units/Enemies").ToList();
         enemyCompositionList = Resources.LoadAll<ScriptableComposition>("Teams/Enemies").ToList();
-        PreloadAllLocalization();
+        //StartCoroutine(PreloadAllLocalization());
     }
 
-    public static void PreloadAllLocalization()
+    public static IEnumerator PreloadAllLocalization()
     {
-        LocalizationSettings.StringDatabase.GetTable("Spells");
+        yield return LocalizationSettings.InitializationOperation;
+        //LocalizationSettings.StringDatabase.GetTable("Spells");
     }
 
     public List<ScriptableSpell> GetSpells(bool lootable = true)

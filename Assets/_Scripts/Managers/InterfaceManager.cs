@@ -180,7 +180,7 @@ public class InterfaceManager : MonoBehaviour
         }
         catch (Exception)
         {
-            Warning.Info("Il y a eu un problème lors de l'initialisation de l'interface");
+            Debug.LogError("Il y a eu un problème lors de l'initialisation de l'interface");
         }
     }
 
@@ -459,7 +459,6 @@ public class InterfaceManager : MonoBehaviour
         }
 
         // Change la position du sélector de case à l'aide d'un joli lerp
-        targetTile.transform.position = targetTile.transform.position;
         tileSelector_currentPos = Vector3.Lerp(tileSelector_currentPos, tileSelector_targetPos, Time.deltaTime * selectorSpeed);
         tileSelector.transform.position = tileSelector_currentPos;
         tileSelector.transform.position = targetTile.transform.position;

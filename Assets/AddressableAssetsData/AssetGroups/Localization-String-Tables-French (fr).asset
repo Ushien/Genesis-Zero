@@ -22,30 +22,35 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-fr
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 885d64880b90dc14dbbb071446a0ff94
     m_Address: Interface_fr
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-fr
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a9d0b503a737f77488cb5521eaff713b
     m_Address: Units_fr
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-fr
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ee0e2c98c90f5d1439820a1f61c73155
     m_Address: Dialogs_fr
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-fr
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 921fa4cf3e20a3b4ab72db00c8d72c73
     m_Address: Passives_fr
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-fr
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 5cfc57f0ab104be4a90979cbe9fc67b9, type: 2}
