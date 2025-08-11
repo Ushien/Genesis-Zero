@@ -129,6 +129,7 @@ public class InterfaceManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        Debug.Log("Ok");
 
         try
         {
@@ -138,7 +139,6 @@ public class InterfaceManager : MonoBehaviour
             RewardUI = Instantiate(RewardUIPrefab);
             RewardUI.worldCamera = GlobalManager.Instance.GetCam();
             UI.worldCamera = GlobalManager.Instance.GetCam();
-
 
             unitPanel = UI.transform.Find("UnitPanelEncapsulator").Find("UnitPanel");
             spellPanel = UI.transform.Find("SpellPanelEncapsulator").Find("SpellPanel");
@@ -171,12 +171,6 @@ public class InterfaceManager : MonoBehaviour
             {
                 activated_states[state] = false;
             }
-
-            PlayerInput playerInput = InputManager.Instance.GetPlayerInput();
-            playerInput.actions["Validate"].performed += ValidateInput;
-            playerInput.actions["Cancel"].performed += CancelInput;
-            playerInput.actions["Movement"].performed += MovementInput;
-            playerInput.actions["Switch"].performed += SwitchInput;
         }
         catch (Exception)
         {
@@ -186,8 +180,12 @@ public class InterfaceManager : MonoBehaviour
 
     void Start()
     {
-
         // On crée le tileSelector qui va naviguer pour la sélection des cases
+        PlayerInput playerInput = InputManager.Instance.GetPlayerInput();
+        playerInput.actions["Validate"].performed += ValidateInput;
+        playerInput.actions["Cancel"].performed += CancelInput;
+        playerInput.actions["Movement"].performed += MovementInput;
+        playerInput.actions["Switch"].performed += SwitchInput;
 
         tileSelector = Instantiate(GridManager.Instance.GetTilePrefab()).transform;
         Material material = Instantiate(tileOutliner);

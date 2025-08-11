@@ -71,20 +71,16 @@ public class GlobalManager : MonoBehaviour
         resourceManager = Instantiate(resourceManagerPrefab);
         resourceManager.transform.SetParent(transform.parent);
         resourceManager.LoadResources();
-    }
 
-    // Start is called before the first frame update
-    void Start()
-    { 
         audioManager = Instantiate(audioManagerPrefab); // Pour l'instant ici, je gère pas ou il doit être supprimé/ajouté
         audioManager.transform.SetParent(transform.parent);
         ResetRun();
         ChangeState(RunPhase.STARTPHASE);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    // Start is called before the first frame update
+    void Start()
+    { 
 
     }
 

@@ -168,12 +168,12 @@ public class BaseUnit : MonoBehaviour
             // Rend l'unité grisée si elle a déjà reçu une instruction
             if(HasGivenInstruction() && animator.GetCurrentAnimatorStateInfo(0).IsName("idle")){
                 //gameObject.GetComponent<SpriteRenderer>().color = new Color32( 173, 173, 173, 200);
-                animator.Play("prepared");
+                //animator.Play("prepared");
             }
             //else
             if(!HasGivenInstruction() && !animator.GetCurrentAnimatorStateInfo(0).IsName("idle")){
                 //gameObject.GetComponent<SpriteRenderer>().color = new Color32( 255, 255, 255, 255);
-                animator.Play("idle");
+                //animator.Play("idle");
             }
         }
     }
