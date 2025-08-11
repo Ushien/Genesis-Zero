@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class NotificationManager : MonoBehaviour
 {
@@ -15,10 +16,6 @@ public class NotificationManager : MonoBehaviour
 
     public void Start()
     {
-        if (InterfaceManager.Instance == null)
-        {
-            Debug.Log("tt");
-        }
         notificationsUIEmplacement = InterfaceManager.Instance.GetUI().transform.Find("Notifications");
     }
 

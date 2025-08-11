@@ -5,19 +5,23 @@ using DG.Tweening;
 
 public class Notification : MonoBehaviour
 {
+    [SerializeField] float displayTime = 2f;
+    [SerializeField] float fadeDuration = 0.5f;
     void Start()
     {
-        ShowToast();
-    }
+        CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
+        // Apparition depuis alpha 0
+        canvasGroup.alpha = 0;
+        transform.localScale = Vector3.one * 0.8f; // effet pop-in
 
-    void ShowToast()
-    {
-        Sequence s = DOTween.Sequence();
-        /*
-        s.Append(toastCanvas.DOFade(1, 0.5f))      // Apparition
-         .AppendInterval(2f)                       // Attente
-         .Append(toastCanvas.DOFade(0, 0.5f))      // Disparition
-         .OnComplete(() => toastCanvas.gameObject.SetActive(false));
-        */
+        // Sequence DOTween
+        Sequence seq = DOTween.Sequence();
+
+        seq.Append(canvasGroup.DOFade(1, fadeDuration))       // Fade in
+           .Join(transform.DOScale(1f, fadeDuration))         // Scale up
+           .AppendInterval(displayTime)                       // Pause
+           .Append(canvasGroup.DOFade(0, fadeDuration))       // Fade out
+           .Join(transform.DOScale(0.8f, fadeDuration))       // Scale down
+           .OnComplete(() => Destroy(gameObject));            // Détruire à la fin
     }
 }
