@@ -19,11 +19,11 @@ public class ArmesArgentées : Passive
         EventManager.OnDamage -= Argent;
         foreach (Passive _passive in passivesAdded)
         {
-            _passive.holder.DeletePassive(_passive);
+            _passive.GetOwner().DeletePassive(_passive);
         }
     }
     void Argent(DamageEvent damageEvent){
-        if(damageEvent.GetOriginUnit() == holder){
+        if(damageEvent.GetOriginUnit() == GetOwner()){
 			if(!damageEvent.GetTargetUnit().HasPassive(a_ArmesArgentees)){
 				// Ajoute le passif
                 Passive newPassive = a_ArmesArgentees.SetupPassive(damageEvent.GetTargetUnit());

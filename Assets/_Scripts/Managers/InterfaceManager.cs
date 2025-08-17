@@ -129,7 +129,6 @@ public class InterfaceManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        Debug.Log("Ok");
 
         try
         {
@@ -539,17 +538,17 @@ public class InterfaceManager : MonoBehaviour
         {
             unitPassiveNamePanel.text = unit.GetPassives()[selectedPassiveIndex].GetName();
             unitPassiveDescriptionPanel.text = unit.GetPassives()[selectedPassiveIndex].GetDescription();
-            passivePanel.Find("Sprite").GetComponent<Image>().sprite = unit.GetPassives()[selectedPassiveIndex].GetScriptablePassive().artwork;
+            passivePanel.Find("Sprite").GetComponent<Image>().sprite = unit.GetPassives()[selectedPassiveIndex].GetArtwork();
             if (unit.GetPassives().Count >= 2)
             {
                 passivePanel.Find("NextSprite").gameObject.SetActive(true);
                 if (selectedPassiveIndex == unit.GetPassives().Count - 1)
                 {
-                    passivePanel.Find("NextSprite").GetComponent<Image>().sprite = unit.GetPassives()[0].GetScriptablePassive().artwork;
+                    passivePanel.Find("NextSprite").GetComponent<Image>().sprite = unit.GetPassives()[0].GetArtwork();
                 }
                 else
                 {
-                    passivePanel.Find("NextSprite").GetComponent<Image>().sprite = unit.GetPassives()[selectedPassiveIndex + 1].GetScriptablePassive().artwork;
+                    passivePanel.Find("NextSprite").GetComponent<Image>().sprite = unit.GetPassives()[selectedPassiveIndex + 1].GetArtwork();
                 }
             }
             else

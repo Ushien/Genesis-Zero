@@ -15,7 +15,7 @@ public class NewBehaviourScript : Passive
     }
     void Detonation(DeathEvent deathEvent)
     {
-        if(deathEvent.GetDeadUnit().GetTeam() != holder.GetTeam()){
+        if(deathEvent.GetDeadUnit().GetTeam() != GetOwner().GetTeam()){
             foreach (BaseUnit adjUnit in UnitManager.Instance.GetAdjacentUnits(deathEvent.GetDeadUnit()))
             {
                 SpellManager.Instance.InflictDamage(GetOwner(), GetFinalDamages(ratio1), adjUnit);

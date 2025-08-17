@@ -10,12 +10,12 @@ public class Foi : Passive
     {
         newModifier = Instantiate(modifier);
         newModifier.Setup(gameObject, _powerBonus : ratio1, _duration : Modifier.Duration.Permanent);
-        holder.AddModifier(newModifier, holder.Heal);
+        GetOwner().AddModifier(newModifier, GetOwner().Heal);
     }
     // Lorsque le passif disparaît, le désactive
     override public void Desactivate()
     {
-        holder.DeleteModifier(newModifier, holder.Heal);
+        GetOwner().DeleteModifier(newModifier, GetOwner().Heal);
         // Retire le modificateur du personnage
     }
 }

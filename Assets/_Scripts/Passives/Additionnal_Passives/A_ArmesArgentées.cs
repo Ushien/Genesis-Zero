@@ -26,7 +26,7 @@ public class A_ArmesArgentées : Passive
         }
 
         if(finalDamages > 0){
-            SpellManager.Instance.InflictDamage(originUnit, finalDamages, holder);
+            SpellManager.Instance.InflictDamage(originUnit, finalDamages, GetOwner());
         }
     }
 

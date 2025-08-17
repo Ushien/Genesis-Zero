@@ -11,11 +11,11 @@ public class Elysium : Passive
     {
         newModifier = Instantiate(modifier);
         newModifier.Setup(gameObject, _duration : Modifier.Duration.Permanent, _properties : new List<Properties>(){Properties.Curatif});
-        holder.AddGlobalModifier(newModifier);
+        GetOwner().AddGlobalModifier(newModifier);
     }
     // Lorsque le passif disparaît, le désactive
     override public void Desactivate()
     {
-        holder.DeleteGlobalModifier(newModifier);
+        GetOwner().DeleteGlobalModifier(newModifier);
     }
 }

@@ -11,9 +11,8 @@ using UnityEngine.Localization.Tables;
 /// <summary>
 /// Représente une attaque ou une technique
 /// </summary>
-public class BaseSpell : MonoBehaviour
+public class BaseSpell : Upgrade
 {
-
         #region Fields
 
         #region Fields de setup
@@ -22,7 +21,7 @@ public class BaseSpell : MonoBehaviour
 
         #endregion
         #region Références à d'autres objets
-    private BaseUnit owner;
+
     #endregion
 
     #region Caractérstiques
@@ -35,7 +34,6 @@ public class BaseSpell : MonoBehaviour
     // Cooldown actuel du sort. Lorsque celui-ci est égal au cooldown total, le sort peut être lancé. Quand le sort est lancé, celui-ci passe à zéro. Il augmente ensuite de 1 par tour.
     public int cooldown = 0;
     private bool activated = false;
-    private Sprite artwork = null;
     // Indique la portée du sort (horizontale, verticale, toutes les unités, etc...)
     private GridManager.Selection_mode range;
     // Indique si un sort ne peut être lancé que sur une équipe en particulier
@@ -199,14 +197,6 @@ public class BaseSpell : MonoBehaviour
         #region Manipulation des caractéristiques du sort
 
     /// <summary>
-    /// Renvoie l'unité en possession du sort
-    /// </summary>
-    /// <returns></returns>
-    public BaseUnit GetOwner(){
-        return owner;
-    }
-
-    /// <summary>
     /// Définit un nouveau propriétaire du sort
     /// </summary>
     /// <param name="new_owner"></param>
@@ -224,10 +214,6 @@ public class BaseSpell : MonoBehaviour
     /// <returns></returns>
     public GridManager.Selection_mode GetRange(){
         return range;
-    }
-
-    public Sprite GetArtwork(){
-        return artwork;
     }
     
     /// <summary>

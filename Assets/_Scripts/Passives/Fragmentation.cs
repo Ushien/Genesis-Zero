@@ -16,9 +16,9 @@ public class Fragmentation : Passive
         EventManager.OnDamage -= Fragment;
     }
     void Fragment(DamageEvent damageEvent){
-        if(damageEvent.GetTargetUnit() == holder && damageEvent.GetHealthAmount() != 0){
+        if(damageEvent.GetTargetUnit() == GetOwner() && damageEvent.GetHealthAmount() != 0){
             int health = damageEvent.GetHealthAmount();
-            holder.Summon(summonedUnit, healthAmount : health);
+            GetOwner().Summon(summonedUnit, healthAmount : health);
         }
     }
 }

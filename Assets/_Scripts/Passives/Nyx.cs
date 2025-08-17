@@ -15,8 +15,8 @@ public class Nyx : Passive
         EventManager.AfterCast -= Nocturne;
     }
     void Nocturne(AfterCastEvent castEvent){
-        if(castEvent.GetSourceUnit() == holder && castEvent.GetCastedSpell().IsAnAttack()){
-            foreach (BaseSpell spell in holder.GetSpells())
+        if(castEvent.GetSourceUnit() == GetOwner() && castEvent.GetCastedSpell().IsAnAttack()){
+            foreach (BaseSpell spell in GetOwner().GetSpells())
             {
                 if(spell.GetScriptableSpell() != castEvent.GetCastedSpell().GetScriptableSpell()){
                     spell.ModifyCooldown(+1);

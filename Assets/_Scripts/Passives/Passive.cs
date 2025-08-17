@@ -10,26 +10,22 @@ using UnityEngine.Localization.Tables;
 /// Tous les passifs du jeu héritent de cette superclasse.
 /// </summary>
 
-public class Passive : MonoBehaviour
+public class Passive : Upgrade
 {
     private int unique_id;
     public float ratio1;
     public float ratio2;
     public float ratio3;
-    public BaseUnit holder;
     public ScriptablePassive scriptablePassive;
 
     public Modifier modifier;
     private bool minor = false;
     private bool activated = false;
 
-    virtual public void AttachToUnit(BaseUnit unit){
-        holder = unit;
-    }
-
     virtual public void Setup(BaseUnit unit, ScriptablePassive _scriptablePassive){
         unique_id = scriptablePassive.id;
         name = _scriptablePassive.name;
+        artwork = _scriptablePassive.artwork;
         ratio1 = _scriptablePassive.ratios[0];
         ratio2 = _scriptablePassive.ratios[1];
         ratio3 = _scriptablePassive.ratios[2];
@@ -37,7 +33,7 @@ public class Passive : MonoBehaviour
         minor = _scriptablePassive.minor;
         modifier = unit.emptyModifier;
 
-        AttachToUnit(unit);
+        owner = unit;
         unit.AddPassive(this);
         transform.parent = unit.transform;
 
@@ -81,10 +77,6 @@ public class Passive : MonoBehaviour
 
     public float ApplyPower(float ratio){
         return ratio * GetOwner().GetFinalPower();
-    }
-
-    public BaseUnit GetOwner(){
-        return holder;
     }
 
     public ScriptablePassive GetScriptablePassive(){

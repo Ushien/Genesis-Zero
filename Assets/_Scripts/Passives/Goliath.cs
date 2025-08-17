@@ -10,11 +10,11 @@ public class Goliath : Passive
     {
         newModifier = Instantiate(modifier);
         newModifier.Setup(gameObject, _healthBonus : ratio1, _duration : Modifier.Duration.Permanent);
-        holder.AddGlobalModifier(newModifier);
+        GetOwner().AddGlobalModifier(newModifier);
     }
     // Lorsque le passif disparaît, le désactive
     override public void Desactivate()
     {
-        holder.DeleteGlobalModifier(newModifier);
+        GetOwner().DeleteGlobalModifier(newModifier);
     }
 }

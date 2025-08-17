@@ -14,14 +14,14 @@ public class Académique : Passive
     override public void Desactivate()
     {
         EventManager.AfterCast -= RisingPower;
-        holder.DeleteGlobalModifier(modifiers);
+        GetOwner().DeleteGlobalModifier(modifiers);
     }
     void RisingPower(AfterCastEvent castEvent){
-        if(castEvent.GetSourceUnit() == holder && castEvent.GetCastedSpell().IsATechnique()){
+        if(castEvent.GetSourceUnit() == GetOwner() && castEvent.GetCastedSpell().IsATechnique()){
             Modifier newModifier = Instantiate(modifier);
             newModifier.Setup(gameObject, ratio1, _duration : Modifier.Duration.Battle);
             modifiers.Add(newModifier);
-            holder.AddGlobalModifier(newModifier);
+            GetOwner().AddGlobalModifier(newModifier);
         }
     }
 }

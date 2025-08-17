@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class NotificationManager : MonoBehaviour
 {
@@ -19,20 +19,16 @@ public class NotificationManager : MonoBehaviour
         notificationsUIEmplacement = InterfaceManager.Instance.GetUI().transform.Find("Notifications");
     }
 
-    public void Notify(BaseSpell spell)
+    public void Notify(Upgrade upgrade)
     {
         GameObject newNotification = Instantiate(notificationPrefab, notificationsUIEmplacement);
-        newNotification.name = spell.name;
-    }
-
-    public void Notify()
-    {
-        GameObject newNotification = Instantiate(notificationPrefab, notificationsUIEmplacement);
+        newNotification.name = upgrade.name;
+        newNotification.GetComponent<Image>().sprite = upgrade.GetArtwork();
     }
 
     public void OnGUI()
     {
         if (GUI.Button(new Rect(10, 10, 50, 50), "Add Notification"))
-            Notify();
+            Notify(UnitManager.Instance.GetRandomUnit().GetRandomSpell(includingAttack:true));
     }
 }
