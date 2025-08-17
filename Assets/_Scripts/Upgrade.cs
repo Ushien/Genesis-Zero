@@ -24,4 +24,9 @@ public abstract class Upgrade : MonoBehaviour
     {
         return artwork;
     }
+
+    public void Notify()
+    {
+        BattleEventManager.Instance.Notify(this);
+    }
 }

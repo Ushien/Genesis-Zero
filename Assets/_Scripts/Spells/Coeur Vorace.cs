@@ -31,8 +31,10 @@ public class CoeurVorace : BaseSpell
     }
 
     public void IncrementHeal(HealEvent healEvent){
-        if(healEvent.GetTargetUnit() == GetOwner()){
+        if (healEvent.GetTargetUnit() == GetOwner())
+        {
             healCount += 1;
+            Notify();
         }
     }
 

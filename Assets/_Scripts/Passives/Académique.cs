@@ -17,11 +17,13 @@ public class Académique : Passive
         GetOwner().DeleteGlobalModifier(modifiers);
     }
     void RisingPower(AfterCastEvent castEvent){
-        if(castEvent.GetSourceUnit() == GetOwner() && castEvent.GetCastedSpell().IsATechnique()){
+        if (castEvent.GetSourceUnit() == GetOwner() && castEvent.GetCastedSpell().IsATechnique())
+        {
             Modifier newModifier = Instantiate(modifier);
-            newModifier.Setup(gameObject, ratio1, _duration : Modifier.Duration.Battle);
+            newModifier.Setup(gameObject, ratio1, _duration: Modifier.Duration.Battle);
             modifiers.Add(newModifier);
             GetOwner().AddGlobalModifier(newModifier);
+            Notify();
         }
     }
 }

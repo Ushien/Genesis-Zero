@@ -20,8 +20,16 @@ public class TestScript : MonoBehaviour
     private List<string> scriptedInstructions = new List<string>();
     private List<string> scriptedPicks = new List<string>();
 
-    public void Awake(){
+    public void Awake()
+    {
         Instance = this;
+
+        int i = 1;
+        while (File.Exists(Application.dataPath + "/logs/log" + i + ".txt"))
+        {
+            i++;
+        }
+        logFile = Application.dataPath + "/logs/log" + i + ".txt";
     }
 
     public void Log(string text){
@@ -122,12 +130,16 @@ public class TestScript : MonoBehaviour
         return scriptedPicks.Count > 0;
     }
 
-    public void Start(){
-        if(GlobalManager.Instance.debug){
+    public void Start()
+    {
+        if (GlobalManager.Instance.debug)
+        {
 
             // Vérifie si un log d'instructions scriptées est présent dans le dossier
-            if(Directory.Exists(Application.dataPath + "/logs/debug")){
-                if(Directory.GetFiles(Application.dataPath + "/logs/debug").Count() > 0){
+            if (Directory.Exists(Application.dataPath + "/logs/debug"))
+            {
+                if (Directory.GetFiles(Application.dataPath + "/logs/debug").Count() > 0)
+                {
                     Assert.IsTrue(Directory.GetFiles(Application.dataPath + "/logs/debug").Count() == 2, "Il ne peut y avoir qu'un seul fichier d'instructions dans le dossier logs/debug (et ses métadonnées)");
                     string[] allLines = File.ReadAllLines(Directory.GetFiles(Application.dataPath + "/logs/debug")[0]);
                     GlobalManager.Instance.runSeed = Int32.Parse(allLines.Where(line => line[0] == 'S').First().Substring(2));
@@ -136,13 +148,6 @@ public class TestScript : MonoBehaviour
                     File.Delete(Directory.GetFiles(Application.dataPath + "/logs/debug")[0] + ".txt.meta");
                 }
             }
-
-            int i = 1;
-            while(File.Exists(Application.dataPath + "/logs/log" + i + ".txt"))
-            {
-                i++;
-            }
-            logFile = Application.dataPath + "/logs/log" + i + ".txt";
         }
     }
 

@@ -175,13 +175,18 @@ public class AnimationManager : MonoBehaviour
         yield return null;
     }
 
+    private IEnumerator Animate(NotifyEvent notifyEvent)
+    {
+        NotificationManager.Instance.Notify(notifyEvent.GetUpgrade());
+        yield return null;
+    }
 
     private void Animate(BattleEvent battleEvent)
     {
         //Debug.Log(battleEvent.GetSummary());
         if (battleEvent is BeforeCastEvent)
         {
-            StartCoroutine(Animate((BeforeCastEvent)battleEvent));            
+            StartCoroutine(Animate((BeforeCastEvent)battleEvent));
         }
         if (battleEvent is DamageEvent)
         {
@@ -210,6 +215,10 @@ public class AnimationManager : MonoBehaviour
         if (battleEvent is SummonEvent)
         {
             StartCoroutine(Animate((SummonEvent)battleEvent));
+        }
+        if (battleEvent is NotifyEvent)
+        {
+            StartCoroutine(Animate((NotifyEvent)battleEvent));
         }
     }
 

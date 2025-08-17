@@ -162,20 +162,18 @@ public class BattleEventManager : MonoBehaviour
         AnimationManager.Instance.AddAnimation(summonEvent);
     }
 
-/*
-    public Notify()
+    public void Notify(Upgrade upgrade)
     {
-
+        ApplyNotificationEvent(CreateNotificationEvent(upgrade));
     }
     
-    public SummonEvent CreateNotificationEvent(BaseUnit summonedUnit, Tile summonTile, BaseUnit summoner)
+    public NotifyEvent CreateNotificationEvent(Upgrade upgrade)
     {
-        return new SummonEvent(summonedUnit, summonTile, summoner, null);
+        return new NotifyEvent(upgrade);
     }
 
-    public void ApplyNotificationEvent(SummonEvent summonEvent){
-        BattleManager.Instance.AddEvent(summonEvent);
-        AnimationManager.Instance.AddAnimation(summonEvent);
+    public void ApplyNotificationEvent(NotifyEvent notifyEvent){
+        BattleManager.Instance.AddEvent(notifyEvent);
+        AnimationManager.Instance.AddAnimation(notifyEvent);
     }
-*/
 }

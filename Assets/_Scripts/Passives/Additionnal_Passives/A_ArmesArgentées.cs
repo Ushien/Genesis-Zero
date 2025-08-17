@@ -6,9 +6,15 @@ public class A_ArmesArgentées : Passive
 {
     int damageCounter = 0;
     private BaseUnit originUnit;
+    private ArmesArgentées originPassive;
 
-    public void SetOriginUnit(BaseUnit _originUnit){
+    public void SetOriginUnit(BaseUnit _originUnit)
+    {
         originUnit = _originUnit;
+    }
+    public void SetOriginPassive(ArmesArgentées _originPassive)
+    {
+        originPassive = _originPassive;
     }
 
     override public void Desactivate()
@@ -25,8 +31,10 @@ public class A_ArmesArgentées : Passive
             damageCounter -= 3;
         }
 
-        if(finalDamages > 0){
+        if (finalDamages > 0)
+        {
             SpellManager.Instance.InflictDamage(originUnit, finalDamages, GetOwner());
+            originPassive.Notify();
         }
     }
 

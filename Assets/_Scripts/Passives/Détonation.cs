@@ -20,7 +20,7 @@ public class NewBehaviourScript : Passive
             {
                 SpellManager.Instance.InflictDamage(GetOwner(), GetFinalDamages(ratio1), adjUnit);
             }
-            
+            Notify();
         }
     }
 }

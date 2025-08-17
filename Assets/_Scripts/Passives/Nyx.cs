@@ -15,13 +15,16 @@ public class Nyx : Passive
         EventManager.AfterCast -= Nocturne;
     }
     void Nocturne(AfterCastEvent castEvent){
-        if(castEvent.GetSourceUnit() == GetOwner() && castEvent.GetCastedSpell().IsAnAttack()){
+        if (castEvent.GetSourceUnit() == GetOwner() && castEvent.GetCastedSpell().IsAnAttack())
+        {
             foreach (BaseSpell spell in GetOwner().GetSpells())
             {
-                if(spell.GetScriptableSpell() != castEvent.GetCastedSpell().GetScriptableSpell()){
+                if (spell.GetScriptableSpell() != castEvent.GetCastedSpell().GetScriptableSpell())
+                {
                     spell.ModifyCooldown(+1);
                 }
             }
+            Notify();
         }
     }
 }
