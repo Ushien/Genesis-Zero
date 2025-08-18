@@ -530,7 +530,7 @@ public class BattleManager : MonoBehaviour
     public void EndTurnEffects()
     {
         UnitManager.Instance.ApplyEndTurnEffects();
-        EventManager.Instance.EndTurn();
+        BattleEventManager.Instance.EndTurn(ConvertTeamTurn(teamTurn));
     }
 
     public void StartTurnEffects()

@@ -14,12 +14,15 @@ public class CycloneMagnetique : Passive
     override public void Desactivate(){
         EventManager.OnEndTurn -= Cyclone;
     }
-    void Cyclone()
+    void Cyclone(EndTurnEvent endTurnEvent)
     {
-        foreach (BaseUnit unit in UnitManager.Instance.GetUnits(Team.Enemy))
+        if (endTurnEvent.GetTeam() == Team.Enemy)
         {
-            SpellManager.Instance.InflictDamage(GetOwner(), GetFinalDamages(ratio1), unit);
+            foreach (BaseUnit unit in UnitManager.Instance.GetUnits(Team.Enemy))
+            {
+                SpellManager.Instance.InflictDamage(GetOwner(), GetFinalDamages(ratio1), unit);
+            }
+            Notify();
         }
-        Notify();
     }
 }

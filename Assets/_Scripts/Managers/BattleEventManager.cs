@@ -18,12 +18,12 @@ public class BattleEventManager : MonoBehaviour
 
     public void ApplyBeforeCastEvent(BeforeCastEvent castEvent, bool animation = true)
     {
-        EventManager.Instance.BeforeTechCast(castEvent);
         BattleManager.Instance.AddEvent(castEvent);
         if (animation)
         {
             AnimationManager.Instance.AddAnimation(castEvent);
         }
+        EventManager.Instance.BeforeTechCast(castEvent);
     }
 
     public AfterCastEvent CreateAfterCastEvent(BaseUnit sourceUnit, BaseSpell castedSpell, Tile targetTile, bool animation = true)
@@ -33,12 +33,12 @@ public class BattleEventManager : MonoBehaviour
 
     public void ApplyAfterCastEvent(AfterCastEvent castEvent, bool animation = true)
     {
-        EventManager.Instance.AfterTechCast(castEvent);
         BattleManager.Instance.AddEvent(castEvent);
         if (animation)
         {
             AnimationManager.Instance.AddAnimation(castEvent);
         }
+        EventManager.Instance.AfterTechCast(castEvent);
     }
 
     public DamageEvent CreateDamageEvent(BaseUnit targetUnit, int health_amount, int armor_amount)
@@ -53,12 +53,12 @@ public class BattleEventManager : MonoBehaviour
 
     public void ApplyDamageEvent(DamageEvent damageEvent, bool animation = true)
     {
-        EventManager.Instance.UnitDamaged(damageEvent);
         BattleManager.Instance.AddEvent(damageEvent);
         if (animation)
         {
             AnimationManager.Instance.AddAnimation(damageEvent);
         }
+        EventManager.Instance.UnitDamaged(damageEvent);
     }
 
     public ArmorGainEvent CreateArmorGainEvent(BaseUnit targetUnit, int amount, bool animation = true)
@@ -68,12 +68,12 @@ public class BattleEventManager : MonoBehaviour
 
     public void ApplyArmorGainEvent(ArmorGainEvent armorGainEvent, bool animation = true)
     {
-        EventManager.Instance.UnitGainedArmor(armorGainEvent);
         BattleManager.Instance.AddEvent(armorGainEvent);
         if (animation)
         {
             AnimationManager.Instance.AddAnimation(armorGainEvent);
         }
+        EventManager.Instance.UnitGainedArmor(armorGainEvent);
     }
 
 
@@ -84,12 +84,12 @@ public class BattleEventManager : MonoBehaviour
 
     public void ApplyHealEvent(HealEvent healEvent, bool animation = true)
     {
-        EventManager.Instance.UnitHealed(healEvent);
         BattleManager.Instance.AddEvent(healEvent);
         if (animation)
         {
             AnimationManager.Instance.AddAnimation(healEvent);
         }
+        EventManager.Instance.UnitHealed(healEvent);
     }
 
     public DeathEvent CreateDeathEvent(BaseUnit deadUnit, Tile deathTile, bool animation = true)
@@ -99,12 +99,12 @@ public class BattleEventManager : MonoBehaviour
 
     public void ApplyDeathEvent(DeathEvent deathEvent, bool animation = true)
     {
-        EventManager.Instance.UnitDied(deathEvent);
         BattleManager.Instance.AddEvent(deathEvent);
         if (animation)
         {
             AnimationManager.Instance.AddAnimation(deathEvent);
         }
+        EventManager.Instance.UnitDied(deathEvent);
     }
 
     public HPModificationEvent CreateHPModificationEvent(BaseUnit targetUnit, int oldAmount, int newAmount, bool total)
@@ -166,14 +166,32 @@ public class BattleEventManager : MonoBehaviour
     {
         ApplyNotificationEvent(CreateNotificationEvent(upgrade));
     }
-    
+
     public NotifyEvent CreateNotificationEvent(Upgrade upgrade)
     {
         return new NotifyEvent(upgrade);
     }
 
-    public void ApplyNotificationEvent(NotifyEvent notifyEvent){
+    public void ApplyNotificationEvent(NotifyEvent notifyEvent)
+    {
         BattleManager.Instance.AddEvent(notifyEvent);
         AnimationManager.Instance.AddAnimation(notifyEvent);
+    }
+
+    public void EndTurn(Team team)
+    {
+        ApplyEndTurnEvent(CreateEndTurnEvent(team));
+    }
+
+    public EndTurnEvent CreateEndTurnEvent(Team team)
+    {
+        return new EndTurnEvent(team);
+    }
+
+    public void ApplyEndTurnEvent(EndTurnEvent endTurnEvent)
+    {
+        BattleManager.Instance.AddEvent(endTurnEvent);
+        AnimationManager.Instance.AddAnimation(endTurnEvent);
+        EventManager.Instance.EndTurn(endTurnEvent);
     }
 }

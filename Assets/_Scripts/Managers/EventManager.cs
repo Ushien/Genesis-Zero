@@ -28,7 +28,7 @@ public class EventManager : MonoBehaviour
     public delegate void SummonAction();
     public static event Action<SummonEvent> OnSummon;
     public delegate void EndTurnAction();
-    public static event Action OnEndTurn;
+    public static event Action<EndTurnEvent> OnEndTurn;
     void Awake()
     {
         Instance = this;
@@ -89,9 +89,9 @@ public class EventManager : MonoBehaviour
             OnSummon(summonEvent);
         }
     }
-    public void EndTurn(){
+    public void EndTurn(EndTurnEvent endTurnEvent){
         if (OnEndTurn != null){
-            OnEndTurn();
+            OnEndTurn(endTurnEvent);
         }
     }
 }
