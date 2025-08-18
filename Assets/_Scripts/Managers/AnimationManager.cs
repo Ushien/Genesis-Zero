@@ -44,7 +44,7 @@ public class AnimationManager : MonoBehaviour
 
     public void Update()
     {
-        if (BattleManager.Instance.GetTurnState() == BattleManager.TurnState.ANIMATION && !animationLocked)
+        if (BattleManager.Instance.inAnimation && !animationLocked)
         {
             if (animationQueue.Count != 0)
             {
@@ -56,7 +56,8 @@ public class AnimationManager : MonoBehaviour
 
             else
             {
-                BattleManager.Instance.ChangeState(BattleManager.Machine.TURNSTATE, BattleManager.Trigger.FORWARD);
+                //BattleManager.Instance.ChangeState(BattleManager.Machine.TURNSTATE, BattleManager.Trigger.FORWARD);
+                BattleManager.Instance.FinishedAnimation();
             }
         }
     }
@@ -224,7 +225,7 @@ public class AnimationManager : MonoBehaviour
 
     public void AddAnimation(BattleEvent battleEvent)
     {
-        //Debug.Log(battleEvent.GetSummary());
+        Debug.Log(battleEvent.GetSummary());
         animationQueue.Add(battleEvent);
     }
 
@@ -232,6 +233,11 @@ public class AnimationManager : MonoBehaviour
     public void DisplayAnimationQueueCount()
     {
         Debug.Log(animationQueue.Count);
+    }
+
+    public int GetAnimationQueueCount()
+    {
+        return animationQueue.Count;
     }
 
     public void LockAnimation()

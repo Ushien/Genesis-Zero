@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : Passive
+public class Détonation : Passive
 {
     // Lorsque le passif est setup, l'active
     override public void Activate()

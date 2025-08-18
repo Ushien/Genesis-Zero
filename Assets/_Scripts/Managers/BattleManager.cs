@@ -16,7 +16,7 @@ public class BattleManager : MonoBehaviour
 
     //Game states
     public enum BattleState {OUT, START, TURN, END, WON, LOST}
-    public enum TurnState {OUT, START, ACTION_CHOICE, APPLY_ACTIONS, ANIMATION, END}
+    public enum TurnState {OUT, START, ACTION_CHOICE, APPLY_ACTIONS, END}
     public enum PlayerActionChoiceState {OUT, START, CHARACTER_SELECTION, SWITCH_CHARACTER, SPELL_SELECTION, TARGET_SELECTION, VALIDATED_ACTION, OTHER_STATE, EXIT}
 
     public enum Machine{BATTLESTATE, TURNSTATE, PLAYERACTIONCHOICESTATE}
@@ -36,7 +36,7 @@ public class BattleManager : MonoBehaviour
     public List<BattleTurn> archivedTurns = new List<BattleTurn>();
 
     private GameObject battleArchive;
-    private 
+    public bool inAnimation = false;
 
     void Awake(){
         Instance = this;
@@ -58,7 +58,29 @@ public class BattleManager : MonoBehaviour
         //StartBattle();
     }
 
-    public void ChangeState(Machine machine, Trigger trigger){
+    public void FinishedAnimation()
+    {
+        inAnimation = false;
+
+        if (turnState == TurnState.END || turnState == TurnState.APPLY_ACTIONS){
+            ChangeState(Machine.TURNSTATE, Trigger.FORWARD);
+        }
+    }
+
+    public void StartAnimation()
+    {
+        if (AnimationManager.Instance.GetAnimationQueueCount() > 0)
+        {
+            inAnimation = true;
+        }
+        else
+        {
+            FinishedAnimation();
+        }
+    }
+
+    public void ChangeState(Machine machine, Trigger trigger)
+    {
         switch (machine)
         {
             case Machine.PLAYERACTIONCHOICESTATE:
@@ -235,22 +257,13 @@ public class BattleManager : MonoBehaviour
 
     private void ApplyActionsTurnPhaseIn(){
         ApplyInstructions();
-
-        // Passage automatique à la phase ANIMATION
-        ChangeState(Machine.TURNSTATE, Trigger.FORWARD);
-    }
-
-    private void AnimationTurnPhaseIn(){
-        //AnimationManager.Instance.LaunchAnimations();
-        // Passage automatique à la phase END
-        //ChangeState(Machine.TURNSTATE, Trigger.FORWARD);
+        StartAnimation();
     }
 
     private void EndTurnPhaseIn(){
         EndTurnEffects();
         ArchiveTurn();
-        // Passage automatique à la phase OUT
-        ChangeState(Machine.TURNSTATE, Trigger.FORWARD);
+        StartAnimation();
     }
 
     private void OutTurnPhaseIn(){
@@ -302,18 +315,6 @@ public class BattleManager : MonoBehaviour
                 break;
 
             case TurnState.APPLY_ACTIONS:
-                switch (trigger)
-                {
-                    case Trigger.FORWARD:
-                        turnState = TurnState.ANIMATION;
-                        AnimationTurnPhaseIn();
-                        break;
-                    default:
-                        break;
-                }
-                break;
-
-            case TurnState.ANIMATION:
                 switch (trigger)
                 {
                     case Trigger.FORWARD:
@@ -526,11 +527,14 @@ public class BattleManager : MonoBehaviour
         playerActionChoiceState = PlayerActionChoiceState.OUT;
     }
 
-    public void EndTurnEffects(){
+    public void EndTurnEffects()
+    {
         UnitManager.Instance.ApplyEndTurnEffects();
+        EventManager.Instance.EndTurn();
     }
 
-    public void StartTurnEffects(){
+    public void StartTurnEffects()
+    {
         UnitManager.Instance.ApplyStartTurnEffects();
     }
 
@@ -559,7 +563,6 @@ public class BattleManager : MonoBehaviour
         currentTurn.transform.SetParent(battleArchive.transform);
         currentTurn.name = "Turn " + nTurn;
         currentTurn.Setup(nTurn);
-        
     }
 
 

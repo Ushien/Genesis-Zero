@@ -27,49 +27,71 @@ public class EventManager : MonoBehaviour
     public static event Action<ArmorGainEvent> OnArmorGain;
     public delegate void SummonAction();
     public static event Action<SummonEvent> OnSummon;
-    void Awake(){
+    public delegate void EndTurnAction();
+    public static event Action OnEndTurn;
+    void Awake()
+    {
         Instance = this;
     }
 
-    public void AfterTechCast(AfterCastEvent afterCastEvent){
-        if (AfterCast != null){
+    public void AfterTechCast(AfterCastEvent afterCastEvent)
+    {
+        if (AfterCast != null)
+        {
             AfterCast(afterCastEvent);
         }
     }
 
-    public void BeforeTechCast(BeforeCastEvent BeforeCastEvent){
-        if (BeforeCast != null){
+    public void BeforeTechCast(BeforeCastEvent BeforeCastEvent)
+    {
+        if (BeforeCast != null)
+        {
             BeforeCast(BeforeCastEvent);
         }
     }
 
-    public void UnitHealed(HealEvent healEvent){
-        if (AfterHeal != null){
+    public void UnitHealed(HealEvent healEvent)
+    {
+        if (AfterHeal != null)
+        {
             AfterHeal(healEvent);
         }
     }
 
-    public void UnitDied(DeathEvent deathEvent){
-        if (OnDeath != null){
+    public void UnitDied(DeathEvent deathEvent)
+    {
+        if (OnDeath != null)
+        {
             OnDeath(deathEvent);
         }
     }
 
-    public void UnitDamaged(DamageEvent damageEvent){
-        if (OnDamage != null){
+    public void UnitDamaged(DamageEvent damageEvent)
+    {
+        if (OnDamage != null)
+        {
             OnDamage(damageEvent);
         }
     }
 
-    public void UnitGainedArmor(ArmorGainEvent armorGainEvent){
-        if (OnArmorGain != null){
+    public void UnitGainedArmor(ArmorGainEvent armorGainEvent)
+    {
+        if (OnArmorGain != null)
+        {
             OnArmorGain(armorGainEvent);
         }
     }
 
-    public void UnitSummoned(SummonEvent summonEvent){
-        if (OnSummon != null){
+    public void UnitSummoned(SummonEvent summonEvent)
+    {
+        if (OnSummon != null)
+        {
             OnSummon(summonEvent);
+        }
+    }
+    public void EndTurn(){
+        if (OnEndTurn != null){
+            OnEndTurn();
         }
     }
 }
