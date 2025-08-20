@@ -13,14 +13,11 @@ MonoBehaviour:
   m_Name: Chronokit
   m_EditorClassIdentifier: 
   id: 3
-  passive_name: Chronokit
-  fight_description: "Les effets de d\xE9but et de fin de tour s'appliquent deux
-    fois"
   ratios:
   - 1
   - 1
   - 1
   artwork: {fileID: 21300000, guid: 37de44bcb59b8174497def1957cc490b, type: 3}
-  passivePrefab: {fileID: 0}
+  passivePrefab: {fileID: 3753051920494600691, guid: 27337463aa8756343b0f6a63d08e0564, type: 3}
   minor: 0
-  lootable: 0
+  lootable: 1

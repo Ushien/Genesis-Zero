@@ -37,6 +37,7 @@ public class BattleManager : MonoBehaviour
 
     private GameObject battleArchive;
     public bool inAnimation = false;
+    public int howManyEndturnEffects = 1;
 
     void Awake(){
         Instance = this;
@@ -530,7 +531,10 @@ public class BattleManager : MonoBehaviour
     public void EndTurnEffects()
     {
         UnitManager.Instance.ApplyEndTurnEffects();
-        BattleEventManager.Instance.EndTurn(ConvertTeamTurn(teamTurn));
+        for (int i = 0; i < howManyEndturnEffects; i++)
+        {
+            BattleEventManager.Instance.EndTurn(ConvertTeamTurn(teamTurn));
+        }
     }
 
     public void StartTurnEffects()
