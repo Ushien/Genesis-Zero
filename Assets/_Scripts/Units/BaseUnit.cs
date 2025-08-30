@@ -22,7 +22,7 @@ public class BaseUnit : MonoBehaviour
 
     private int unique_id;
     public ScriptableUnit scriptableUnit;
-    public Modifier emptyModifier;
+    public CharacterModifier emptyModifier;
         #endregion
 
         #region Références à d'autres objets
@@ -65,8 +65,8 @@ public class BaseUnit : MonoBehaviour
         #region Fields relatifs au moteur de jeu
 
     // Liste des modificateurs associés à l'unité
-    private Dictionary<Func<int, BattleEvent>, List<Modifier>> modifiers = new Dictionary<Func<int, BattleEvent>, List<Modifier>>();
-    private List<Modifier> globalModifiers = new List<Modifier>();
+    private Dictionary<Func<int, BattleEvent>, List<CharacterModifier>> modifiers = new Dictionary<Func<int, BattleEvent>, List<CharacterModifier>>();
+    private List<CharacterModifier> globalModifiers = new List<CharacterModifier>();
     // Liste des actions enregistrées. Le tuple est composé de 3 éléments: La méthode qui doit être appelée, le paramètre avec lequel elle doit être appelée, le nombre de tours dans lequel l'action doit être effectuée.
     private List<Tuple<Func<int, BattleEvent>, int, int>> actionQueue = new List<Tuple<Func<int, BattleEvent>, int, int>>();
     // L'unité a-t-elle déjà reçu une instruction ?
@@ -129,8 +129,8 @@ public class BaseUnit : MonoBehaviour
         }
 
         // Il faut ajouter un modifier pour chaque méthode qui pourrait y être sujette
-        modifiers[Heal] = new List<Modifier>();
-        modifiers[Damage] = new List<Modifier>();
+        modifiers[Heal] = new List<CharacterModifier>();
+        modifiers[Damage] = new List<CharacterModifier>();
 
         passives = new List<Passive>();
 
@@ -186,8 +186,8 @@ public class BaseUnit : MonoBehaviour
         GiveInstruction(false);
         Cleanse();
         SetArmor(0);
-        modifiers[Heal] = new List<Modifier>();
-        modifiers[Damage] = new List<Modifier>();
+        modifiers[Heal] = new List<CharacterModifier>();
+        modifiers[Damage] = new List<CharacterModifier>();
         actionQueue = new List<Tuple<Func<int, BattleEvent>, int, int>>();
         ModifiersEndBattle();
         DeleteMinorPassives();
@@ -492,19 +492,19 @@ public class BaseUnit : MonoBehaviour
 
         #region Gestion des modificateurs
 
-    public void AddGlobalModifier(Modifier modifier){
+    public void AddGlobalModifier(CharacterModifier modifier){
         globalModifiers.Add(modifier);
         modifier.transform.SetParent(transform);
         CheckModifiers();
     }
 
-    public void DeleteGlobalModifier(Modifier modifier){
+    public void DeleteGlobalModifier(CharacterModifier modifier){
         globalModifiers.Remove(modifier);
         CheckModifiers();
     }
 
-    public void DeleteGlobalModifier(List<Modifier> modifiers){
-        foreach (Modifier _modifier in modifiers)
+    public void DeleteGlobalModifier(List<CharacterModifier> modifiers){
+        foreach (CharacterModifier _modifier in modifiers)
         {
             DeleteGlobalModifier(_modifier);
         }
@@ -515,7 +515,7 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     /// <param name="modifier"></param>
     /// <param name="function"></param>
-    public void AddModifier(Modifier modifier, Func<int, BattleEvent> function){
+    public void AddModifier(CharacterModifier modifier, Func<int, BattleEvent> function){
         modifiers[function].Add(modifier);
         modifier.transform.SetParent(transform);
         CheckModifiers();
@@ -526,7 +526,7 @@ public class BaseUnit : MonoBehaviour
     /// </summary>
     /// <param name="modifier"></param>
     /// <param name="function"></param>
-    public void DeleteModifier(Modifier modifier, Func<int, BattleEvent> function){
+    public void DeleteModifier(CharacterModifier modifier, Func<int, BattleEvent> function){
         modifiers[function].Remove(modifier);
         CheckModifiers();
     }
@@ -535,12 +535,12 @@ public class BaseUnit : MonoBehaviour
     /// Diminue la durée restante des modificateurs de 1 et les supprime si celle-ci vaut 0
     /// </summary>
     private void ModifiersEndTurn(){
-        foreach (Modifier modifier in globalModifiers){
+        foreach (CharacterModifier modifier in globalModifiers){
             modifier.ReduceTurns();
         }
-        foreach (KeyValuePair<Func<int, BattleEvent>, List<Modifier>> action in modifiers)
+        foreach (KeyValuePair<Func<int, BattleEvent>, List<CharacterModifier>> action in modifiers)
         {
-            foreach (Modifier _modifier in action.Value)
+            foreach (CharacterModifier _modifier in action.Value)
             {
                 _modifier.ReduceTurns();
             }
@@ -549,12 +549,12 @@ public class BaseUnit : MonoBehaviour
     }
 
     public void ModifiersEndBattle(){
-        foreach (Modifier modifier in globalModifiers){
+        foreach (CharacterModifier modifier in globalModifiers){
             modifier.EndBattle();
         }
-        foreach (KeyValuePair<Func<int, BattleEvent>, List<Modifier>> action in modifiers)
+        foreach (KeyValuePair<Func<int, BattleEvent>, List<CharacterModifier>> action in modifiers)
         {
-            foreach (Modifier _modifier in action.Value)
+            foreach (CharacterModifier _modifier in action.Value)
             {
                 _modifier.EndBattle();
             }
@@ -571,7 +571,7 @@ public class BaseUnit : MonoBehaviour
         // Check the global modifiers
 
         for (int i = 0; i < globalModifiers.Count; i++){
-            Modifier modifier = globalModifiers[i];
+            CharacterModifier modifier = globalModifiers[i];
             if(modifier.IsEnded()){
                 globalModifiers[i] = null;
                 Destroy(modifier.gameObject);
@@ -614,7 +614,7 @@ public class BaseUnit : MonoBehaviour
         {
             for (int i = 0; i < action.Value.Count; i++)
             {
-                Modifier modifier = action.Value[i];
+                CharacterModifier modifier = action.Value[i];
                 if(modifier.IsEnded()){
                     action.Value[i] = null;
                     Destroy(modifier.gameObject);
@@ -1114,7 +1114,7 @@ public class BaseUnit : MonoBehaviour
     /// <param name="amount"></param>
     public HealEvent Heal(int amount){
         int finalAmount = amount;
-        foreach (Modifier _modifier in modifiers[Heal])
+        foreach (CharacterModifier _modifier in modifiers[Heal])
         {
             finalAmount = Tools.Ceiling(_modifier.GetNewAmount(finalAmount));
         }

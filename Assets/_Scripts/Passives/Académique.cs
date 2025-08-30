@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Académique : Passive
 {
-    List<Modifier> modifiers = new List<Modifier>();
+    List<CharacterModifier> modifiers = new List<CharacterModifier>();
     // Lorsque le passif est setup, l'active
     override public void Activate()
     {
@@ -19,8 +19,8 @@ public class Académique : Passive
     void RisingPower(AfterCastEvent castEvent){
         if (castEvent.GetSourceUnit() == GetOwner() && castEvent.GetCastedSpell().IsATechnique())
         {
-            Modifier newModifier = Instantiate(modifier);
-            newModifier.Setup(gameObject, ratio1, _duration: Modifier.Duration.Battle);
+            CharacterModifier newModifier = Instantiate(modifier);
+            newModifier.Setup(gameObject, ratio1, _duration: CharacterModifier.Duration.Battle);
             modifiers.Add(newModifier);
             GetOwner().AddGlobalModifier(newModifier);
             Notify();

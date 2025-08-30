@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Foi : Passive
 {
-    Modifier newModifier;
+    CharacterModifier newModifier;
     // Lorsque le passif est setup, l'active
     override public void Activate()
     {
         newModifier = Instantiate(modifier);
-        newModifier.Setup(gameObject, _powerBonus : ratio1, _duration : Modifier.Duration.Permanent);
+        newModifier.Setup(gameObject, _powerBonus : ratio1, _duration : CharacterModifier.Duration.Permanent);
         GetOwner().AddModifier(newModifier, GetOwner().Heal);
     }
     // Lorsque le passif disparaît, le désactive

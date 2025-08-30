@@ -18,7 +18,7 @@ public class Passive : Upgrade
     public float ratio3;
     public ScriptablePassive scriptablePassive;
 
-    public Modifier modifier;
+    public CharacterModifier modifier;
     private bool minor = false;
     private bool activated = false;
 

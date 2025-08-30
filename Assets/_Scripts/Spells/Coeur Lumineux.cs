@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CoeurLumineux : BaseSpell
 {
-    private Modifier modifier;
+    private CharacterModifier modifier;
 
     override public void Cast(Tile targetTile = null, List<Properties> properties = null){
         base.CastSpell(targetTile, properties, _CoeurLumineux);

@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// S'applique sur une unité ou un spell pour lui conférer une modification, temporaire ou non.
 /// </summary>
-public class Modifier : MonoBehaviour
+public class CharacterModifier : MonoBehaviour
 {
     public float powerBonus = 0f;
     public float healthBonus = 0f;

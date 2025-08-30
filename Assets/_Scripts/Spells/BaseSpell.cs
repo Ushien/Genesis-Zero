@@ -55,8 +55,8 @@ public class BaseSpell : Upgrade
         #region Fields relatifs au moteur de jeu
 
     [SerializeField]
-    public Modifier baseModifier;
-    private List<Modifier> modifiers = new List<Modifier>();
+    public CharacterModifier baseModifier;
+    private List<CharacterModifier> modifiers = new List<CharacterModifier>();
         #endregion
         #endregion
 
@@ -421,7 +421,7 @@ public class BaseSpell : Upgrade
     virtual public int GetFinalDamages(float _ratio){
         int finalAmount = Tools.Ceiling(_ratio * GetOwner().GetFinalPower());
         
-        foreach (Modifier _modifier in modifiers)
+        foreach (CharacterModifier _modifier in modifiers)
         {
             finalAmount = Tools.Ceiling(_modifier.GetNewAmount(finalAmount));
         }
@@ -454,7 +454,7 @@ public class BaseSpell : Upgrade
     /// Ajoute un modificateur sur le sort
     /// </summary>
     /// <param name="modifier"></param>
-    public void AddModifier(Modifier modifier){
+    public void AddModifier(CharacterModifier modifier){
         modifiers.Add(modifier);
     }
 
@@ -462,7 +462,7 @@ public class BaseSpell : Upgrade
     /// Supprime un modificateur sur le sort
     /// </summary>
     /// <param name="modifier"></param>
-    private void DeleteModifier(Modifier modifier){
+    private void DeleteModifier(CharacterModifier modifier){
         modifiers.Remove(modifier);
     }
 
@@ -473,7 +473,7 @@ public class BaseSpell : Upgrade
     private void ModifierEndTurn(){
         if(modifiers.Count > 0){
         }
-        foreach (Modifier modifier in modifiers)
+        foreach (CharacterModifier modifier in modifiers)
         {
             modifier.ReduceTurns();
             if(modifier.IsEnded()){

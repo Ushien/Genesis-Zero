@@ -15,16 +15,16 @@ public class Onde : BaseSpell
     private void _Onde(Tile targetTile, List<Properties> properties = null){   
         SpellManager.Instance.UseSpell(GetOwner(), GetFinalDamages(GetRatio()[0]), targetTile.GetUnit(), properties, spellType : SpellType.Heal);
         
-        Modifier newModifier = Instantiate(baseModifier);
-        newModifier.Setup(gameObject, _powerBonus : GetRatio()[1], _duration : Modifier.Duration.Battle);
+        CharacterModifier newModifier = Instantiate(baseModifier);
+        newModifier.Setup(gameObject, _powerBonus : GetRatio()[1], _duration : CharacterModifier.Duration.Battle);
         targetTile.GetUnit().AddGlobalModifier(newModifier);
     }
 
     private void _Onde_H(Tile targetTile, List<Properties> properties = null){   
         SpellManager.Instance.UseSpell(GetOwner(), GetFinalDamages(GetRatio(hyper : true)[0]), targetTile.GetUnit(), properties, spellType : SpellType.Heal);
         
-        Modifier newModifier = Instantiate(baseModifier);
-        newModifier.Setup(gameObject, _powerBonus : GetRatio(hyper : true)[1], _duration : Modifier.Duration.Battle);
+        CharacterModifier newModifier = Instantiate(baseModifier);
+        newModifier.Setup(gameObject, _powerBonus : GetRatio(hyper : true)[1], _duration : CharacterModifier.Duration.Battle);
         targetTile.GetUnit().AddGlobalModifier(newModifier);
     }
 }

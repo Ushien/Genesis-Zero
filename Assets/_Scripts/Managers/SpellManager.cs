@@ -16,7 +16,7 @@ public class SpellManager : MonoBehaviour
     public static SpellManager Instance;
     public ScriptableSpell basicAttack;
     [SerializeField]
-    private Modifier baseModifier;
+    private CharacterModifier baseModifier;
     private List<ScriptableSpell> _spells;
     private List<Properties> emptyProperties;
 
@@ -184,7 +184,7 @@ public class SpellManager : MonoBehaviour
         return cleansableStatus;
     }
 
-    public Modifier GetModifier(){
+    public CharacterModifier GetModifier(){
         return baseModifier;
     }
 }

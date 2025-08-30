@@ -14,16 +14,16 @@ public class Benediction : BaseSpell
 
     private void _Benediction(Tile targetTile, List<Properties> properties = null){
 
-        Modifier _modifier = Instantiate(baseModifier);
-        _modifier.Setup(gameObject, _powerBonus : GetRatio()[0], _turns : 3, _duration : Modifier.Duration.Battle);
+        CharacterModifier _modifier = Instantiate(baseModifier);
+        _modifier.Setup(gameObject, _powerBonus : GetRatio()[0], _turns : 3, _duration : CharacterModifier.Duration.Battle);
 
         targetTile.GetUnit().GetAttack().AddModifier(_modifier);
     }
 
     private void _Benediction_H(Tile targetTile, List<Properties> properties = null){
 
-        Modifier _modifier = Instantiate(SpellManager.Instance.GetModifier());
-        _modifier.Setup(gameObject, _powerBonus : GetRatio(hyper:true)[0], _turns : 3, _duration : Modifier.Duration.Battle);
+        CharacterModifier _modifier = Instantiate(SpellManager.Instance.GetModifier());
+        _modifier.Setup(gameObject, _powerBonus : GetRatio(hyper:true)[0], _turns : 3, _duration : CharacterModifier.Duration.Battle);
 
         targetTile.GetUnit().GetAttack().AddModifier(_modifier);
     }
